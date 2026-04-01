@@ -35,12 +35,19 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'Non Homepage Hero',
+          value: 'nonHomepageHero',
+        },
       ],
       required: true,
     },
     {
       name: 'richText',
       type: 'richText',
+      admin: {
+        condition: (_, { type } = {}) => type !== 'nonHomepageHero',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -53,16 +60,44 @@ export const hero: Field = {
       }),
       label: false,
     },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Giant Title',
+      required: true,
+      admin: {
+        condition: (_, { type } = {}) => type === 'nonHomepageHero',
+        description: 'Teks raksasa untuk foreground (contoh: Branding)',
+      },
+    },
+    {
+      name: 'gradientColor',
+      type: 'select',
+      label: 'Gradient Color',
+      defaultValue: 'yellow',
+      admin: {
+        condition: (_, { type } = {}) => type === 'nonHomepageHero',
+      },
+      options: [
+        { label: 'Yellow', value: 'yellow' },
+        { label: 'Orange', value: 'orange' },
+        { label: 'Blue', value: 'blue' },
+      ],
+    },
     linkGroup({
       overrides: {
         maxRows: 2,
+        admin: {
+          condition: (_, { type } = {}) => type !== 'nonHomepageHero',
+        },
       },
     }),
     {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) =>
+          ['highImpact', 'mediumImpact', 'nonHomepageHero'].includes(type),
       },
       relationTo: 'media',
       required: true,

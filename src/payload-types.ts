@@ -159,7 +159,7 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
     richText?: {
       root: {
         type: string;
@@ -175,6 +175,11 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Teks raksasa untuk foreground (contoh: Branding)
+     */
+    title?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue') | null;
     links?:
       | {
           link: {
@@ -1064,6 +1069,8 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        title?: T;
+        gradientColor?: T;
         links?:
           | T
           | {

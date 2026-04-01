@@ -263,6 +263,7 @@ html[data-theme='light'] {
   letter-spacing: 0;
   text-align: center;
   color: var(--gda-brand-black);
+  transition: color 0.3s ease-in-out;
 }
 
 .gda-nav-item:hover {
