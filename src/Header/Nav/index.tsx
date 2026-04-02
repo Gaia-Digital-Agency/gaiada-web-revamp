@@ -71,9 +71,7 @@ const DropdownNavItem: React.FC<{
         type="button"
       >
         <CMSLink {...item.link} appearance="link" />
-        <ChevronDown
-          className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`}
-        />
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (

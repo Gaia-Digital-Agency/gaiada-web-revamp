@@ -45,6 +45,9 @@
   --breakpoint-2xl: 86rem;
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
+
+  /* Brand Font Template - Swap "Avenir Next" here when assets are ready */
+  --font-brand: 'Avenir Next', 'Inter', var(--font-sans), sans-serif;
 }
 
 @layer utilities {
@@ -123,6 +126,10 @@
   --success: oklch(78% 0.08 200deg);
   --warning: oklch(89% 0.1 75deg);
   --error: oklch(75% 0.15 25deg);
+  --gda-brand-black: #1a1a1b;
+  --gda-brand-yellow: #ffc22c;
+  --gda-brand-earth: #78716c;
+  --gda-brand-grey: #c6c6c6;
 }
 
 [data-theme='dark'] {
@@ -212,4 +219,54 @@
   body {
     @apply bg-background text-foreground min-h-[100vh] flex flex-col;
   }
+}
+
+html {
+  opacity: 0;
+}
+
+html[data-theme='dark'],
+html[data-theme='light'] {
+  opacity: initial;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.gda-hero-banner-title {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: 220px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #f9f9f9;
+}
+
+.gda-nav-item {
+  font-family: var(--font-brand);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--gda-brand-black);
+  transition: color 0.3s ease-in-out;
+}
+
+.gda-nav-item:hover {
+  color: var(--gda-brand-yellow);
+  text-decoration: none;
 }

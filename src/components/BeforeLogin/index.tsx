@@ -12,7 +12,7 @@ const BeforeLogin: React.FC = () => {
           passwordInput.dataset.hasToggle = 'true';
           
           // Find the container (Payload 3.0 uses a div with class 'field-type password')
-          const container = passwordInput.closest('.field-type.password') || passwordInput.parentElement;
+          const container = (passwordInput.closest('.field-type.password') || passwordInput.parentElement) as HTMLElement | null;
           
           if (container) {
             container.style.position = 'relative';

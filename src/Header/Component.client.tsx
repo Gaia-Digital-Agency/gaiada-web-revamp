@@ -19,6 +19,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
 
+  const [isScrolled, setIsScrolled] = useState(false)
+
   useEffect(() => {
     setHeaderTheme(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,14 +31,33 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    // Call once to set initial state
+    handleScroll()
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
-        </Link>
-        <HeaderNav data={data} />
-      </div>
-    </header>
+    <>
+      <header
+        className={`sticky top-0 z-50 w-full h-[79px] px-6 md:px-10 flex items-center transition-all duration-300 ${
+          isScrolled ? 'bg-[#F9F9F9CC] backdrop-blur-[25px] shadow-sm' : 'bg-transparent'
+        }`}
+        {...(theme ? { 'data-theme': theme } : {})}
+      >
+        <div className="container mx-auto flex justify-between items-center w-full">
+          <Link href="/">
+            <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+          </Link>
+          <HeaderNav data={data} />
+        </div>
+      </header>
+    </>
   )
 }

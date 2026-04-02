@@ -14,6 +14,7 @@ import { AboutBlock } from '@/blocks/AboutBlock/Component'
 import { CareerBlock } from '@/blocks/CareerBlock/Component'
 
 // Mapping of block slugs to their corresponding React components
+
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
