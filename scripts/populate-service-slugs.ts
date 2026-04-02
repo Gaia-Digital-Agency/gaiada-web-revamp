@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
-import config from './src/payload.config'
-import { toKebabCase } from './src/utilities/toKebabCase'
+import config from '../src/payload.config'
+import { toKebabCase } from '../src/utilities/toKebabCase'
 
 const populateServiceSlugs = async () => {
   const payload = await getPayload({ config })
