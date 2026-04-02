@@ -274,6 +274,26 @@ export interface Page {
         blockName?: string | null;
         blockType: 'careerBlock';
       }
+    | {
+        columns?:
+          | {
+              size?: ('full' | 'half' | 'oneThird' | 'twoThirds') | null;
+              buttons?:
+                | {
+                    label: string;
+                    url: string;
+                    variant?: ('default' | 'secondary' | 'outline' | 'ghost' | 'link' | 'destructive') | null;
+                    newTab?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'buttonBlock';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1399,6 +1419,27 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               description?: T;
               form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        buttonBlock?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    size?: T;
+                    buttons?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          variant?: T;
+                          newTab?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
