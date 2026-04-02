@@ -38,7 +38,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           <span
             className={cn(
               'text-[32px] font-semibold leading-[130%] transition-colors duration-300',
-              isOpen ? 'text-[#FFC22C]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+              isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -47,7 +47,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           <span
             className={cn(
               'text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
-              isOpen ? 'text-[#FFC22C]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+              isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -62,7 +62,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             <Plus
               className={cn(
                 'w-8 h-8 transition-colors duration-300',
-                isOpen ? 'text-[#FFC22C]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+                isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
               )}
             />
           </motion.div>
@@ -78,7 +78,11 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="pl-[60px] md:pl-[66px]">
+            {/* width: 330;
+            height: 78;
+            angle: 0 deg;
+            opacity: 1; */}
+            <div className="pl-[60px] md:pl-[66px] w-[450px]">
               {' '}
               {/* Adjusted indent to align perfectly with the title text start */}
               <p
