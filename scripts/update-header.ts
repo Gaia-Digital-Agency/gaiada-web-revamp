@@ -12,7 +12,7 @@ const updateHeader = async () => {
     { link: { type: 'custom', url: '/careers', label: 'Careers' } },
     { link: { type: 'custom', url: '/blog', label: 'Blog' } },
     { link: { type: 'custom', url: '/contact', label: 'Contact' } },
-  ]
+  ] as const
 
   await payload.updateGlobal({
     slug: 'header',
