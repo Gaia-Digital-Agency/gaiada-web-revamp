@@ -20,27 +20,40 @@ export type AboutBlockType = {
   }[]
 }
 
-const AccordionItem: React.FC<{ title: string; description: string }> = ({
+const AccordionItem: React.FC<{ title: string; description: string; index: number }> = ({
   title,
   description,
+  index,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const formattedIndex = (index + 1).toString().padStart(2, '0')
 
   return (
-    <div className="">
+    <div className="border-b border-[#E2E4E9] last:border-none">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300"
       >
-        <span
-          className={cn(
-            'text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
-            isOpen ? 'text-[#FFC22C]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
-          )}
-          style={{ fontFamily: 'Avenir Next, sans-serif' }}
-        >
-          {title}
-        </span>
+        <div className="flex items-baseline gap-6">
+          <span
+            className={cn(
+              'text-[32px] font-semibold leading-[130%] transition-colors duration-300',
+              isOpen ? 'text-[#FFC22C]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+            )}
+            style={{ fontFamily: 'Avenir Next, sans-serif' }}
+          >
+            {formattedIndex}
+          </span>
+          <span
+            className={cn(
+              'text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
+              isOpen ? 'text-[#FFC22C]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+            )}
+            style={{ fontFamily: 'Avenir Next, sans-serif' }}
+          >
+            {title}
+          </span>
+        </div>
         <div className="shrink-0 ml-4">
           <motion.div
             animate={{ rotate: isOpen ? 45 : 0 }}
@@ -65,12 +78,16 @@ const AccordionItem: React.FC<{ title: string; description: string }> = ({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <p
-              className="text-[14px] leading-[22px] text-[#6D758F] font-normal pb-6"
-              style={{ fontFamily: 'Inter, sans-serif' }}
-            >
-              {description}
-            </p>
+            <div className="pl-[52px]">
+              {' '}
+              {/* Memberikan indent agar teks konten tidak berada di bawah nomor */}
+              <p
+                className="text-[14px] leading-[22px] text-[#6D758F] font-normal pb-6"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                {description}
+              </p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -110,8 +127,9 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
           </div>
         </div>
       </div>
-      {/* about-section-2-content: Accordion List */}
-      <div id="about-section-2-content" className="w-full max-w-[657px] mx-auto">
+
+      {/* about-section-2: Accordion List */}
+      <div id="about-section-2" className="w-full max-w-[657px] mx-auto">
         {items && items.length > 0 && (
           <div className="flex flex-col">
             {items.map((item, index) => (
@@ -119,6 +137,7 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
                 key={item.id || index}
                 title={item.title}
                 description={item.description}
+                index={index}
               />
             ))}
           </div>
