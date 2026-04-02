@@ -4,8 +4,10 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 
+// Represents a valid collection name from the Payload configuration
 type Collection = keyof Config['collections']
 
+// Retrieves a single document from a specified collection by its slug
 async function getDocument(collection: Collection, slug: string, depth = 0) {
   const payload = await getPayload({ config: configPromise })
 

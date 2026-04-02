@@ -7,6 +7,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
+// Configuration for the Archive block in Payload CMS
 export const Archive: Block = {
   slug: 'archive',
   interfaceName: 'ArchiveBlock',

@@ -61,7 +61,65 @@ export const plugins: Plugin[] = [
     formOverrides: {
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
-          if ('name' in field && field.name === 'confirmationMessage') {
+          if (field.type === 'blocks' && field.name === 'fields') {
+            return {
+              ...field,
+              blocks: [
+                ...(field.blocks || []),
+                {
+                  slug: 'hCaptcha',
+                  fields: [
+                    {
+                      name: 'siteKey',
+                      type: 'text',
+                      label: 'Site Key',
+                      required: true,
+                    },
+                    {
+                      name: 'secretKey',
+                      type: 'text',
+                      label: 'Secret Key',
+                      required: true,
+                      admin: {
+                        description: 'This will be used to verify the hCaptcha on the server.',
+                      },
+                    },
+                  ],
+                  labels: {
+                    plural: 'hCaptchas',
+                    singular: 'hCaptcha',
+                  },
+                },
+                {
+                  slug: 'file',
+                  fields: [
+                    {
+                      name: 'label',
+                      type: 'text',
+                      label: 'Label',
+                      required: true,
+                    },
+                    {
+                      name: 'name',
+                      type: 'text',
+                      label: 'Name',
+                      required: true,
+                    },
+                    {
+                      name: 'required',
+                      type: 'checkbox',
+                      label: 'Required',
+                    },
+                  ],
+                  labels: {
+                    plural: 'Files',
+                    singular: 'File',
+                  },
+                },
+              ],
+            }
+          }
+          if (field.type === 'richText' && field.name === 'confirmationMessage') {
             return {
               ...field,
               editor: lexicalEditor({

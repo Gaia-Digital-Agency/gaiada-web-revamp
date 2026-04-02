@@ -10,6 +10,26 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'visitorCount',
+      type: 'number',
+      label: 'Visitor Count',
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'copyright',
+      type: 'text',
+      label: 'Copyright',
+      defaultValue: 'Copyright @2026',
+    },
+    {
+      name: 'developedBy',
+      type: 'text',
+      label: 'Developed By',
+      defaultValue: 'Developed by Gaia Digital Agency',
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
@@ -17,7 +37,7 @@ export const Footer: GlobalConfig = {
           appearances: false,
         }),
       ],
-      maxRows: 6,
+      maxRows: 10,
       admin: {
         initCollapsed: true,
         components: {

@@ -2,8 +2,10 @@ import type { Field, GroupField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
 
+// Defines the available appearance options for links
 export type LinkAppearances = 'default' | 'outline'
 
+// Predefined configuration for each link appearance option
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   default: {
     label: 'Default',
@@ -15,12 +17,14 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
   },
 }
 
+// Type definition for the link field generator function
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
   disableLabel?: boolean
   overrides?: Partial<GroupField>
 }) => Field
 
+// Generates a comprehensive link field configuration for Payload CMS
 export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
   const linkResult: GroupField = {
     name: 'link',

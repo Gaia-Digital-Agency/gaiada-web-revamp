@@ -19,6 +19,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   return url
 }
 
+// Generates metadata for a document, including title, description, and OpenGraph tags
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | null
 }): Promise<Metadata> => {

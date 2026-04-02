@@ -1,3 +1,4 @@
+// Formats a timestamp into a MM/DD/YYYY date string
 export const formatDateTime = (timestamp: string): string => {
   const now = new Date()
   let date = now

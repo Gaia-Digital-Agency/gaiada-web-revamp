@@ -5,6 +5,7 @@ import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 
+// Component for rendering a call-to-action block with rich text and links
 export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
   return (
     <div className="container">

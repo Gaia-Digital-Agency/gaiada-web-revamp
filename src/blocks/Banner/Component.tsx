@@ -8,6 +8,7 @@ type Props = {
   className?: string
 } & BannerBlockProps
 
+// Component for rendering banner notices with different styles (info, error, success, warning)
 export const BannerBlock: React.FC<Props> = ({ className, content, style }) => {
   return (
     <div className={cn('mx-auto my-8 w-full', className)}>

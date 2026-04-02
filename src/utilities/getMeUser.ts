@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import type { User } from '../payload-types'
 import { getClientSideURL } from './getURL'
 
+// Retrieves the currently authenticated user and their token, optionally redirecting based on authentication state
 export const getMeUser = async (args?: {
   nullUserRedirect?: string
   validUserRedirect?: string

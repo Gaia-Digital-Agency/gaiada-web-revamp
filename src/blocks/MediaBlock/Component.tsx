@@ -18,6 +18,7 @@ type Props = MediaBlockProps & {
   disableInnerContainer?: boolean
 }
 
+// Component for rendering a media block (image/video) with an optional caption
 export const MediaBlock: React.FC<Props> = (props) => {
   const {
     captionClassName,

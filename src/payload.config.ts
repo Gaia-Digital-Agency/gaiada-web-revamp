@@ -9,8 +9,14 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Services } from './collections/Services/index'
+import { Portfolio } from './collections/Portfolio'
+import { About } from './collections/About'
+import { Departments } from './collections/Departments'
+import { Team } from './collections/Team'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { Settings } from './Settings/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -18,6 +24,7 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Main Payload CMS configuration defining collections, globals, plugins, and database settings
 export default buildConfig({
   admin: {
     components: {
@@ -62,9 +69,20 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Services,
+    Portfolio,
+    About,
+    Departments,
+    Team,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, Settings],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

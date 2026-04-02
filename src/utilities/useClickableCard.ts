@@ -4,6 +4,7 @@ import type { RefObject } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef } from 'react'
 
+// Type definition for the return value of the useClickableCard hook
 type UseClickableCardType<T extends HTMLElement> = {
   card: {
     ref: RefObject<T | null>
@@ -13,12 +14,14 @@ type UseClickableCardType<T extends HTMLElement> = {
   }
 }
 
+// Interface for the properties passed to the useClickableCard hook
 interface Props {
   external?: boolean
   newTab?: boolean
   scroll?: boolean
 }
 
+// Custom hook that makes a container element behave like a link, handling accessibility and click/touch events
 function useClickableCard<T extends HTMLElement>({
   external = false,
   newTab = false,

@@ -1,5 +1,6 @@
 import canUseDOM from './canUseDOM'
 
+// Returns the server-side URL of the application
 export const getServerSideURL = () => {
   return (
     process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -9,6 +10,7 @@ export const getServerSideURL = () => {
   )
 }
 
+// Returns the client-side URL of the application
 export const getClientSideURL = () => {
   if (canUseDOM) {
     const protocol = window.location.protocol

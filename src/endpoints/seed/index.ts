@@ -9,6 +9,7 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { seedGaia } from './gaia-seed'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -18,9 +19,14 @@ const collections: CollectionSlug[] = [
   'forms',
   'form-submissions',
   'search',
+  'services',
+  'portfolio',
+  'about-items',
+  'departments',
+  'team',
 ]
 
-const globals: GlobalSlug[] = ['header', 'footer']
+const globals: GlobalSlug[] = ['header', 'footer', 'settings']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -45,23 +51,42 @@ export const seed = async ({
 
   // clear the database
   await Promise.all(
-    globals.map((global) =>
-      payload.updateGlobal({
+    globals.map((global) => {
+      const data: any = {}
+      if (global === 'header' || global === 'footer') {
+        data.navItems = []
+      }
+
+      return payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data,
         depth: 0,
         context: {
           disableRevalidate: true,
         },
-      }),
-    ),
+      })
+    }),
   )
 
-  await Promise.all(
-    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-  )
+  // clear the database in order to avoid foreign key constraint errors
+  const collectionsToDelete: CollectionSlug[] = [
+    'team',
+    'departments',
+    'services',
+    'portfolio',
+    'about-items',
+    'posts',
+    'pages',
+    'forms',
+    'form-submissions',
+    'categories',
+    'media',
+    'search',
+  ]
+
+  for (const collection of collectionsToDelete) {
+    await payload.db.deleteMany({ collection, req, where: {} })
+  }
 
   await Promise.all(
     collections
@@ -109,27 +134,32 @@ export const seed = async ({
     }),
     payload.create({
       collection: 'media',
+      context: { disableRevalidate: true },
       data: image1,
       file: image1Buffer,
     }),
     payload.create({
       collection: 'media',
+      context: { disableRevalidate: true },
       data: image2,
       file: image2Buffer,
     }),
     payload.create({
       collection: 'media',
+      context: { disableRevalidate: true },
       data: image2,
       file: image3Buffer,
     }),
     payload.create({
       collection: 'media',
+      context: { disableRevalidate: true },
       data: imageHero1,
       file: hero1Buffer,
     }),
     categories.map((category) =>
       payload.create({
         collection: 'categories',
+        context: { disableRevalidate: true },
         data: {
           title: category,
           slug: category,
@@ -173,6 +203,7 @@ export const seed = async ({
   await payload.update({
     id: post1Doc.id,
     collection: 'posts',
+    context: { disableRevalidate: true },
     data: {
       relatedPosts: [post2Doc.id, post3Doc.id],
     },
@@ -180,6 +211,7 @@ export const seed = async ({
   await payload.update({
     id: post2Doc.id,
     collection: 'posts',
+    context: { disableRevalidate: true },
     data: {
       relatedPosts: [post1Doc.id, post3Doc.id],
     },
@@ -187,92 +219,15 @@ export const seed = async ({
   await payload.update({
     id: post3Doc.id,
     collection: 'posts',
+    context: { disableRevalidate: true },
     data: {
       relatedPosts: [post1Doc.id, post2Doc.id],
     },
   })
 
-  payload.logger.info(`— Seeding contact form...`)
+  payload.logger.info(`— Seeding Gaia Digital Agency...`)
 
-  const contactForm = await payload.create({
-    collection: 'forms',
-    depth: 0,
-    data: contactFormData,
-  })
-
-  payload.logger.info(`— Seeding pages...`)
-
-  const [_, contactPage] = await Promise.all([
-    payload.create({
-      collection: 'pages',
-      depth: 0,
-      data: home({ heroImage: imageHomeDoc, metaImage: image2Doc }),
-    }),
-    payload.create({
-      collection: 'pages',
-      depth: 0,
-      data: contactPageData({ contactForm: contactForm }),
-    }),
-  ])
-
-  payload.logger.info(`— Seeding globals...`)
-
-  await Promise.all([
-    payload.updateGlobal({
-      slug: 'header',
-      data: {
-        navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Posts',
-              url: '/posts',
-            },
-          },
-          {
-            link: {
-              type: 'reference',
-              label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
-            },
-          },
-        ],
-      },
-    }),
-    payload.updateGlobal({
-      slug: 'footer',
-      data: {
-        navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
-            },
-          },
-        ],
-      },
-    }),
-  ])
+  await seedGaia({ payload, req })
 
   payload.logger.info('Seeded database successfully!')
 }

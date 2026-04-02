@@ -11,6 +11,7 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
 
+// Type definition for the FormBlock component properties
 export type FormBlockType = {
   blockName?: string
   blockType?: 'formBlock'
@@ -19,6 +20,7 @@ export type FormBlockType = {
   introContent?: DefaultTypedEditorState
 }
 
+// Client-side component that renders a form builder form with validation and submission logic
 export const FormBlock: React.FC<
   {
     id?: string
@@ -47,15 +49,10 @@ export const FormBlock: React.FC<
   const router = useRouter()
 
   const onSubmit = useCallback(
-    (data: FormFieldBlock[]) => {
+    (data: any) => {
       let loadingTimerID: ReturnType<typeof setTimeout>
       const submitForm = async () => {
         setError(undefined)
-
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
 
         // delay loading indicator by 1s
         loadingTimerID = setTimeout(() => {
@@ -63,6 +60,37 @@ export const FormBlock: React.FC<
         }, 1000)
 
         try {
+          const dataToSend = []
+
+          for (const [name, value] of Object.entries(data)) {
+            if (value instanceof FileList && value.length > 0) {
+              const file = value[0]
+              const formData = new FormData()
+              formData.append('file', file)
+              formData.append('alt', `Upload for ${name}`)
+
+              const uploadReq = await fetch(`${getClientSideURL()}/api/media`, {
+                body: formData,
+                method: 'POST',
+              })
+
+              const uploadRes = await uploadReq.json()
+              if (uploadReq.status >= 400) {
+                throw new Error(uploadRes.errors?.[0]?.message || 'File upload failed')
+              }
+
+              dataToSend.push({
+                field: name,
+                value: uploadRes.doc.url || uploadRes.doc.id,
+              })
+            } else {
+              dataToSend.push({
+                field: name,
+                value,
+              })
+            }
+          }
+
           const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
             body: JSON.stringify({
               form: formID,

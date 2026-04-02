@@ -9,6 +9,7 @@ import {
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
 
+// Configures the default Lexical rich text editor features for Payload CMS
 export const defaultLexical = lexicalEditor({
   features: [
     ParagraphFeature(),

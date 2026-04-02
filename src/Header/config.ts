@@ -16,8 +16,23 @@ export const Header: GlobalConfig = {
         link({
           appearances: false,
         }),
+        {
+          name: 'subItems',
+          type: 'array',
+          label: 'Dropdown Items',
+          admin: {
+            description: 'Add sub-items to create a dropdown menu for this nav item.',
+            initCollapsed: true,
+          },
+          fields: [
+            link({
+              appearances: false,
+            }),
+          ],
+          maxRows: 20,
+        },
       ],
-      maxRows: 6,
+      maxRows: 8,
       admin: {
         initCollapsed: true,
         components: {
