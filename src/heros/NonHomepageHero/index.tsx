@@ -4,7 +4,12 @@ import React, { useEffect } from 'react'
 import Image from 'next/image'
 import type { Media, Page } from '@/payload-types'
 
-export const NonHomepageHero: React.FC<Page['hero']> = ({ title, media, gradientColor }) => {
+export const NonHomepageHero: React.FC<Page['hero']> = ({
+  title,
+  media,
+  gradientColor,
+  giantTitleColor,
+}) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -24,6 +29,10 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({ title, media, gradient
     blue: {
       hex: '#2563eb',
       rgba: 'rgba(37, 99, 235, 0)',
+    },
+    white: {
+      hex: '#ffffff',
+      rgba: 'rgba(255, 255, 255, 0)',
     },
   }
 
@@ -59,7 +68,9 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({ title, media, gradient
       {/* LAYER 3: Foreground - Giant Typography */}
       <div className="relative z-20 w-full overflow-hidden translate-y-[15%] pointer-events-none">
         <div className="container mx-auto px-4 mb-5">
-          <h1 className="gda-hero-banner-title">{title}</h1>
+          <h1 className="gda-hero-banner-title" style={{ color: giantTitleColor || undefined }}>
+            {title}
+          </h1>
         </div>
       </div>
     </section>

@@ -191,7 +191,11 @@ export interface Page {
      * Teks raksasa untuk foreground (contoh: Branding)
      */
     title?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue') | null;
+    /**
+     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     */
+    giantTitleColor?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
     links?:
       | {
           link: {
@@ -908,7 +912,11 @@ export interface Service {
      * Teks raksasa untuk foreground (contoh: Branding)
      */
     title?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue') | null;
+    /**
+     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     */
+    giantTitleColor?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
     links?:
       | {
           link: {
@@ -1335,6 +1343,7 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         title?: T;
+        giantTitleColor?: T;
         gradientColor?: T;
         links?:
           | T
@@ -1683,6 +1692,7 @@ export interface ServicesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         title?: T;
+        giantTitleColor?: T;
         gradientColor?: T;
         links?:
           | T
