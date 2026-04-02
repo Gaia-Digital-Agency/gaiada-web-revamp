@@ -888,7 +888,7 @@ export interface Service {
    */
   image?: (number | null) | Media;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
     richText?: {
       root: {
         type: string;
@@ -904,6 +904,11 @@ export interface Service {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Teks raksasa untuk foreground (contoh: Branding)
+     */
+    title?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue') | null;
     links?:
       | {
           link: {
@@ -1329,6 +1334,8 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        title?: T;
+        gradientColor?: T;
         links?:
           | T
           | {
@@ -1675,6 +1682,8 @@ export interface ServicesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        title?: T;
+        gradientColor?: T;
         links?:
           | T
           | {
