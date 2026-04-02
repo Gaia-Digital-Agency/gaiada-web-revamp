@@ -191,7 +191,11 @@ export interface Page {
      * Teks raksasa untuk foreground (contoh: Branding)
      */
     title?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue') | null;
+    /**
+     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     */
+    giantTitleColor?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
     links?:
       | {
           link: {
@@ -261,7 +265,33 @@ export interface Page {
         blockType: 'portfolioBlock';
       }
     | {
+        image?: (number | null) | Media;
         title?: string | null;
+        /**
+         * Simple caption for this section
+         */
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        items?:
+          | {
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'aboutBlock';
@@ -908,7 +938,11 @@ export interface Service {
      * Teks raksasa untuk foreground (contoh: Branding)
      */
     title?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue') | null;
+    /**
+     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     */
+    giantTitleColor?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
     links?:
       | {
           link: {
@@ -1335,6 +1369,7 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         title?: T;
+        giantTitleColor?: T;
         gradientColor?: T;
         links?:
           | T
@@ -1389,7 +1424,16 @@ export interface PagesSelect<T extends boolean = true> {
         aboutBlock?:
           | T
           | {
+              image?: T;
               title?: T;
+              description?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1683,6 +1727,7 @@ export interface ServicesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         title?: T;
+        giantTitleColor?: T;
         gradientColor?: T;
         links?:
           | T

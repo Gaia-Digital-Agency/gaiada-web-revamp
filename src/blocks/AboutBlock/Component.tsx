@@ -1,40 +1,151 @@
-import React from 'react'
-import { getPayload } from 'payload'
-import configPromise from '@/payload.config'
-import { Media } from '@/components/Media'
+'use client'
 
-// Type definition for the AboutBlock component properties
+import React, { useState } from 'react'
+import { Media } from '@/components/Media'
+import type { Media as MediaType } from '@/payload-types'
+import RichText from '@/components/RichText'
+import { Plus } from 'lucide-react'
+import { cn } from '@/utilities/ui'
+import { motion, AnimatePresence } from 'framer-motion'
+
 export type AboutBlockType = {
   blockType: 'aboutBlock'
   title?: string
+  description?: any
+  image?: MediaType
+  items?: {
+    title: string
+    description: string
+    id?: string
+  }[]
 }
 
-// React component that renders the About section with items fetched from the CMS
-export const AboutBlock: React.FC<AboutBlockType> = async ({
+const AccordionItem: React.FC<{ title: string; description: string; index: number }> = ({
   title,
+  description,
+  index,
 }) => {
-  const payload = await getPayload({ config: configPromise })
-  const aboutItems = await payload.find({
-    collection: 'about-items',
-    limit: 100,
-    sort: 'createdAt',
-  })
+  const [isOpen, setIsOpen] = useState(false)
+  const formattedIndex = (index + 1).toString().padStart(2, '0')
 
   return (
-    <div className="container">
-      {title && <h2 className="text-3xl font-bold mb-12">{title}</h2>}
-      <div className="flex flex-col gap-24">
-        {aboutItems.docs.map((item: any, i: number) => (
-          <div key={i} className={`grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
-            <div className={i % 2 !== 0 ? 'md:order-2' : 'md:order-1'}>
-              <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-              <p className="text-lg text-muted-foreground">{item.description}</p>
+    <div>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300"
+      >
+        <div className="flex items-baseline gap-6">
+          <span
+            className={cn(
+              'text-[32px] font-semibold leading-[130%] transition-colors duration-300',
+              isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+            )}
+            style={{ fontFamily: 'Avenir Next, sans-serif' }}
+          >
+            {formattedIndex}
+          </span>
+          <span
+            className={cn(
+              'text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
+              isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+            )}
+            style={{ fontFamily: 'Avenir Next, sans-serif' }}
+          >
+            {title}
+          </span>
+        </div>
+        <div className="shrink-0 ml-4">
+          <motion.div
+            animate={{ rotate: isOpen ? 45 : 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <Plus
+              className={cn(
+                'w-8 h-8 transition-colors duration-300',
+                isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+              )}
+            />
+          </motion.div>
+        </div>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            {/* width: 330;
+            height: 78;
+            angle: 0 deg;
+            opacity: 1; */}
+            <div className="pl-[60px] md:pl-[66px] w-[450px]">
+              {' '}
+              {/* Adjusted indent to align perfectly with the title text start */}
+              <p
+                className="text-[14px] leading-[22px] text-[#6D758F] font-normal pb-6"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                {description}
+              </p>
             </div>
-            <div className={`aspect-video relative overflow-hidden rounded-lg ${i % 2 !== 0 ? 'md:order-1' : 'md:order-2'}`}>
-              <Media resource={item.image} fill className="object-cover" />
-            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image, items }) => {
+  return (
+    <div id="about-us" className="container px-0!">
+      <div id="about-section-1" className="mb-20">
+        <div className="flex flex-col md:flex-row items-start gap-[48px]">
+          {/* Bagian Kiri: Image */}
+          <div id="about-section-1-image" className="w-full md:w-[708px] md:h-[480px] shrink-0">
+            {image && (
+              <div className="relative w-full h-full overflow-hidden">
+                <Media resource={image} fill className="object-cover" />
+              </div>
+            )}
           </div>
-        ))}
+
+          {/* Bagian Kanan: Title, Description, and Accordion */}
+          <div id="about-section-1-content" className="flex-1 pr-[180px]">
+            {title && (
+              <h2 className="text-[56px] font-brand font-bold text-black leading-tight mb-6">
+                {title}
+              </h2>
+            )}
+
+            {description && (
+              <RichText
+                data={description}
+                enableGutter={false}
+                className="prose-lg max-w-none font-roboto font-normal text-black leading-[160%] tracking-[0.01em] mb-12"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* about-section-2: Accordion List */}
+      <div id="about-section-2" className="w-full max-w-[657px] mx-auto">
+        {items && items.length > 0 && (
+          <div className="flex flex-col">
+            {items.map((item, index) => (
+              <AccordionItem
+                key={item.id || index}
+                title={item.title}
+                description={item.description}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

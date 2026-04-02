@@ -71,6 +71,16 @@ export const hero: Field = {
       },
     },
     {
+      name: 'giantTitleColor',
+      type: 'text',
+      label: 'Giant Title Color',
+      admin: {
+        condition: (_, { type } = {}) => type === 'nonHomepageHero',
+        description:
+          'Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)',
+      },
+    },
+    {
       name: 'gradientColor',
       type: 'select',
       label: 'Gradient Color',
@@ -82,6 +92,7 @@ export const hero: Field = {
         { label: 'Yellow', value: 'yellow' },
         { label: 'Orange', value: 'orange' },
         { label: 'Blue', value: 'blue' },
+        { label: 'White', value: 'white' },
       ],
     },
     linkGroup({
