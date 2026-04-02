@@ -1,10 +1,11 @@
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
+import type { Header } from '../src/payload-types'
 
 const updateHeader = async () => {
   const payload = await getPayload({ config })
   
-  const navItems = [
+  const navItems: Header['navItems'] = [
     { link: { type: 'custom', url: '/', label: 'Home' } },
     { link: { type: 'custom', url: '/services', label: 'Services' } },
     { link: { type: 'custom', url: '/portfolio', label: 'Portfolio' } },
@@ -12,7 +13,7 @@ const updateHeader = async () => {
     { link: { type: 'custom', url: '/careers', label: 'Careers' } },
     { link: { type: 'custom', url: '/blog', label: 'Blog' } },
     { link: { type: 'custom', url: '/contact', label: 'Contact' } },
-  ] as const
+  ]
 
   await payload.updateGlobal({
     slug: 'header',

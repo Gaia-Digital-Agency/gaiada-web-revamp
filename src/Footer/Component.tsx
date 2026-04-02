@@ -10,8 +10,8 @@ import { Logo } from '@/components/Logo/Logo'
 import { FooterInfo } from './FooterInfo'
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
-  const settings: Setting = await getCachedGlobal('settings', 1)()
+  const footerData = (await getCachedGlobal('footer', 1)()) as Footer | null
+  const settings = (await getCachedGlobal('settings', 1)()) as Setting | null
 
   const navItems = footerData?.navItems || []
   const socialLinks = settings?.socialLinks || []

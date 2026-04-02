@@ -61,7 +61,7 @@ export const plugins: Plugin[] = [
     formOverrides: {
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
-          if ('name' in field && field.name === 'fields') {
+          if (field.type === 'blocks' && field.name === 'fields') {
             return {
               ...field,
               blocks: [
@@ -119,7 +119,7 @@ export const plugins: Plugin[] = [
               ],
             }
           }
-          if ('name' in field && field.name === 'confirmationMessage') {
+          if (field.type === 'richText' && field.name === 'confirmationMessage') {
             return {
               ...field,
               editor: lexicalEditor({

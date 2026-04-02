@@ -5,7 +5,7 @@ import type { Setting } from '@/payload-types'
 
 // WhatsApp call-to-action button component
 export const WhatsAppCTA: React.FC = async () => {
-  const settings: Setting = await getCachedGlobal('settings', 1)()
+  const settings = (await getCachedGlobal('settings', 1)()) as Setting | null
 
   if (!settings?.whatsappNumber) return null
 
