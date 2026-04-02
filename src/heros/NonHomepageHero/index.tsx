@@ -31,8 +31,8 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       rgba: 'rgba(37, 99, 235, 0)',
     },
     white: {
-      hex: '#ffffff',
-      rgba: 'rgba(255, 255, 255, 0)',
+      hex: '#f9f9f9',
+      rgba: 'rgba(249, 249, 249, 0)',
     },
   }
 

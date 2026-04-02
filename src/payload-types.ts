@@ -265,7 +265,33 @@ export interface Page {
         blockType: 'portfolioBlock';
       }
     | {
+        image?: (number | null) | Media;
         title?: string | null;
+        /**
+         * Simple caption for this section
+         */
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        items?:
+          | {
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'aboutBlock';
@@ -1398,7 +1424,16 @@ export interface PagesSelect<T extends boolean = true> {
         aboutBlock?:
           | T
           | {
+              image?: T;
               title?: T;
+              description?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

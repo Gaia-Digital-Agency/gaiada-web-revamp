@@ -55,6 +55,7 @@
     width: 100%;
     margin-inline: auto;
     padding-inline: 1rem;
+    /* background-color: var(--gda-white-bone); */
   }
 
   @variant sm {
@@ -90,7 +91,8 @@
 }
 
 :root {
-  --background: oklch(100% 0 0deg);
+  /* --background: oklch(100% 0 0deg); */
+  --background: #f9f9f9;
   --foreground: oklch(14.5% 0 0deg);
   --card: oklch(96.5% 0.005 265deg);
   --card-foreground: oklch(14.5% 0 0deg);
@@ -130,6 +132,7 @@
   --gda-brand-yellow: #ffc22c;
   --gda-brand-earth: #78716c;
   --gda-brand-grey: #c6c6c6;
+  --gda-white-bone: #f9f9f9;
 }
 
 [data-theme='dark'] {
