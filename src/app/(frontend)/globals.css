@@ -345,6 +345,14 @@
 
 @font-face {
   font-family: 'Roboto';
+  src: url('/gaiadaweb/fonts/Roboto-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
   src: url('/gaiadaweb/fonts/Roboto-SemiBold.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
@@ -410,12 +418,38 @@ body {
   text-rendering: optimizeLegibility;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
+  letter-spacing: 0;
 }
 
 /* T Y P O G R A P H Y */
-.heading-1 {
+h1 {
   font-family: var(--font-brand);
+  font-size: 56px;
   font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.56px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: var(--font-brand);
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.56px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: var(--font-brand);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.3em;
+  letter-spacing: 0.32px;
+  margin-bottom: 20px;
 }
 
 /* B U T T O N S */
@@ -425,31 +459,33 @@ body {
   flex-wrap: nowrap;
   align-items: center;
   gap: 8px;
-  background-color: var(--gda-brand-black);
-  color: var(--gda-brand-white);
-  padding: 20px 32px;
-  font-size: 13.5;
   font-family: var(--font-avenir);
-  font-weight: 700;
   line-height: 1em;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   transition: 0.3s all;
 
-  &:hover {
-    background-color: var(--gda-brand-yellow);
+  &.button-default {
+    background-color: var(--gda-brand-black);
+    color: var(--gda-brand-white);
+    padding: 20px 32px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 13.5px;
+    font-weight: 700;
+
+    &:hover {
+      background-color: var(--gda-brand-yellow);
+    }
   }
 
   &.button-link {
     padding: 0;
-    background-color: transparent;
     font-size: 18px;
     font-weight: 600;
     color: var(--gda-brand-black);
     text-transform: none;
 
     &:hover {
-      color: var(--gda-brand-yellowe);
+      color: var(--gda-brand-yellow) !important;
     }
   }
 }
