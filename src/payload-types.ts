@@ -2217,6 +2217,12 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
+  smtpHost?: string | null;
+  smtpPort?: number | null;
+  smtpUser?: string | null;
+  smtpSecure?: boolean | null;
+  fromName?: string | null;
+  fromEmail?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2299,6 +2305,13 @@ export interface SettingsSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  smtpHost?: T;
+  smtpPort?: T;
+  smtpUser?: T;
+  smtpPass?: T;
+  smtpSecure?: T;
+  fromName?: T;
+  fromEmail?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

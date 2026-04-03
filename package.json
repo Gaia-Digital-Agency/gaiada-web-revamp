@@ -25,6 +25,7 @@
     "@hcaptcha/react-hcaptcha": "^2.0.2",
     "@payloadcms/admin-bar": "3.80.0",
     "@payloadcms/db-postgres": "3.80.0",
+    "@payloadcms/email-nodemailer": "^3.81.0",
     "@payloadcms/live-preview-react": "3.80.0",
     "@payloadcms/next": "3.80.0",
     "@payloadcms/plugin-form-builder": "3.80.0",

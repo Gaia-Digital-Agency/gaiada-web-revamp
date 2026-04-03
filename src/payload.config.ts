@@ -1,7 +1,8 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import path from 'path'
-import { buildConfig, PayloadRequest } from 'payload'
+import { buildConfig, Payload, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
@@ -84,6 +85,42 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, Settings],
   plugins,
+  email: nodemailerAdapter({
+    defaultFromName: 'Gaiada Admin',
+    defaultFromAddress: 'admin@gaiada.com',
+    transportOptions: async ({ payload }) => {
+      try {
+        const settings = await payload.findGlobal({
+          slug: 'settings',
+          depth: 0,
+        })
+
+        if (settings?.smtpHost) {
+          return {
+            host: settings.smtpHost,
+            port: settings.smtpPort,
+            secure: settings.smtpSecure,
+            auth: {
+              user: settings.smtpUser,
+              pass: settings.smtpPass,
+            },
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load email settings from database:', err)
+      }
+
+      // Fallback for development
+      return {
+        host: process.env.SMTP_HOST || 'localhost',
+        port: Number(process.env.SMTP_PORT) || 587,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      }
+    },
+  }),
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
