@@ -1,61 +1,66 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
-import React from 'react'
-
-import type { Footer, Setting } from '@/payload-types'
-
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import type { Footer } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
-import { FooterInfo } from './FooterInfo'
+import { Mail, MapPin } from 'lucide-react'
 
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as Footer | null
-  const settings = (await getCachedGlobal('settings', 1)()) as Setting | null
-
   const navItems = footerData?.navItems || []
-  const socialLinks = settings?.socialLinks || []
 
   return (
-    <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white py-12">
-      <div className="container grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div className="flex flex-col gap-6">
-          <Link className="flex items-center" href="/">
-            <Logo />
-          </Link>
-          <div className="flex flex-col gap-2 text-sm text-gray-400">
-            <p>{footerData?.copyright || 'Copyright @2026'}</p>
-            <p>{footerData?.developedBy || 'Developed by Gaia Digital Agency'}</p>
+    <footer className="footer">
+      <div
+        style={{
+          backgroundImage:
+            typeof footerData?.backgroundImage === 'object' && footerData.backgroundImage?.url
+              ? `url(${footerData.backgroundImage.url})`
+              : 'none',
+          backgroundSize: '50% auto',
+          backgroundPosition: 'left bottom',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className="container columns-2 grid grid-cols-1 md:grid-cols-2 gap-[12px] pt-16 pr-0">
+          <div className="w-1/2 pt-16">
+            <h2 className="pb-5">{footerData?.heading}</h2>
+            <div className="flex flex-col gap-2">
+              {footerData?.navItemsWithIcon?.map((item, i) => {
+                const link = item.link
+
+                return (
+                  <a
+                    key={i}
+                    href={link.url}
+                    target={link.newTab ? '_blank' : '_self'}
+                    className="flex items-center gap-2 font-medium text-lg"
+                  >
+                    {link.icon === 'email' && <Mail strokeWidth={0.5} size={18} />}
+                    {link.icon === 'map' && <MapPin strokeWidth={0.5} size={18} />}
+                    {link.label}
+                  </a>
+                )
+              })}
+            </div>
           </div>
+          <div className="form-wrapper py-16 h-96"></div>
         </div>
+      </div>
 
-        <div className="flex flex-col gap-6">
-          <h3 className="text-lg font-semibold">Navigation</h3>
-          <nav className="flex flex-col gap-3">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white hover:text-gray-400" key={i} {...link} />
-            })}
-          </nav>
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <h3 className="text-lg font-semibold">Connect</h3>
-          <div className="flex gap-4 mb-4">
-            {socialLinks.map((social, i) => (
-              <a
-                key={i}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-80 transition-opacity"
-              >
-                <span className="capitalize">{social.platform}</span>
-              </a>
+      <div style={{ backdropFilter: 'blur(10px)' }}>
+        <div className="container columns-2 grid grid-cols-1 md:grid-cols-2 gap-12 py-16">
+          <div className="flex flex-row">
+            {navItems.map((navItem) => (
+              <CMSLink
+                key={navItem.id}
+                {...navItem.link}
+                className="flex items-center gap-2 text-sm after:content-['|'] after:mx-2 last:after:content-['']"
+              />
             ))}
           </div>
-          <p className="text-sm text-gray-400">Visitor Count: {footerData?.visitorCount || 0}</p>
-          <FooterInfo />
-          <ThemeSelector />
+          <div className="flex flex-row justify-end gap-1">
+            <p className="text-sm">{footerData?.copyright}</p>
+            <p className="text-sm">{footerData?.developedBy}</p>
+          </div>
         </div>
       </div>
     </footer>

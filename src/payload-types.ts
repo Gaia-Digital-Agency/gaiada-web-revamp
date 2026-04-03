@@ -2216,7 +2216,19 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  visitorCount?: number | null;
+  backgroundImage?: (number | null) | Media;
+  heading?: string | null;
+  navItemsWithIcon?:
+    | {
+        link: {
+          label: string;
+          url: string;
+          icon?: ('none' | 'email' | 'map') | null;
+          newTab?: boolean | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
   copyright?: string | null;
   developedBy?: string | null;
   navItems?:
@@ -2307,7 +2319,21 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  visitorCount?: T;
+  backgroundImage?: T;
+  heading?: T;
+  navItemsWithIcon?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              icon?: T;
+              newTab?: T;
+            };
+        id?: T;
+      };
   copyright?: T;
   developedBy?: T;
   navItems?:
