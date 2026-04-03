@@ -9,9 +9,43 @@ export const AboutBlock: Block = {
   },
   fields: [
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Image',
+    },
+    {
       name: 'title',
       type: 'text',
       label: 'Title',
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      label: 'Description',
+      admin: {
+        description: 'Simple caption for this section',
+      },
+    },
+    {
+      name: 'items',
+      type: 'array',
+      label: 'Commitment / Vision / Mission List',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          required: true,
+        },
+      ],
+      admin: {
+        initCollapsed: true,
+      },
     },
   ],
 }
