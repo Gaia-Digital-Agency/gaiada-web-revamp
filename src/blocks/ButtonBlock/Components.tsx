@@ -7,7 +7,9 @@ import { AppButton } from '@/components/common/AppButton'
 type ButtonField = {
   label: string
   url: string
-  variant?: 'default' | 'secondary' | 'link' | 'outline' | 'ghost' | 'destructive'
+  variant?: 'default' | 'link'
+  icon?: 'none' | 'arrow' | 'search'
+  iconPosition?: 'left' | 'right'
   newTab?: boolean
 }
 
@@ -52,6 +54,8 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ columns = [] }) => {
                       href={btn.url}
                       variant={btn.variant}
                       newTab={btn.newTab}
+                      icon={btn.icon}
+                      iconPosition={btn.iconPosition}
                     />
                   )
                 })}

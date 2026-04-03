@@ -42,16 +42,34 @@ export const ButtonBlock: Block = {
               required: true,
             },
             {
+              name: 'icon',
+              type: 'select',
+              defaultValue: 'none',
+              options: [
+                { label: 'None', value: 'none' },
+                { label: 'Arrow', value: 'arrow' },
+                { label: 'Search', value: 'search' },
+              ],
+            },
+            {
+              name: 'iconPosition',
+              type: 'select',
+              defaultValue: 'right',
+              options: [
+                { label: 'Left', value: 'left' },
+                { label: 'Right', value: 'right' },
+              ],
+              admin: {
+                condition: (_, siblingData) => siblingData?.icon !== 'none',
+              },
+            },
+            {
               name: 'variant',
               type: 'select',
               defaultValue: 'default',
               options: [
                 { label: 'Default', value: 'default' },
-                { label: 'Secondary', value: 'secondary' },
-                { label: 'Outline', value: 'outline' },
-                { label: 'Ghost', value: 'ghost' },
                 { label: 'Link', value: 'link' },
-                { label: 'Destructive', value: 'destructive' },
               ],
             },
             {

@@ -282,7 +282,9 @@ export interface Page {
                 | {
                     label: string;
                     url: string;
-                    variant?: ('default' | 'secondary' | 'outline' | 'ghost' | 'link' | 'destructive') | null;
+                    icon?: ('none' | 'arrow' | 'search') | null;
+                    iconPosition?: ('left' | 'right') | null;
+                    variant?: ('default' | 'link') | null;
                     newTab?: boolean | null;
                     id?: string | null;
                   }[]
@@ -1434,6 +1436,8 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           label?: T;
                           url?: T;
+                          icon?: T;
+                          iconPosition?: T;
                           variant?: T;
                           newTab?: T;
                           id?: T;

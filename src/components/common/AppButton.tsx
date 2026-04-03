@@ -1,18 +1,23 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
+import { ArrowRight, Search } from 'lucide-react'
 
 export type AppButtonProps = {
   label: string
   href: string
-  variant?: 'default' | 'secondary' | 'link' | 'outline' | 'ghost' | 'destructive'
+  variant?: 'default' | 'link'
   newTab?: boolean
   className?: string
-  showClickState?: boolean
+  icon?: 'none' | 'arrow' | 'search'
+  iconPosition?: 'left' | 'right'
 }
+
+const ArrowIcon = () => <ArrowRight size={16} />
+const SearchIcon = () => <Search size={16} />
 
 export const AppButton: React.FC<AppButtonProps> = ({
   label,
@@ -20,33 +25,51 @@ export const AppButton: React.FC<AppButtonProps> = ({
   variant = 'default',
   newTab = false,
   className,
-  showClickState = false,
+  icon = 'none',
+  iconPosition = 'right',
 }) => {
-  const [clicked, setClicked] = useState(false)
-
   const isExternal = href.startsWith('http')
 
-  const handleClick = () => {
-    if (showClickState) setClicked(true)
+  const renderIcon = () => {
+    switch (icon) {
+      case 'arrow':
+        return <ArrowIcon />
+      case 'search':
+        return <SearchIcon />
+      default:
+        return null
+    }
   }
 
-  const content = showClickState && clicked ? 'Clicked!' : label
+  const iconEl = icon && icon !== 'none' ? renderIcon() : null
 
-  // External link
+  const content = (
+    <>
+      {iconPosition === 'left' && iconEl}
+      <span className="leading-none">{label}</span>
+      {iconPosition !== 'left' && iconEl}
+    </>
+  )
+
+  const baseClass = cn('inline-flex items-center justify-center gap-2', className)
+
+  // External
   if (isExternal) {
     return (
-      <Button variant={variant} className={cn(className)} onClick={handleClick} asChild>
+      <Button variant={variant} className={baseClass} asChild>
         <a href={href} target={newTab ? '_blank' : '_self'} rel="noopener noreferrer">
-          {content}
+          <span className="inline-flex items-center gap-2">{content}</span>
         </a>
       </Button>
     )
   }
 
-  // Internal link
+  // Internal
   return (
-    <Button variant={variant} className={cn(className)} onClick={handleClick} asChild>
-      <Link href={href}>{content}</Link>
+    <Button variant={variant} className={baseClass} asChild>
+      <Link href={href}>
+        <span className="inline-flex items-center gap-2">{content}</span>
+      </Link>
     </Button>
   )
 }
