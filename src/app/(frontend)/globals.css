@@ -129,9 +129,12 @@
   --warning: oklch(89% 0.1 75deg);
   --error: oklch(75% 0.15 25deg);
   --gda-brand-black: #1a1a1b;
+  --gda-brand-white: #f9f9f9;
   --gda-brand-yellow: #ffc22c;
   --gda-brand-earth: #78716c;
   --gda-brand-grey: #c6c6c6;
+  --font-avenir: 'Avenir Next', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
   --gda-white-bone: #f9f9f9;
 }
 
@@ -218,8 +221,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-Regular.woff2') format('woff2'),
-    url('/fonts/AvenirNext-Regular.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-Regular.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -228,8 +231,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-Medium.woff2') format('woff2'),
-    url('/fonts/AvenirNext-Medium.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-Medium.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -238,8 +241,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-DemiBold.woff2') format('woff2'),
-    url('/fonts/AvenirNext-DemiBold.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-DemiBold.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-DemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -248,8 +251,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-Bold.woff2') format('woff2'),
-    url('/fonts/AvenirNext-Bold.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-Bold.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -258,8 +261,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-Heavy.woff2') format('woff2'),
-    url('/fonts/AvenirNext-Heavy.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-Heavy.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-Heavy.woff') format('woff');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -268,8 +271,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-UltraLight.woff2') format('woff2'),
-    url('/fonts/AvenirNext-UltraLight.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-UltraLight.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-UltraLight.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -278,8 +281,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-UltraLightItalic.woff2') format('woff2'),
-    url('/fonts/AvenirNext-UltraLightItalic.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-UltraLightItalic.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-UltraLightItalic.woff') format('woff');
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -288,8 +291,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-Italic.woff2') format('woff2'),
-    url('/fonts/AvenirNext-Italic.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-Italic.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-Italic.woff') format('woff');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -298,8 +301,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-MediumItalic.woff2') format('woff2'),
-    url('/fonts/AvenirNext-MediumItalic.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-MediumItalic.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-MediumItalic.woff') format('woff');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -308,8 +311,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-DemiBoldItalic.woff2') format('woff2'),
-    url('/fonts/AvenirNext-DemiBoldItalic.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-DemiBoldItalic.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-DemiBoldItalic.woff') format('woff');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -318,8 +321,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-BoldItalic.woff2') format('woff2'),
-    url('/fonts/AvenirNext-BoldItalic.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-BoldItalic.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-BoldItalic.woff') format('woff');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -328,8 +331,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/fonts/AvenirNext-HeavyItalic.woff2') format('woff2'),
-    url('/fonts/AvenirNext-HeavyItalic.woff') format('woff');
+    url('/gaiadaweb/fonts/AvenirNext-HeavyItalic.woff2') format('woff2'),
+    url('/gaiadaweb/fonts/AvenirNext-HeavyItalic.woff') format('woff');
   font-weight: 800;
   font-style: italic;
   font-display: swap;
@@ -337,7 +340,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+  src: url('/gaiadaweb/fonts/Roboto-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -345,7 +348,15 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/fonts/Roboto-SemiBold.ttf') format('truetype');
+  src: url('/gaiadaweb/fonts/Roboto-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/gaiadaweb/fonts/Roboto-SemiBold.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -353,7 +364,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/fonts/Roboto-SemiBoldItalic.ttf') format('truetype');
+  src: url('/gaiadaweb/fonts/Roboto-SemiBoldItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -361,7 +372,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+  src: url('/gaiadaweb/fonts/Roboto-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -369,7 +380,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/fonts/Roboto-BoldItalic.ttf') format('truetype');
+  src: url('/gaiadaweb/fonts/Roboto-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -406,13 +417,80 @@ html[data-theme='light'] {
 }
 
 body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
 }
 
 /* T Y P O G R A P H Y */
-.heading-1 {
+h1 {
   font-family: var(--font-brand);
+  font-size: 56px;
   font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.56px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: var(--font-brand);
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.56px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: var(--font-brand);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.3em;
+  letter-spacing: 0.32px;
+  margin-bottom: 20px;
+}
+
+/* B U T T O N S */
+.button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-avenir);
+  line-height: 1em;
+  transition: 0.3s all;
+
+  &.button-default {
+    background-color: var(--gda-brand-black);
+    color: var(--gda-brand-white);
+    padding: 20px 32px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 13.5px;
+    font-weight: 700;
+
+    &:hover {
+      background-color: var(--gda-brand-yellow);
+    }
+  }
+
+  &.button-link {
+    padding: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gda-brand-black);
+    text-transform: none;
+
+    &:hover {
+      color: var(--gda-brand-yellow) !important;
+    }
+  }
 }
 
 .animate-float {
