@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Media } from '@/components/Media'
 import type { Department, Team } from '@/payload-types'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
+import { AppButton } from '@/components/common/AppButton'
 
 type Props = {
   departments: (Department & { members: Team[] })[]
@@ -60,14 +61,10 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
 
   return (
     <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 overflow-hidden">
-      <div className="flex flex-col gap-y-6 mb-12">
-        <h2 className="font-brand text-[56px] font-bold leading-[110%] tracking-[-1%] text-center">
-          {title}
-        </h2>
+      <div className="flex flex-col mb-[48px]">
+        <h1 className="text-center">{title}</h1>
         <div className="flex items-center w-[419px] h-[36px] mx-auto justify-center">
-          <p className="font-brand text-[16px] font-normal leading-[24px] tracking-[0%] text-center">
-            {introText}
-          </p>
+          <p className="font-brand font-normal text-center">{introText}</p>
         </div>
       </div>
 
@@ -77,7 +74,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className="flex gap-[10px] overflow-x-auto overflow-y-visible pb-32 cursor-grab select-none no-scrollbar"
+        className="flex gap-4 overflow-x-auto overflow-y-visible cursor-grab select-none no-scrollbar"
         style={{
           width: 'calc(100% + 48px)',
           marginRight: '-24px',
@@ -125,14 +122,15 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#ffc22c] via-[#ffc22c]/80 via-20% to-transparent to-60%" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-brand text-[30px] font-bold leading-[110%] tracking-[-1%] text-white capitalize">
+                    <p className="font-brand text-[30px] font-bold leading-[110%] tracking-[-1%] text-white capitalize">
                       {dept.name}
-                    </h3>
+                    </p>
                   </div>
                 </div>
 
                 {/* Face B - Member Grid */}
                 <div
+                  id={`dept-${dept.id}`}
                   className={`absolute inset-0 bg-[#111] flex flex-col transition-opacity duration-300 delay-75 ${isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 >
                   <div className="flex-1 relative overflow-hidden">
@@ -234,20 +232,28 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
 
               {/* Description Below Card */}
               <div
-                className={`mt-6 transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
+                className={`transition-all duration-500 grid mb-4 ${
+                  isActive ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 mt-0'
+                }`}
               >
-                <h4 className="font-brand text-[24px] font-semibold leading-[140%] tracking-[0%] text-[#1A1A1B] capitalize">
-                  {dept.name}
-                </h4>
-                {dept.description && (
-                  <p className="font-brand text-[16px] font-normal leading-[160%] tracking-[1%] text-[#1A1A1B]">
-                    {dept.description}
+                <div className="overflow-hidden">
+                  <p className="font-brand text-[24px] font-semibold leading-[140%] tracking-[0%] text-[#1A1A1B] capitalize">
+                    {dept.name}
                   </p>
-                )}
+                  {dept.description && (
+                    <p className="font-brand text-[16px] font-normal leading-[160%] tracking-[1%] text-[#1A1A1B]">
+                      {dept.description}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )
         })}
+      </div>
+
+      <div className="flex items-center justify-center mt-[48px]">
+        <AppButton label="Join Our Team" href="/careers" variant="default" icon="arrow" />
       </div>
     </div>
   )

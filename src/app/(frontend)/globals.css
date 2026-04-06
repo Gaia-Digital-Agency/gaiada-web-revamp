@@ -20,6 +20,37 @@
     font-weight: unset;
     font-size: unset;
   }
+
+  /* T Y P O G R A P H Y */
+  h1 {
+    font-family: var(--font-brand);
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1em;
+    letter-spacing: -0.56px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: var(--font-brand);
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.1em;
+    letter-spacing: -0.56px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: var(--font-brand);
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.3em;
+    letter-spacing: 0.32px;
+    margin-bottom: 20px;
+  }
 }
 
 @plugin "@tailwindcss/typography";
@@ -221,8 +252,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-Regular.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-Regular.woff') format('woff');
+    url('/fonts/AvenirNext-Regular.woff2') format('woff2'),
+    url('/fonts/AvenirNext-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -231,8 +262,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-Medium.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-Medium.woff') format('woff');
+    url('/fonts/AvenirNext-Medium.woff2') format('woff2'),
+    url('/fonts/AvenirNext-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -241,8 +272,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-DemiBold.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-DemiBold.woff') format('woff');
+    url('/fonts/AvenirNext-DemiBold.woff2') format('woff2'),
+    url('/fonts/AvenirNext-DemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -251,8 +282,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-Bold.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-Bold.woff') format('woff');
+    url('/fonts/AvenirNext-Bold.woff2') format('woff2'),
+    url('/fonts/AvenirNext-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -261,8 +292,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-Heavy.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-Heavy.woff') format('woff');
+    url('/fonts/AvenirNext-Heavy.woff2') format('woff2'),
+    url('/fonts/AvenirNext-Heavy.woff') format('woff');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -271,8 +302,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-UltraLight.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-UltraLight.woff') format('woff');
+    url('/fonts/AvenirNext-UltraLight.woff2') format('woff2'),
+    url('/fonts/AvenirNext-UltraLight.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -281,8 +312,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-UltraLightItalic.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-UltraLightItalic.woff') format('woff');
+    url('/fonts/AvenirNext-UltraLightItalic.woff2') format('woff2'),
+    url('/fonts/AvenirNext-UltraLightItalic.woff') format('woff');
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -291,8 +322,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-Italic.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-Italic.woff') format('woff');
+    url('/fonts/AvenirNext-Italic.woff2') format('woff2'),
+    url('/fonts/AvenirNext-Italic.woff') format('woff');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -301,8 +332,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-MediumItalic.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-MediumItalic.woff') format('woff');
+    url('/fonts/AvenirNext-MediumItalic.woff2') format('woff2'),
+    url('/fonts/AvenirNext-MediumItalic.woff') format('woff');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -311,8 +342,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-DemiBoldItalic.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-DemiBoldItalic.woff') format('woff');
+    url('/fonts/AvenirNext-DemiBoldItalic.woff2') format('woff2'),
+    url('/fonts/AvenirNext-DemiBoldItalic.woff') format('woff');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -321,8 +352,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-BoldItalic.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-BoldItalic.woff') format('woff');
+    url('/fonts/AvenirNext-BoldItalic.woff2') format('woff2'),
+    url('/fonts/AvenirNext-BoldItalic.woff') format('woff');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -331,8 +362,8 @@
 @font-face {
   font-family: 'Avenir Next';
   src:
-    url('/gaiadaweb/fonts/AvenirNext-HeavyItalic.woff2') format('woff2'),
-    url('/gaiadaweb/fonts/AvenirNext-HeavyItalic.woff') format('woff');
+    url('/fonts/AvenirNext-HeavyItalic.woff2') format('woff2'),
+    url('/fonts/AvenirNext-HeavyItalic.woff') format('woff');
   font-weight: 800;
   font-style: italic;
   font-display: swap;
@@ -340,7 +371,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/gaiadaweb/fonts/Roboto-Regular.ttf') format('truetype');
+  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -348,7 +379,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/gaiadaweb/fonts/Roboto-Italic.ttf') format('truetype');
+  src: url('/fonts/Roboto-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -356,7 +387,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/gaiadaweb/fonts/Roboto-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Roboto-SemiBold.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -364,7 +395,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/gaiadaweb/fonts/Roboto-SemiBoldItalic.ttf') format('truetype');
+  src: url('/fonts/Roboto-SemiBoldItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -372,7 +403,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/gaiadaweb/fonts/Roboto-Bold.ttf') format('truetype');
+  src: url('/fonts/Roboto-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -380,7 +411,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/gaiadaweb/fonts/Roboto-BoldItalic.ttf') format('truetype');
+  src: url('/fonts/Roboto-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
