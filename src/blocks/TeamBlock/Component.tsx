@@ -37,6 +37,7 @@ export const TeamBlock: React.FC<
 
     return {
       ...dept,
+      description: dept.description,
       members,
     }
   })
