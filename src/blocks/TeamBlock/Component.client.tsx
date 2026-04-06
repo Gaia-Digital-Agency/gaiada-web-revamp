@@ -123,7 +123,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                       />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#ffc22c] via-[#ffc22c]/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#ffc22c] via-[#ffc22c]/80 via-20% to-transparent to-60%" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="font-brand text-[30px] font-bold leading-[110%] tracking-[-1%] text-white capitalize">
                       {dept.name}
