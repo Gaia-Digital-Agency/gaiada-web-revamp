@@ -304,6 +304,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'careerBlock';
       }
+    | TeamBlock
   )[];
   meta?: {
     title?: string | null;
@@ -904,6 +905,17 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  title?: string | null;
+  introText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'teamBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
@@ -1048,6 +1060,7 @@ export interface AboutItem {
 export interface Department {
   id: number;
   name: string;
+  image: number | Media;
   description?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1446,6 +1459,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        teamBlock?: T | TeamBlockSelect<T>;
       };
   meta?:
     | T
@@ -1542,6 +1556,16 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  title?: T;
+  introText?: T;
   id?: T;
   blockName?: T;
 }
@@ -1805,6 +1829,7 @@ export interface AboutItemsSelect<T extends boolean = true> {
  */
 export interface DepartmentsSelect<T extends boolean = true> {
   name?: T;
+  image?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;
