@@ -60,14 +60,10 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
 
   return (
     <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 overflow-hidden">
-      <div className="flex flex-col gap-y-6 mb-12">
-        <h2 className="font-brand text-[56px] font-bold leading-[110%] tracking-[-1%] text-center">
-          {title}
-        </h2>
+      <div className="flex flex-col mb-[48px]">
+        <h1 className="text-center">{title}</h1>
         <div className="flex items-center w-[419px] h-[36px] mx-auto justify-center">
-          <p className="font-brand text-[16px] font-normal leading-[24px] tracking-[0%] text-center">
-            {introText}
-          </p>
+          <p className="font-brand font-normal text-center">{introText}</p>
         </div>
       </div>
 
@@ -125,9 +121,9 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#ffc22c] via-[#ffc22c]/80 via-20% to-transparent to-60%" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-brand text-[30px] font-bold leading-[110%] tracking-[-1%] text-white capitalize">
+                    <p className="font-brand text-[30px] font-bold leading-[110%] tracking-[-1%] text-white capitalize">
                       {dept.name}
-                    </h3>
+                    </p>
                   </div>
                 </div>
 
@@ -236,9 +232,9 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
               <div
                 className={`mt-6 transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
               >
-                <h4 className="font-brand text-[24px] font-semibold leading-[140%] tracking-[0%] text-[#1A1A1B] capitalize">
+                <p className="font-brand text-[24px] font-semibold leading-[140%] tracking-[0%] text-[#1A1A1B] capitalize">
                   {dept.name}
-                </h4>
+                </p>
                 {dept.description && (
                   <p className="font-brand text-[16px] font-normal leading-[160%] tracking-[1%] text-[#1A1A1B]">
                     {dept.description}
@@ -248,6 +244,12 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
             </div>
           )
         })}
+      </div>
+
+      <div className="flex items-center justify-center">
+        <button className="w-[227px] h-[48px] bg-[#ffc22c] text-white font-brand font-semibold text-[16px] leading-[120%] tracking-[1%] capitalize">
+          Join Our Team
+        </button>
       </div>
     </div>
   )

@@ -43,12 +43,10 @@ export const TeamBlock: React.FC<
   })
 
   return (
-    <div className="bg-[#C6C6C633] pt-20 pb-30 gap-12">
-      <TeamBlockClient
-        departments={departmentsWithMembers as any}
-        title={title || undefined}
-        introText={introText || undefined}
-      />
-    </div>
+    <TeamBlockClient
+      departments={departmentsWithMembers as any}
+      title={title || undefined}
+      introText={introText || undefined}
+    />
   )
 }

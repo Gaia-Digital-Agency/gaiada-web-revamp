@@ -54,7 +54,7 @@ export const RenderBlocks: React.FC<{
 
               return (
                 <section
-                  className={`py-16 md:py-24 ${!isEven ? 'bg-muted/30' : 'bg-transparent'}`}
+                  className={`py-12 md:py-16 ${!isEven ? 'bg-(--grey-background)' : 'bg-(--gda-brand-white)'}`}
                   key={index}
                 >
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
