@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
@@ -84,6 +85,16 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, Settings],
   plugins,
+  email: nodemailerAdapter({
+    defaultFromName: 'Gaiada Local Test',
+    defaultFromAddress: 'test@gaiada.local',
+    transportOptions: {
+      host: '127.0.0.1',
+      port: 1025,
+      secure: false,
+      auth: undefined, // MailHog doesn't need auth
+    },
+  }),
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {

@@ -16,6 +16,14 @@ export const Users: CollectionConfig = {
     useAsTitle: 'name',
   },
   auth: true,
+  // auth: {
+  //   forgotPassword: {
+  //     generateEmailHTML: (args) => {
+  //       // Anda bisa menulis HTML email kustom di sini
+  //       return `<p>Halo, ini link reset Anda: ${args?.token}</p>`
+  //     },
+  //   },
+  // },
   fields: [
     {
       name: 'name',

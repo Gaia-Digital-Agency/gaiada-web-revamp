@@ -304,6 +304,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'careerBlock';
       }
+    | TeamBlock
     | {
         columns?:
           | {
@@ -926,6 +927,17 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  title?: string | null;
+  introText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'teamBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
@@ -1070,6 +1082,7 @@ export interface AboutItem {
 export interface Department {
   id: number;
   name: string;
+  image: number | Media;
   description?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1468,6 +1481,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        teamBlock?: T | TeamBlockSelect<T>;
         buttonBlock?:
           | T
           | {
@@ -1587,6 +1601,16 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  title?: T;
+  introText?: T;
   id?: T;
   blockName?: T;
 }
@@ -1850,6 +1874,7 @@ export interface AboutItemsSelect<T extends boolean = true> {
  */
 export interface DepartmentsSelect<T extends boolean = true> {
   name?: T;
+  image?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2248,6 +2273,7 @@ export interface Footer {
  */
 export interface Setting {
   id: number;
+  logo?: (number | null) | Media;
   /**
    * Enter the site-wide WhatsApp number (e.g., +1234567890)
    */
@@ -2262,6 +2288,13 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
+  smtpHost?: string | null;
+  smtpPort?: number | null;
+  smtpUser?: string | null;
+  smtpPass?: string | null;
+  smtpSecure?: boolean | null;
+  fromName?: string | null;
+  fromEmail?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2333,6 +2366,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
+  logo?: T;
   whatsappNumber?: T;
   contactEmail?: T;
   socialLinks?:
@@ -2344,6 +2378,13 @@ export interface SettingsSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  smtpHost?: T;
+  smtpPort?: T;
+  smtpUser?: T;
+  smtpPass?: T;
+  smtpSecure?: T;
+  fromName?: T;
+  fromEmail?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
