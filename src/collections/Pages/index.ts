@@ -12,6 +12,7 @@ import { ServicesBlock } from '../../blocks/Services/config'
 import { PortfolioBlock } from '../../blocks/PortfolioBlock/config'
 import { AboutBlock } from '../../blocks/AboutBlock/config'
 import { CareerBlock } from '../../blocks/CareerBlock/config'
+import { TeamBlock } from '../../blocks/TeamBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -89,6 +90,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 PortfolioBlock,
                 AboutBlock,
                 CareerBlock,
+                TeamBlock,
                 ButtonBlock,
               ],
               required: true,

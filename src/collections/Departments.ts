@@ -19,6 +19,12 @@ export const Departments: CollectionConfig = {
       required: true,
     },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
       name: 'description',
       type: 'textarea',
     },
