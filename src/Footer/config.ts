@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
+import { linkWithIcon } from '@/fields/linkWithIcon'
 import { revalidateFooter } from './hooks/revalidateFooter'
 
 export const Footer: GlobalConfig = {
@@ -10,12 +11,22 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: 'visitorCount',
-      type: 'number',
-      label: 'Visitor Count',
-      admin: {
-        readOnly: true,
-      },
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Background Image',
+    },
+    {
+      name: 'heading',
+      type: 'text',
+      label: 'Heading',
+      defaultValue: 'Start a project with Gaia',
+    },
+    {
+      name: 'navItemsWithIcon',
+      label: 'Nav Items (with Icon)',
+      type: 'array',
+      fields: [linkWithIcon()],
     },
     {
       name: 'copyright',

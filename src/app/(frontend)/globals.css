@@ -417,11 +417,17 @@ html[data-theme='light'] {
 }
 
 body {
+  background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   letter-spacing: 0;
+}
+
+/* F O O T E R */
+footer {
+  background-color: var(--gda-brand-white);
 }
 
 /* T Y P O G R A P H Y */
@@ -455,6 +461,10 @@ h3 {
   margin-bottom: 20px;
 }
 
+.text-avenir {
+  font-family: var(--font-avenir) !important;
+}
+
 /* B U T T O N S */
 .button {
   display: flex;
@@ -465,6 +475,7 @@ h3 {
   font-family: var(--font-avenir);
   line-height: 1em;
   transition: 0.3s all;
+  cursor: pointer;
 
   &.button-default {
     background-color: var(--gda-brand-black);
