@@ -9,6 +9,7 @@ import { Text } from './Text'
 import { Textarea } from './Textarea'
 import { HCaptchaField } from './hCaptcha'
 import { FileField } from './File'
+import { RadioButton } from './RadioButton'
 
 export const fields = {
   checkbox: Checkbox,
@@ -22,4 +23,5 @@ export const fields = {
   textarea: Textarea,
   hCaptcha: HCaptchaField,
   file: FileField,
+  radio: RadioButton,
 }

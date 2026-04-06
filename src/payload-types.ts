@@ -864,6 +864,22 @@ export interface Form {
             blockName?: string | null;
             blockType: 'file';
           }
+        | {
+            label: string;
+            name: string;
+            width?: number | null;
+            required?: boolean | null;
+            options?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'radio';
+          }
       )[]
     | null;
   submitButtonLabel?: string | null;
@@ -2005,6 +2021,23 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               name?: T;
               required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        radio?:
+          | T
+          | {
+              label?: T;
+              name?: T;
+              width?: T;
+              required?: T;
+              options?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

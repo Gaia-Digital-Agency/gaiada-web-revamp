@@ -461,6 +461,10 @@ h3 {
   margin-bottom: 20px;
 }
 
+.text-avenir {
+  font-family: var(--font-avenir) !important;
+}
+
 /* B U T T O N S */
 .button {
   display: flex;
@@ -471,6 +475,7 @@ h3 {
   font-family: var(--font-avenir);
   line-height: 1em;
   transition: 0.3s all;
+  cursor: pointer;
 
   &.button-default {
     background-color: var(--gda-brand-black);

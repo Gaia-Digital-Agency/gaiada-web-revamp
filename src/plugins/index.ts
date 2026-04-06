@@ -116,6 +116,57 @@ export const plugins: Plugin[] = [
                     singular: 'File',
                   },
                 },
+                {
+                  slug: 'radio',
+                  fields: [
+                    {
+                      name: 'label',
+                      type: 'text',
+                      label: 'Label',
+                      required: true,
+                    },
+                    {
+                      name: 'name',
+                      type: 'text',
+                      label: 'Field Name',
+                      required: true,
+                    },
+                    {
+                      name: 'width',
+                      type: 'number',
+                      label: 'Width (percentage)',
+                    },
+                    {
+                      name: 'required',
+                      type: 'checkbox',
+                      label: 'Required',
+                    },
+                    {
+                      name: 'options',
+                      type: 'array',
+                      label: 'Options',
+                      minRows: 1,
+                      fields: [
+                        {
+                          name: 'label',
+                          type: 'text',
+                          label: 'Label',
+                          required: true,
+                        },
+                        {
+                          name: 'value',
+                          type: 'text',
+                          label: 'Value',
+                          required: true,
+                        },
+                      ],
+                    },
+                  ],
+                  labels: {
+                    plural: 'Radio Buttons',
+                    singular: 'Radio Button',
+                  },
+                },
               ],
             }
           }

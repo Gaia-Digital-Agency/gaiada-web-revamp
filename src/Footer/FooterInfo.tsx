@@ -12,7 +12,10 @@ export const FooterInfo: React.FC = () => {
 
     // Fetch location (simplified)
     fetch('https://ipapi.co/json/')
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error('Network response was not ok')
+        return res.json()
+      })
       .then((data) => {
         setLocation(`${data.city}, ${data.country_name}`)
       })
