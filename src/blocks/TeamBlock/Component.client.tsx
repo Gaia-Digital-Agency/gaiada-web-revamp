@@ -136,37 +136,65 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                   className={`absolute inset-0 bg-[#111] flex flex-col transition-opacity duration-300 delay-75 ${isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 >
                   <div className="flex-1 relative overflow-hidden">
-                    <div
-                      className="absolute inset-0 grid gap-px transition-all duration-300"
-                      style={{
-                        gridTemplateColumns: `repeat(${currentMembers.length <= 4 ? currentMembers.length : 3}, 1fr)`,
-                        gridTemplateRows: `repeat(${currentMembers.length <= 4 ? 1 : 2}, 1fr)`,
-                      }}
-                    >
-                      {currentMembers.map((member) => (
-                        <div
-                          key={member.id}
-                          className="relative group overflow-hidden bg-[#1a1a1a]"
-                        >
-                          {member.image && typeof member.image !== 'string' && (
-                            <Media
-                              resource={member.image}
-                              fill
-                              imgClassName="object-cover transition-transform duration-500 group-hover:scale-110 object-top"
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                          <div className="absolute bottom-0 left-0 right-0 p-3">
-                            <p className="font-brand text-[16px] font-bold leading-[160%] tracking-[1%] text-center text-white">
-                              {member.name}
-                            </p>
-                            <p className="font-brand text-[12px] font-normal leading-[120%] tracking-[1%] text-center text-white">
-                              {member.role}
-                            </p>
+                    {currentMembers.length === 1 ? (
+                      <div className="h-full bg-[#111]">
+                        {currentMembers.map((member) => (
+                          <div
+                            key={member.id}
+                            className="relative w-full h-full group overflow-hidden bg-[#1a1a1a]"
+                          >
+                            {member.image && typeof member.image !== 'string' && (
+                              <Media
+                                resource={member.image}
+                                fill
+                                imgClassName="object-cover transition-transform duration-500 group-hover:scale-110 object-center"
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                            <div className="absolute bottom-0 left-0 right-0 p-8">
+                              <p className="font-brand text-[32px] font-bold leading-[120%] tracking-[1%] text-center text-white capitalize drop-shadow-lg">
+                                {member.name}
+                              </p>
+                              <p className="font-brand text-[18px] font-normal leading-[120%] tracking-[1%] text-center text-white/80 capitalize">
+                                {member.role}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        className="absolute inset-0 grid gap-px transition-all duration-300"
+                        style={{
+                          gridTemplateColumns: `repeat(${currentMembers.length <= 4 ? currentMembers.length : 3}, 1fr)`,
+                          gridTemplateRows: `repeat(${currentMembers.length <= 4 ? 1 : 2}, 1fr)`,
+                        }}
+                      >
+                        {currentMembers.map((member) => (
+                          <div
+                            key={member.id}
+                            className="relative group overflow-hidden bg-[#1a1a1a]"
+                          >
+                            {member.image && typeof member.image !== 'string' && (
+                              <Media
+                                resource={member.image}
+                                fill
+                                imgClassName="object-cover transition-transform duration-500 group-hover:scale-110 object-top"
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                            <div className="absolute bottom-0 left-0 right-0 p-3">
+                              <p className="font-brand text-[16px] font-bold leading-[160%] tracking-[1%] text-center text-white">
+                                {member.name}
+                              </p>
+                              <p className="font-brand text-[12px] font-normal leading-[120%] tracking-[1%] text-center text-white">
+                                {member.role}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {totalPages > 1 && (
