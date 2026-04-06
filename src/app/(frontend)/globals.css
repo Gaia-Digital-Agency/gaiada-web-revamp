@@ -448,11 +448,52 @@ html[data-theme='light'] {
 }
 
 body {
+  background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   letter-spacing: 0;
+}
+
+/* F O O T E R */
+footer {
+  background-color: var(--gda-brand-white);
+}
+
+/* T Y P O G R A P H Y */
+h1 {
+  font-family: var(--font-brand);
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.56px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: var(--font-brand);
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.56px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: var(--font-brand);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.3em;
+  letter-spacing: 0.32px;
+  margin-bottom: 20px;
+}
+
+.text-avenir {
+  font-family: var(--font-avenir) !important;
 }
 
 /* B U T T O N S */
@@ -465,6 +506,7 @@ body {
   font-family: var(--font-avenir);
   line-height: 1em;
   transition: 0.3s all;
+  cursor: pointer;
 
   &.button-default {
     background-color: var(--gda-brand-black);
