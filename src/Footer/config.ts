@@ -11,6 +11,12 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'formId',
+      type: 'number',
+      label: 'Form ID',
+      defaultValue: 1,
+    },
+    {
       name: 'backgroundImage',
       type: 'upload',
       relationTo: 'media',

@@ -6,13 +6,13 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
-async function getForm() {
+async function getForm(formId: number) {
   const payload = await getPayload({ config: configPromise })
 
   try {
     const form = await payload.findByID({
       collection: 'forms',
-      id: 1,
+      id: formId,
     })
 
     return form
@@ -25,7 +25,7 @@ async function getForm() {
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as FooterType | null
   const navItems = footerData?.navItems || []
-  const form = await getForm()
+  const form = await getForm(footerData?.formId || 1)
 
   const bgImage =
     footerData?.backgroundImage && typeof footerData.backgroundImage !== 'number'
