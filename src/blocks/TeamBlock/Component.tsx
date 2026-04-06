@@ -16,12 +16,14 @@ export const TeamBlock: React.FC<
   const departmentsRes = await payload.find({
     collection: 'departments',
     limit: 100,
+    sort: 'id',
   })
 
   // Fetch team members
   const teamRes = await payload.find({
     collection: 'team',
     limit: 1000,
+    sort: 'id',
   })
 
   // Group members by department
