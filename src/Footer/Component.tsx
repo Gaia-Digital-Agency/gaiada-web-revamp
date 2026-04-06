@@ -2,7 +2,8 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import React from 'react'
 
-import type { Footer, Setting } from '@/payload-types'
+import type { Footer, Settings, Media } from '@/payload-types'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
@@ -11,17 +12,21 @@ import { FooterInfo } from './FooterInfo'
 
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as Footer | null
-  const settings = (await getCachedGlobal('settings', 1)()) as Setting | null
+  const settingsData = (await getCachedGlobal('settings', 1)()) as Settings | null
 
   const navItems = footerData?.navItems || []
-  const socialLinks = settings?.socialLinks || []
+  const socialLinks = settingsData?.socialLinks || []
+  
+  const logoData = settingsData?.logo as Media | undefined
+  const logoUrl = logoData ? getMediaUrl(logoData.url) : '/gaia-logo.webp'
+  const logoAlt = logoData?.alt || 'Gaiada Logo'
 
   return (
     <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white py-12">
       <div className="container grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex flex-col gap-6">
           <Link className="flex items-center" href="/">
-            <Logo />
+            <Logo src={logoUrl} alt={logoAlt} />
           </Link>
           <div className="flex flex-col gap-2 text-sm text-gray-400">
             <p>{footerData?.copyright || 'Copyright @2026'}</p>

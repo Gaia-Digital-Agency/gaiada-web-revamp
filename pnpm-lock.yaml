@@ -18,8 +18,8 @@ importers:
         specifier: 3.80.0
         version: 3.80.0(payload@3.80.0(graphql@16.13.2)(typescript@5.7.3))
       '@payloadcms/email-nodemailer':
-        specifier: ^3.81.0
-        version: 3.81.0(payload@3.80.0(graphql@16.13.2)(typescript@5.7.3))
+        specifier: 3.80.0
+        version: 3.80.0(payload@3.80.0(graphql@16.13.2)(typescript@5.7.3))
       '@payloadcms/live-preview-react':
         specifier: 3.80.0
         version: 3.80.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1457,11 +1457,11 @@ packages:
     peerDependencies:
       payload: 3.80.0
 
-  '@payloadcms/email-nodemailer@3.81.0':
-    resolution: {integrity: sha512-0zKGiwby2hVmLubuO8w0XfskxHoWOrpjbw/v/5MkulOtPzzew1S9r+AxIPuzLq/FlBesQnW0IBYFDL6ziptSGw==}
+  '@payloadcms/email-nodemailer@3.80.0':
+    resolution: {integrity: sha512-+XXMkzUgPKErsguJIfLlkd75FnO8k1TcqK0XNCN51+uwTYZFmKc08wiL1oU+wxS52qa1HFhh0ObJ5ZJH4c04Ew==}
     engines: {node: ^18.20.2 || >=20.9.0}
     peerDependencies:
-      payload: 3.81.0
+      payload: 3.80.0
 
   '@payloadcms/graphql@3.80.0':
     resolution: {integrity: sha512-AlJcFI/R+4SRPWW51ny2BsIj+4j6qVxyn0W5Kz1f5MMfheuD844tc92O+IwmUsrRsb0l6zv3zI3G3M6V2WdFFQ==}
@@ -6210,7 +6210,7 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@payloadcms/email-nodemailer@3.81.0(payload@3.80.0(graphql@16.13.2)(typescript@5.7.3))':
+  '@payloadcms/email-nodemailer@3.80.0(payload@3.80.0(graphql@16.13.2)(typescript@5.7.3))':
     dependencies:
       nodemailer: 7.0.12
       payload: 3.80.0(graphql@16.13.2)(typescript@5.7.3)

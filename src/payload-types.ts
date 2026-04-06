@@ -2203,6 +2203,7 @@ export interface Footer {
  */
 export interface Setting {
   id: number;
+  logo?: (number | null) | Media;
   /**
    * Enter the site-wide WhatsApp number (e.g., +1234567890)
    */
@@ -2220,6 +2221,7 @@ export interface Setting {
   smtpHost?: string | null;
   smtpPort?: number | null;
   smtpUser?: string | null;
+  smtpPass?: string | null;
   smtpSecure?: boolean | null;
   fromName?: string | null;
   fromEmail?: string | null;
@@ -2294,6 +2296,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
+  logo?: T;
   whatsappNumber?: T;
   contactEmail?: T;
   socialLinks?:

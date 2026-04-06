@@ -18,23 +18,29 @@ export const Settings: GlobalConfig = {
         {
           label: 'General',
           fields: [
-            {
-              name: 'whatsappNumber',
-              type: 'text',
-              label: 'WhatsApp Number',
-              admin: {
-                description: 'Enter the site-wide WhatsApp number (e.g., +1234567890)',
-              },
+          {
+            name: 'logo',
+            type: 'upload',
+            relationTo: 'media',
+            label: 'Website Logo',
+          },
+          {
+            name: 'whatsappNumber',
+            type: 'text',
+            label: 'WhatsApp Number',
+            admin: {
+              description: 'Enter the site-wide WhatsApp number (e.g., +1234567890)',
             },
-            {
-              name: 'contactEmail',
-              type: 'text',
-              label: 'Contact Email',
-            },
-            {
-              name: 'socialLinks',
-              type: 'array',
-              label: 'Social Media Links',
+          },
+          {
+            name: 'contactEmail',
+            type: 'text',
+            label: 'Contact Email',
+          },
+          {
+            name: 'socialLinks',
+            type: 'array',
+            label: 'Social Media Links',
               fields: [
                 {
                   name: 'platform',
@@ -95,7 +101,7 @@ export const Settings: GlobalConfig = {
             },
             {
               name: 'smtpPass',
-              type: 'password',
+              type: 'text',
               label: 'SMTP Password',
             },
             {
