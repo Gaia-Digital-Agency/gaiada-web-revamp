@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Media } from '@/components/Media'
 import type { Department, Team } from '@/payload-types'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
+import { AppButton } from '@/components/common/AppButton'
 
 type Props = {
   departments: (Department & { members: Team[] })[]
@@ -73,7 +74,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className="flex gap-[10px] overflow-x-auto overflow-y-visible pb-32 cursor-grab select-none no-scrollbar"
+        className="flex gap-4 overflow-x-auto overflow-y-visible cursor-grab select-none no-scrollbar"
         style={{
           width: 'calc(100% + 48px)',
           marginRight: '-24px',
@@ -129,6 +130,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
 
                 {/* Face B - Member Grid */}
                 <div
+                  id={`dept-${dept.id}`}
                   className={`absolute inset-0 bg-[#111] flex flex-col transition-opacity duration-300 delay-75 ${isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 >
                   <div className="flex-1 relative overflow-hidden">
@@ -230,26 +232,28 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
 
               {/* Description Below Card */}
               <div
-                className={`mt-6 transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
+                className={`transition-all duration-500 grid mb-4 ${
+                  isActive ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 mt-0'
+                }`}
               >
-                <p className="font-brand text-[24px] font-semibold leading-[140%] tracking-[0%] text-[#1A1A1B] capitalize">
-                  {dept.name}
-                </p>
-                {dept.description && (
-                  <p className="font-brand text-[16px] font-normal leading-[160%] tracking-[1%] text-[#1A1A1B]">
-                    {dept.description}
+                <div className="overflow-hidden">
+                  <p className="font-brand text-[24px] font-semibold leading-[140%] tracking-[0%] text-[#1A1A1B] capitalize">
+                    {dept.name}
                   </p>
-                )}
+                  {dept.description && (
+                    <p className="font-brand text-[16px] font-normal leading-[160%] tracking-[1%] text-[#1A1A1B]">
+                      {dept.description}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )
         })}
       </div>
 
-      <div className="flex items-center justify-center">
-        <button className="w-[227px] h-[48px] bg-[#ffc22c] text-white font-brand font-semibold text-[16px] leading-[120%] tracking-[1%] capitalize">
-          Join Our Team
-        </button>
+      <div className="flex items-center justify-center mt-[48px]">
+        <AppButton label="Join Our Team" href="/careers" variant="default" icon="arrow" />
       </div>
     </div>
   )
