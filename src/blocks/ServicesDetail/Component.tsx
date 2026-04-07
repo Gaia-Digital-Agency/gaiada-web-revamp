@@ -1,5 +1,6 @@
 import React from 'react'
 import { Media } from '@/components/Media'
+import { ChevronDown } from 'lucide-react'
 
 export type ServicesDetailBlockType = {
   blockType: 'servicesDetail'
@@ -57,6 +58,62 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      <div id="sub-services" className="container pt-0">
+        <div className="grid grid-cols-2 gap-x-12 px-20 items-center">
+          <div className="bg-blue-200 relative w-full h-[400px]">
+            <Media
+              resource={intro.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
+
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <h3 className="text-(--gda-brand-white) text-center">{subServices?.[0]?.title}</h3>
+              <div className="flex justify-center mt-4">
+                <ChevronDown className="text-(--gda-brand-white)" />
+              </div>
+            </div>
+          </div>
+          <div className="bg-yellow-300 mt-20 relative w-full h-[400px]">
+            <Media
+              resource={intro.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div className="bg-blue-200 relative w-full h-[400px]">
+            <Media
+              resource={intro.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div className="bg-yellow-300 mt-20 relative w-full h-[400px]">
+            <Media
+              resource={intro.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div className="bg-blue-200 relative w-full h-[400px]">
+            <Media
+              resource={intro.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div className="bg-yellow-300 mt-20 relative w-full h-[400px]">
+            <Media
+              resource={intro.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
         </div>
       </div>
     </section>
