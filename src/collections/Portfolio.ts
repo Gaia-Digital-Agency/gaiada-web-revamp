@@ -40,12 +40,16 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
       required: true,
     },
     {
+      name: 'description',
+      type: 'richText',
+      required: true,
+    },
+    {
       name: 'services',
       type: 'relationship',
       relationTo: 'services',
       hasMany: true,
-      label: 'Services',
-      required: true,
+      label: 'Services (Categories)',
       admin: {
         position: 'sidebar',
       },

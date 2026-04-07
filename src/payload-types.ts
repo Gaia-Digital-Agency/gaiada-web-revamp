@@ -213,6 +213,10 @@ export interface Page {
               | ({
                   relationTo: 'services';
                   value: number | Service;
+                } | null)
+              | ({
+                  relationTo: 'portfolio';
+                  value: number | Portfolio;
                 } | null);
             url?: string | null;
             label: string;
@@ -619,6 +623,10 @@ export interface Service {
               | ({
                   relationTo: 'services';
                   value: number | Service;
+                } | null)
+              | ({
+                  relationTo: 'portfolio';
+                  value: number | Portfolio;
                 } | null);
             url?: string | null;
             label: string;
@@ -700,6 +708,137 @@ export interface Service {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio".
+ */
+export interface Portfolio {
+  id: number;
+  title: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  services?: (number | Service)[] | null;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Teks raksasa untuk foreground (contoh: Branding)
+     */
+    title?: string | null;
+    /**
+     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     */
+    giantTitleColor?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'services';
+                  value: number | Service;
+                } | null)
+              | ({
+                  relationTo: 'portfolio';
+                  value: number | Portfolio;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
+  layout?:
+    | (
+        | CallToActionBlock
+        | ContentBlock
+        | MediaBlock
+        | FormBlock
+        | {
+            mediaPosition: 'left' | 'right';
+            richText: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            media: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contentMedia';
+          }
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
@@ -735,6 +874,10 @@ export interface CallToActionBlock {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -789,6 +932,10 @@ export interface ContentBlock {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -1092,118 +1239,6 @@ export interface TeamBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'teamBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "portfolio".
- */
-export interface Portfolio {
-  id: number;
-  title: string;
-  services: (number | Service)[];
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    /**
-     * Teks raksasa untuk foreground (contoh: Branding)
-     */
-    title?: string | null;
-    /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
-     */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'services';
-                  value: number | Service;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-  };
-  layout?:
-    | (
-        | CallToActionBlock
-        | ContentBlock
-        | MediaBlock
-        | FormBlock
-        | {
-            mediaPosition: 'left' | 'right';
-            richText: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            media: number | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contentMedia';
-          }
-      )[]
-    | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2013,6 +2048,7 @@ export interface ServicesSelect<T extends boolean = true> {
  */
 export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   services?: T;
   hero?:
     | T
@@ -2436,6 +2472,10 @@ export interface Header {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -2460,6 +2500,10 @@ export interface Header {
                   | ({
                       relationTo: 'services';
                       value: number | Service;
+                    } | null)
+                  | ({
+                      relationTo: 'portfolio';
+                      value: number | Portfolio;
                     } | null);
                 url?: string | null;
                 label: string;
@@ -2513,6 +2557,10 @@ export interface Footer {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;

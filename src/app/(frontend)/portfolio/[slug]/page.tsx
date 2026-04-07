@@ -11,6 +11,8 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import PageClient from './page.client'
+import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -34,6 +36,23 @@ type Args = {
   }>
 }
 
+export function PortfolioTitle({
+  title,
+  description,
+}: {
+  title: string
+  description: DefaultTypedEditorState
+}) {
+  return (
+    <div className="container">
+      <div className="flex flex-col justify-center items-center w-[700px] mx-auto py-20 gap-y-4">
+        <h1 className="text-center">{title}</h1>
+        <RichText data={description} className="text-center" />
+      </div>
+    </div>
+  )
+}
+
 export default async function PortfolioPage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
@@ -55,6 +74,11 @@ export default async function PortfolioPage({ params: paramsPromise }: Args) {
 
       {/* Tampilkan Hero Portfolio */}
       {portfolio.hero && <RenderHero {...portfolio.hero} />}
+
+      <PortfolioTitle title={portfolio.title} description={portfolio.description} />
+
+      {/* <h1>{portfolio.title}</h1>
+      <RichText data={portfolio.description} /> */}
 
       {/* Tampilkan layout blocks (Content, Media, CTA, dll) */}
       {portfolio.layout && <RenderBlocks blocks={portfolio.layout} />}
