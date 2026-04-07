@@ -1,12 +1,16 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Media } from '@/components/Media'
 import type { Media as MediaType } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Plus } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import { motion, AnimatePresence } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+import SplitType from 'split-type'
 
 export type AboutBlockType = {
   blockType: 'aboutBlock'
@@ -100,33 +104,157 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
 }
 
 export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image, items }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      if (!title) return
+
+      gsap.registerPlugin(ScrollTrigger)
+
+      const titleElement = document.querySelector('#title-about-us') as HTMLElement
+      if (!titleElement) return
+
+      let split: SplitType
+
+      const createAnimation = () => {
+        // 1. Bersihkan jika sudah ada split sebelumnya
+        if (split) split.revert()
+
+        // 2. Lakukan split awal ke dalam lines
+        split = new SplitType(titleElement, {
+          types: 'lines',
+          lineClass: 'split-line',
+        })
+
+        // 3. Meniru efek mask: "lines" dengan membungkus konten setiap baris
+        // Kita membungkus isi teks setiap baris ke dalam div .split-inner
+        split.lines?.forEach((line) => {
+          const wrapper = document.createElement('div')
+          wrapper.classList.add('split-inner')
+          wrapper.innerHTML = line.innerHTML
+          line.innerHTML = ''
+          line.appendChild(wrapper)
+        })
+
+        // 4. Animasikan .split-inner (bukan .split-line)
+        const inners = titleElement.querySelectorAll('.split-inner')
+
+        gsap.from(inners, {
+          yPercent: 120, // Teks tenggelam 120% ke bawah
+          stagger: 0.1,
+          // duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: titleElement,
+            start: 'top 80%', // Mulai saat bagian atas judul menyentuh tengah layar
+            end: 'bottom 20%', // Selesai saat bagian bawah judul menyentuh tengah layar
+            scrub: true, // "Nempel" di scroll (timbul tenggelam mengikuti scroll)
+            // markers: true, // Aktifkan jika ingin melihat garis bantu
+          },
+        })
+      }
+
+      // Jalankan inisialisasi
+      createAnimation()
+
+      // Handle window resize (autoSplit manual)
+      const handleResize = () => {
+        createAnimation()
+      }
+
+      window.addEventListener('resize', handleResize)
+
+      return () => {
+        window.removeEventListener('resize', handleResize)
+        if (split) split.revert()
+      }
+    },
+    { scope: containerRef, dependencies: [title] },
+  )
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger)
+
+      // Parallax effect for image
+      gsap.to('.about-us-image', {
+        yPercent: -20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#about-section-1-image',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
+      // Target children paragraphs for a staggered effect
+      // Gunakan selector yang lebih spesifik di dalam scope
+      const items = gsap.utils.toArray('#description-about-us p')
+
+      if (items.length > 0) {
+        gsap.from(items, {
+          y: -100,
+          opacity: 0,
+          stagger: 0.15,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '#description-about-us',
+            start: 'top 85%',
+            // end: 'top 20%', // Hapus end jika tidak ingin scrub terlalu panjang
+            toggleActions: 'play none none reverse', // Gunakan play/reverse sebagai alternatif jika scrub tidak terasa
+          },
+        })
+      } else {
+        // Fallback jika tidak ada p tag
+        gsap.from('#description-about-us', {
+          y: -100,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '#description-about-us',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        })
+      }
+    },
+    { scope: containerRef },
+  )
+
   return (
-    <div id="about-us" className="container px-0!">
+    <div ref={containerRef} id="about-us" className="container px-0!">
       <div id="about-section-1" className="mb-20">
         <div className="flex flex-col md:flex-row items-start gap-[48px]">
           {/* Bagian Kiri: Image */}
           <div id="about-section-1-image" className="w-full md:w-[708px] md:h-[480px] shrink-0">
             {image && (
               <div className="relative w-full h-full overflow-hidden">
-                <Media resource={image} fill className="object-cover" />
+                <Media
+                  resource={image}
+                  fill
+                  className="about-us-image w-full h-full"
+                  imgClassName="object-cover scale-110"
+                />
               </div>
             )}
           </div>
 
           {/* Bagian Kanan: Title, Description, and Accordion */}
           <div id="about-section-1-content" className="flex-1 pr-[180px]">
-            {title && (
-              <h2 className="text-[56px] font-brand font-bold text-black leading-tight mb-6">
-                {title}
-              </h2>
-            )}
+            {title && <h2 id="title-about-us">{title}</h2>}
 
             {description && (
-              <RichText
-                data={description}
-                enableGutter={false}
-                className="prose-lg max-w-none font-roboto font-normal text-black leading-[160%] tracking-[0.01em] mb-12"
-              />
+              <div id="description-about-us">
+                <RichText
+                  data={description}
+                  enableGutter={false}
+                  // className="prose-lg max-w-none font-roboto font-normal text-black leading-[160%] tracking-[0.01em] mb-12"
+                />
+              </div>
             )}
           </div>
         </div>
