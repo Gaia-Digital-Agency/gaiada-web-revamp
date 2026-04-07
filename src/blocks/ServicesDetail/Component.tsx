@@ -72,9 +72,8 @@ export default function SubServiceList({
               </div>
 
               <div className="mt-4">
-                <ChevronDown className="text-(--gda-brand-white) group-hover:hidden" size={40} />
-                <ChevronUp
-                  className="text-(--gda-brand-white) hidden group-hover:block"
+                <ChevronDown
+                  className="text-(--gda-brand-white) transition-transform duration-500 group-hover:rotate-180"
                   size={40}
                 />
               </div>
