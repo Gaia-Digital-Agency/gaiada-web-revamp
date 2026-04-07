@@ -40,13 +40,13 @@ export const PortfolioInsightBlock: React.FC<PortfolioInsightBlockType> = ({ tit
                   data={insight.description}
                   enableGutter={false}
                   enableProse={true}
-                  className="prose-lg text-muted-foreground"
+                  className=""
                 />
               </div>
 
               <div
                 className={cn(
-                  'relative aspect-[16/10] overflow-hidden',
+                  'relative aspect-16/10 overflow-hidden',
                   index % 2 !== 0 ? 'md:order-1' : 'md:order-2',
                 )}
               >
