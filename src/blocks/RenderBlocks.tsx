@@ -14,6 +14,7 @@ import { AboutBlock } from '@/blocks/AboutBlock/Component'
 import { CareerBlock } from '@/blocks/CareerBlock/Component'
 import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { ButtonBlock } from '@/blocks/ButtonBlock/Components'
+import { ServicesDetailBlock } from '@/blocks/ServicesDetail/Component'
 
 // Mapping of block slugs to their corresponding React components
 
@@ -30,6 +31,7 @@ const blockComponents = {
   careerBlock: CareerBlock,
   teamBlock: TeamBlock,
   buttonBlock: ButtonBlock,
+  servicesDetail: ServicesDetailBlock,
 }
 
 // Component that iterates through and renders an array of page layout blocks

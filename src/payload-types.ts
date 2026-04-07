@@ -959,14 +959,6 @@ export interface TeamBlock {
 export interface Service {
   id: number;
   title: string;
-  /**
-   * Short description shown on the services listing page card.
-   */
-  description: string;
-  /**
-   * Image shown on the services listing page card.
-   */
-  image?: (number | null) | Media;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
     richText?: {
@@ -1046,6 +1038,24 @@ export interface Service {
             id?: string | null;
             blockName?: string | null;
             blockType: 'contentMedia';
+          }
+        | {
+            intro: {
+              title: string;
+              description: string;
+              image: number | Media;
+            };
+            subServices?:
+              | {
+                  title: string;
+                  description: string;
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'servicesDetail';
           }
       )[]
     | null;
@@ -1804,8 +1814,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
-  image?: T;
   hero?:
     | T
     | {
@@ -1844,6 +1852,27 @@ export interface ServicesSelect<T extends boolean = true> {
               mediaPosition?: T;
               richText?: T;
               media?: T;
+              id?: T;
+              blockName?: T;
+            };
+        servicesDetail?:
+          | T
+          | {
+              intro?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                  };
+              subServices?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

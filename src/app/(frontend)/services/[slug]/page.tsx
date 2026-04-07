@@ -54,6 +54,7 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       {service.hero && <RenderHero {...service.hero} />}
+
       {service.layout && <RenderBlocks blocks={service.layout} />}
 
       {/* Fallback: if no layout blocks, show description */}
