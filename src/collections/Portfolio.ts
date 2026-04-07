@@ -1,16 +1,37 @@
 import type { CollectionConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
+import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
+import { CallToAction } from '../blocks/CallToAction/config'
+import { Content } from '../blocks/Content/config'
+import { FormBlock } from '../blocks/Form/config'
+import { MediaBlock } from '../blocks/MediaBlock/config'
+import { ContentMedia } from '../blocks/ContentMedia/config'
+import { hero } from '@/heros/config'
+import { slugField } from 'payload'
 
-export const Portfolio: CollectionConfig = {
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
+
+export const Portfolio: CollectionConfig<'portfolio'> = {
   slug: 'portfolio',
-  admin: {
-    useAsTitle: 'title',
-  },
   access: {
-    read: () => true,
+    read: authenticatedOrPublished,
     create: authenticated,
     update: authenticated,
     delete: authenticated,
+  },
+  defaultPopulate: {
+    title: true,
+    slug: true,
+  },
+  admin: {
+    defaultColumns: ['title', 'slug', 'updatedAt'],
+    useAsTitle: 'title',
   },
   fields: [
     {
@@ -19,15 +40,73 @@ export const Portfolio: CollectionConfig = {
       required: true,
     },
     {
-      name: 'description',
-      type: 'textarea',
+      name: 'services',
+      type: 'relationship',
+      relationTo: 'services',
+      hasMany: true,
+      label: 'Services',
       required: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
+      type: 'tabs',
+      tabs: [
+        {
+          fields: [hero],
+          label: 'Hero',
+        },
+        {
+          fields: [
+            {
+              name: 'layout',
+              type: 'blocks',
+              blocks: [CallToAction, Content, MediaBlock, FormBlock, ContentMedia],
+              admin: {
+                initCollapsed: true,
+              },
+            },
+          ],
+          label: 'Page Content',
+        },
+        {
+          name: 'meta',
+          label: 'SEO',
+          fields: [
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+              imagePath: 'meta.image',
+            }),
+            MetaTitleField({ hasGenerateFn: true }),
+            MetaImageField({ relationTo: 'media' }),
+            MetaDescriptionField({}),
+            PreviewField({
+              hasGenerateFn: true,
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+            }),
+          ],
+        },
+      ],
     },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    slugField(),
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100,
+      },
+      schedulePublish: true,
+    },
+    maxPerDoc: 50,
+  },
 }
