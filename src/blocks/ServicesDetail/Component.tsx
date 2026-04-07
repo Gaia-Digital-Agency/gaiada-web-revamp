@@ -1,6 +1,7 @@
 import React from 'react'
 import { Media } from '@/components/Media'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { AppButton } from '@/components/common/AppButton'
 
 export type ServicesDetailBlockType = {
   blockType: 'servicesDetail'
@@ -12,7 +13,52 @@ export type ServicesDetailBlockType = {
   subServices?: Array<{
     title: string
     id?: string | null
+    image: any
+    description: string
   }> | null
+}
+
+export default function SubServiceList({
+  subServices,
+}: {
+  subServices: ServicesDetailBlockType['subServices']
+}) {
+  if (subServices?.length === 0) return null
+  return (
+    <>
+      {subServices?.map((service, index) => {
+        const isOdd = index % 2 !== 0 // index 0 = genap, index 1 = ganjil, dst
+
+        return (
+          <div key={service.id} className={`relative w-full h-[400px] ${isOdd ? 'mt-20' : ''}`}>
+            <Media
+              resource={service.image}
+              fill
+              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `
+                  linear-gradient(180deg, rgba(26, 26, 27, 0) -17.7%, rgba(26, 26, 27, 0.6) 100%),
+                  linear-gradient(180deg, rgba(255, 194, 44, 0) -9.62%, rgba(255, 194, 44, 0.5) 100%)
+                `,
+              }}
+            />
+
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <h3 className="text-(--gda-brand-white) text-center">{service.title}</h3>
+              {/* <p className="text-(--gda-brand-white) text-center">{service.description}</p> */}
+              <div className="flex justify-center mt-4">
+                <ChevronDown className="text-(--gda-brand-white)" />
+                {/* <ChevronUp /> */}
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </>
+  )
 }
 
 export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, subServices }) => {
@@ -27,24 +73,6 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
               <h2 className="text-(--gda-brand-yellow)">{intro.title}</h2>
               <div>{intro.description}</div>
             </div>
-
-            {/* {subServices && subServices.length > 0 && (
-              <div className="space-y-6 pt-4">
-                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-primary/80">
-                  What we provide
-                </h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-                  {subServices.map((sub, i) => (
-                    <li key={i} className="flex items-center gap-4 group">
-                      <div className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary transition-colors flex-shrink-0" />
-                      <span className="text-lg font-medium text-foreground/70 group-hover:text-foreground transition-colors leading-tight">
-                        {sub.title}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )} */}
           </div>
 
           {intro.image && (
@@ -63,57 +91,16 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
 
       <div id="sub-services" className="container pt-0">
         <div className="grid grid-cols-2 gap-x-12 px-20 items-center">
-          <div className="bg-blue-200 relative w-full h-[400px]">
-            <Media
-              resource={intro.image}
-              fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
-
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <h3 className="text-(--gda-brand-white) text-center">{subServices?.[0]?.title}</h3>
-              <div className="flex justify-center mt-4">
-                <ChevronDown className="text-(--gda-brand-white)" />
-              </div>
-            </div>
-          </div>
-          <div className="bg-yellow-300 mt-20 relative w-full h-[400px]">
-            <Media
-              resource={intro.image}
-              fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-          <div className="bg-blue-200 relative w-full h-[400px]">
-            <Media
-              resource={intro.image}
-              fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-          <div className="bg-yellow-300 mt-20 relative w-full h-[400px]">
-            <Media
-              resource={intro.image}
-              fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-          <div className="bg-blue-200 relative w-full h-[400px]">
-            <Media
-              resource={intro.image}
-              fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-          <div className="bg-yellow-300 mt-20 relative w-full h-[400px]">
-            <Media
-              resource={intro.image}
-              fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
+          <SubServiceList subServices={subServices} />
+        </div>
+        <div className="flex justify-center mt-12">
+          <AppButton
+            href="/"
+            label="See Our Portfolio"
+            icon="arrow"
+            variant="default"
+            iconPosition="right"
+          />
         </div>
       </div>
     </section>
