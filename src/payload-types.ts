@@ -363,6 +363,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'portfolioInsight';
       }
+    | PortfolioImageBanner
   )[];
   meta?: {
     title?: string | null;
@@ -742,6 +743,7 @@ export interface Service {
             blockName?: string | null;
             blockType: 'portfolioInsight';
           }
+        | PortfolioImageBanner
       )[]
     | null;
   meta?: {
@@ -901,6 +903,7 @@ export interface Portfolio {
             blockName?: string | null;
             blockType: 'portfolioInsight';
           }
+        | PortfolioImageBanner
       )[]
     | null;
   meta?: {
@@ -1278,6 +1281,16 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioImageBanner".
+ */
+export interface PortfolioImageBanner {
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioImageBanner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1781,6 +1794,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
       };
   meta?:
     | T
@@ -1887,6 +1901,15 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface TeamBlockSelect<T extends boolean = true> {
   title?: T;
   introText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioImageBanner_select".
+ */
+export interface PortfolioImageBannerSelect<T extends boolean = true> {
+  image?: T;
   id?: T;
   blockName?: T;
 }
@@ -2141,6 +2164,7 @@ export interface ServicesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
       };
   meta?:
     | T
@@ -2220,6 +2244,7 @@ export interface PortfolioSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
       };
   meta?:
     | T

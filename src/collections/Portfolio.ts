@@ -7,6 +7,7 @@ import { FormBlock } from '../blocks/Form/config'
 import { MediaBlock } from '../blocks/MediaBlock/config'
 import { ContentMedia } from '../blocks/ContentMedia/config'
 import { PortfolioInsight } from '../blocks/PortfolioInsight/config'
+import { PortfolioImageBanner } from '../blocks/PortfolioImageBanner/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 
@@ -74,6 +75,7 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
                 FormBlock,
                 ContentMedia,
                 PortfolioInsight,
+                PortfolioImageBanner,
               ],
               admin: {
                 initCollapsed: true,
