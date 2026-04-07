@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^2.0.2",
+    "@innovixx/payload-color-picker-field": "^2.0.4",
     "@payloadcms/admin-bar": "3.80.0",
     "@payloadcms/db-postgres": "3.80.0",
     "@payloadcms/email-nodemailer": "3.80.0",

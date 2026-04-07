@@ -47,7 +47,7 @@ export async function Footer() {
         <div className="flex justify-end items-start py-20">
           <div className="w-full px-4 lg:max-w-2xl py-8">
             <h2 className="w-full md:w-1/2">{footerData?.heading}</h2>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 mt-8">
               {footerData?.navItemsWithIcon?.map((item, i) => {
                 const link = item.link
                 return (
