@@ -559,6 +559,18 @@ h3 {
   animation: float 6s ease-in-out infinite;
 }
 
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em; /* Menghindari huruf terpotong di bawah */
+  margin-bottom: -0.05em;
+}
+
+.split-inner {
+  display: block;
+  will-change: transform;
+}
+
 .gda-hero-banner-title {
   font-family: var(--font-brand);
   font-weight: 700;

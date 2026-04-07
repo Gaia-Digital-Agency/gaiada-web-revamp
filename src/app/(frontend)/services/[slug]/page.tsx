@@ -47,22 +47,23 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
   }
 
   return (
-    <article className="pt-16 pb-24">
+    <article className="pt-16">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
 
       {service.hero && <RenderHero {...service.hero} />}
+
       {service.layout && <RenderBlocks blocks={service.layout} />}
 
       {/* Fallback: if no layout blocks, show description */}
-      {(!service.layout || service.layout.length === 0) && (
+      {/* {(!service.layout || service.layout.length === 0) && (
         <div className="container py-16">
           <h1 className="text-4xl font-bold mb-6">{service.title}</h1>
           <p className="text-lg text-muted-foreground">{service.description}</p>
         </div>
-      )}
+      )} */}
     </article>
   )
 }
