@@ -213,6 +213,10 @@ export interface Page {
               | ({
                   relationTo: 'services';
                   value: number | Service;
+                } | null)
+              | ({
+                  relationTo: 'portfolio';
+                  value: number | Portfolio;
                 } | null);
             url?: string | null;
             label: string;
@@ -331,6 +335,35 @@ export interface Page {
         blockName?: string | null;
         blockType: 'buttonBlock';
       }
+    | {
+        title?: string | null;
+        insights?:
+          | {
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              image: number | Media;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'portfolioInsight';
+      }
+    | PortfolioImageBanner
   )[];
   meta?: {
     title?: string | null;
@@ -619,6 +652,10 @@ export interface Service {
               | ({
                   relationTo: 'services';
                   value: number | Service;
+                } | null)
+              | ({
+                  relationTo: 'portfolio';
+                  value: number | Portfolio;
                 } | null);
             url?: string | null;
             label: string;
@@ -678,6 +715,195 @@ export interface Service {
             blockName?: string | null;
             blockType: 'servicesDetail';
           }
+        | {
+            title?: string | null;
+            insights?:
+              | {
+                  title: string;
+                  description: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolioInsight';
+          }
+        | PortfolioImageBanner
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio".
+ */
+export interface Portfolio {
+  id: number;
+  title: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  services?: (number | Service)[] | null;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Teks raksasa untuk foreground (contoh: Branding)
+     */
+    title?: string | null;
+    /**
+     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     */
+    giantTitleColor?: string | null;
+    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'services';
+                  value: number | Service;
+                } | null)
+              | ({
+                  relationTo: 'portfolio';
+                  value: number | Portfolio;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
+  layout?:
+    | (
+        | CallToActionBlock
+        | ContentBlock
+        | MediaBlock
+        | FormBlock
+        | {
+            mediaPosition: 'left' | 'right';
+            richText: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            media: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contentMedia';
+          }
+        | {
+            title?: string | null;
+            insights?:
+              | {
+                  title: string;
+                  description: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolioInsight';
+          }
+        | PortfolioImageBanner
       )[]
     | null;
   meta?: {
@@ -735,6 +961,10 @@ export interface CallToActionBlock {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -789,6 +1019,10 @@ export interface ContentBlock {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -1050,6 +1284,16 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioImageBanner".
+ */
+export interface PortfolioImageBanner {
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioImageBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
@@ -1092,18 +1336,6 @@ export interface TeamBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'teamBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "portfolio".
- */
-export interface Portfolio {
-  id: number;
-  title: string;
-  description: string;
-  image: number | Media;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1547,6 +1779,22 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioInsight?:
+          | T
+          | {
+              title?: T;
+              insights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
       };
   meta?:
     | T
@@ -1653,6 +1901,15 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface TeamBlockSelect<T extends boolean = true> {
   title?: T;
   introText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioImageBanner_select".
+ */
+export interface PortfolioImageBannerSelect<T extends boolean = true> {
+  image?: T;
   id?: T;
   blockName?: T;
 }
@@ -1892,6 +2149,22 @@ export interface ServicesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioInsight?:
+          | T
+          | {
+              title?: T;
+              insights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
       };
   meta?:
     | T
@@ -1914,9 +2187,78 @@ export interface ServicesSelect<T extends boolean = true> {
 export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  image?: T;
+  services?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        richText?: T;
+        title?: T;
+        giantTitleColor?: T;
+        gradientColor?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        contentMedia?:
+          | T
+          | {
+              mediaPosition?: T;
+              richText?: T;
+              media?: T;
+              id?: T;
+              blockName?: T;
+            };
+        portfolioInsight?:
+          | T
+          | {
+              title?: T;
+              insights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2284,6 +2626,10 @@ export interface Header {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -2308,6 +2654,10 @@ export interface Header {
                   | ({
                       relationTo: 'services';
                       value: number | Service;
+                    } | null)
+                  | ({
+                      relationTo: 'portfolio';
+                      value: number | Portfolio;
                     } | null);
                 url?: string | null;
                 label: string;
@@ -2361,6 +2711,10 @@ export interface Footer {
             | ({
                 relationTo: 'services';
                 value: number | Service;
+              } | null)
+            | ({
+                relationTo: 'portfolio';
+                value: number | Portfolio;
               } | null);
           url?: string | null;
           label: string;
@@ -2539,6 +2893,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'services';
           value: number | Service;
+        } | null)
+      | ({
+          relationTo: 'portfolio';
+          value: number | Portfolio;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

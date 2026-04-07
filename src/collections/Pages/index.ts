@@ -19,6 +19,8 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { ButtonBlock } from '@/blocks/ButtonBlock/config'
+import { PortfolioInsight } from '../../blocks/PortfolioInsight/config'
+import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/config'
 
 import {
   MetaDescriptionField,
@@ -92,6 +94,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 CareerBlock,
                 TeamBlock,
                 ButtonBlock,
+                PortfolioInsight,
+                PortfolioImageBanner,
               ],
               required: true,
               admin: {

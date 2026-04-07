@@ -32,7 +32,7 @@ export default function SubServiceList({
         return (
           <div
             key={service.id}
-            className={`relative w-full h-[400px] group overflow-hidden ${isOdd ? 'mt-20' : ''}`}
+            className={`relative w-full h-[400px] group overflow-hidden cursor-pointer ${isOdd ? 'mt-20' : ''}`}
           >
             <Media
               resource={service.image}

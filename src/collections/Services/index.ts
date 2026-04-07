@@ -8,6 +8,8 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { ContentMedia } from '../../blocks/ContentMedia/config'
 import { ServicesDetailBlock } from '../../blocks/ServicesDetail/config'
+import { PortfolioInsight } from '../../blocks/PortfolioInsight/config'
+import { PortfolioImageBanner } from '../../blocks/PortfolioImageBanner/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -63,6 +65,8 @@ export const Services: CollectionConfig<'services'> = {
                 FormBlock,
                 ContentMedia,
                 ServicesDetailBlock,
+                PortfolioInsight,
+                PortfolioImageBanner,
               ],
               admin: {
                 initCollapsed: true,
