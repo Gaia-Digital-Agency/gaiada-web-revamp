@@ -30,14 +30,18 @@ export default function SubServiceList({
         const isOdd = index % 2 !== 0 // index 0 = genap, index 1 = ganjil, dst
 
         return (
-          <div key={service.id} className={`relative w-full h-[400px] ${isOdd ? 'mt-20' : ''}`}>
+          <div
+            key={service.id}
+            className={`relative w-full h-[400px] group overflow-hidden ${isOdd ? 'mt-20' : ''}`}
+          >
             <Media
               resource={service.image}
               fill
               imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
             />
+            {/* Base Overlay */}
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
               style={{
                 background: `
                   linear-gradient(180deg, rgba(26, 26, 27, 0) -17.7%, rgba(26, 26, 27, 0.6) 100%),
@@ -45,13 +49,34 @@ export default function SubServiceList({
                 `,
               }}
             />
+            {/* Hover Overlay */}
+            <div
+              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background: `
+                  linear-gradient(180deg,rgba(26, 26, 27, 0.5) 0%, rgba(255, 194, 44, 1) 100%),
+                  linear-gradient(180deg, rgba(255, 194, 44, 0) -9.62%, #FFC22C 100%)
+                `,
+              }}
+            />
 
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <h3 className="text-(--gda-brand-white) text-center">{service.title}</h3>
-              {/* <p className="text-(--gda-brand-white) text-center">{service.description}</p> */}
-              <div className="flex justify-center mt-4">
-                <ChevronDown className="text-(--gda-brand-white)" />
-                {/* <ChevronUp /> */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col items-center">
+              <h3 className="text-(--gda-brand-white) text-center transition-transform duration-500 group-hover:-translate-y-2">
+                {service.title}
+              </h3>
+
+              <div className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out">
+                <p className="text-(--gda-brand-white) text-center px-4 mt-2">
+                  {service.description}
+                </p>
+              </div>
+
+              <div className="mt-4">
+                <ChevronDown className="text-(--gda-brand-white) group-hover:hidden" size={40} />
+                <ChevronUp
+                  className="text-(--gda-brand-white) hidden group-hover:block"
+                  size={40}
+                />
               </div>
             </div>
           </div>
