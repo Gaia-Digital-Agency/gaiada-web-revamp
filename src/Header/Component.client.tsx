@@ -18,7 +18,6 @@ interface HeaderClientProps {
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
-  /* Storing the value in a useState to avoid hydration errors */
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
@@ -27,12 +26,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
 
   useEffect(() => {
     setHeaderTheme(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   useEffect(() => {
     if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme])
 
   useEffect(() => {
@@ -40,7 +37,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
       setIsScrolled(window.scrollY > 10)
     }
 
-    // Call once to set initial state
     handleScroll()
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -50,20 +46,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full h-[79px] px-6 md:px-10 flex items-center transition-all duration-300 ${
-          isScrolled ? 'bg-[#F9F9F9CC] backdrop-blur-[25px] shadow-sm' : 'bg-transparent'
-        }`}
+        className={`z-50 w-full h-[79px] px-6 md:px-10 flex items-center transition-all duration-300 `}
         {...(theme ? { 'data-theme': theme } : {})}
       >
         <div className="container mx-auto flex justify-between items-center w-full">
           <Link href="/">
-            <Logo 
-              loading="eager" 
-              priority="high" 
-              className="invert dark:invert-0" 
-              src={logo?.url} 
-              alt={logo?.alt}
-            />
+            <Logo loading="eager" priority="high" className="" src={logo?.url} alt={logo?.alt} />
           </Link>
           <HeaderNav data={data} />
         </div>
