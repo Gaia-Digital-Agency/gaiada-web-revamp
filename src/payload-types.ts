@@ -335,6 +335,34 @@ export interface Page {
         blockName?: string | null;
         blockType: 'buttonBlock';
       }
+    | {
+        title?: string | null;
+        insights?:
+          | {
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              image: number | Media;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'portfolioInsight';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -686,6 +714,34 @@ export interface Service {
             blockName?: string | null;
             blockType: 'servicesDetail';
           }
+        | {
+            title?: string | null;
+            insights?:
+              | {
+                  title: string;
+                  description: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolioInsight';
+          }
       )[]
     | null;
   meta?: {
@@ -816,6 +872,34 @@ export interface Portfolio {
             id?: string | null;
             blockName?: string | null;
             blockType: 'contentMedia';
+          }
+        | {
+            title?: string | null;
+            insights?:
+              | {
+                  title: string;
+                  description: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolioInsight';
           }
       )[]
     | null;
@@ -1682,6 +1766,21 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioInsight?:
+          | T
+          | {
+              title?: T;
+              insights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -2027,6 +2126,21 @@ export interface ServicesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        portfolioInsight?:
+          | T
+          | {
+              title?: T;
+              insights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -2088,6 +2202,21 @@ export interface PortfolioSelect<T extends boolean = true> {
               mediaPosition?: T;
               richText?: T;
               media?: T;
+              id?: T;
+              blockName?: T;
+            };
+        portfolioInsight?:
+          | T
+          | {
+              title?: T;
+              insights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

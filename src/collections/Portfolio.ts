@@ -6,6 +6,7 @@ import { Content } from '../blocks/Content/config'
 import { FormBlock } from '../blocks/Form/config'
 import { MediaBlock } from '../blocks/MediaBlock/config'
 import { ContentMedia } from '../blocks/ContentMedia/config'
+import { PortfolioInsight } from '../blocks/PortfolioInsight/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 
@@ -66,7 +67,14 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, FormBlock, ContentMedia],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                FormBlock,
+                ContentMedia,
+                PortfolioInsight,
+              ],
               admin: {
                 initCollapsed: true,
               },

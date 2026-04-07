@@ -15,6 +15,7 @@ import { CareerBlock } from '@/blocks/CareerBlock/Component'
 import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { ButtonBlock } from '@/blocks/ButtonBlock/Components'
 import { ServicesDetailBlock } from '@/blocks/ServicesDetail/Component'
+import { PortfolioInsightBlock } from '@/blocks/PortfolioInsight/Component'
 
 // Mapping of block slugs to their corresponding React components
 
@@ -32,11 +33,12 @@ const blockComponents = {
   teamBlock: TeamBlock,
   buttonBlock: ButtonBlock,
   servicesDetail: ServicesDetailBlock,
+  portfolioInsight: PortfolioInsightBlock,
 }
 
 // Component that iterates through and renders an array of page layout blocks
 export const RenderBlocks: React.FC<{
-  blocks: (Page['layout'][0] | (NonNullable<Service['layout']>[0]))[]
+  blocks: (Page['layout'][0] | NonNullable<Service['layout']>[0])[]
 }> = (props) => {
   const { blocks } = props
 

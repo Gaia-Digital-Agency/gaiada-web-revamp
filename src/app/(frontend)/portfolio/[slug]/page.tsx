@@ -44,7 +44,7 @@ export function PortfolioTitle({
   description: DefaultTypedEditorState
 }) {
   return (
-    <div className="container">
+    <div className="bg-(--gda-brand-white)">
       <div className="flex flex-col justify-center items-center w-[700px] mx-auto py-20 gap-y-4">
         <h1 className="text-center">{title}</h1>
         <RichText data={description} className="text-center" />
@@ -75,10 +75,9 @@ export default async function PortfolioPage({ params: paramsPromise }: Args) {
       {/* Tampilkan Hero Portfolio */}
       {portfolio.hero && <RenderHero {...portfolio.hero} />}
 
-      <PortfolioTitle title={portfolio.title} description={portfolio.description} />
-
-      {/* <h1>{portfolio.title}</h1>
-      <RichText data={portfolio.description} /> */}
+      {portfolio.title && portfolio.description && (
+        <PortfolioTitle title={portfolio.title} description={portfolio.description} />
+      )}
 
       {/* Tampilkan layout blocks (Content, Media, CTA, dll) */}
       {portfolio.layout && <RenderBlocks blocks={portfolio.layout} />}
