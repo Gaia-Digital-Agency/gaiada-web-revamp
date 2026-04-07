@@ -35,7 +35,7 @@ export const PortfolioInsightBlock: React.FC<PortfolioInsightBlockType> = ({ tit
                   index % 2 !== 0 ? 'md:order-2 pr-20' : 'md:order-1 pl-20',
                 )}
               >
-                <h3>{insight.title}</h3>
+                <h2>{insight.title}</h2>
                 <RichText
                   data={insight.description}
                   enableGutter={false}
@@ -46,11 +46,11 @@ export const PortfolioInsightBlock: React.FC<PortfolioInsightBlockType> = ({ tit
 
               <div
                 className={cn(
-                  'relative aspect-16/10 overflow-hidden',
+                  'relative aspect-[16/10] overflow-hidden',
                   index % 2 !== 0 ? 'md:order-1' : 'md:order-2',
                 )}
               >
-                <Media resource={insight.image} fill className="object-cover" />
+                <Media resource={insight.image} fill imgClassName="object-cover" />
               </div>
             </div>
           ))}
