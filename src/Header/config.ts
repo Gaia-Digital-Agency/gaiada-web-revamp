@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
 import { revalidateHeader } from './hooks/revalidateHeader'
+import { colorPickerField } from '@innovixx/payload-color-picker-field'
 
 export const Header: GlobalConfig = {
   slug: 'header',
@@ -27,6 +28,10 @@ export const Header: GlobalConfig = {
           fields: [
             link({
               appearances: false,
+            }),
+            colorPickerField({
+              name: 'primaryColor',
+              label: 'Primary Color',
             }),
           ],
           maxRows: 20,

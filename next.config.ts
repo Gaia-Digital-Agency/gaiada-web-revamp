@@ -41,6 +41,7 @@ const nextConfig: NextConfig = {
 
     return webpackConfig
   },
+  transpilePackages: ['@innovixx/payload-color-picker-field'],
   reactStrictMode: true,
   redirects,
   turbopack: {

@@ -1,38 +1,50 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-
 import type { Header as HeaderType } from '@/payload-types'
-
 import { CMSLink } from '@/components/Link'
-import Link from 'next/link'
-import { SearchIcon, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 export const HeaderNav: React.FC<{ data: HeaderType | null }> = ({ data }) => {
   const navItems = data?.navItems || []
+  const pathname = usePathname()
+  const getHref = (link: any) => {
+    if (link?.type === 'reference') {
+      return `/${link?.reference?.value?.slug || ''}`
+    }
+    return link?.url || ''
+  }
 
   return (
-    <nav className="flex gap-3 items-center">
+    <nav className="flex gap-6 items-center nav-wrapper">
       {navItems.map((item, i) => {
         const hasSubItems = item.subItems && item.subItems.length > 0
 
+        const href = getHref(item.link)
+        const isActive = pathname === href
+
         if (hasSubItems) {
-          return <DropdownNavItem key={i} item={item} />
+          return <DropdownNavItem key={i} item={item} pathname={pathname} />
         }
 
-        return <CMSLink key={i} {...item.link} appearance="link" />
+        return (
+          <CMSLink
+            key={i}
+            {...item.link}
+            appearance="link"
+            className={`font-medium ${isActive ? 'active' : ''}`}
+          />
+        )
       })}
-      <Link href="/search">
-        <span className="sr-only">Search</span>
-        <SearchIcon className="w-5 text-primary" />
-      </Link>
     </nav>
   )
 }
 
 const DropdownNavItem: React.FC<{
   item: NonNullable<HeaderType['navItems']>[number]
-}> = ({ item }) => {
+  pathname: string
+}> = ({ item, pathname }) => {
   const [open, setOpen] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -43,10 +55,9 @@ const DropdownNavItem: React.FC<{
   }
 
   const handleLeave = () => {
-    timeoutRef.current = setTimeout(() => setOpen(false), 150)
+    // timeoutRef.current = setTimeout(() => setOpen(false), 150)
   }
 
-  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -57,15 +68,28 @@ const DropdownNavItem: React.FC<{
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  const [shouldRender, setShouldRender] = useState(open)
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+    if (open) {
+      setShouldRender(true)
+    } else {
+      timeoutId = setTimeout(() => setShouldRender(false), 300)
+    }
+
+    return () => clearTimeout(timeoutId)
+  }, [open])
+
   return (
     <div
       ref={containerRef}
-      className="relative"
+      className="has-submenu relative"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       <button
-        className="inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline"
+        className="has-submenu inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline"
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
@@ -74,19 +98,30 @@ const DropdownNavItem: React.FC<{
         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
-      {open && (
+      {shouldRender && (
         <div
-          className="absolute top-full left-0 mt-2 bg-background border border-border rounded-md shadow-lg py-2 min-w-48 z-50"
+          className={`sub-menu-wrapper absolute top-full left-0 mt-2 py-2 min-w-[450px] z-50 flex flex-row flex-wrap ${
+            open ? 'animate-slide-in-right' : 'animate-slide-out-right'
+          }`}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >
           {item.subItems?.map((subItem, j) => (
-            <div key={j} className="px-1">
+            <div key={j} className="px-1 min-w-[140px]">
               <CMSLink
                 {...subItem.link}
                 appearance="inline"
-                className="block px-3 py-2 text-sm rounded hover:bg-muted transition-colors w-full"
-              />
+                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${subItem.link.url === pathname ? 'active' : ''}`}
+              >
+                <div className="relative w-3 h-3 flex-shrink-0">
+                  <div
+                    className="absolute inset-0 rounded-full blur-[2.5px]"
+                    style={{
+                      backgroundColor: subItem.primaryColor || '#000000',
+                    }}
+                  />
+                </div>
+              </CMSLink>
             </div>
           ))}
         </div>

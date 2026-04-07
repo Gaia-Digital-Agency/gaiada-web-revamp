@@ -1,5 +1,5 @@
+import { Label } from '@/components/ui/label'
 import type { CollectionConfig } from 'payload'
-
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { CallToAction } from '../../blocks/CallToAction/config'
@@ -11,6 +11,7 @@ import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { revalidateService, revalidateServiceDelete } from './hooks/revalidateService'
+import { colorPickerField } from '@innovixx/payload-color-picker-field'
 
 import {
   MetaDescriptionField,
