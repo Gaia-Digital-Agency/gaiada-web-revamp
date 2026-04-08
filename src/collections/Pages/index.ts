@@ -19,6 +19,7 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { ButtonBlock } from '@/blocks/ButtonBlock/config'
+import { OurProcessBlock } from '@/blocks/OurProcess/config'
 
 import {
   MetaDescriptionField,
@@ -92,6 +93,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 CareerBlock,
                 TeamBlock,
                 ButtonBlock,
+                OurProcessBlock,
               ],
               required: true,
               admin: {

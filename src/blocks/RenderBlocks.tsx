@@ -14,6 +14,7 @@ import { AboutBlock } from '@/blocks/AboutBlock/Component'
 import { CareerBlock } from '@/blocks/CareerBlock/Component'
 import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { ButtonBlock } from '@/blocks/ButtonBlock/Components'
+import { OurProcess } from '@/blocks/OurProcess/component'
 
 // Mapping of block slugs to their corresponding React components
 
@@ -30,6 +31,7 @@ const blockComponents = {
   careerBlock: CareerBlock,
   teamBlock: TeamBlock,
   buttonBlock: ButtonBlock,
+  ourProcessBlock: OurProcess,
 }
 
 // Component that iterates through and renders an array of page layout blocks
@@ -54,7 +56,7 @@ export const RenderBlocks: React.FC<{
 
               return (
                 <section
-                  className={`py-12 md:py-16 ${!isEven ? 'bg-(--grey-background)' : 'bg-(--gda-brand-white)'}`}
+                  className={`py-12 md:py-16 flex items-center ${!isEven ? 'bg-(--grey-background)' : 'bg-(--gda-brand-white)'}`}
                   key={index}
                 >
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}

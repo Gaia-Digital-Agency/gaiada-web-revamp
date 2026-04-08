@@ -164,9 +164,10 @@
   --gda-brand-yellow: #ffc22c;
   --gda-brand-earth: #78716c;
   --gda-brand-grey: #c6c6c6;
+  --gda-white-bone: #f9f9f9;
+  --gda-earth: #78716c;
   --font-avenir: 'Avenir Next', sans-serif;
   --font-roboto: 'Roboto', sans-serif;
-  --gda-white-bone: #f9f9f9;
 }
 
 [data-theme='dark'] {
@@ -453,7 +454,12 @@ body {
   text-rendering: optimizeLegibility;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
+}
+
+/* C O N T A I N E R */
+.container {
+  max-width: 1112px;
 }
 
 /* H E A D E R */
@@ -478,16 +484,17 @@ footer {
 }
 
 /* T Y P O G R A P H Y */
-h1 {
+h1,
+.heading-1 {
   font-family: var(--font-brand);
   font-size: 56px;
   font-weight: 700;
   line-height: 1.1em;
   letter-spacing: -0.56px;
-  margin-bottom: 20px;
 }
 
-h2 {
+h2,
+.heading-2 {
   font-family: var(--font-brand);
   font-size: 42px;
   font-style: normal;
@@ -495,21 +502,24 @@ h2 {
   line-height: 1.1em;
   letter-spacing: -0.56px;
   margin-top: 0;
-  margin-bottom: 20px;
 }
 
-h3 {
+h3,
+.heading-3 {
   font-family: var(--font-brand);
   font-size: 32px;
   font-style: normal;
   font-weight: 600;
   line-height: 1.3em;
   letter-spacing: 0.32px;
-  margin-bottom: 20px;
 }
 
 .text-avenir {
   font-family: var(--font-avenir) !important;
+}
+
+.text-yellow {
+  color: var(--gda-brand-yellow);
 }
 
 /* B U T T O N S */
