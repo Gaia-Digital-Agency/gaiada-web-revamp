@@ -5,6 +5,9 @@ import RichText from '@/components/RichText'
 import type { Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 import { useGSAPImageParallax } from '@/hooks/useGSAPImageParallax'
+// import { useGSAPStaggerReveal } from '@/hooks/useGSAPStaggerReveal'
+import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
+import { useFramerMotionBlurInText } from '@/hooks/useFramerMotionBlurInText'
 
 export type PortfolioInsightBlockType = {
   blockType: 'portfolioInsight'
@@ -25,7 +28,12 @@ const PortfolioInsightItem: React.FC<{
   index: number
 }> = ({ insight, index }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLDivElement>(null)
+
   useGSAPImageParallax(wrapperRef)
+  useGSAPSplitTextReveal(titleRef, {}, [insight.title])
+  useGSAPSplitTextReveal(descriptionRef, {}, [insight.title])
 
   return (
     <div
@@ -40,8 +48,15 @@ const PortfolioInsightItem: React.FC<{
           index % 2 !== 0 ? 'md:order-2 pr-20' : 'md:order-1 pl-20',
         )}
       >
-        <h2>{insight.title}</h2>
-        <RichText data={insight.description} enableGutter={false} enableProse={true} className="" />
+        <div ref={descriptionRef}>
+          <h2>{insight.title}</h2>
+          <RichText
+            data={insight.description}
+            enableGutter={false}
+            enableProse={true}
+            className=""
+          />
+        </div>
       </div>
 
       <div
