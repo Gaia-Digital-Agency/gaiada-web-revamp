@@ -80,8 +80,8 @@ const PortfolioInsightItem: React.FC<{
 
 export const PortfolioInsightBlock: React.FC<PortfolioInsightBlockType> = ({ title, insights }) => {
   return (
-    <div className="bg-(--gda-brand-white)">
-      <div className="container">
+    <div className="container bg-(--gda-brand-white)">
+      <div>
         {title && <h2 className="text-center">{title}</h2>}
 
         <div className="flex flex-col">
