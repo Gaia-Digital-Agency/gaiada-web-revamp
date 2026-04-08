@@ -19,7 +19,7 @@ type HomepageHeroType =
       children?: never
       richText?: Page['hero']['richText']
       title?: Page['hero']['title']
-      buttons?: any[]
+      buttons?: Page['hero']['buttons']
     })
 
 export const HomepageHero: React.FC<HomepageHeroType> = ({

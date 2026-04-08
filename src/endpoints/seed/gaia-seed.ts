@@ -61,6 +61,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       context: { disableRevalidate: true },
       data: {
         name,
+        image: mediaId || 1, // Fallback to 1 if no media found, or handle as needed
         description: `Our ${name} department specializes in premium digital solutions.`,
       },
     })
@@ -127,17 +128,16 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
   for (const svc of serviceData) {
     await payload.create({
       collection: 'services',
+      draft: false,
       context: { disableRevalidate: true },
       data: {
         title: svc.title,
         slug: svc.slug,
-        description: svc.description,
-        image: mediaId,
         _status: 'published',
         hero: {
           type: 'mediumImpact',
           richText: richText([heading(svc.title)]),
-          media: mediaId,
+          media: mediaId || 1,
         },
         layout: [
           {
@@ -161,11 +161,18 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
   for (let i = 1; i <= 5; i++) {
     await payload.create({
       collection: 'portfolio',
+      draft: false,
       context: { disableRevalidate: true },
       data: {
         title: `Project ${i}`,
-        description: `A showcase of our premium work for Client ${i}, focused on digital excellence.`,
-        image: mediaId,
+        slug: `project-${i}`,
+        description: richText([paragraph(`A showcase of our premium work for Client ${i}, focused on digital excellence.`)]),
+        _status: 'published',
+        hero: {
+          type: 'mediumImpact',
+          richText: richText([heading(`Project ${i}`)]),
+          media: mediaId || 1,
+        },
       },
     })
   }
@@ -178,7 +185,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       data: {
         title: `Our Value ${i}`,
         description: `We believe in digital innovation and providing value ${i} to our clients globally.`,
-        image: mediaId,
+        image: mediaId || 1,
       },
     })
   }
@@ -192,7 +199,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       data: {
         name: `Team Member ${i + 1}`,
         role: roles[i],
-        image: mediaId,
+        image: mediaId || 1,
         department: depts[i % depts.length].id,
       },
     })
@@ -243,6 +250,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
   // 8. Create Pages
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Home',
@@ -251,26 +259,26 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       hero: {
         type: 'highImpact',
         richText: richText([heading('Elevate Your Digital Brand')]),
-        media: mediaId,
+        media: mediaId || 1,
       },
       layout: [
         {
           blockType: 'contentMedia',
           mediaPosition: 'right',
           richText: richText([paragraph('Welcome to Gaia Digital Agency. We transform digital ideas into premium experiences.')]),
-          media: mediaId,
+          media: mediaId || 1,
         },
         {
           blockType: 'contentMedia',
           mediaPosition: 'left',
           richText: richText([paragraph('Our features include cutting-edge design and strategic marketing solutions.')]),
-          media: mediaId,
+          media: mediaId || 1,
         },
         {
           blockType: 'contentMedia',
           mediaPosition: 'right',
           richText: richText([paragraph('Our writing team produces high-quality content that resonates with your audience and drives engagement.')]),
-          media: mediaId,
+          media: mediaId || 1,
         },
       ],
     },
@@ -278,6 +286,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Services',
@@ -286,7 +295,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       hero: {
         type: 'mediumImpact',
         richText: richText([heading('Our Services')]),
-        media: mediaId,
+        media: mediaId || 1,
       },
       layout: [
         {
@@ -306,6 +315,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Portfolio',
@@ -314,7 +324,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       hero: {
         type: 'mediumImpact',
         richText: richText([heading('Our Portfolio')]),
-        media: mediaId,
+        media: mediaId || 1,
       },
       layout: [
         {
@@ -328,6 +338,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'About Us',
@@ -336,7 +347,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       hero: {
         type: 'mediumImpact',
         richText: richText([heading('About Gaia')]),
-        media: mediaId,
+        media: mediaId || 1,
       },
       layout: [
         {
@@ -349,6 +360,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Careers',
@@ -357,7 +369,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       hero: {
         type: 'mediumImpact',
         richText: richText([heading('Join Our Team')]),
-        media: mediaId,
+        media: mediaId || 1,
       },
       layout: [
         {
@@ -372,6 +384,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Contact Us',
@@ -394,6 +407,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Blog',
@@ -402,7 +416,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       hero: {
         type: 'mediumImpact',
         richText: richText([heading('Our Blog')]),
-        media: mediaId,
+        media: mediaId || 1,
       },
       layout: [
         {
@@ -416,6 +430,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
 
   await payload.create({
     collection: 'pages',
+    draft: false,
     context: { disableRevalidate: true },
     data: {
       title: 'Coming Soon',
@@ -480,7 +495,6 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
     data: {
       copyright: 'Copyright @2026',
       developedBy: 'Developed by Gaia Digital Agency',
-      visitorCount: 1250,
       navItems: [
         { link: { type: 'custom', url: '/services', label: 'Services' } },
         { link: { type: 'custom', url: '/portfolio', label: 'Portfolio' } },
