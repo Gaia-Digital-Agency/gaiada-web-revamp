@@ -1,12 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Media } from '@/components/Media'
 import type { Media as MediaType } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Plus } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
+import { useGSAPStaggerReveal } from '@/hooks/useGSAPStaggerReveal'
+import { useGSAPImageParallax } from '@/hooks/useGSAPImageParallax'
 
 export type AboutBlockType = {
   blockType: 'aboutBlock'
@@ -78,13 +81,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            {/* width: 330;
-            height: 78;
-            angle: 0 deg;
-            opacity: 1; */}
             <div className="pl-[60px] md:pl-[66px] w-[450px]">
-              {' '}
-              {/* Adjusted indent to align perfectly with the title text start */}
               <p
                 className="text-[14px] leading-[22px] text-[#6D758F] font-normal pb-6"
                 style={{ fontFamily: 'Inter, sans-serif' }}
@@ -100,15 +97,32 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
 }
 
 export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image, items }) => {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLDivElement>(null)
+  const imageWrapperRef = useRef<HTMLDivElement>(null)
+
+  // Use the reusable animation hooks
+  useGSAPSplitTextReveal(titleRef, {}, [title])
+  useGSAPStaggerReveal(descriptionRef, { selector: 'p' }, [description])
+  useGSAPImageParallax(imageWrapperRef)
+
   return (
-    <div id="about-us" className="container px-0!">
+    <div ref={sectionRef} id="about-us" className="container px-0!">
       <div id="about-section-1" className="mb-20">
         <div className="flex flex-col md:flex-row items-start gap-[48px]">
           {/* Bagian Kiri: Image */}
           <div id="about-section-1-image" className="w-full md:w-[708px] md:h-[480px] shrink-0">
             {image && (
-              <div className="relative w-full h-full overflow-hidden">
-                <Media resource={image} fill className="object-cover" />
+              <div ref={imageWrapperRef} className="relative w-full h-full overflow-hidden">
+                <Media
+                  resource={image}
+                  fill
+                  className="about-us-image w-full h-full"
+                  imgClassName="object-cover scale-[1.2]"
+                  htmlElement={null}
+                  pictureClassName="w-full h-full"
+                />
               </div>
             )}
           </div>
@@ -116,17 +130,15 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
           {/* Bagian Kanan: Title, Description, and Accordion */}
           <div id="about-section-1-content" className="flex-1 pr-[180px]">
             {title && (
-              <h2 className="text-[56px] font-brand font-bold text-black leading-tight mb-6">
+              <h2 ref={titleRef} id="title-about-us">
                 {title}
               </h2>
             )}
 
             {description && (
-              <RichText
-                data={description}
-                enableGutter={false}
-                className="prose-lg max-w-none font-roboto font-normal text-black leading-[160%] tracking-[0.01em] mb-12"
-              />
+              <div ref={descriptionRef} id="description-about-us">
+                <RichText data={description} enableGutter={false} />
+              </div>
             )}
           </div>
         </div>

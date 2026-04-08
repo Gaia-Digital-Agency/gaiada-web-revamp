@@ -11,11 +11,13 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import PageClient from './page.client'
+import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const services = await payload.find({
-    collection: 'services',
+  const portfolios = await payload.find({
+    collection: 'portfolio',
     draft: false,
     limit: 1000,
     overrideAccess: false,
@@ -25,7 +27,7 @@ export async function generateStaticParams() {
     },
   })
 
-  return services.docs.map(({ slug }) => ({ slug }))
+  return portfolios.docs.map(({ slug }) => ({ slug }))
 }
 
 type Args = {
@@ -34,15 +36,32 @@ type Args = {
   }>
 }
 
-export default async function ServicePage({ params: paramsPromise }: Args) {
+export function PortfolioTitle({
+  title,
+  description,
+}: {
+  title: string
+  description: DefaultTypedEditorState
+}) {
+  return (
+    <div className="bg-(--gda-brand-white)">
+      <div className="flex flex-col justify-center items-center w-[700px] mx-auto py-20 gap-y-4">
+        <h1 className="text-center">{title}</h1>
+        <RichText data={description} className="text-center" />
+      </div>
+    </div>
+  )
+}
+
+export default async function PortfolioPage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
-  const url = '/services/' + decodedSlug
+  const url = '/portfolio/' + decodedSlug
 
-  const service = await queryServiceBySlug({ slug: decodedSlug })
+  const portfolio = await queryPortfolioBySlug({ slug: decodedSlug })
 
-  if (!service) {
+  if (!portfolio) {
     return <PayloadRedirects url={url} />
   }
 
@@ -53,17 +72,15 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      {service.hero && <RenderHero {...service.hero} />}
+      {/* Tampilkan Hero Portfolio */}
+      {portfolio.hero && <RenderHero {...portfolio.hero} />}
 
-      {service.layout && <RenderBlocks blocks={service.layout} />}
+      {portfolio.title && portfolio.description && (
+        <PortfolioTitle title={portfolio.title} description={portfolio.description} />
+      )}
 
-      {/* Fallback: if no layout blocks, show description */}
-      {/* {(!service.layout || service.layout.length === 0) && (
-        <div className="container py-16">
-          <h1 className="text-4xl font-bold mb-6">{service.title}</h1>
-          <p className="text-lg text-muted-foreground">{service.description}</p>
-        </div>
-      )} */}
+      {/* Tampilkan layout blocks (Content, Media, CTA, dll) */}
+      {portfolio.layout && <RenderBlocks blocks={portfolio.layout} />}
     </article>
   )
 }
@@ -71,18 +88,18 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
-  const service = await queryServiceBySlug({ slug: decodedSlug })
+  const portfolio = await queryPortfolioBySlug({ slug: decodedSlug })
 
-  return generateMeta({ doc: service })
+  return generateMeta({ doc: portfolio })
 }
 
-const queryServiceBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPortfolioBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
-    collection: 'services',
+    collection: 'portfolio',
     draft,
     limit: 1,
     pagination: false,
