@@ -1,7 +1,9 @@
-import React from 'react'
+'use client'
+import React, { useRef } from 'react'
 import { cn } from '@/utilities/ui'
 import { Media } from '@/components/Media'
 import type { PortfolioImageBanner as PortfolioImageBannerProps } from '@/payload-types'
+import { useGSAPImageParallax } from '@/hooks/useGSAPImageParallax'
 
 type Props = PortfolioImageBannerProps & {
   className?: string
@@ -10,9 +12,14 @@ type Props = PortfolioImageBannerProps & {
 export const PortfolioImageBanner: React.FC<Props> = (props) => {
   const { image, className } = props
 
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  useGSAPImageParallax(wrapperRef)
+
   return (
     <div className={cn('w-full flex justify-center py-0', className)}>
       <div
+        ref={wrapperRef}
         className="w-full max-w-[1440px] relative overflow-hidden py-0"
         style={{
           height: '532.033203125px',

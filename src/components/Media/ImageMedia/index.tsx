@@ -45,7 +45,7 @@ const placeholderBlur =
  * remotePatterns for optimization. Only add `loader` if using external CDNs with custom transforms.
  */
 
-export const ImageMedia: React.FC<MediaProps> = (props) => {
+export const ImageMedia = React.forwardRef<HTMLImageElement, MediaProps>((props, ref) => {
   const {
     alt: altFromProps,
     fill,
@@ -85,7 +85,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         .join(', ')
 
   return (
-    <picture className={cn(pictureClassName)}>
+    <picture className={cn(pictureClassName)} ref={ref as any}>
       <NextImage
         alt={alt || ''}
         className={cn(imgClassName)}
@@ -102,4 +102,6 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       />
     </picture>
   )
-}
+})
+
+ImageMedia.displayName = 'ImageMedia'

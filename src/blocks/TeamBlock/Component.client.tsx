@@ -5,6 +5,7 @@ import { Media } from '@/components/Media'
 import type { Department, Team } from '@/payload-types'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import { AppButton } from '@/components/common/AppButton'
+import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
 
 type Props = {
   departments: (Department & { members: Team[] })[]
@@ -18,9 +19,14 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
   const [activeDept, setActiveDept] = useState<number | null>(null)
   const [currentPage, setCurrentPage] = useState<Record<number, number>>({})
   const trackRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const introTextRef = useRef<HTMLParagraphElement>(null)
   const isDragging = useRef(false)
   const startX = useRef(0)
   const scrollLeft = useRef(0)
+
+  useGSAPSplitTextReveal(titleRef, {}, [title])
+  useGSAPSplitTextReveal(introTextRef, {}, [introText])
 
   // Initialize current pages
   useEffect(() => {
@@ -62,9 +68,13 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
   return (
     <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 overflow-hidden">
       <div className="flex flex-col mb-[48px]">
-        <h1 className="text-center">{title}</h1>
+        <h1 className="text-center" ref={titleRef}>
+          {title}
+        </h1>
         <div className="flex items-center w-[419px] h-[36px] mx-auto justify-center">
-          <p className="font-brand font-normal text-center">{introText}</p>
+          <p ref={introTextRef} className="font-brand font-normal text-center">
+            {introText}
+          </p>
         </div>
       </div>
 

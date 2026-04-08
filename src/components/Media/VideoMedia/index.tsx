@@ -1,17 +1,18 @@
 'use client'
 
 import { cn } from '@/utilities/ui'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useImperativeHandle, useRef } from 'react'
 
 import type { Props as MediaProps } from '../types'
 
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 
-export const VideoMedia: React.FC<MediaProps> = (props) => {
+export const VideoMedia = React.forwardRef<HTMLVideoElement, MediaProps>((props, ref) => {
   const { onClick, resource, videoClassName } = props
 
   const videoRef = useRef<HTMLVideoElement>(null)
-  // const [showFallback] = useState<boolean>()
+
+  useImperativeHandle(ref, () => videoRef.current!)
 
   useEffect(() => {
     const { current: video } = videoRef
@@ -43,4 +44,6 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   }
 
   return null
-}
+})
+
+VideoMedia.displayName = 'VideoMedia'
