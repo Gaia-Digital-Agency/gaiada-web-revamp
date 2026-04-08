@@ -46,7 +46,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   return (
     <>
       <header
-        className={`z-50 w-full h-[79px] px-6 md:px-10 flex items-center transition-all duration-300 `}
+        className={`sticky top-0 z-50 w-full h-[79px] px-6 md:px-10 flex items-center transition-all duration-300 mt-[-80px] ${
+          isScrolled ? 'bg-[#F9F9F9CC] backdrop-blur-[25px] shadow-sm' : 'bg-transparent'
+        }`}
         {...(theme ? { 'data-theme': theme } : {})}
       >
         <div className="container mx-auto flex justify-between items-center w-full">
