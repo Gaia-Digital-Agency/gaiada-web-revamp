@@ -351,6 +351,14 @@ export interface Page {
         steps?:
           | {
               title: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ourProcessBlock';
+      }
+    | {
         title?: string | null;
         insights?:
           | {
@@ -376,8 +384,6 @@ export interface Page {
           | null;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'ourProcessBlock';
-      }
         blockType: 'portfolioInsight';
       }
     | PortfolioImageBanner
@@ -627,7 +633,11 @@ export interface Service {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
+    /**
+     * Title
+     */
+    title?: string | null;
     richText?: {
       root: {
         type: string;
@@ -644,14 +654,21 @@ export interface Service {
       [k: string]: unknown;
     } | null;
     /**
-     * Teks raksasa untuk foreground (contoh: Branding)
-     */
-    title?: string | null;
-    /**
      * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
      */
     giantTitleColor?: string | null;
     gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    buttons?:
+      | {
+          label: string;
+          url: string;
+          icon?: ('none' | 'arrow' | 'search') | null;
+          iconPosition?: ('left' | 'right') | null;
+          variant?: ('default' | 'link') | null;
+          newTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
     links?:
       | {
           link: {
@@ -1826,6 +1843,11 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     title?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         portfolioInsight?:
           | T
           | {
@@ -2250,10 +2272,21 @@ export interface PortfolioSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        richText?: T;
         title?: T;
+        richText?: T;
         giantTitleColor?: T;
         gradientColor?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              icon?: T;
+              iconPosition?: T;
+              variant?: T;
+              newTab?: T;
+              id?: T;
+            };
         links?:
           | T
           | {
