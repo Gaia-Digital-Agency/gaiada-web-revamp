@@ -43,10 +43,11 @@ export default function SubServiceList({
             <div
               className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
               style={{
-                background: `
-                  linear-gradient(180deg, rgba(26, 26, 27, 0) -17.7%, rgba(26, 26, 27, 0.6) 100%),
-                  linear-gradient(180deg, rgba(255, 194, 44, 0) -9.62%, rgba(255, 194, 44, 0.5) 100%)
-                `,
+                background: `linear-gradient(180deg, rgba(26, 26, 27, 0) -25%, rgba(26, 26, 27, 0.6) 100%);`,
+                // background: `
+                //   linear-gradient(180deg, rgba(26, 26, 27, 0) -17.7%, rgba(26, 26, 27, 0.6) 100%),
+                //   linear-gradient(180deg, rgba(255, 194, 44, 0) -9.62%, rgba(255, 194, 44, 0.5) 100%)
+                // `,
               }}
             />
             {/* Hover Overlay */}
@@ -89,8 +90,8 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
   if (!intro) return null
 
   return (
-    <section className="bg-(--gda-brand-white) overflow-hidden">
-      <div className="container py-16 md:py-24 pr-0">
+    <div className="px-0 mx-auto bg-(--gda-brand-white) overflow-hidden">
+      <div className="py-16 md:py-24 pr-0">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
           <div className="space-y-8 max-w-2xl">
             <div className="space-y-4 pl-[180px]">
@@ -101,7 +102,7 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
 
           {intro.image && (
             <div className="flex justify-end w-full lg:w-[708px]">
-              <div className="relative w-full max-w-[708px] aspect-[708/422] overflow-hidden group">
+              <div className="relative w-full max-w-[708px] aspect-video overflow-hidden group">
                 <Media
                   resource={intro.image}
                   fill
@@ -113,7 +114,7 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
         </div>
       </div>
 
-      <div id="sub-services" className="container pt-0">
+      <div id="sub-services" className="pt-0">
         <div className="grid grid-cols-2 gap-x-12 px-20 items-center">
           <SubServiceList subServices={subServices} />
         </div>
@@ -127,6 +128,6 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, 
           />
         </div>
       </div>
-    </section>
+    </div>
   )
 }
