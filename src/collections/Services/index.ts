@@ -39,6 +39,7 @@ export const Services: CollectionConfig<'services'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     useAsTitle: 'title',
+    group: 'GAIA Content',
   },
   fields: [
     {

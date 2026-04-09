@@ -72,11 +72,11 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
-    services: Service;
-    portfolio: Portfolio;
-    'about-items': AboutItem;
     departments: Department;
     team: Team;
+    services: Service;
+    portfolio: Portfolio;
+    scopes: Scope;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -99,11 +99,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
-    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
-    'about-items': AboutItemsSelect<false> | AboutItemsSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
+    scopes: ScopesSelect<false> | ScopesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -828,6 +828,7 @@ export interface Portfolio {
     [k: string]: unknown;
   };
   services?: (number | Service)[] | null;
+  scopes?: (number | Scope)[] | null;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
     /**
@@ -975,6 +976,21 @@ export interface Portfolio {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scopes".
+ */
+export interface Scope {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1391,18 +1407,6 @@ export interface TeamBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-items".
- */
-export interface AboutItem {
-  id: number;
-  title: string;
-  description: string;
-  image: number | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "departments".
  */
 export interface Department {
@@ -1637,6 +1641,14 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'departments';
+        value: number | Department;
+      } | null)
+    | ({
+        relationTo: 'team';
+        value: number | Team;
+      } | null)
+    | ({
         relationTo: 'services';
         value: number | Service;
       } | null)
@@ -1645,16 +1657,8 @@ export interface PayloadLockedDocument {
         value: number | Portfolio;
       } | null)
     | ({
-        relationTo: 'about-items';
-        value: number | AboutItem;
-      } | null)
-    | ({
-        relationTo: 'departments';
-        value: number | Department;
-      } | null)
-    | ({
-        relationTo: 'team';
-        value: number | Team;
+        relationTo: 'scopes';
+        value: number | Scope;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2166,6 +2170,29 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments_select".
+ */
+export interface DepartmentsSelect<T extends boolean = true> {
+  name?: T;
+  image?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  image?: T;
+  department?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
@@ -2283,6 +2310,7 @@ export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   services?: T;
+  scopes?: T;
   hero?:
     | T
     | {
@@ -2368,35 +2396,12 @@ export interface PortfolioSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-items_select".
+ * via the `definition` "scopes_select".
  */
-export interface AboutItemsSelect<T extends boolean = true> {
+export interface ScopesSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
-  image?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments_select".
- */
-export interface DepartmentsSelect<T extends boolean = true> {
-  name?: T;
-  image?: T;
-  description?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team_select".
- */
-export interface TeamSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  image?: T;
-  department?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2837,7 +2842,13 @@ export interface Footer {
  */
 export interface Setting {
   id: number;
+  siteTitle: string;
+  tagline?: string | null;
   logo?: (number | null) | Media;
+  /**
+   * Upload a favicon (best in .ico or .svg format).
+   */
+  favicon?: (number | null) | Media;
   /**
    * Enter the site-wide WhatsApp number (e.g., +1234567890)
    */
@@ -2852,6 +2863,27 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
+  address: string;
+  /**
+   * Paste the <iframe> embed code from Google Maps here.
+   */
+  googleMapsEmbed?: string | null;
+  /**
+   * Only enter the ID, not the full script.
+   */
+  gtmId?: string | null;
+  /**
+   * Only enter the ID (Measurement ID).
+   */
+  gaId?: string | null;
+  /**
+   * Custom scripts to be added inside the <head> tag.
+   */
+  headerScripts?: string | null;
+  /**
+   * Custom scripts to be added before the closing </body> tag.
+   */
+  footerScripts?: string | null;
   smtpHost?: string | null;
   smtpPort?: number | null;
   smtpUser?: string | null;
@@ -2946,7 +2978,10 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  tagline?: T;
   logo?: T;
+  favicon?: T;
   whatsappNumber?: T;
   contactEmail?: T;
   socialLinks?:
@@ -2958,6 +2993,12 @@ export interface SettingsSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  address?: T;
+  googleMapsEmbed?: T;
+  gtmId?: T;
+  gaId?: T;
+  headerScripts?: T;
+  footerScripts?: T;
   smtpHost?: T;
   smtpPort?: T;
   smtpUser?: T;

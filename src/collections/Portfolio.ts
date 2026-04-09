@@ -34,6 +34,7 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     useAsTitle: 'title',
+    group: 'GAIA Content',
   },
   fields: [
     {
@@ -61,6 +62,16 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
       relationTo: 'services',
       hasMany: true,
       label: 'Services (Categories)',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'scopes',
+      type: 'relationship',
+      relationTo: 'scopes',
+      hasMany: true,
+      label: 'Scope of Work',
       admin: {
         position: 'sidebar',
       },

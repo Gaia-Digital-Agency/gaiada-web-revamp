@@ -2,7 +2,10 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE "public"."enum_pages_hero_links_link_type" AS ENUM('reference', 'custom');
+   CREATE TYPE "public"."enum_pages_hero_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum_pages_hero_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum_pages_hero_buttons_variant" AS ENUM('default', 'link');
+  CREATE TYPE "public"."enum_pages_hero_links_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_pages_hero_links_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum_pages_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_pages_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
@@ -12,8 +15,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_pages_blocks_archive_populate_by" AS ENUM('collection', 'selection');
   CREATE TYPE "public"."enum_pages_blocks_archive_relation_to" AS ENUM('posts');
   CREATE TYPE "public"."enum_pages_blocks_content_media_media_position" AS ENUM('left', 'right');
-  CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
+  CREATE TYPE "public"."enum_pages_blocks_button_block_columns_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum_pages_blocks_button_block_columns_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum_pages_blocks_button_block_columns_buttons_variant" AS ENUM('default', 'link');
+  CREATE TYPE "public"."enum_pages_blocks_button_block_columns_size" AS ENUM('full', 'half', 'oneThird', 'twoThirds');
+  CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact', 'nonHomepageHero', 'homepageHero');
+  CREATE TYPE "public"."enum_pages_hero_gradient_color" AS ENUM('yellow', 'orange', 'blue', 'white');
   CREATE TYPE "public"."enum_pages_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__pages_v_version_hero_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum__pages_v_version_hero_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum__pages_v_version_hero_buttons_variant" AS ENUM('default', 'link');
   CREATE TYPE "public"."enum__pages_v_version_hero_links_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum__pages_v_version_hero_links_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum__pages_v_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
@@ -24,10 +35,18 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__pages_v_blocks_archive_populate_by" AS ENUM('collection', 'selection');
   CREATE TYPE "public"."enum__pages_v_blocks_archive_relation_to" AS ENUM('posts');
   CREATE TYPE "public"."enum__pages_v_blocks_content_media_media_position" AS ENUM('left', 'right');
-  CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
+  CREATE TYPE "public"."enum__pages_v_blocks_button_block_columns_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum__pages_v_blocks_button_block_columns_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum__pages_v_blocks_button_block_columns_buttons_variant" AS ENUM('default', 'link');
+  CREATE TYPE "public"."enum__pages_v_blocks_button_block_columns_size" AS ENUM('full', 'half', 'oneThird', 'twoThirds');
+  CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact', 'nonHomepageHero', 'homepageHero');
+  CREATE TYPE "public"."enum__pages_v_version_hero_gradient_color" AS ENUM('yellow', 'orange', 'blue', 'white');
   CREATE TYPE "public"."enum__pages_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_posts_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum_services_hero_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum_services_hero_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum_services_hero_buttons_variant" AS ENUM('default', 'link');
   CREATE TYPE "public"."enum_services_hero_links_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_services_hero_links_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum_services_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
@@ -36,8 +55,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_services_blocks_content_columns_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_services_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum_services_blocks_content_media_media_position" AS ENUM('left', 'right');
-  CREATE TYPE "public"."enum_services_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
+  CREATE TYPE "public"."enum_services_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact', 'nonHomepageHero', 'homepageHero');
+  CREATE TYPE "public"."enum_services_hero_gradient_color" AS ENUM('yellow', 'orange', 'blue', 'white');
   CREATE TYPE "public"."enum_services_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__services_v_version_hero_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum__services_v_version_hero_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum__services_v_version_hero_buttons_variant" AS ENUM('default', 'link');
   CREATE TYPE "public"."enum__services_v_version_hero_links_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum__services_v_version_hero_links_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum__services_v_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
@@ -46,8 +69,37 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__services_v_blocks_content_columns_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum__services_v_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum__services_v_blocks_content_media_media_position" AS ENUM('left', 'right');
-  CREATE TYPE "public"."enum__services_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
+  CREATE TYPE "public"."enum__services_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact', 'nonHomepageHero', 'homepageHero');
+  CREATE TYPE "public"."enum__services_v_version_hero_gradient_color" AS ENUM('yellow', 'orange', 'blue', 'white');
   CREATE TYPE "public"."enum__services_v_version_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum_portfolio_hero_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum_portfolio_hero_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum_portfolio_hero_buttons_variant" AS ENUM('default', 'link');
+  CREATE TYPE "public"."enum_portfolio_hero_links_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum_portfolio_hero_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum_portfolio_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum_portfolio_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum_portfolio_blocks_content_columns_size" AS ENUM('oneThird', 'half', 'twoThirds', 'full');
+  CREATE TYPE "public"."enum_portfolio_blocks_content_columns_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum_portfolio_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum_portfolio_blocks_content_media_media_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum_portfolio_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact', 'nonHomepageHero', 'homepageHero');
+  CREATE TYPE "public"."enum_portfolio_hero_gradient_color" AS ENUM('yellow', 'orange', 'blue', 'white');
+  CREATE TYPE "public"."enum_portfolio_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_buttons_icon" AS ENUM('none', 'arrow', 'search');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_buttons_icon_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_buttons_variant" AS ENUM('default', 'link');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_links_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum__portfolio_v_blocks_cta_links_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum__portfolio_v_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum__portfolio_v_blocks_content_columns_size" AS ENUM('oneThird', 'half', 'twoThirds', 'full');
+  CREATE TYPE "public"."enum__portfolio_v_blocks_content_columns_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum__portfolio_v_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum__portfolio_v_blocks_content_media_media_position" AS ENUM('left', 'right');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact', 'nonHomepageHero', 'homepageHero');
+  CREATE TYPE "public"."enum__portfolio_v_version_hero_gradient_color" AS ENUM('yellow', 'orange', 'blue', 'white');
+  CREATE TYPE "public"."enum__portfolio_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_redirects_to_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_forms_confirmation_type" AS ENUM('message', 'redirect');
   CREATE TYPE "public"."enum_payload_jobs_log_task_slug" AS ENUM('inline', 'schedulePublish');
@@ -56,8 +108,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_payload_folders_folder_type" AS ENUM('media');
   CREATE TYPE "public"."enum_header_nav_items_sub_items_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_header_nav_items_link_type" AS ENUM('reference', 'custom');
+  CREATE TYPE "public"."enum_footer_nav_items_with_icon_link_icon" AS ENUM('none', 'email', 'map');
   CREATE TYPE "public"."enum_footer_nav_items_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_settings_social_links_platform" AS ENUM('facebook', 'instagram', 'linkedin', 'tiktok', 'youtube');
+  CREATE TABLE "pages_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum_pages_hero_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum_pages_hero_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum_pages_hero_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false
+  );
+  
   CREATE TABLE "pages_hero_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -174,12 +239,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "pages_blocks_about_block_items" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" varchar
+  );
+  
   CREATE TABLE "pages_blocks_about_block" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
+  	"image_id" integer,
   	"title" varchar,
+  	"description" jsonb,
   	"block_name" varchar
   );
   
@@ -194,11 +269,94 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "pages_blocks_team_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar DEFAULT 'Our Team',
+  	"intro_text" varchar DEFAULT 'Hover a department · Drag to explore',
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_button_block_columns_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum_pages_blocks_button_block_columns_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum_pages_blocks_button_block_columns_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum_pages_blocks_button_block_columns_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false
+  );
+  
+  CREATE TABLE "pages_blocks_button_block_columns" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"size" "enum_pages_blocks_button_block_columns_size" DEFAULT 'full'
+  );
+  
+  CREATE TABLE "pages_blocks_button_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_our_process_block_steps" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_our_process_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_portfolio_insight_insights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"image_id" integer
+  );
+  
+  CREATE TABLE "pages_blocks_portfolio_insight" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_portfolio_image_banner" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "pages" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar,
   	"hero_type" "enum_pages_hero_type" DEFAULT 'lowImpact',
+  	"hero_title" varchar,
   	"hero_rich_text" jsonb,
+  	"hero_giant_title_color" varchar,
+  	"hero_gradient_color" "enum_pages_hero_gradient_color" DEFAULT 'yellow',
   	"hero_media_id" integer,
   	"meta_title" varchar,
   	"meta_image_id" integer,
@@ -218,7 +376,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"pages_id" integer,
   	"posts_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer,
   	"categories_id" integer
+  );
+  
+  CREATE TABLE "_pages_v_version_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum__pages_v_version_hero_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum__pages_v_version_hero_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum__pages_v_version_hero_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false,
+  	"_uuid" varchar
   );
   
   CREATE TABLE "_pages_v_version_hero_links" (
@@ -348,12 +521,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "_pages_v_blocks_about_block_items" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" varchar,
+  	"_uuid" varchar
+  );
+  
   CREATE TABLE "_pages_v_blocks_about_block" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
+  	"image_id" integer,
   	"title" varchar,
+  	"description" jsonb,
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -370,12 +554,104 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "_pages_v_blocks_team_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar DEFAULT 'Our Team',
+  	"intro_text" varchar DEFAULT 'Hover a department · Drag to explore',
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_button_block_columns_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum__pages_v_blocks_button_block_columns_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum__pages_v_blocks_button_block_columns_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum__pages_v_blocks_button_block_columns_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_button_block_columns" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"size" "enum__pages_v_blocks_button_block_columns_size" DEFAULT 'full',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_button_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_our_process_block_steps" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_our_process_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_portfolio_insight_insights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"image_id" integer,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_portfolio_insight" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_portfolio_image_banner" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "_pages_v" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"parent_id" integer,
   	"version_title" varchar,
   	"version_hero_type" "enum__pages_v_version_hero_type" DEFAULT 'lowImpact',
+  	"version_hero_title" varchar,
   	"version_hero_rich_text" jsonb,
+  	"version_hero_giant_title_color" varchar,
+  	"version_hero_gradient_color" "enum__pages_v_version_hero_gradient_color" DEFAULT 'yellow',
   	"version_hero_media_id" integer,
   	"version_meta_title" varchar,
   	"version_meta_image_id" integer,
@@ -399,6 +675,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"pages_id" integer,
   	"posts_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer,
   	"categories_id" integer
   );
   
@@ -575,6 +853,37 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"lock_until" timestamp(3) with time zone
   );
   
+  CREATE TABLE "departments" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"image_id" integer NOT NULL,
+  	"description" varchar,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE "team" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"role" varchar NOT NULL,
+  	"image_id" integer NOT NULL,
+  	"department_id" integer NOT NULL,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE "services_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum_services_hero_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum_services_hero_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum_services_hero_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false
+  );
+  
   CREATE TABLE "services_hero_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -659,13 +968,61 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "services_blocks_services_detail_sub_services" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" varchar,
+  	"image_id" integer
+  );
+  
+  CREATE TABLE "services_blocks_services_detail" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"intro_title" varchar,
+  	"intro_description" varchar,
+  	"intro_image_id" integer,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "services_blocks_portfolio_insight_insights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"image_id" integer
+  );
+  
+  CREATE TABLE "services_blocks_portfolio_insight" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "services_blocks_portfolio_image_banner" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "services" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar,
-  	"description" varchar,
-  	"image_id" integer,
   	"hero_type" "enum_services_hero_type" DEFAULT 'lowImpact',
+  	"hero_title" varchar,
   	"hero_rich_text" jsonb,
+  	"hero_giant_title_color" varchar,
+  	"hero_gradient_color" "enum_services_hero_gradient_color" DEFAULT 'yellow',
   	"hero_media_id" integer,
   	"meta_title" varchar,
   	"meta_image_id" integer,
@@ -684,7 +1041,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"pages_id" integer,
-  	"posts_id" integer
+  	"posts_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer
+  );
+  
+  CREATE TABLE "_services_v_version_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum__services_v_version_hero_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum__services_v_version_hero_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum__services_v_version_hero_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false,
+  	"_uuid" varchar
   );
   
   CREATE TABLE "_services_v_version_hero_links" (
@@ -779,14 +1151,67 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "_services_v_blocks_services_detail_sub_services" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" varchar,
+  	"image_id" integer,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_services_v_blocks_services_detail" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"intro_title" varchar,
+  	"intro_description" varchar,
+  	"intro_image_id" integer,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_services_v_blocks_portfolio_insight_insights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"image_id" integer,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_services_v_blocks_portfolio_insight" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_services_v_blocks_portfolio_image_banner" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "_services_v" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"parent_id" integer,
   	"version_title" varchar,
-  	"version_description" varchar,
-  	"version_image_id" integer,
   	"version_hero_type" "enum__services_v_version_hero_type" DEFAULT 'lowImpact',
+  	"version_hero_title" varchar,
   	"version_hero_rich_text" jsonb,
+  	"version_hero_giant_title_color" varchar,
+  	"version_hero_gradient_color" "enum__services_v_version_hero_gradient_color" DEFAULT 'yellow',
   	"version_hero_media_id" integer,
   	"version_meta_title" varchar,
   	"version_meta_image_id" integer,
@@ -809,41 +1234,345 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"pages_id" integer,
-  	"posts_id" integer
+  	"posts_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer
+  );
+  
+  CREATE TABLE "portfolio_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum_portfolio_hero_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum_portfolio_hero_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum_portfolio_hero_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false
+  );
+  
+  CREATE TABLE "portfolio_hero_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link_type" "enum_portfolio_hero_links_link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_label" varchar,
+  	"link_appearance" "enum_portfolio_hero_links_link_appearance" DEFAULT 'default'
+  );
+  
+  CREATE TABLE "portfolio_blocks_cta_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link_type" "enum_portfolio_blocks_cta_links_link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_label" varchar,
+  	"link_appearance" "enum_portfolio_blocks_cta_links_link_appearance" DEFAULT 'default'
+  );
+  
+  CREATE TABLE "portfolio_blocks_cta" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"rich_text" jsonb,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "portfolio_blocks_content_columns" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"size" "enum_portfolio_blocks_content_columns_size" DEFAULT 'oneThird',
+  	"rich_text" jsonb,
+  	"enable_link" boolean,
+  	"link_type" "enum_portfolio_blocks_content_columns_link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_label" varchar,
+  	"link_appearance" "enum_portfolio_blocks_content_columns_link_appearance" DEFAULT 'default'
+  );
+  
+  CREATE TABLE "portfolio_blocks_content" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "portfolio_blocks_media_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"media_id" integer,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "portfolio_blocks_form_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"form_id" integer,
+  	"enable_intro" boolean,
+  	"intro_content" jsonb,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "portfolio_blocks_content_media" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"media_position" "enum_portfolio_blocks_content_media_media_position" DEFAULT 'right',
+  	"rich_text" jsonb,
+  	"media_id" integer,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "portfolio_blocks_portfolio_insight_insights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"image_id" integer
+  );
+  
+  CREATE TABLE "portfolio_blocks_portfolio_insight" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "portfolio_blocks_portfolio_image_banner" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"block_name" varchar
   );
   
   CREATE TABLE "portfolio" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"title" varchar NOT NULL,
-  	"description" varchar NOT NULL,
-  	"image_id" integer NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"hero_type" "enum_portfolio_hero_type" DEFAULT 'lowImpact',
+  	"hero_title" varchar,
+  	"hero_rich_text" jsonb,
+  	"hero_giant_title_color" varchar,
+  	"hero_gradient_color" "enum_portfolio_hero_gradient_color" DEFAULT 'yellow',
+  	"hero_media_id" integer,
+  	"meta_title" varchar,
+  	"meta_image_id" integer,
+  	"meta_description" varchar,
+  	"published_at" timestamp(3) with time zone,
+  	"generate_slug" boolean DEFAULT true,
+  	"slug" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"_status" "enum_portfolio_status" DEFAULT 'draft'
   );
   
-  CREATE TABLE "about_items" (
+  CREATE TABLE "portfolio_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" integer NOT NULL,
+  	"path" varchar NOT NULL,
+  	"services_id" integer,
+  	"scopes_id" integer,
+  	"pages_id" integer,
+  	"posts_id" integer,
+  	"portfolio_id" integer
+  );
+  
+  CREATE TABLE "_portfolio_v_version_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"label" varchar,
+  	"url" varchar,
+  	"icon" "enum__portfolio_v_version_hero_buttons_icon" DEFAULT 'none',
+  	"icon_position" "enum__portfolio_v_version_hero_buttons_icon_position" DEFAULT 'right',
+  	"variant" "enum__portfolio_v_version_hero_buttons_variant" DEFAULT 'default',
+  	"new_tab" boolean DEFAULT false,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_version_hero_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"link_type" "enum__portfolio_v_version_hero_links_link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_label" varchar,
+  	"link_appearance" "enum__portfolio_v_version_hero_links_link_appearance" DEFAULT 'default',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_cta_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"link_type" "enum__portfolio_v_blocks_cta_links_link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_label" varchar,
+  	"link_appearance" "enum__portfolio_v_blocks_cta_links_link_appearance" DEFAULT 'default',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_cta" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"rich_text" jsonb,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_content_columns" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"size" "enum__portfolio_v_blocks_content_columns_size" DEFAULT 'oneThird',
+  	"rich_text" jsonb,
+  	"enable_link" boolean,
+  	"link_type" "enum__portfolio_v_blocks_content_columns_link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_label" varchar,
+  	"link_appearance" "enum__portfolio_v_blocks_content_columns_link_appearance" DEFAULT 'default',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_content" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_media_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"media_id" integer,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_form_block" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"form_id" integer,
+  	"enable_intro" boolean,
+  	"intro_content" jsonb,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_content_media" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"media_position" "enum__portfolio_v_blocks_content_media_media_position" DEFAULT 'right',
+  	"rich_text" jsonb,
+  	"media_id" integer,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_portfolio_insight_insights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"description" jsonb,
+  	"image_id" integer,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_portfolio_insight" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v_blocks_portfolio_image_banner" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_portfolio_v" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"parent_id" integer,
+  	"version_title" varchar,
+  	"version_description" jsonb,
+  	"version_hero_type" "enum__portfolio_v_version_hero_type" DEFAULT 'lowImpact',
+  	"version_hero_title" varchar,
+  	"version_hero_rich_text" jsonb,
+  	"version_hero_giant_title_color" varchar,
+  	"version_hero_gradient_color" "enum__portfolio_v_version_hero_gradient_color" DEFAULT 'yellow',
+  	"version_hero_media_id" integer,
+  	"version_meta_title" varchar,
+  	"version_meta_image_id" integer,
+  	"version_meta_description" varchar,
+  	"version_published_at" timestamp(3) with time zone,
+  	"version_generate_slug" boolean DEFAULT true,
+  	"version_slug" varchar,
+  	"version_updated_at" timestamp(3) with time zone,
+  	"version_created_at" timestamp(3) with time zone,
+  	"version__status" "enum__portfolio_v_version_status" DEFAULT 'draft',
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"latest" boolean,
+  	"autosave" boolean
+  );
+  
+  CREATE TABLE "_portfolio_v_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" integer NOT NULL,
+  	"path" varchar NOT NULL,
+  	"services_id" integer,
+  	"scopes_id" integer,
+  	"pages_id" integer,
+  	"posts_id" integer,
+  	"portfolio_id" integer
+  );
+  
+  CREATE TABLE "scopes" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
-  	"description" varchar NOT NULL,
-  	"image_id" integer NOT NULL,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
-  );
-  
-  CREATE TABLE "departments" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"name" varchar NOT NULL,
-  	"description" varchar,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
-  );
-  
-  CREATE TABLE "team" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"name" varchar NOT NULL,
-  	"role" varchar NOT NULL,
-  	"image_id" integer NOT NULL,
-  	"department_id" integer NOT NULL,
+  	"generate_slug" boolean DEFAULT true,
+  	"slug" varchar NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -1006,6 +1735,26 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "forms_blocks_radio_options" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar NOT NULL,
+  	"value" varchar NOT NULL
+  );
+  
+  CREATE TABLE "forms_blocks_radio" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar NOT NULL,
+  	"name" varchar NOT NULL,
+  	"width" numeric,
+  	"required" boolean,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "forms_emails" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -1141,11 +1890,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"media_id" integer,
   	"categories_id" integer,
   	"users_id" integer,
-  	"services_id" integer,
-  	"portfolio_id" integer,
-  	"about_items_id" integer,
   	"departments_id" integer,
   	"team_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer,
+  	"scopes_id" integer,
   	"redirects_id" integer,
   	"forms_id" integer,
   	"form_submissions_id" integer,
@@ -1184,7 +1933,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_type" "enum_header_nav_items_sub_items_link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
-  	"link_label" varchar NOT NULL
+  	"link_label" varchar NOT NULL,
+  	"primary_color" varchar
   );
   
   CREATE TABLE "header_nav_items" (
@@ -1209,7 +1959,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"pages_id" integer,
-  	"posts_id" integer
+  	"posts_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer
+  );
+  
+  CREATE TABLE "footer_nav_items_with_icon" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link_label" varchar NOT NULL,
+  	"link_url" varchar NOT NULL,
+  	"link_icon" "enum_footer_nav_items_with_icon_link_icon" DEFAULT 'none',
+  	"link_new_tab" boolean DEFAULT false
   );
   
   CREATE TABLE "footer_nav_items" (
@@ -1224,7 +1986,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "footer" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"visitor_count" numeric,
+  	"form_id" numeric DEFAULT 1,
+  	"background_image_id" integer,
+  	"heading" varchar DEFAULT 'Start a project with Gaia',
   	"copyright" varchar DEFAULT 'Copyright @2026',
   	"developed_by" varchar DEFAULT 'Developed by Gaia Digital Agency',
   	"updated_at" timestamp(3) with time zone,
@@ -1237,7 +2001,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"pages_id" integer,
-  	"posts_id" integer
+  	"posts_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer
   );
   
   CREATE TABLE "settings_social_links" (
@@ -1252,12 +2018,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "settings" (
   	"id" serial PRIMARY KEY NOT NULL,
+  	"logo_id" integer,
   	"whatsapp_number" varchar,
   	"contact_email" varchar,
+  	"smtp_host" varchar,
+  	"smtp_port" numeric,
+  	"smtp_user" varchar,
+  	"smtp_pass" varchar,
+  	"smtp_secure" boolean DEFAULT true,
+  	"from_name" varchar,
+  	"from_email" varchar,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
   );
   
+  ALTER TABLE "pages_hero_buttons" ADD CONSTRAINT "pages_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_hero_links" ADD CONSTRAINT "pages_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_cta_links" ADD CONSTRAINT "pages_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_cta" ADD CONSTRAINT "pages_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -1272,15 +2047,31 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "pages_blocks_content_media" ADD CONSTRAINT "pages_blocks_content_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_services_block" ADD CONSTRAINT "pages_blocks_services_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_portfolio_block" ADD CONSTRAINT "pages_blocks_portfolio_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_about_block_items" ADD CONSTRAINT "pages_blocks_about_block_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_about_block"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_about_block" ADD CONSTRAINT "pages_blocks_about_block_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_about_block" ADD CONSTRAINT "pages_blocks_about_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_career_block" ADD CONSTRAINT "pages_blocks_career_block_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_career_block" ADD CONSTRAINT "pages_blocks_career_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_team_block" ADD CONSTRAINT "pages_blocks_team_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_button_block_columns_buttons" ADD CONSTRAINT "pages_blocks_button_block_columns_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_button_block_columns"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_button_block_columns" ADD CONSTRAINT "pages_blocks_button_block_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_button_block"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_button_block" ADD CONSTRAINT "pages_blocks_button_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_our_process_block_steps" ADD CONSTRAINT "pages_blocks_our_process_block_steps_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_our_process_block"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_our_process_block" ADD CONSTRAINT "pages_blocks_our_process_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_insight_insights" ADD CONSTRAINT "pages_blocks_portfolio_insight_insights_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_insight_insights" ADD CONSTRAINT "pages_blocks_portfolio_insight_insights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_portfolio_insight"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_insight" ADD CONSTRAINT "pages_blocks_portfolio_insight_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_image_banner" ADD CONSTRAINT "pages_blocks_portfolio_image_banner_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_image_banner" ADD CONSTRAINT "pages_blocks_portfolio_image_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages" ADD CONSTRAINT "pages_hero_media_id_media_id_fk" FOREIGN KEY ("hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages" ADD CONSTRAINT "pages_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_version_hero_buttons" ADD CONSTRAINT "_pages_v_version_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_version_hero_links" ADD CONSTRAINT "_pages_v_version_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_cta_links" ADD CONSTRAINT "_pages_v_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_cta" ADD CONSTRAINT "_pages_v_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
@@ -1295,15 +2086,30 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_pages_v_blocks_content_media" ADD CONSTRAINT "_pages_v_blocks_content_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_services_block" ADD CONSTRAINT "_pages_v_blocks_services_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_portfolio_block" ADD CONSTRAINT "_pages_v_blocks_portfolio_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_about_block_items" ADD CONSTRAINT "_pages_v_blocks_about_block_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_about_block"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_about_block" ADD CONSTRAINT "_pages_v_blocks_about_block_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_about_block" ADD CONSTRAINT "_pages_v_blocks_about_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_career_block" ADD CONSTRAINT "_pages_v_blocks_career_block_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_career_block" ADD CONSTRAINT "_pages_v_blocks_career_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_team_block" ADD CONSTRAINT "_pages_v_blocks_team_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_button_block_columns_buttons" ADD CONSTRAINT "_pages_v_blocks_button_block_columns_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_button_block_columns"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_button_block_columns" ADD CONSTRAINT "_pages_v_blocks_button_block_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_button_block"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_button_block" ADD CONSTRAINT "_pages_v_blocks_button_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_our_process_block_steps" ADD CONSTRAINT "_pages_v_blocks_our_process_block_steps_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_our_process_block"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_our_process_block" ADD CONSTRAINT "_pages_v_blocks_our_process_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_insight_insights" ADD CONSTRAINT "_pages_v_blocks_portfolio_insight_insights_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_insight_insights" ADD CONSTRAINT "_pages_v_blocks_portfolio_insight_insights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_portfolio_insight"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_insight" ADD CONSTRAINT "_pages_v_blocks_portfolio_insight_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_image_banner" ADD CONSTRAINT "_pages_v_blocks_portfolio_image_banner_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_image_banner" ADD CONSTRAINT "_pages_v_blocks_portfolio_image_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_parent_id_pages_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."pages"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_hero_media_id_media_id_fk" FOREIGN KEY ("version_hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_meta_image_id_media_id_fk" FOREIGN KEY ("version_meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "posts_populated_authors" ADD CONSTRAINT "posts_populated_authors_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "posts" ADD CONSTRAINT "posts_hero_image_id_media_id_fk" FOREIGN KEY ("hero_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
@@ -1325,6 +2131,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "categories_breadcrumbs" ADD CONSTRAINT "categories_breadcrumbs_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "categories" ADD CONSTRAINT "categories_parent_id_categories_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "departments" ADD CONSTRAINT "departments_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "team" ADD CONSTRAINT "team_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "team" ADD CONSTRAINT "team_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "services_hero_buttons" ADD CONSTRAINT "services_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_hero_links" ADD CONSTRAINT "services_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_blocks_cta_links" ADD CONSTRAINT "services_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_blocks_cta" ADD CONSTRAINT "services_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
@@ -1336,12 +2146,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "services_blocks_form_block" ADD CONSTRAINT "services_blocks_form_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_blocks_content_media" ADD CONSTRAINT "services_blocks_content_media_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "services_blocks_content_media" ADD CONSTRAINT "services_blocks_content_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "services" ADD CONSTRAINT "services_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "services_blocks_services_detail_sub_services" ADD CONSTRAINT "services_blocks_services_detail_sub_services_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "services_blocks_services_detail_sub_services" ADD CONSTRAINT "services_blocks_services_detail_sub_services_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services_blocks_services_detail"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "services_blocks_services_detail" ADD CONSTRAINT "services_blocks_services_detail_intro_image_id_media_id_fk" FOREIGN KEY ("intro_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "services_blocks_services_detail" ADD CONSTRAINT "services_blocks_services_detail_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "services_blocks_portfolio_insight_insights" ADD CONSTRAINT "services_blocks_portfolio_insight_insights_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "services_blocks_portfolio_insight_insights" ADD CONSTRAINT "services_blocks_portfolio_insight_insights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services_blocks_portfolio_insight"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "services_blocks_portfolio_insight" ADD CONSTRAINT "services_blocks_portfolio_insight_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "services_blocks_portfolio_image_banner" ADD CONSTRAINT "services_blocks_portfolio_image_banner_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "services_blocks_portfolio_image_banner" ADD CONSTRAINT "services_blocks_portfolio_image_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services" ADD CONSTRAINT "services_hero_media_id_media_id_fk" FOREIGN KEY ("hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "services" ADD CONSTRAINT "services_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "services_rels" ADD CONSTRAINT "services_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_rels" ADD CONSTRAINT "services_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_rels" ADD CONSTRAINT "services_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "services_rels" ADD CONSTRAINT "services_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "services_rels" ADD CONSTRAINT "services_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_version_hero_buttons" ADD CONSTRAINT "_services_v_version_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v_version_hero_links" ADD CONSTRAINT "_services_v_version_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v_blocks_cta_links" ADD CONSTRAINT "_services_v_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v_blocks_cta" ADD CONSTRAINT "_services_v_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
@@ -1353,17 +2174,74 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_services_v_blocks_form_block" ADD CONSTRAINT "_services_v_blocks_form_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v_blocks_content_media" ADD CONSTRAINT "_services_v_blocks_content_media_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_services_v_blocks_content_media" ADD CONSTRAINT "_services_v_blocks_content_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_services_detail_sub_services" ADD CONSTRAINT "_services_v_blocks_services_detail_sub_services_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_services_detail_sub_services" ADD CONSTRAINT "_services_v_blocks_services_detail_sub_services_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v_blocks_services_detail"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_services_detail" ADD CONSTRAINT "_services_v_blocks_services_detail_intro_image_id_media_id_fk" FOREIGN KEY ("intro_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_services_detail" ADD CONSTRAINT "_services_v_blocks_services_detail_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_portfolio_insight_insights" ADD CONSTRAINT "_services_v_blocks_portfolio_insight_insights_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_portfolio_insight_insights" ADD CONSTRAINT "_services_v_blocks_portfolio_insight_insights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v_blocks_portfolio_insight"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_portfolio_insight" ADD CONSTRAINT "_services_v_blocks_portfolio_insight_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_portfolio_image_banner" ADD CONSTRAINT "_services_v_blocks_portfolio_image_banner_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_services_v_blocks_portfolio_image_banner" ADD CONSTRAINT "_services_v_blocks_portfolio_image_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v" ADD CONSTRAINT "_services_v_parent_id_services_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."services"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "_services_v" ADD CONSTRAINT "_services_v_version_image_id_media_id_fk" FOREIGN KEY ("version_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_services_v" ADD CONSTRAINT "_services_v_version_hero_media_id_media_id_fk" FOREIGN KEY ("version_hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_services_v" ADD CONSTRAINT "_services_v_version_meta_image_id_media_id_fk" FOREIGN KEY ("version_meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_services_v_rels" ADD CONSTRAINT "_services_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_services_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v_rels" ADD CONSTRAINT "_services_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_services_v_rels" ADD CONSTRAINT "_services_v_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "portfolio" ADD CONSTRAINT "portfolio_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "about_items" ADD CONSTRAINT "about_items_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "team" ADD CONSTRAINT "team_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "team" ADD CONSTRAINT "team_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_services_v_rels" ADD CONSTRAINT "_services_v_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_services_v_rels" ADD CONSTRAINT "_services_v_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_hero_buttons" ADD CONSTRAINT "portfolio_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_hero_links" ADD CONSTRAINT "portfolio_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_cta_links" ADD CONSTRAINT "portfolio_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_cta" ADD CONSTRAINT "portfolio_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_content_columns" ADD CONSTRAINT "portfolio_blocks_content_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio_blocks_content"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_content" ADD CONSTRAINT "portfolio_blocks_content_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_media_block" ADD CONSTRAINT "portfolio_blocks_media_block_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_media_block" ADD CONSTRAINT "portfolio_blocks_media_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_form_block" ADD CONSTRAINT "portfolio_blocks_form_block_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_form_block" ADD CONSTRAINT "portfolio_blocks_form_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_content_media" ADD CONSTRAINT "portfolio_blocks_content_media_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_content_media" ADD CONSTRAINT "portfolio_blocks_content_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_portfolio_insight_insights" ADD CONSTRAINT "portfolio_blocks_portfolio_insight_insights_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_portfolio_insight_insights" ADD CONSTRAINT "portfolio_blocks_portfolio_insight_insights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio_blocks_portfolio_insight"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_portfolio_insight" ADD CONSTRAINT "portfolio_blocks_portfolio_insight_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_portfolio_image_banner" ADD CONSTRAINT "portfolio_blocks_portfolio_image_banner_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio_blocks_portfolio_image_banner" ADD CONSTRAINT "portfolio_blocks_portfolio_image_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio" ADD CONSTRAINT "portfolio_hero_media_id_media_id_fk" FOREIGN KEY ("hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio" ADD CONSTRAINT "portfolio_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_scopes_fk" FOREIGN KEY ("scopes_id") REFERENCES "public"."scopes"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_version_hero_buttons" ADD CONSTRAINT "_portfolio_v_version_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_version_hero_links" ADD CONSTRAINT "_portfolio_v_version_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_cta_links" ADD CONSTRAINT "_portfolio_v_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_cta" ADD CONSTRAINT "_portfolio_v_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_content_columns" ADD CONSTRAINT "_portfolio_v_blocks_content_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v_blocks_content"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_content" ADD CONSTRAINT "_portfolio_v_blocks_content_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_media_block" ADD CONSTRAINT "_portfolio_v_blocks_media_block_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_media_block" ADD CONSTRAINT "_portfolio_v_blocks_media_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_form_block" ADD CONSTRAINT "_portfolio_v_blocks_form_block_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_form_block" ADD CONSTRAINT "_portfolio_v_blocks_form_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_content_media" ADD CONSTRAINT "_portfolio_v_blocks_content_media_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_content_media" ADD CONSTRAINT "_portfolio_v_blocks_content_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_portfolio_insight_insights" ADD CONSTRAINT "_portfolio_v_blocks_portfolio_insight_insights_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_portfolio_insight_insights" ADD CONSTRAINT "_portfolio_v_blocks_portfolio_insight_insights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v_blocks_portfolio_insight"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_portfolio_insight" ADD CONSTRAINT "_portfolio_v_blocks_portfolio_insight_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_portfolio_image_banner" ADD CONSTRAINT "_portfolio_v_blocks_portfolio_image_banner_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_blocks_portfolio_image_banner" ADD CONSTRAINT "_portfolio_v_blocks_portfolio_image_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v" ADD CONSTRAINT "_portfolio_v_parent_id_portfolio_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."portfolio"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v" ADD CONSTRAINT "_portfolio_v_version_hero_media_id_media_id_fk" FOREIGN KEY ("version_hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v" ADD CONSTRAINT "_portfolio_v_version_meta_image_id_media_id_fk" FOREIGN KEY ("version_meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_scopes_fk" FOREIGN KEY ("scopes_id") REFERENCES "public"."scopes"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "redirects_rels" ADD CONSTRAINT "redirects_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."redirects"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "redirects_rels" ADD CONSTRAINT "redirects_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "redirects_rels" ADD CONSTRAINT "redirects_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
@@ -1379,6 +2257,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "forms_blocks_textarea" ADD CONSTRAINT "forms_blocks_textarea_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "forms_blocks_h_captcha" ADD CONSTRAINT "forms_blocks_h_captcha_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "forms_blocks_file" ADD CONSTRAINT "forms_blocks_file_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "forms_blocks_radio_options" ADD CONSTRAINT "forms_blocks_radio_options_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."forms_blocks_radio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "forms_blocks_radio" ADD CONSTRAINT "forms_blocks_radio_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "forms_emails" ADD CONSTRAINT "forms_emails_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "form_submissions_submission_data" ADD CONSTRAINT "form_submissions_submission_data_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."form_submissions"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "form_submissions" ADD CONSTRAINT "form_submissions_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
@@ -1395,11 +2275,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_about_items_fk" FOREIGN KEY ("about_items_id") REFERENCES "public"."about_items"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_departments_fk" FOREIGN KEY ("departments_id") REFERENCES "public"."departments"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_team_fk" FOREIGN KEY ("team_id") REFERENCES "public"."team"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_scopes_fk" FOREIGN KEY ("scopes_id") REFERENCES "public"."scopes"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_redirects_fk" FOREIGN KEY ("redirects_id") REFERENCES "public"."redirects"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_forms_fk" FOREIGN KEY ("forms_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_form_submissions_fk" FOREIGN KEY ("form_submissions_id") REFERENCES "public"."form_submissions"("id") ON DELETE cascade ON UPDATE no action;
@@ -1412,12 +2292,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "header_rels" ADD CONSTRAINT "header_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."header"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "header_rels" ADD CONSTRAINT "header_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "header_rels" ADD CONSTRAINT "header_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "header_rels" ADD CONSTRAINT "header_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "header_rels" ADD CONSTRAINT "header_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "footer_nav_items_with_icon" ADD CONSTRAINT "footer_nav_items_with_icon_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."footer"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "footer_nav_items" ADD CONSTRAINT "footer_nav_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."footer"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "footer" ADD CONSTRAINT "footer_background_image_id_media_id_fk" FOREIGN KEY ("background_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "footer_rels" ADD CONSTRAINT "footer_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."footer"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "footer_rels" ADD CONSTRAINT "footer_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "footer_rels" ADD CONSTRAINT "footer_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "footer_rels" ADD CONSTRAINT "footer_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "footer_rels" ADD CONSTRAINT "footer_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "settings_social_links" ADD CONSTRAINT "settings_social_links_icon_id_media_id_fk" FOREIGN KEY ("icon_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "settings_social_links" ADD CONSTRAINT "settings_social_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."settings"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "settings" ADD CONSTRAINT "settings_logo_id_media_id_fk" FOREIGN KEY ("logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  CREATE INDEX "pages_hero_buttons_order_idx" ON "pages_hero_buttons" USING btree ("_order");
+  CREATE INDEX "pages_hero_buttons_parent_id_idx" ON "pages_hero_buttons" USING btree ("_parent_id");
   CREATE INDEX "pages_hero_links_order_idx" ON "pages_hero_links" USING btree ("_order");
   CREATE INDEX "pages_hero_links_parent_id_idx" ON "pages_hero_links" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_cta_links_order_idx" ON "pages_blocks_cta_links" USING btree ("_order");
@@ -1451,13 +2340,41 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_blocks_portfolio_block_order_idx" ON "pages_blocks_portfolio_block" USING btree ("_order");
   CREATE INDEX "pages_blocks_portfolio_block_parent_id_idx" ON "pages_blocks_portfolio_block" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_portfolio_block_path_idx" ON "pages_blocks_portfolio_block" USING btree ("_path");
+  CREATE INDEX "pages_blocks_about_block_items_order_idx" ON "pages_blocks_about_block_items" USING btree ("_order");
+  CREATE INDEX "pages_blocks_about_block_items_parent_id_idx" ON "pages_blocks_about_block_items" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_about_block_order_idx" ON "pages_blocks_about_block" USING btree ("_order");
   CREATE INDEX "pages_blocks_about_block_parent_id_idx" ON "pages_blocks_about_block" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_about_block_path_idx" ON "pages_blocks_about_block" USING btree ("_path");
+  CREATE INDEX "pages_blocks_about_block_image_idx" ON "pages_blocks_about_block" USING btree ("image_id");
   CREATE INDEX "pages_blocks_career_block_order_idx" ON "pages_blocks_career_block" USING btree ("_order");
   CREATE INDEX "pages_blocks_career_block_parent_id_idx" ON "pages_blocks_career_block" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_career_block_path_idx" ON "pages_blocks_career_block" USING btree ("_path");
   CREATE INDEX "pages_blocks_career_block_form_idx" ON "pages_blocks_career_block" USING btree ("form_id");
+  CREATE INDEX "pages_blocks_team_block_order_idx" ON "pages_blocks_team_block" USING btree ("_order");
+  CREATE INDEX "pages_blocks_team_block_parent_id_idx" ON "pages_blocks_team_block" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_team_block_path_idx" ON "pages_blocks_team_block" USING btree ("_path");
+  CREATE INDEX "pages_blocks_button_block_columns_buttons_order_idx" ON "pages_blocks_button_block_columns_buttons" USING btree ("_order");
+  CREATE INDEX "pages_blocks_button_block_columns_buttons_parent_id_idx" ON "pages_blocks_button_block_columns_buttons" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_button_block_columns_order_idx" ON "pages_blocks_button_block_columns" USING btree ("_order");
+  CREATE INDEX "pages_blocks_button_block_columns_parent_id_idx" ON "pages_blocks_button_block_columns" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_button_block_order_idx" ON "pages_blocks_button_block" USING btree ("_order");
+  CREATE INDEX "pages_blocks_button_block_parent_id_idx" ON "pages_blocks_button_block" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_button_block_path_idx" ON "pages_blocks_button_block" USING btree ("_path");
+  CREATE INDEX "pages_blocks_our_process_block_steps_order_idx" ON "pages_blocks_our_process_block_steps" USING btree ("_order");
+  CREATE INDEX "pages_blocks_our_process_block_steps_parent_id_idx" ON "pages_blocks_our_process_block_steps" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_our_process_block_order_idx" ON "pages_blocks_our_process_block" USING btree ("_order");
+  CREATE INDEX "pages_blocks_our_process_block_parent_id_idx" ON "pages_blocks_our_process_block" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_our_process_block_path_idx" ON "pages_blocks_our_process_block" USING btree ("_path");
+  CREATE INDEX "pages_blocks_portfolio_insight_insights_order_idx" ON "pages_blocks_portfolio_insight_insights" USING btree ("_order");
+  CREATE INDEX "pages_blocks_portfolio_insight_insights_parent_id_idx" ON "pages_blocks_portfolio_insight_insights" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_portfolio_insight_insights_image_idx" ON "pages_blocks_portfolio_insight_insights" USING btree ("image_id");
+  CREATE INDEX "pages_blocks_portfolio_insight_order_idx" ON "pages_blocks_portfolio_insight" USING btree ("_order");
+  CREATE INDEX "pages_blocks_portfolio_insight_parent_id_idx" ON "pages_blocks_portfolio_insight" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_portfolio_insight_path_idx" ON "pages_blocks_portfolio_insight" USING btree ("_path");
+  CREATE INDEX "pages_blocks_portfolio_image_banner_order_idx" ON "pages_blocks_portfolio_image_banner" USING btree ("_order");
+  CREATE INDEX "pages_blocks_portfolio_image_banner_parent_id_idx" ON "pages_blocks_portfolio_image_banner" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_portfolio_image_banner_path_idx" ON "pages_blocks_portfolio_image_banner" USING btree ("_path");
+  CREATE INDEX "pages_blocks_portfolio_image_banner_image_idx" ON "pages_blocks_portfolio_image_banner" USING btree ("image_id");
   CREATE INDEX "pages_hero_hero_media_idx" ON "pages" USING btree ("hero_media_id");
   CREATE INDEX "pages_meta_meta_image_idx" ON "pages" USING btree ("meta_image_id");
   CREATE UNIQUE INDEX "pages_slug_idx" ON "pages" USING btree ("slug");
@@ -1469,7 +2386,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_rels_path_idx" ON "pages_rels" USING btree ("path");
   CREATE INDEX "pages_rels_pages_id_idx" ON "pages_rels" USING btree ("pages_id");
   CREATE INDEX "pages_rels_posts_id_idx" ON "pages_rels" USING btree ("posts_id");
+  CREATE INDEX "pages_rels_services_id_idx" ON "pages_rels" USING btree ("services_id");
+  CREATE INDEX "pages_rels_portfolio_id_idx" ON "pages_rels" USING btree ("portfolio_id");
   CREATE INDEX "pages_rels_categories_id_idx" ON "pages_rels" USING btree ("categories_id");
+  CREATE INDEX "_pages_v_version_hero_buttons_order_idx" ON "_pages_v_version_hero_buttons" USING btree ("_order");
+  CREATE INDEX "_pages_v_version_hero_buttons_parent_id_idx" ON "_pages_v_version_hero_buttons" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_version_hero_links_order_idx" ON "_pages_v_version_hero_links" USING btree ("_order");
   CREATE INDEX "_pages_v_version_hero_links_parent_id_idx" ON "_pages_v_version_hero_links" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_cta_links_order_idx" ON "_pages_v_blocks_cta_links" USING btree ("_order");
@@ -1503,13 +2424,41 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_portfolio_block_order_idx" ON "_pages_v_blocks_portfolio_block" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_portfolio_block_parent_id_idx" ON "_pages_v_blocks_portfolio_block" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_portfolio_block_path_idx" ON "_pages_v_blocks_portfolio_block" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_about_block_items_order_idx" ON "_pages_v_blocks_about_block_items" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_about_block_items_parent_id_idx" ON "_pages_v_blocks_about_block_items" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_about_block_order_idx" ON "_pages_v_blocks_about_block" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_about_block_parent_id_idx" ON "_pages_v_blocks_about_block" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_about_block_path_idx" ON "_pages_v_blocks_about_block" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_about_block_image_idx" ON "_pages_v_blocks_about_block" USING btree ("image_id");
   CREATE INDEX "_pages_v_blocks_career_block_order_idx" ON "_pages_v_blocks_career_block" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_career_block_parent_id_idx" ON "_pages_v_blocks_career_block" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_career_block_path_idx" ON "_pages_v_blocks_career_block" USING btree ("_path");
   CREATE INDEX "_pages_v_blocks_career_block_form_idx" ON "_pages_v_blocks_career_block" USING btree ("form_id");
+  CREATE INDEX "_pages_v_blocks_team_block_order_idx" ON "_pages_v_blocks_team_block" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_team_block_parent_id_idx" ON "_pages_v_blocks_team_block" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_team_block_path_idx" ON "_pages_v_blocks_team_block" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_button_block_columns_buttons_order_idx" ON "_pages_v_blocks_button_block_columns_buttons" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_button_block_columns_buttons_parent_id_idx" ON "_pages_v_blocks_button_block_columns_buttons" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_button_block_columns_order_idx" ON "_pages_v_blocks_button_block_columns" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_button_block_columns_parent_id_idx" ON "_pages_v_blocks_button_block_columns" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_button_block_order_idx" ON "_pages_v_blocks_button_block" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_button_block_parent_id_idx" ON "_pages_v_blocks_button_block" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_button_block_path_idx" ON "_pages_v_blocks_button_block" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_our_process_block_steps_order_idx" ON "_pages_v_blocks_our_process_block_steps" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_our_process_block_steps_parent_id_idx" ON "_pages_v_blocks_our_process_block_steps" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_our_process_block_order_idx" ON "_pages_v_blocks_our_process_block" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_our_process_block_parent_id_idx" ON "_pages_v_blocks_our_process_block" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_our_process_block_path_idx" ON "_pages_v_blocks_our_process_block" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_portfolio_insight_insights_order_idx" ON "_pages_v_blocks_portfolio_insight_insights" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_portfolio_insight_insights_parent_id_idx" ON "_pages_v_blocks_portfolio_insight_insights" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_portfolio_insight_insights_image_idx" ON "_pages_v_blocks_portfolio_insight_insights" USING btree ("image_id");
+  CREATE INDEX "_pages_v_blocks_portfolio_insight_order_idx" ON "_pages_v_blocks_portfolio_insight" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_portfolio_insight_parent_id_idx" ON "_pages_v_blocks_portfolio_insight" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_portfolio_insight_path_idx" ON "_pages_v_blocks_portfolio_insight" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_portfolio_image_banner_order_idx" ON "_pages_v_blocks_portfolio_image_banner" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_portfolio_image_banner_parent_id_idx" ON "_pages_v_blocks_portfolio_image_banner" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_portfolio_image_banner_path_idx" ON "_pages_v_blocks_portfolio_image_banner" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_portfolio_image_banner_image_idx" ON "_pages_v_blocks_portfolio_image_banner" USING btree ("image_id");
   CREATE INDEX "_pages_v_parent_idx" ON "_pages_v" USING btree ("parent_id");
   CREATE INDEX "_pages_v_version_hero_version_hero_media_idx" ON "_pages_v" USING btree ("version_hero_media_id");
   CREATE INDEX "_pages_v_version_meta_version_meta_image_idx" ON "_pages_v" USING btree ("version_meta_image_id");
@@ -1526,6 +2475,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_rels_path_idx" ON "_pages_v_rels" USING btree ("path");
   CREATE INDEX "_pages_v_rels_pages_id_idx" ON "_pages_v_rels" USING btree ("pages_id");
   CREATE INDEX "_pages_v_rels_posts_id_idx" ON "_pages_v_rels" USING btree ("posts_id");
+  CREATE INDEX "_pages_v_rels_services_id_idx" ON "_pages_v_rels" USING btree ("services_id");
+  CREATE INDEX "_pages_v_rels_portfolio_id_idx" ON "_pages_v_rels" USING btree ("portfolio_id");
   CREATE INDEX "_pages_v_rels_categories_id_idx" ON "_pages_v_rels" USING btree ("categories_id");
   CREATE INDEX "posts_populated_authors_order_idx" ON "posts_populated_authors" USING btree ("_order");
   CREATE INDEX "posts_populated_authors_parent_id_idx" ON "posts_populated_authors" USING btree ("_parent_id");
@@ -1583,6 +2534,15 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "users_updated_at_idx" ON "users" USING btree ("updated_at");
   CREATE INDEX "users_created_at_idx" ON "users" USING btree ("created_at");
   CREATE UNIQUE INDEX "users_email_idx" ON "users" USING btree ("email");
+  CREATE INDEX "departments_image_idx" ON "departments" USING btree ("image_id");
+  CREATE INDEX "departments_updated_at_idx" ON "departments" USING btree ("updated_at");
+  CREATE INDEX "departments_created_at_idx" ON "departments" USING btree ("created_at");
+  CREATE INDEX "team_image_idx" ON "team" USING btree ("image_id");
+  CREATE INDEX "team_department_idx" ON "team" USING btree ("department_id");
+  CREATE INDEX "team_updated_at_idx" ON "team" USING btree ("updated_at");
+  CREATE INDEX "team_created_at_idx" ON "team" USING btree ("created_at");
+  CREATE INDEX "services_hero_buttons_order_idx" ON "services_hero_buttons" USING btree ("_order");
+  CREATE INDEX "services_hero_buttons_parent_id_idx" ON "services_hero_buttons" USING btree ("_parent_id");
   CREATE INDEX "services_hero_links_order_idx" ON "services_hero_links" USING btree ("_order");
   CREATE INDEX "services_hero_links_parent_id_idx" ON "services_hero_links" USING btree ("_parent_id");
   CREATE INDEX "services_blocks_cta_links_order_idx" ON "services_blocks_cta_links" USING btree ("_order");
@@ -1607,7 +2567,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "services_blocks_content_media_parent_id_idx" ON "services_blocks_content_media" USING btree ("_parent_id");
   CREATE INDEX "services_blocks_content_media_path_idx" ON "services_blocks_content_media" USING btree ("_path");
   CREATE INDEX "services_blocks_content_media_media_idx" ON "services_blocks_content_media" USING btree ("media_id");
-  CREATE INDEX "services_image_idx" ON "services" USING btree ("image_id");
+  CREATE INDEX "services_blocks_services_detail_sub_services_order_idx" ON "services_blocks_services_detail_sub_services" USING btree ("_order");
+  CREATE INDEX "services_blocks_services_detail_sub_services_parent_id_idx" ON "services_blocks_services_detail_sub_services" USING btree ("_parent_id");
+  CREATE INDEX "services_blocks_services_detail_sub_services_image_idx" ON "services_blocks_services_detail_sub_services" USING btree ("image_id");
+  CREATE INDEX "services_blocks_services_detail_order_idx" ON "services_blocks_services_detail" USING btree ("_order");
+  CREATE INDEX "services_blocks_services_detail_parent_id_idx" ON "services_blocks_services_detail" USING btree ("_parent_id");
+  CREATE INDEX "services_blocks_services_detail_path_idx" ON "services_blocks_services_detail" USING btree ("_path");
+  CREATE INDEX "services_blocks_services_detail_intro_intro_image_idx" ON "services_blocks_services_detail" USING btree ("intro_image_id");
+  CREATE INDEX "services_blocks_portfolio_insight_insights_order_idx" ON "services_blocks_portfolio_insight_insights" USING btree ("_order");
+  CREATE INDEX "services_blocks_portfolio_insight_insights_parent_id_idx" ON "services_blocks_portfolio_insight_insights" USING btree ("_parent_id");
+  CREATE INDEX "services_blocks_portfolio_insight_insights_image_idx" ON "services_blocks_portfolio_insight_insights" USING btree ("image_id");
+  CREATE INDEX "services_blocks_portfolio_insight_order_idx" ON "services_blocks_portfolio_insight" USING btree ("_order");
+  CREATE INDEX "services_blocks_portfolio_insight_parent_id_idx" ON "services_blocks_portfolio_insight" USING btree ("_parent_id");
+  CREATE INDEX "services_blocks_portfolio_insight_path_idx" ON "services_blocks_portfolio_insight" USING btree ("_path");
+  CREATE INDEX "services_blocks_portfolio_image_banner_order_idx" ON "services_blocks_portfolio_image_banner" USING btree ("_order");
+  CREATE INDEX "services_blocks_portfolio_image_banner_parent_id_idx" ON "services_blocks_portfolio_image_banner" USING btree ("_parent_id");
+  CREATE INDEX "services_blocks_portfolio_image_banner_path_idx" ON "services_blocks_portfolio_image_banner" USING btree ("_path");
+  CREATE INDEX "services_blocks_portfolio_image_banner_image_idx" ON "services_blocks_portfolio_image_banner" USING btree ("image_id");
   CREATE INDEX "services_hero_hero_media_idx" ON "services" USING btree ("hero_media_id");
   CREATE INDEX "services_meta_meta_image_idx" ON "services" USING btree ("meta_image_id");
   CREATE UNIQUE INDEX "services_slug_idx" ON "services" USING btree ("slug");
@@ -1619,6 +2595,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "services_rels_path_idx" ON "services_rels" USING btree ("path");
   CREATE INDEX "services_rels_pages_id_idx" ON "services_rels" USING btree ("pages_id");
   CREATE INDEX "services_rels_posts_id_idx" ON "services_rels" USING btree ("posts_id");
+  CREATE INDEX "services_rels_services_id_idx" ON "services_rels" USING btree ("services_id");
+  CREATE INDEX "services_rels_portfolio_id_idx" ON "services_rels" USING btree ("portfolio_id");
+  CREATE INDEX "_services_v_version_hero_buttons_order_idx" ON "_services_v_version_hero_buttons" USING btree ("_order");
+  CREATE INDEX "_services_v_version_hero_buttons_parent_id_idx" ON "_services_v_version_hero_buttons" USING btree ("_parent_id");
   CREATE INDEX "_services_v_version_hero_links_order_idx" ON "_services_v_version_hero_links" USING btree ("_order");
   CREATE INDEX "_services_v_version_hero_links_parent_id_idx" ON "_services_v_version_hero_links" USING btree ("_parent_id");
   CREATE INDEX "_services_v_blocks_cta_links_order_idx" ON "_services_v_blocks_cta_links" USING btree ("_order");
@@ -1643,8 +2623,24 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_services_v_blocks_content_media_parent_id_idx" ON "_services_v_blocks_content_media" USING btree ("_parent_id");
   CREATE INDEX "_services_v_blocks_content_media_path_idx" ON "_services_v_blocks_content_media" USING btree ("_path");
   CREATE INDEX "_services_v_blocks_content_media_media_idx" ON "_services_v_blocks_content_media" USING btree ("media_id");
+  CREATE INDEX "_services_v_blocks_services_detail_sub_services_order_idx" ON "_services_v_blocks_services_detail_sub_services" USING btree ("_order");
+  CREATE INDEX "_services_v_blocks_services_detail_sub_services_parent_id_idx" ON "_services_v_blocks_services_detail_sub_services" USING btree ("_parent_id");
+  CREATE INDEX "_services_v_blocks_services_detail_sub_services_image_idx" ON "_services_v_blocks_services_detail_sub_services" USING btree ("image_id");
+  CREATE INDEX "_services_v_blocks_services_detail_order_idx" ON "_services_v_blocks_services_detail" USING btree ("_order");
+  CREATE INDEX "_services_v_blocks_services_detail_parent_id_idx" ON "_services_v_blocks_services_detail" USING btree ("_parent_id");
+  CREATE INDEX "_services_v_blocks_services_detail_path_idx" ON "_services_v_blocks_services_detail" USING btree ("_path");
+  CREATE INDEX "_services_v_blocks_services_detail_intro_intro_image_idx" ON "_services_v_blocks_services_detail" USING btree ("intro_image_id");
+  CREATE INDEX "_services_v_blocks_portfolio_insight_insights_order_idx" ON "_services_v_blocks_portfolio_insight_insights" USING btree ("_order");
+  CREATE INDEX "_services_v_blocks_portfolio_insight_insights_parent_id_idx" ON "_services_v_blocks_portfolio_insight_insights" USING btree ("_parent_id");
+  CREATE INDEX "_services_v_blocks_portfolio_insight_insights_image_idx" ON "_services_v_blocks_portfolio_insight_insights" USING btree ("image_id");
+  CREATE INDEX "_services_v_blocks_portfolio_insight_order_idx" ON "_services_v_blocks_portfolio_insight" USING btree ("_order");
+  CREATE INDEX "_services_v_blocks_portfolio_insight_parent_id_idx" ON "_services_v_blocks_portfolio_insight" USING btree ("_parent_id");
+  CREATE INDEX "_services_v_blocks_portfolio_insight_path_idx" ON "_services_v_blocks_portfolio_insight" USING btree ("_path");
+  CREATE INDEX "_services_v_blocks_portfolio_image_banner_order_idx" ON "_services_v_blocks_portfolio_image_banner" USING btree ("_order");
+  CREATE INDEX "_services_v_blocks_portfolio_image_banner_parent_id_idx" ON "_services_v_blocks_portfolio_image_banner" USING btree ("_parent_id");
+  CREATE INDEX "_services_v_blocks_portfolio_image_banner_path_idx" ON "_services_v_blocks_portfolio_image_banner" USING btree ("_path");
+  CREATE INDEX "_services_v_blocks_portfolio_image_banner_image_idx" ON "_services_v_blocks_portfolio_image_banner" USING btree ("image_id");
   CREATE INDEX "_services_v_parent_idx" ON "_services_v" USING btree ("parent_id");
-  CREATE INDEX "_services_v_version_version_image_idx" ON "_services_v" USING btree ("version_image_id");
   CREATE INDEX "_services_v_version_hero_version_hero_media_idx" ON "_services_v" USING btree ("version_hero_media_id");
   CREATE INDEX "_services_v_version_meta_version_meta_image_idx" ON "_services_v" USING btree ("version_meta_image_id");
   CREATE INDEX "_services_v_version_version_slug_idx" ON "_services_v" USING btree ("version_slug");
@@ -1660,18 +2656,116 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_services_v_rels_path_idx" ON "_services_v_rels" USING btree ("path");
   CREATE INDEX "_services_v_rels_pages_id_idx" ON "_services_v_rels" USING btree ("pages_id");
   CREATE INDEX "_services_v_rels_posts_id_idx" ON "_services_v_rels" USING btree ("posts_id");
-  CREATE INDEX "portfolio_image_idx" ON "portfolio" USING btree ("image_id");
+  CREATE INDEX "_services_v_rels_services_id_idx" ON "_services_v_rels" USING btree ("services_id");
+  CREATE INDEX "_services_v_rels_portfolio_id_idx" ON "_services_v_rels" USING btree ("portfolio_id");
+  CREATE INDEX "portfolio_hero_buttons_order_idx" ON "portfolio_hero_buttons" USING btree ("_order");
+  CREATE INDEX "portfolio_hero_buttons_parent_id_idx" ON "portfolio_hero_buttons" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_hero_links_order_idx" ON "portfolio_hero_links" USING btree ("_order");
+  CREATE INDEX "portfolio_hero_links_parent_id_idx" ON "portfolio_hero_links" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_cta_links_order_idx" ON "portfolio_blocks_cta_links" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_cta_links_parent_id_idx" ON "portfolio_blocks_cta_links" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_cta_order_idx" ON "portfolio_blocks_cta" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_cta_parent_id_idx" ON "portfolio_blocks_cta" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_cta_path_idx" ON "portfolio_blocks_cta" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_content_columns_order_idx" ON "portfolio_blocks_content_columns" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_content_columns_parent_id_idx" ON "portfolio_blocks_content_columns" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_content_order_idx" ON "portfolio_blocks_content" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_content_parent_id_idx" ON "portfolio_blocks_content" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_content_path_idx" ON "portfolio_blocks_content" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_media_block_order_idx" ON "portfolio_blocks_media_block" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_media_block_parent_id_idx" ON "portfolio_blocks_media_block" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_media_block_path_idx" ON "portfolio_blocks_media_block" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_media_block_media_idx" ON "portfolio_blocks_media_block" USING btree ("media_id");
+  CREATE INDEX "portfolio_blocks_form_block_order_idx" ON "portfolio_blocks_form_block" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_form_block_parent_id_idx" ON "portfolio_blocks_form_block" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_form_block_path_idx" ON "portfolio_blocks_form_block" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_form_block_form_idx" ON "portfolio_blocks_form_block" USING btree ("form_id");
+  CREATE INDEX "portfolio_blocks_content_media_order_idx" ON "portfolio_blocks_content_media" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_content_media_parent_id_idx" ON "portfolio_blocks_content_media" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_content_media_path_idx" ON "portfolio_blocks_content_media" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_content_media_media_idx" ON "portfolio_blocks_content_media" USING btree ("media_id");
+  CREATE INDEX "portfolio_blocks_portfolio_insight_insights_order_idx" ON "portfolio_blocks_portfolio_insight_insights" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_portfolio_insight_insights_parent_id_idx" ON "portfolio_blocks_portfolio_insight_insights" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_portfolio_insight_insights_image_idx" ON "portfolio_blocks_portfolio_insight_insights" USING btree ("image_id");
+  CREATE INDEX "portfolio_blocks_portfolio_insight_order_idx" ON "portfolio_blocks_portfolio_insight" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_portfolio_insight_parent_id_idx" ON "portfolio_blocks_portfolio_insight" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_portfolio_insight_path_idx" ON "portfolio_blocks_portfolio_insight" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_portfolio_image_banner_order_idx" ON "portfolio_blocks_portfolio_image_banner" USING btree ("_order");
+  CREATE INDEX "portfolio_blocks_portfolio_image_banner_parent_id_idx" ON "portfolio_blocks_portfolio_image_banner" USING btree ("_parent_id");
+  CREATE INDEX "portfolio_blocks_portfolio_image_banner_path_idx" ON "portfolio_blocks_portfolio_image_banner" USING btree ("_path");
+  CREATE INDEX "portfolio_blocks_portfolio_image_banner_image_idx" ON "portfolio_blocks_portfolio_image_banner" USING btree ("image_id");
+  CREATE INDEX "portfolio_hero_hero_media_idx" ON "portfolio" USING btree ("hero_media_id");
+  CREATE INDEX "portfolio_meta_meta_image_idx" ON "portfolio" USING btree ("meta_image_id");
+  CREATE UNIQUE INDEX "portfolio_slug_idx" ON "portfolio" USING btree ("slug");
   CREATE INDEX "portfolio_updated_at_idx" ON "portfolio" USING btree ("updated_at");
   CREATE INDEX "portfolio_created_at_idx" ON "portfolio" USING btree ("created_at");
-  CREATE INDEX "about_items_image_idx" ON "about_items" USING btree ("image_id");
-  CREATE INDEX "about_items_updated_at_idx" ON "about_items" USING btree ("updated_at");
-  CREATE INDEX "about_items_created_at_idx" ON "about_items" USING btree ("created_at");
-  CREATE INDEX "departments_updated_at_idx" ON "departments" USING btree ("updated_at");
-  CREATE INDEX "departments_created_at_idx" ON "departments" USING btree ("created_at");
-  CREATE INDEX "team_image_idx" ON "team" USING btree ("image_id");
-  CREATE INDEX "team_department_idx" ON "team" USING btree ("department_id");
-  CREATE INDEX "team_updated_at_idx" ON "team" USING btree ("updated_at");
-  CREATE INDEX "team_created_at_idx" ON "team" USING btree ("created_at");
+  CREATE INDEX "portfolio__status_idx" ON "portfolio" USING btree ("_status");
+  CREATE INDEX "portfolio_rels_order_idx" ON "portfolio_rels" USING btree ("order");
+  CREATE INDEX "portfolio_rels_parent_idx" ON "portfolio_rels" USING btree ("parent_id");
+  CREATE INDEX "portfolio_rels_path_idx" ON "portfolio_rels" USING btree ("path");
+  CREATE INDEX "portfolio_rels_services_id_idx" ON "portfolio_rels" USING btree ("services_id");
+  CREATE INDEX "portfolio_rels_scopes_id_idx" ON "portfolio_rels" USING btree ("scopes_id");
+  CREATE INDEX "portfolio_rels_pages_id_idx" ON "portfolio_rels" USING btree ("pages_id");
+  CREATE INDEX "portfolio_rels_posts_id_idx" ON "portfolio_rels" USING btree ("posts_id");
+  CREATE INDEX "portfolio_rels_portfolio_id_idx" ON "portfolio_rels" USING btree ("portfolio_id");
+  CREATE INDEX "_portfolio_v_version_hero_buttons_order_idx" ON "_portfolio_v_version_hero_buttons" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_version_hero_buttons_parent_id_idx" ON "_portfolio_v_version_hero_buttons" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_version_hero_links_order_idx" ON "_portfolio_v_version_hero_links" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_version_hero_links_parent_id_idx" ON "_portfolio_v_version_hero_links" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_cta_links_order_idx" ON "_portfolio_v_blocks_cta_links" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_cta_links_parent_id_idx" ON "_portfolio_v_blocks_cta_links" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_cta_order_idx" ON "_portfolio_v_blocks_cta" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_cta_parent_id_idx" ON "_portfolio_v_blocks_cta" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_cta_path_idx" ON "_portfolio_v_blocks_cta" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_content_columns_order_idx" ON "_portfolio_v_blocks_content_columns" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_content_columns_parent_id_idx" ON "_portfolio_v_blocks_content_columns" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_content_order_idx" ON "_portfolio_v_blocks_content" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_content_parent_id_idx" ON "_portfolio_v_blocks_content" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_content_path_idx" ON "_portfolio_v_blocks_content" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_media_block_order_idx" ON "_portfolio_v_blocks_media_block" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_media_block_parent_id_idx" ON "_portfolio_v_blocks_media_block" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_media_block_path_idx" ON "_portfolio_v_blocks_media_block" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_media_block_media_idx" ON "_portfolio_v_blocks_media_block" USING btree ("media_id");
+  CREATE INDEX "_portfolio_v_blocks_form_block_order_idx" ON "_portfolio_v_blocks_form_block" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_form_block_parent_id_idx" ON "_portfolio_v_blocks_form_block" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_form_block_path_idx" ON "_portfolio_v_blocks_form_block" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_form_block_form_idx" ON "_portfolio_v_blocks_form_block" USING btree ("form_id");
+  CREATE INDEX "_portfolio_v_blocks_content_media_order_idx" ON "_portfolio_v_blocks_content_media" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_content_media_parent_id_idx" ON "_portfolio_v_blocks_content_media" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_content_media_path_idx" ON "_portfolio_v_blocks_content_media" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_content_media_media_idx" ON "_portfolio_v_blocks_content_media" USING btree ("media_id");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_insight_insights_order_idx" ON "_portfolio_v_blocks_portfolio_insight_insights" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_insight_insights_parent_id_idx" ON "_portfolio_v_blocks_portfolio_insight_insights" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_insight_insights_image_idx" ON "_portfolio_v_blocks_portfolio_insight_insights" USING btree ("image_id");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_insight_order_idx" ON "_portfolio_v_blocks_portfolio_insight" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_insight_parent_id_idx" ON "_portfolio_v_blocks_portfolio_insight" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_insight_path_idx" ON "_portfolio_v_blocks_portfolio_insight" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_image_banner_order_idx" ON "_portfolio_v_blocks_portfolio_image_banner" USING btree ("_order");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_image_banner_parent_id_idx" ON "_portfolio_v_blocks_portfolio_image_banner" USING btree ("_parent_id");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_image_banner_path_idx" ON "_portfolio_v_blocks_portfolio_image_banner" USING btree ("_path");
+  CREATE INDEX "_portfolio_v_blocks_portfolio_image_banner_image_idx" ON "_portfolio_v_blocks_portfolio_image_banner" USING btree ("image_id");
+  CREATE INDEX "_portfolio_v_parent_idx" ON "_portfolio_v" USING btree ("parent_id");
+  CREATE INDEX "_portfolio_v_version_hero_version_hero_media_idx" ON "_portfolio_v" USING btree ("version_hero_media_id");
+  CREATE INDEX "_portfolio_v_version_meta_version_meta_image_idx" ON "_portfolio_v" USING btree ("version_meta_image_id");
+  CREATE INDEX "_portfolio_v_version_version_slug_idx" ON "_portfolio_v" USING btree ("version_slug");
+  CREATE INDEX "_portfolio_v_version_version_updated_at_idx" ON "_portfolio_v" USING btree ("version_updated_at");
+  CREATE INDEX "_portfolio_v_version_version_created_at_idx" ON "_portfolio_v" USING btree ("version_created_at");
+  CREATE INDEX "_portfolio_v_version_version__status_idx" ON "_portfolio_v" USING btree ("version__status");
+  CREATE INDEX "_portfolio_v_created_at_idx" ON "_portfolio_v" USING btree ("created_at");
+  CREATE INDEX "_portfolio_v_updated_at_idx" ON "_portfolio_v" USING btree ("updated_at");
+  CREATE INDEX "_portfolio_v_latest_idx" ON "_portfolio_v" USING btree ("latest");
+  CREATE INDEX "_portfolio_v_autosave_idx" ON "_portfolio_v" USING btree ("autosave");
+  CREATE INDEX "_portfolio_v_rels_order_idx" ON "_portfolio_v_rels" USING btree ("order");
+  CREATE INDEX "_portfolio_v_rels_parent_idx" ON "_portfolio_v_rels" USING btree ("parent_id");
+  CREATE INDEX "_portfolio_v_rels_path_idx" ON "_portfolio_v_rels" USING btree ("path");
+  CREATE INDEX "_portfolio_v_rels_services_id_idx" ON "_portfolio_v_rels" USING btree ("services_id");
+  CREATE INDEX "_portfolio_v_rels_scopes_id_idx" ON "_portfolio_v_rels" USING btree ("scopes_id");
+  CREATE INDEX "_portfolio_v_rels_pages_id_idx" ON "_portfolio_v_rels" USING btree ("pages_id");
+  CREATE INDEX "_portfolio_v_rels_posts_id_idx" ON "_portfolio_v_rels" USING btree ("posts_id");
+  CREATE INDEX "_portfolio_v_rels_portfolio_id_idx" ON "_portfolio_v_rels" USING btree ("portfolio_id");
+  CREATE UNIQUE INDEX "scopes_slug_idx" ON "scopes" USING btree ("slug");
+  CREATE INDEX "scopes_updated_at_idx" ON "scopes" USING btree ("updated_at");
+  CREATE INDEX "scopes_created_at_idx" ON "scopes" USING btree ("created_at");
   CREATE UNIQUE INDEX "redirects_from_idx" ON "redirects" USING btree ("from");
   CREATE INDEX "redirects_updated_at_idx" ON "redirects" USING btree ("updated_at");
   CREATE INDEX "redirects_created_at_idx" ON "redirects" USING btree ("created_at");
@@ -1715,6 +2809,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "forms_blocks_file_order_idx" ON "forms_blocks_file" USING btree ("_order");
   CREATE INDEX "forms_blocks_file_parent_id_idx" ON "forms_blocks_file" USING btree ("_parent_id");
   CREATE INDEX "forms_blocks_file_path_idx" ON "forms_blocks_file" USING btree ("_path");
+  CREATE INDEX "forms_blocks_radio_options_order_idx" ON "forms_blocks_radio_options" USING btree ("_order");
+  CREATE INDEX "forms_blocks_radio_options_parent_id_idx" ON "forms_blocks_radio_options" USING btree ("_parent_id");
+  CREATE INDEX "forms_blocks_radio_order_idx" ON "forms_blocks_radio" USING btree ("_order");
+  CREATE INDEX "forms_blocks_radio_parent_id_idx" ON "forms_blocks_radio" USING btree ("_parent_id");
+  CREATE INDEX "forms_blocks_radio_path_idx" ON "forms_blocks_radio" USING btree ("_path");
   CREATE INDEX "forms_emails_order_idx" ON "forms_emails" USING btree ("_order");
   CREATE INDEX "forms_emails_parent_id_idx" ON "forms_emails" USING btree ("_parent_id");
   CREATE INDEX "forms_updated_at_idx" ON "forms" USING btree ("updated_at");
@@ -1763,11 +2862,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
   CREATE INDEX "payload_locked_documents_rels_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("categories_id");
   CREATE INDEX "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
-  CREATE INDEX "payload_locked_documents_rels_services_id_idx" ON "payload_locked_documents_rels" USING btree ("services_id");
-  CREATE INDEX "payload_locked_documents_rels_portfolio_id_idx" ON "payload_locked_documents_rels" USING btree ("portfolio_id");
-  CREATE INDEX "payload_locked_documents_rels_about_items_id_idx" ON "payload_locked_documents_rels" USING btree ("about_items_id");
   CREATE INDEX "payload_locked_documents_rels_departments_id_idx" ON "payload_locked_documents_rels" USING btree ("departments_id");
   CREATE INDEX "payload_locked_documents_rels_team_id_idx" ON "payload_locked_documents_rels" USING btree ("team_id");
+  CREATE INDEX "payload_locked_documents_rels_services_id_idx" ON "payload_locked_documents_rels" USING btree ("services_id");
+  CREATE INDEX "payload_locked_documents_rels_portfolio_id_idx" ON "payload_locked_documents_rels" USING btree ("portfolio_id");
+  CREATE INDEX "payload_locked_documents_rels_scopes_id_idx" ON "payload_locked_documents_rels" USING btree ("scopes_id");
   CREATE INDEX "payload_locked_documents_rels_redirects_id_idx" ON "payload_locked_documents_rels" USING btree ("redirects_id");
   CREATE INDEX "payload_locked_documents_rels_forms_id_idx" ON "payload_locked_documents_rels" USING btree ("forms_id");
   CREATE INDEX "payload_locked_documents_rels_form_submissions_id_idx" ON "payload_locked_documents_rels" USING btree ("form_submissions_id");
@@ -1791,21 +2890,30 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "header_rels_path_idx" ON "header_rels" USING btree ("path");
   CREATE INDEX "header_rels_pages_id_idx" ON "header_rels" USING btree ("pages_id");
   CREATE INDEX "header_rels_posts_id_idx" ON "header_rels" USING btree ("posts_id");
+  CREATE INDEX "header_rels_services_id_idx" ON "header_rels" USING btree ("services_id");
+  CREATE INDEX "header_rels_portfolio_id_idx" ON "header_rels" USING btree ("portfolio_id");
+  CREATE INDEX "footer_nav_items_with_icon_order_idx" ON "footer_nav_items_with_icon" USING btree ("_order");
+  CREATE INDEX "footer_nav_items_with_icon_parent_id_idx" ON "footer_nav_items_with_icon" USING btree ("_parent_id");
   CREATE INDEX "footer_nav_items_order_idx" ON "footer_nav_items" USING btree ("_order");
   CREATE INDEX "footer_nav_items_parent_id_idx" ON "footer_nav_items" USING btree ("_parent_id");
+  CREATE INDEX "footer_background_image_idx" ON "footer" USING btree ("background_image_id");
   CREATE INDEX "footer_rels_order_idx" ON "footer_rels" USING btree ("order");
   CREATE INDEX "footer_rels_parent_idx" ON "footer_rels" USING btree ("parent_id");
   CREATE INDEX "footer_rels_path_idx" ON "footer_rels" USING btree ("path");
   CREATE INDEX "footer_rels_pages_id_idx" ON "footer_rels" USING btree ("pages_id");
   CREATE INDEX "footer_rels_posts_id_idx" ON "footer_rels" USING btree ("posts_id");
+  CREATE INDEX "footer_rels_services_id_idx" ON "footer_rels" USING btree ("services_id");
+  CREATE INDEX "footer_rels_portfolio_id_idx" ON "footer_rels" USING btree ("portfolio_id");
   CREATE INDEX "settings_social_links_order_idx" ON "settings_social_links" USING btree ("_order");
   CREATE INDEX "settings_social_links_parent_id_idx" ON "settings_social_links" USING btree ("_parent_id");
-  CREATE INDEX "settings_social_links_icon_idx" ON "settings_social_links" USING btree ("icon_id");`)
+  CREATE INDEX "settings_social_links_icon_idx" ON "settings_social_links" USING btree ("icon_id");
+  CREATE INDEX "settings_logo_idx" ON "settings" USING btree ("logo_id");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   DROP TABLE "pages_hero_links" CASCADE;
+   DROP TABLE "pages_hero_buttons" CASCADE;
+  DROP TABLE "pages_hero_links" CASCADE;
   DROP TABLE "pages_blocks_cta_links" CASCADE;
   DROP TABLE "pages_blocks_cta" CASCADE;
   DROP TABLE "pages_blocks_content_columns" CASCADE;
@@ -1816,10 +2924,21 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_blocks_content_media" CASCADE;
   DROP TABLE "pages_blocks_services_block" CASCADE;
   DROP TABLE "pages_blocks_portfolio_block" CASCADE;
+  DROP TABLE "pages_blocks_about_block_items" CASCADE;
   DROP TABLE "pages_blocks_about_block" CASCADE;
   DROP TABLE "pages_blocks_career_block" CASCADE;
+  DROP TABLE "pages_blocks_team_block" CASCADE;
+  DROP TABLE "pages_blocks_button_block_columns_buttons" CASCADE;
+  DROP TABLE "pages_blocks_button_block_columns" CASCADE;
+  DROP TABLE "pages_blocks_button_block" CASCADE;
+  DROP TABLE "pages_blocks_our_process_block_steps" CASCADE;
+  DROP TABLE "pages_blocks_our_process_block" CASCADE;
+  DROP TABLE "pages_blocks_portfolio_insight_insights" CASCADE;
+  DROP TABLE "pages_blocks_portfolio_insight" CASCADE;
+  DROP TABLE "pages_blocks_portfolio_image_banner" CASCADE;
   DROP TABLE "pages" CASCADE;
   DROP TABLE "pages_rels" CASCADE;
+  DROP TABLE "_pages_v_version_hero_buttons" CASCADE;
   DROP TABLE "_pages_v_version_hero_links" CASCADE;
   DROP TABLE "_pages_v_blocks_cta_links" CASCADE;
   DROP TABLE "_pages_v_blocks_cta" CASCADE;
@@ -1831,8 +2950,18 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_content_media" CASCADE;
   DROP TABLE "_pages_v_blocks_services_block" CASCADE;
   DROP TABLE "_pages_v_blocks_portfolio_block" CASCADE;
+  DROP TABLE "_pages_v_blocks_about_block_items" CASCADE;
   DROP TABLE "_pages_v_blocks_about_block" CASCADE;
   DROP TABLE "_pages_v_blocks_career_block" CASCADE;
+  DROP TABLE "_pages_v_blocks_team_block" CASCADE;
+  DROP TABLE "_pages_v_blocks_button_block_columns_buttons" CASCADE;
+  DROP TABLE "_pages_v_blocks_button_block_columns" CASCADE;
+  DROP TABLE "_pages_v_blocks_button_block" CASCADE;
+  DROP TABLE "_pages_v_blocks_our_process_block_steps" CASCADE;
+  DROP TABLE "_pages_v_blocks_our_process_block" CASCADE;
+  DROP TABLE "_pages_v_blocks_portfolio_insight_insights" CASCADE;
+  DROP TABLE "_pages_v_blocks_portfolio_insight" CASCADE;
+  DROP TABLE "_pages_v_blocks_portfolio_image_banner" CASCADE;
   DROP TABLE "_pages_v" CASCADE;
   DROP TABLE "_pages_v_rels" CASCADE;
   DROP TABLE "posts_populated_authors" CASCADE;
@@ -1846,6 +2975,9 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "categories" CASCADE;
   DROP TABLE "users_sessions" CASCADE;
   DROP TABLE "users" CASCADE;
+  DROP TABLE "departments" CASCADE;
+  DROP TABLE "team" CASCADE;
+  DROP TABLE "services_hero_buttons" CASCADE;
   DROP TABLE "services_hero_links" CASCADE;
   DROP TABLE "services_blocks_cta_links" CASCADE;
   DROP TABLE "services_blocks_cta" CASCADE;
@@ -1854,8 +2986,14 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "services_blocks_media_block" CASCADE;
   DROP TABLE "services_blocks_form_block" CASCADE;
   DROP TABLE "services_blocks_content_media" CASCADE;
+  DROP TABLE "services_blocks_services_detail_sub_services" CASCADE;
+  DROP TABLE "services_blocks_services_detail" CASCADE;
+  DROP TABLE "services_blocks_portfolio_insight_insights" CASCADE;
+  DROP TABLE "services_blocks_portfolio_insight" CASCADE;
+  DROP TABLE "services_blocks_portfolio_image_banner" CASCADE;
   DROP TABLE "services" CASCADE;
   DROP TABLE "services_rels" CASCADE;
+  DROP TABLE "_services_v_version_hero_buttons" CASCADE;
   DROP TABLE "_services_v_version_hero_links" CASCADE;
   DROP TABLE "_services_v_blocks_cta_links" CASCADE;
   DROP TABLE "_services_v_blocks_cta" CASCADE;
@@ -1864,12 +3002,42 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_services_v_blocks_media_block" CASCADE;
   DROP TABLE "_services_v_blocks_form_block" CASCADE;
   DROP TABLE "_services_v_blocks_content_media" CASCADE;
+  DROP TABLE "_services_v_blocks_services_detail_sub_services" CASCADE;
+  DROP TABLE "_services_v_blocks_services_detail" CASCADE;
+  DROP TABLE "_services_v_blocks_portfolio_insight_insights" CASCADE;
+  DROP TABLE "_services_v_blocks_portfolio_insight" CASCADE;
+  DROP TABLE "_services_v_blocks_portfolio_image_banner" CASCADE;
   DROP TABLE "_services_v" CASCADE;
   DROP TABLE "_services_v_rels" CASCADE;
+  DROP TABLE "portfolio_hero_buttons" CASCADE;
+  DROP TABLE "portfolio_hero_links" CASCADE;
+  DROP TABLE "portfolio_blocks_cta_links" CASCADE;
+  DROP TABLE "portfolio_blocks_cta" CASCADE;
+  DROP TABLE "portfolio_blocks_content_columns" CASCADE;
+  DROP TABLE "portfolio_blocks_content" CASCADE;
+  DROP TABLE "portfolio_blocks_media_block" CASCADE;
+  DROP TABLE "portfolio_blocks_form_block" CASCADE;
+  DROP TABLE "portfolio_blocks_content_media" CASCADE;
+  DROP TABLE "portfolio_blocks_portfolio_insight_insights" CASCADE;
+  DROP TABLE "portfolio_blocks_portfolio_insight" CASCADE;
+  DROP TABLE "portfolio_blocks_portfolio_image_banner" CASCADE;
   DROP TABLE "portfolio" CASCADE;
-  DROP TABLE "about_items" CASCADE;
-  DROP TABLE "departments" CASCADE;
-  DROP TABLE "team" CASCADE;
+  DROP TABLE "portfolio_rels" CASCADE;
+  DROP TABLE "_portfolio_v_version_hero_buttons" CASCADE;
+  DROP TABLE "_portfolio_v_version_hero_links" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_cta_links" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_cta" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_content_columns" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_content" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_media_block" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_form_block" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_content_media" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_portfolio_insight_insights" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_portfolio_insight" CASCADE;
+  DROP TABLE "_portfolio_v_blocks_portfolio_image_banner" CASCADE;
+  DROP TABLE "_portfolio_v" CASCADE;
+  DROP TABLE "_portfolio_v_rels" CASCADE;
+  DROP TABLE "scopes" CASCADE;
   DROP TABLE "redirects" CASCADE;
   DROP TABLE "redirects_rels" CASCADE;
   DROP TABLE "forms_blocks_checkbox" CASCADE;
@@ -1884,6 +3052,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "forms_blocks_textarea" CASCADE;
   DROP TABLE "forms_blocks_h_captcha" CASCADE;
   DROP TABLE "forms_blocks_file" CASCADE;
+  DROP TABLE "forms_blocks_radio_options" CASCADE;
+  DROP TABLE "forms_blocks_radio" CASCADE;
   DROP TABLE "forms_emails" CASCADE;
   DROP TABLE "forms" CASCADE;
   DROP TABLE "form_submissions_submission_data" CASCADE;
@@ -1905,11 +3075,15 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "header_nav_items" CASCADE;
   DROP TABLE "header" CASCADE;
   DROP TABLE "header_rels" CASCADE;
+  DROP TABLE "footer_nav_items_with_icon" CASCADE;
   DROP TABLE "footer_nav_items" CASCADE;
   DROP TABLE "footer" CASCADE;
   DROP TABLE "footer_rels" CASCADE;
   DROP TABLE "settings_social_links" CASCADE;
   DROP TABLE "settings" CASCADE;
+  DROP TYPE "public"."enum_pages_hero_buttons_icon";
+  DROP TYPE "public"."enum_pages_hero_buttons_icon_position";
+  DROP TYPE "public"."enum_pages_hero_buttons_variant";
   DROP TYPE "public"."enum_pages_hero_links_link_type";
   DROP TYPE "public"."enum_pages_hero_links_link_appearance";
   DROP TYPE "public"."enum_pages_blocks_cta_links_link_type";
@@ -1920,8 +3094,16 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_pages_blocks_archive_populate_by";
   DROP TYPE "public"."enum_pages_blocks_archive_relation_to";
   DROP TYPE "public"."enum_pages_blocks_content_media_media_position";
+  DROP TYPE "public"."enum_pages_blocks_button_block_columns_buttons_icon";
+  DROP TYPE "public"."enum_pages_blocks_button_block_columns_buttons_icon_position";
+  DROP TYPE "public"."enum_pages_blocks_button_block_columns_buttons_variant";
+  DROP TYPE "public"."enum_pages_blocks_button_block_columns_size";
   DROP TYPE "public"."enum_pages_hero_type";
+  DROP TYPE "public"."enum_pages_hero_gradient_color";
   DROP TYPE "public"."enum_pages_status";
+  DROP TYPE "public"."enum__pages_v_version_hero_buttons_icon";
+  DROP TYPE "public"."enum__pages_v_version_hero_buttons_icon_position";
+  DROP TYPE "public"."enum__pages_v_version_hero_buttons_variant";
   DROP TYPE "public"."enum__pages_v_version_hero_links_link_type";
   DROP TYPE "public"."enum__pages_v_version_hero_links_link_appearance";
   DROP TYPE "public"."enum__pages_v_blocks_cta_links_link_type";
@@ -1932,10 +3114,18 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__pages_v_blocks_archive_populate_by";
   DROP TYPE "public"."enum__pages_v_blocks_archive_relation_to";
   DROP TYPE "public"."enum__pages_v_blocks_content_media_media_position";
+  DROP TYPE "public"."enum__pages_v_blocks_button_block_columns_buttons_icon";
+  DROP TYPE "public"."enum__pages_v_blocks_button_block_columns_buttons_icon_position";
+  DROP TYPE "public"."enum__pages_v_blocks_button_block_columns_buttons_variant";
+  DROP TYPE "public"."enum__pages_v_blocks_button_block_columns_size";
   DROP TYPE "public"."enum__pages_v_version_hero_type";
+  DROP TYPE "public"."enum__pages_v_version_hero_gradient_color";
   DROP TYPE "public"."enum__pages_v_version_status";
   DROP TYPE "public"."enum_posts_status";
   DROP TYPE "public"."enum__posts_v_version_status";
+  DROP TYPE "public"."enum_services_hero_buttons_icon";
+  DROP TYPE "public"."enum_services_hero_buttons_icon_position";
+  DROP TYPE "public"."enum_services_hero_buttons_variant";
   DROP TYPE "public"."enum_services_hero_links_link_type";
   DROP TYPE "public"."enum_services_hero_links_link_appearance";
   DROP TYPE "public"."enum_services_blocks_cta_links_link_type";
@@ -1945,7 +3135,11 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_services_blocks_content_columns_link_appearance";
   DROP TYPE "public"."enum_services_blocks_content_media_media_position";
   DROP TYPE "public"."enum_services_hero_type";
+  DROP TYPE "public"."enum_services_hero_gradient_color";
   DROP TYPE "public"."enum_services_status";
+  DROP TYPE "public"."enum__services_v_version_hero_buttons_icon";
+  DROP TYPE "public"."enum__services_v_version_hero_buttons_icon_position";
+  DROP TYPE "public"."enum__services_v_version_hero_buttons_variant";
   DROP TYPE "public"."enum__services_v_version_hero_links_link_type";
   DROP TYPE "public"."enum__services_v_version_hero_links_link_appearance";
   DROP TYPE "public"."enum__services_v_blocks_cta_links_link_type";
@@ -1955,7 +3149,36 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__services_v_blocks_content_columns_link_appearance";
   DROP TYPE "public"."enum__services_v_blocks_content_media_media_position";
   DROP TYPE "public"."enum__services_v_version_hero_type";
+  DROP TYPE "public"."enum__services_v_version_hero_gradient_color";
   DROP TYPE "public"."enum__services_v_version_status";
+  DROP TYPE "public"."enum_portfolio_hero_buttons_icon";
+  DROP TYPE "public"."enum_portfolio_hero_buttons_icon_position";
+  DROP TYPE "public"."enum_portfolio_hero_buttons_variant";
+  DROP TYPE "public"."enum_portfolio_hero_links_link_type";
+  DROP TYPE "public"."enum_portfolio_hero_links_link_appearance";
+  DROP TYPE "public"."enum_portfolio_blocks_cta_links_link_type";
+  DROP TYPE "public"."enum_portfolio_blocks_cta_links_link_appearance";
+  DROP TYPE "public"."enum_portfolio_blocks_content_columns_size";
+  DROP TYPE "public"."enum_portfolio_blocks_content_columns_link_type";
+  DROP TYPE "public"."enum_portfolio_blocks_content_columns_link_appearance";
+  DROP TYPE "public"."enum_portfolio_blocks_content_media_media_position";
+  DROP TYPE "public"."enum_portfolio_hero_type";
+  DROP TYPE "public"."enum_portfolio_hero_gradient_color";
+  DROP TYPE "public"."enum_portfolio_status";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_buttons_icon";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_buttons_icon_position";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_buttons_variant";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_links_link_type";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_links_link_appearance";
+  DROP TYPE "public"."enum__portfolio_v_blocks_cta_links_link_type";
+  DROP TYPE "public"."enum__portfolio_v_blocks_cta_links_link_appearance";
+  DROP TYPE "public"."enum__portfolio_v_blocks_content_columns_size";
+  DROP TYPE "public"."enum__portfolio_v_blocks_content_columns_link_type";
+  DROP TYPE "public"."enum__portfolio_v_blocks_content_columns_link_appearance";
+  DROP TYPE "public"."enum__portfolio_v_blocks_content_media_media_position";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_type";
+  DROP TYPE "public"."enum__portfolio_v_version_hero_gradient_color";
+  DROP TYPE "public"."enum__portfolio_v_version_status";
   DROP TYPE "public"."enum_redirects_to_type";
   DROP TYPE "public"."enum_forms_confirmation_type";
   DROP TYPE "public"."enum_payload_jobs_log_task_slug";
@@ -1964,6 +3187,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_payload_folders_folder_type";
   DROP TYPE "public"."enum_header_nav_items_sub_items_link_type";
   DROP TYPE "public"."enum_header_nav_items_link_type";
+  DROP TYPE "public"."enum_footer_nav_items_with_icon_link_icon";
   DROP TYPE "public"."enum_footer_nav_items_link_type";
   DROP TYPE "public"."enum_settings_social_links_platform";`)
 }
