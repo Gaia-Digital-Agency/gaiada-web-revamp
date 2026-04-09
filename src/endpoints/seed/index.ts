@@ -57,6 +57,10 @@ export const seed = async ({
         data.navItems = []
       }
 
+      if (global === 'settings') {
+        data.address = 'Placeholder Address'
+      }
+
       return payload.updateGlobal({
         slug: global,
         data,

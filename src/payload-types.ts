@@ -2827,7 +2827,13 @@ export interface Footer {
  */
 export interface Setting {
   id: number;
+  siteTitle: string;
+  tagline?: string | null;
   logo?: (number | null) | Media;
+  /**
+   * Upload a favicon (best in .ico or .svg format).
+   */
+  favicon?: (number | null) | Media;
   /**
    * Enter the site-wide WhatsApp number (e.g., +1234567890)
    */
@@ -2842,6 +2848,27 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
+  address: string;
+  /**
+   * Paste the <iframe> embed code from Google Maps here.
+   */
+  googleMapsEmbed?: string | null;
+  /**
+   * Only enter the ID, not the full script.
+   */
+  gtmId?: string | null;
+  /**
+   * Only enter the ID (Measurement ID).
+   */
+  gaId?: string | null;
+  /**
+   * Custom scripts to be added inside the <head> tag.
+   */
+  headerScripts?: string | null;
+  /**
+   * Custom scripts to be added before the closing </body> tag.
+   */
+  footerScripts?: string | null;
   smtpHost?: string | null;
   smtpPort?: number | null;
   smtpUser?: string | null;
@@ -2936,7 +2963,10 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  tagline?: T;
   logo?: T;
+  favicon?: T;
   whatsappNumber?: T;
   contactEmail?: T;
   socialLinks?:
@@ -2948,6 +2978,12 @@ export interface SettingsSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  address?: T;
+  googleMapsEmbed?: T;
+  gtmId?: T;
+  gaId?: T;
+  headerScripts?: T;
+  footerScripts?: T;
   smtpHost?: T;
   smtpPort?: T;
   smtpUser?: T;
