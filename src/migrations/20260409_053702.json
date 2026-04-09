@@ -9100,6 +9100,262 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.departments": {
+      "name": "departments",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "departments_image_idx": {
+          "name": "departments_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "departments_updated_at_idx": {
+          "name": "departments_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "departments_created_at_idx": {
+          "name": "departments_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "departments_image_id_media_id_fk": {
+          "name": "departments_image_id_media_id_fk",
+          "tableFrom": "departments",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.team": {
+      "name": "team",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "department_id": {
+          "name": "department_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "team_image_idx": {
+          "name": "team_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "team_department_idx": {
+          "name": "team_department_idx",
+          "columns": [
+            {
+              "expression": "department_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "team_updated_at_idx": {
+          "name": "team_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "team_created_at_idx": {
+          "name": "team_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "team_image_id_media_id_fk": {
+          "name": "team_image_id_media_id_fk",
+          "tableFrom": "team",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "team_department_id_departments_id_fk": {
+          "name": "team_department_id_departments_id_fk",
+          "tableFrom": "team",
+          "tableTo": "departments",
+          "columnsFrom": [
+            "department_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.services_hero_buttons": {
       "name": "services_hero_buttons",
       "schema": "",
@@ -15534,6 +15790,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "scopes_id": {
+          "name": "scopes_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "pages_id": {
           "name": "pages_id",
           "type": "integer",
@@ -15614,6 +15876,21 @@
           "method": "btree",
           "with": {}
         },
+        "portfolio_rels_scopes_id_idx": {
+          "name": "portfolio_rels_scopes_id_idx",
+          "columns": [
+            {
+              "expression": "scopes_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "portfolio_rels_pages_id_idx": {
           "name": "portfolio_rels_pages_id_idx",
           "columns": [
@@ -15680,6 +15957,19 @@
           "tableTo": "services",
           "columnsFrom": [
             "services_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "portfolio_rels_scopes_fk": {
+          "name": "portfolio_rels_scopes_fk",
+          "tableFrom": "portfolio_rels",
+          "tableTo": "scopes",
+          "columnsFrom": [
+            "scopes_id"
           ],
           "columnsTo": [
             "id"
@@ -17691,6 +17981,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "scopes_id": {
+          "name": "scopes_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "pages_id": {
           "name": "pages_id",
           "type": "integer",
@@ -17761,6 +18057,21 @@
           "columns": [
             {
               "expression": "services_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_portfolio_v_rels_scopes_id_idx": {
+          "name": "_portfolio_v_rels_scopes_id_idx",
+          "columns": [
+            {
+              "expression": "scopes_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -17844,6 +18155,19 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
+        "_portfolio_v_rels_scopes_fk": {
+          "name": "_portfolio_v_rels_scopes_fk",
+          "tableFrom": "_portfolio_v_rels",
+          "tableTo": "scopes",
+          "columnsFrom": [
+            "scopes_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
         "_portfolio_v_rels_pages_fk": {
           "name": "_portfolio_v_rels_pages_fk",
           "tableFrom": "_portfolio_v_rels",
@@ -17890,8 +18214,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.about_items": {
-      "name": "about_items",
+    "public.scopes": {
+      "name": "scopes",
       "schema": "",
       "columns": {
         "id": {
@@ -17906,15 +18230,16 @@
           "primaryKey": false,
           "notNull": true
         },
-        "description": {
-          "name": "description",
-          "type": "varchar",
+        "generate_slug": {
+          "name": "generate_slug",
+          "type": "boolean",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": true
         },
-        "image_id": {
-          "name": "image_id",
-          "type": "integer",
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
@@ -17934,23 +18259,23 @@
         }
       },
       "indexes": {
-        "about_items_image_idx": {
-          "name": "about_items_image_idx",
+        "scopes_slug_idx": {
+          "name": "scopes_slug_idx",
           "columns": [
             {
-              "expression": "image_id",
+              "expression": "slug",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             }
           ],
-          "isUnique": false,
+          "isUnique": true,
           "concurrently": false,
           "method": "btree",
           "with": {}
         },
-        "about_items_updated_at_idx": {
-          "name": "about_items_updated_at_idx",
+        "scopes_updated_at_idx": {
+          "name": "scopes_updated_at_idx",
           "columns": [
             {
               "expression": "updated_at",
@@ -17964,8 +18289,8 @@
           "method": "btree",
           "with": {}
         },
-        "about_items_created_at_idx": {
-          "name": "about_items_created_at_idx",
+        "scopes_created_at_idx": {
+          "name": "scopes_created_at_idx",
           "columns": [
             {
               "expression": "created_at",
@@ -17980,277 +18305,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "about_items_image_id_media_id_fk": {
-          "name": "about_items_image_id_media_id_fk",
-          "tableFrom": "about_items",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.departments": {
-      "name": "departments",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "image_id": {
-          "name": "image_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "description": {
-          "name": "description",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "departments_image_idx": {
-          "name": "departments_image_idx",
-          "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "departments_updated_at_idx": {
-          "name": "departments_updated_at_idx",
-          "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "departments_created_at_idx": {
-          "name": "departments_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "departments_image_id_media_id_fk": {
-          "name": "departments_image_id_media_id_fk",
-          "tableFrom": "departments",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.team": {
-      "name": "team",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "role": {
-          "name": "role",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "image_id": {
-          "name": "image_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "department_id": {
-          "name": "department_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "team_image_idx": {
-          "name": "team_image_idx",
-          "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "team_department_idx": {
-          "name": "team_department_idx",
-          "columns": [
-            {
-              "expression": "department_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "team_updated_at_idx": {
-          "name": "team_updated_at_idx",
-          "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "team_created_at_idx": {
-          "name": "team_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "team_image_id_media_id_fk": {
-          "name": "team_image_id_media_id_fk",
-          "tableFrom": "team",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "team_department_id_departments_id_fk": {
-          "name": "team_department_id_departments_id_fk",
-          "tableFrom": "team",
-          "tableTo": "departments",
-          "columnsFrom": [
-            "department_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -21739,6 +21794,18 @@
           "primaryKey": false,
           "notNull": false
         },
+        "departments_id": {
+          "name": "departments_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_id": {
+          "name": "team_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "services_id": {
           "name": "services_id",
           "type": "integer",
@@ -21751,20 +21818,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "about_items_id": {
-          "name": "about_items_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "departments_id": {
-          "name": "departments_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "team_id": {
-          "name": "team_id",
+        "scopes_id": {
+          "name": "scopes_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -21921,6 +21976,36 @@
           "method": "btree",
           "with": {}
         },
+        "payload_locked_documents_rels_departments_id_idx": {
+          "name": "payload_locked_documents_rels_departments_id_idx",
+          "columns": [
+            {
+              "expression": "departments_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_team_id_idx": {
+          "name": "payload_locked_documents_rels_team_id_idx",
+          "columns": [
+            {
+              "expression": "team_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "payload_locked_documents_rels_services_id_idx": {
           "name": "payload_locked_documents_rels_services_id_idx",
           "columns": [
@@ -21951,41 +22036,11 @@
           "method": "btree",
           "with": {}
         },
-        "payload_locked_documents_rels_about_items_id_idx": {
-          "name": "payload_locked_documents_rels_about_items_id_idx",
+        "payload_locked_documents_rels_scopes_id_idx": {
+          "name": "payload_locked_documents_rels_scopes_id_idx",
           "columns": [
             {
-              "expression": "about_items_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "payload_locked_documents_rels_departments_id_idx": {
-          "name": "payload_locked_documents_rels_departments_id_idx",
-          "columns": [
-            {
-              "expression": "departments_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "payload_locked_documents_rels_team_id_idx": {
-          "name": "payload_locked_documents_rels_team_id_idx",
-          "columns": [
-            {
-              "expression": "team_id",
+              "expression": "scopes_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -22151,6 +22206,32 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
+        "payload_locked_documents_rels_departments_fk": {
+          "name": "payload_locked_documents_rels_departments_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "departments",
+          "columnsFrom": [
+            "departments_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_team_fk": {
+          "name": "payload_locked_documents_rels_team_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "team",
+          "columnsFrom": [
+            "team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
         "payload_locked_documents_rels_services_fk": {
           "name": "payload_locked_documents_rels_services_fk",
           "tableFrom": "payload_locked_documents_rels",
@@ -22177,38 +22258,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "payload_locked_documents_rels_about_items_fk": {
-          "name": "payload_locked_documents_rels_about_items_fk",
+        "payload_locked_documents_rels_scopes_fk": {
+          "name": "payload_locked_documents_rels_scopes_fk",
           "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "about_items",
+          "tableTo": "scopes",
           "columnsFrom": [
-            "about_items_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "payload_locked_documents_rels_departments_fk": {
-          "name": "payload_locked_documents_rels_departments_fk",
-          "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "departments",
-          "columnsFrom": [
-            "departments_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "payload_locked_documents_rels_team_fk": {
-          "name": "payload_locked_documents_rels_team_fk",
-          "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "team",
-          "columnsFrom": [
-            "team_id"
+            "scopes_id"
           ],
           "columnsTo": [
             "id"
@@ -24790,6 +24845,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "44d53322-5448-43bf-a2d8-dc713f9a1826",
+  "id": "edf43574-d9f8-4d09-8f7e-3ac8a32e2ae5",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

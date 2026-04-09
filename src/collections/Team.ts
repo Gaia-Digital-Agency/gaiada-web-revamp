@@ -5,6 +5,7 @@ export const Team: CollectionConfig = {
   slug: 'team',
   admin: {
     useAsTitle: 'name',
+    group: 'GAIA Content',
   },
   access: {
     read: () => true,

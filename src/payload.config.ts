@@ -12,7 +12,6 @@ import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Services } from './collections/Services/index'
 import { Portfolio } from './collections/Portfolio'
-import { About } from './collections/About'
 import { Scopes } from './collections/Scopes'
 import { Departments } from './collections/Departments'
 import { Team } from './collections/Team'
@@ -77,11 +76,10 @@ export default buildConfig({
     Media,
     Categories,
     Users,
-    Services,
-    Portfolio,
-    About,
     Departments,
     Team,
+    Services,
+    Portfolio,
     Scopes,
   ],
   cors: [getServerSideURL()].filter(Boolean),

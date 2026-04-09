@@ -72,11 +72,10 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
-    services: Service;
-    portfolio: Portfolio;
-    'about-items': AboutItem;
     departments: Department;
     team: Team;
+    services: Service;
+    portfolio: Portfolio;
     scopes: Scope;
     redirects: Redirect;
     forms: Form;
@@ -100,11 +99,10 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
-    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
-    'about-items': AboutItemsSelect<false> | AboutItemsSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
     scopes: ScopesSelect<false> | ScopesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -1402,18 +1400,6 @@ export interface TeamBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-items".
- */
-export interface AboutItem {
-  id: number;
-  title: string;
-  description: string;
-  image: number | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "departments".
  */
 export interface Department {
@@ -1648,24 +1634,20 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'services';
-        value: number | Service;
-      } | null)
-    | ({
-        relationTo: 'portfolio';
-        value: number | Portfolio;
-      } | null)
-    | ({
-        relationTo: 'about-items';
-        value: number | AboutItem;
-      } | null)
-    | ({
         relationTo: 'departments';
         value: number | Department;
       } | null)
     | ({
         relationTo: 'team';
         value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'portfolio';
+        value: number | Portfolio;
       } | null)
     | ({
         relationTo: 'scopes';
@@ -2174,6 +2156,29 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments_select".
+ */
+export interface DepartmentsSelect<T extends boolean = true> {
+  name?: T;
+  image?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  image?: T;
+  department?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
@@ -2373,40 +2378,6 @@ export interface PortfolioSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-items_select".
- */
-export interface AboutItemsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  image?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments_select".
- */
-export interface DepartmentsSelect<T extends boolean = true> {
-  name?: T;
-  image?: T;
-  description?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team_select".
- */
-export interface TeamSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  image?: T;
-  department?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -34,6 +34,7 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     useAsTitle: 'title',
+    group: 'GAIA Content',
   },
   fields: [
     {

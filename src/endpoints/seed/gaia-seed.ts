@@ -157,7 +157,28 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
     })
   }
 
-  // 4. Create Portfolio
+  // 4. Create Scopes (Scope of Work)
+  const scopeNames = [
+    'UI/UX Design',
+    'Web Development',
+    'Mobile Development',
+    'SEO Optimization',
+    'Content Writing',
+    'Social Media Management',
+  ]
+  const scopes = []
+  for (const name of scopeNames) {
+    const scope = await payload.create({
+      collection: 'scopes',
+      context: { disableRevalidate: true },
+      data: {
+        title: name,
+      },
+    })
+    scopes.push(scope)
+  }
+
+  // 5. Create Portfolio
   for (let i = 1; i <= 5; i++) {
     await payload.create({
       collection: 'portfolio',
@@ -166,26 +187,16 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       data: {
         title: `Project ${i}`,
         slug: `project-${i}`,
-        description: richText([paragraph(`A showcase of our premium work for Client ${i}, focused on digital excellence.`)]),
+        description: richText([
+          paragraph(`A showcase of our premium work for Client ${i}, focused on digital excellence.`),
+        ]),
         _status: 'published',
         hero: {
           type: 'mediumImpact',
           richText: richText([heading(`Project ${i}`)]),
           media: mediaId || 1,
         },
-      },
-    })
-  }
-
-  // 5. Create About Items
-  for (let i = 1; i <= 5; i++) {
-    await payload.create({
-      collection: 'about-items',
-      context: { disableRevalidate: true },
-      data: {
-        title: `Our Value ${i}`,
-        description: `We believe in digital innovation and providing value ${i} to our clients globally.`,
-        image: mediaId || 1,
+        scopes: [scopes[i % scopes.length].id, scopes[(i + 1) % scopes.length].id],
       },
     })
   }

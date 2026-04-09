@@ -1,15 +1,9 @@
-import * as migration_20260409_012255 from './20260409_012255';
-import * as migration_20260409_035956_add_scopes_collection from './20260409_035956_add_scopes_collection';
+import * as migration_20260409_053702 from './20260409_053702';
 
 export const migrations = [
   {
-    up: migration_20260409_012255.up,
-    down: migration_20260409_012255.down,
-    name: '20260409_012255',
-  },
-  {
-    up: migration_20260409_035956_add_scopes_collection.up,
-    down: migration_20260409_035956_add_scopes_collection.down,
-    name: '20260409_035956_add_scopes_collection'
+    up: migration_20260409_053702.up,
+    down: migration_20260409_053702.down,
+    name: '20260409_053702'
   },
 ];

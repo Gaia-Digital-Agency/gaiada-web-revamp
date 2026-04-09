@@ -6,6 +6,10 @@ import { slugField } from 'payload'
 
 export const Scopes: CollectionConfig = {
   slug: 'scopes',
+  labels: {
+    singular: 'Scope of Work',
+    plural: 'Scope of Works',
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -15,6 +19,7 @@ export const Scopes: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    group: 'GAIA Content',
   },
   fields: [
     {

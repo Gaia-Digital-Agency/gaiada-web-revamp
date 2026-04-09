@@ -5,6 +5,7 @@ export const Departments: CollectionConfig = {
   slug: 'departments',
   admin: {
     useAsTitle: 'name',
+    group: 'GAIA Content',
   },
   access: {
     read: () => true,

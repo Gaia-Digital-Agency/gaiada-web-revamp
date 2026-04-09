@@ -21,7 +21,7 @@ const collections: CollectionSlug[] = [
   'search',
   'services',
   'portfolio',
-  'about-items',
+  'scopes',
   'departments',
   'team',
 ]
@@ -74,7 +74,7 @@ export const seed = async ({
     'departments',
     'services',
     'portfolio',
-    'about-items',
+    'scopes',
     'posts',
     'pages',
     'forms',
