@@ -853,6 +853,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"lock_until" timestamp(3) with time zone
   );
   
+  CREATE TABLE "departments" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"image_id" integer NOT NULL,
+  	"description" varchar,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE "team" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"role" varchar NOT NULL,
+  	"image_id" integer NOT NULL,
+  	"department_id" integer NOT NULL,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
   CREATE TABLE "services_hero_buttons" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -1370,6 +1389,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"services_id" integer,
+  	"scopes_id" integer,
   	"pages_id" integer,
   	"posts_id" integer,
   	"portfolio_id" integer
@@ -1542,35 +1562,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"services_id" integer,
+  	"scopes_id" integer,
   	"pages_id" integer,
   	"posts_id" integer,
   	"portfolio_id" integer
   );
   
-  CREATE TABLE "about_items" (
+  CREATE TABLE "scopes" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
-  	"description" varchar NOT NULL,
-  	"image_id" integer NOT NULL,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
-  );
-  
-  CREATE TABLE "departments" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"name" varchar NOT NULL,
-  	"image_id" integer NOT NULL,
-  	"description" varchar,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
-  );
-  
-  CREATE TABLE "team" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"name" varchar NOT NULL,
-  	"role" varchar NOT NULL,
-  	"image_id" integer NOT NULL,
-  	"department_id" integer NOT NULL,
+  	"generate_slug" boolean DEFAULT true,
+  	"slug" varchar NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -1888,11 +1890,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"media_id" integer,
   	"categories_id" integer,
   	"users_id" integer,
-  	"services_id" integer,
-  	"portfolio_id" integer,
-  	"about_items_id" integer,
   	"departments_id" integer,
   	"team_id" integer,
+  	"services_id" integer,
+  	"portfolio_id" integer,
+  	"scopes_id" integer,
   	"redirects_id" integer,
   	"forms_id" integer,
   	"form_submissions_id" integer,
@@ -2129,6 +2131,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "categories_breadcrumbs" ADD CONSTRAINT "categories_breadcrumbs_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "categories" ADD CONSTRAINT "categories_parent_id_categories_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "departments" ADD CONSTRAINT "departments_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "team" ADD CONSTRAINT "team_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "team" ADD CONSTRAINT "team_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "services_hero_buttons" ADD CONSTRAINT "services_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_hero_links" ADD CONSTRAINT "services_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "services_blocks_cta_links" ADD CONSTRAINT "services_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."services_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
@@ -2207,6 +2212,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "portfolio" ADD CONSTRAINT "portfolio_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_scopes_fk" FOREIGN KEY ("scopes_id") REFERENCES "public"."scopes"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "portfolio_rels" ADD CONSTRAINT "portfolio_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
@@ -2232,13 +2238,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_portfolio_v" ADD CONSTRAINT "_portfolio_v_version_meta_image_id_media_id_fk" FOREIGN KEY ("version_meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_portfolio_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_scopes_fk" FOREIGN KEY ("scopes_id") REFERENCES "public"."scopes"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_portfolio_v_rels" ADD CONSTRAINT "_portfolio_v_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "about_items" ADD CONSTRAINT "about_items_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "departments" ADD CONSTRAINT "departments_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "team" ADD CONSTRAINT "team_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "team" ADD CONSTRAINT "team_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "redirects_rels" ADD CONSTRAINT "redirects_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."redirects"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "redirects_rels" ADD CONSTRAINT "redirects_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "redirects_rels" ADD CONSTRAINT "redirects_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
@@ -2272,11 +2275,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_about_items_fk" FOREIGN KEY ("about_items_id") REFERENCES "public"."about_items"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_departments_fk" FOREIGN KEY ("departments_id") REFERENCES "public"."departments"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_team_fk" FOREIGN KEY ("team_id") REFERENCES "public"."team"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_portfolio_fk" FOREIGN KEY ("portfolio_id") REFERENCES "public"."portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_scopes_fk" FOREIGN KEY ("scopes_id") REFERENCES "public"."scopes"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_redirects_fk" FOREIGN KEY ("redirects_id") REFERENCES "public"."redirects"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_forms_fk" FOREIGN KEY ("forms_id") REFERENCES "public"."forms"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_form_submissions_fk" FOREIGN KEY ("form_submissions_id") REFERENCES "public"."form_submissions"("id") ON DELETE cascade ON UPDATE no action;
@@ -2531,6 +2534,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "users_updated_at_idx" ON "users" USING btree ("updated_at");
   CREATE INDEX "users_created_at_idx" ON "users" USING btree ("created_at");
   CREATE UNIQUE INDEX "users_email_idx" ON "users" USING btree ("email");
+  CREATE INDEX "departments_image_idx" ON "departments" USING btree ("image_id");
+  CREATE INDEX "departments_updated_at_idx" ON "departments" USING btree ("updated_at");
+  CREATE INDEX "departments_created_at_idx" ON "departments" USING btree ("created_at");
+  CREATE INDEX "team_image_idx" ON "team" USING btree ("image_id");
+  CREATE INDEX "team_department_idx" ON "team" USING btree ("department_id");
+  CREATE INDEX "team_updated_at_idx" ON "team" USING btree ("updated_at");
+  CREATE INDEX "team_created_at_idx" ON "team" USING btree ("created_at");
   CREATE INDEX "services_hero_buttons_order_idx" ON "services_hero_buttons" USING btree ("_order");
   CREATE INDEX "services_hero_buttons_parent_id_idx" ON "services_hero_buttons" USING btree ("_parent_id");
   CREATE INDEX "services_hero_links_order_idx" ON "services_hero_links" USING btree ("_order");
@@ -2694,6 +2704,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "portfolio_rels_parent_idx" ON "portfolio_rels" USING btree ("parent_id");
   CREATE INDEX "portfolio_rels_path_idx" ON "portfolio_rels" USING btree ("path");
   CREATE INDEX "portfolio_rels_services_id_idx" ON "portfolio_rels" USING btree ("services_id");
+  CREATE INDEX "portfolio_rels_scopes_id_idx" ON "portfolio_rels" USING btree ("scopes_id");
   CREATE INDEX "portfolio_rels_pages_id_idx" ON "portfolio_rels" USING btree ("pages_id");
   CREATE INDEX "portfolio_rels_posts_id_idx" ON "portfolio_rels" USING btree ("posts_id");
   CREATE INDEX "portfolio_rels_portfolio_id_idx" ON "portfolio_rels" USING btree ("portfolio_id");
@@ -2748,19 +2759,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_portfolio_v_rels_parent_idx" ON "_portfolio_v_rels" USING btree ("parent_id");
   CREATE INDEX "_portfolio_v_rels_path_idx" ON "_portfolio_v_rels" USING btree ("path");
   CREATE INDEX "_portfolio_v_rels_services_id_idx" ON "_portfolio_v_rels" USING btree ("services_id");
+  CREATE INDEX "_portfolio_v_rels_scopes_id_idx" ON "_portfolio_v_rels" USING btree ("scopes_id");
   CREATE INDEX "_portfolio_v_rels_pages_id_idx" ON "_portfolio_v_rels" USING btree ("pages_id");
   CREATE INDEX "_portfolio_v_rels_posts_id_idx" ON "_portfolio_v_rels" USING btree ("posts_id");
   CREATE INDEX "_portfolio_v_rels_portfolio_id_idx" ON "_portfolio_v_rels" USING btree ("portfolio_id");
-  CREATE INDEX "about_items_image_idx" ON "about_items" USING btree ("image_id");
-  CREATE INDEX "about_items_updated_at_idx" ON "about_items" USING btree ("updated_at");
-  CREATE INDEX "about_items_created_at_idx" ON "about_items" USING btree ("created_at");
-  CREATE INDEX "departments_image_idx" ON "departments" USING btree ("image_id");
-  CREATE INDEX "departments_updated_at_idx" ON "departments" USING btree ("updated_at");
-  CREATE INDEX "departments_created_at_idx" ON "departments" USING btree ("created_at");
-  CREATE INDEX "team_image_idx" ON "team" USING btree ("image_id");
-  CREATE INDEX "team_department_idx" ON "team" USING btree ("department_id");
-  CREATE INDEX "team_updated_at_idx" ON "team" USING btree ("updated_at");
-  CREATE INDEX "team_created_at_idx" ON "team" USING btree ("created_at");
+  CREATE UNIQUE INDEX "scopes_slug_idx" ON "scopes" USING btree ("slug");
+  CREATE INDEX "scopes_updated_at_idx" ON "scopes" USING btree ("updated_at");
+  CREATE INDEX "scopes_created_at_idx" ON "scopes" USING btree ("created_at");
   CREATE UNIQUE INDEX "redirects_from_idx" ON "redirects" USING btree ("from");
   CREATE INDEX "redirects_updated_at_idx" ON "redirects" USING btree ("updated_at");
   CREATE INDEX "redirects_created_at_idx" ON "redirects" USING btree ("created_at");
@@ -2857,11 +2862,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
   CREATE INDEX "payload_locked_documents_rels_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("categories_id");
   CREATE INDEX "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
-  CREATE INDEX "payload_locked_documents_rels_services_id_idx" ON "payload_locked_documents_rels" USING btree ("services_id");
-  CREATE INDEX "payload_locked_documents_rels_portfolio_id_idx" ON "payload_locked_documents_rels" USING btree ("portfolio_id");
-  CREATE INDEX "payload_locked_documents_rels_about_items_id_idx" ON "payload_locked_documents_rels" USING btree ("about_items_id");
   CREATE INDEX "payload_locked_documents_rels_departments_id_idx" ON "payload_locked_documents_rels" USING btree ("departments_id");
   CREATE INDEX "payload_locked_documents_rels_team_id_idx" ON "payload_locked_documents_rels" USING btree ("team_id");
+  CREATE INDEX "payload_locked_documents_rels_services_id_idx" ON "payload_locked_documents_rels" USING btree ("services_id");
+  CREATE INDEX "payload_locked_documents_rels_portfolio_id_idx" ON "payload_locked_documents_rels" USING btree ("portfolio_id");
+  CREATE INDEX "payload_locked_documents_rels_scopes_id_idx" ON "payload_locked_documents_rels" USING btree ("scopes_id");
   CREATE INDEX "payload_locked_documents_rels_redirects_id_idx" ON "payload_locked_documents_rels" USING btree ("redirects_id");
   CREATE INDEX "payload_locked_documents_rels_forms_id_idx" ON "payload_locked_documents_rels" USING btree ("forms_id");
   CREATE INDEX "payload_locked_documents_rels_form_submissions_id_idx" ON "payload_locked_documents_rels" USING btree ("form_submissions_id");
@@ -2970,6 +2975,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "categories" CASCADE;
   DROP TABLE "users_sessions" CASCADE;
   DROP TABLE "users" CASCADE;
+  DROP TABLE "departments" CASCADE;
+  DROP TABLE "team" CASCADE;
   DROP TABLE "services_hero_buttons" CASCADE;
   DROP TABLE "services_hero_links" CASCADE;
   DROP TABLE "services_blocks_cta_links" CASCADE;
@@ -3030,9 +3037,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_portfolio_v_blocks_portfolio_image_banner" CASCADE;
   DROP TABLE "_portfolio_v" CASCADE;
   DROP TABLE "_portfolio_v_rels" CASCADE;
-  DROP TABLE "about_items" CASCADE;
-  DROP TABLE "departments" CASCADE;
-  DROP TABLE "team" CASCADE;
+  DROP TABLE "scopes" CASCADE;
   DROP TABLE "redirects" CASCADE;
   DROP TABLE "redirects_rels" CASCADE;
   DROP TABLE "forms_blocks_checkbox" CASCADE;

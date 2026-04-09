@@ -19,10 +19,31 @@ export const Settings: GlobalConfig = {
           label: 'General',
           fields: [
           {
+            name: 'siteTitle',
+            type: 'text',
+            label: 'Site Title',
+            required: true,
+            defaultValue: 'Gaiada Digital Agency',
+          },
+          {
+            name: 'tagline',
+            type: 'text',
+            label: 'Tagline',
+          },
+          {
             name: 'logo',
             type: 'upload',
             relationTo: 'media',
             label: 'Website Logo',
+          },
+          {
+            name: 'favicon',
+            type: 'upload',
+            relationTo: 'media',
+            label: 'Website Favicon',
+            admin: {
+              description: 'Upload a favicon (best in .ico or .svg format).',
+            },
           },
           {
             name: 'whatsappNumber',
@@ -72,6 +93,64 @@ export const Settings: GlobalConfig = {
                   label: 'Icon',
                 },
               ],
+            },
+          ],
+        },
+        {
+          label: 'Our Address',
+          fields: [
+            {
+              name: 'address',
+              type: 'textarea',
+              label: 'Physical Address',
+              required: true,
+            },
+            {
+              name: 'googleMapsEmbed',
+              type: 'textarea',
+              label: 'Google Maps Embed Code',
+              admin: {
+                description: 'Paste the <iframe> embed code from Google Maps here.',
+              },
+            },
+          ],
+        },
+        {
+          label: 'Tracking & Analytics',
+          fields: [
+            {
+              name: 'gtmId',
+              type: 'text',
+              label: 'Google Tag Manager ID',
+              admin: {
+                placeholder: 'GTM-XXXXXX',
+                description: 'Only enter the ID, not the full script.',
+              },
+            },
+            {
+              name: 'gaId',
+              type: 'text',
+              label: 'Google Analytics ID',
+              admin: {
+                placeholder: 'G-XXXXXX',
+                description: 'Only enter the ID (Measurement ID).',
+              },
+            },
+            {
+              name: 'headerScripts',
+              type: 'textarea',
+              label: 'Header Scripts',
+              admin: {
+                description: 'Custom scripts to be added inside the <head> tag.',
+              },
+            },
+            {
+              name: 'footerScripts',
+              type: 'textarea',
+              label: 'Footer Scripts',
+              admin: {
+                description: 'Custom scripts to be added before the closing </body> tag.',
+              },
             },
           ],
         },

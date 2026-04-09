@@ -14,7 +14,9 @@ const richText = (children: any[]) => ({
 
 const paragraph = (text: string) => ({
   type: 'paragraph',
-  children: [{ type: 'text', text, version: 1, detail: 0, format: 0, mode: 'normal' as const, style: '' }],
+  children: [
+    { type: 'text', text, version: 1, detail: 0, format: 0, mode: 'normal' as const, style: '' },
+  ],
   direction: 'ltr' as const,
   format: '' as const,
   indent: 0,
@@ -25,7 +27,9 @@ const paragraph = (text: string) => ({
 const heading = (text: string, tag: 'h1' | 'h2' | 'h3' = 'h1') => ({
   type: 'heading',
   tag,
-  children: [{ type: 'text', text, version: 1, detail: 0, format: 0, mode: 'normal' as const, style: '' }],
+  children: [
+    { type: 'text', text, version: 1, detail: 0, format: 0, mode: 'normal' as const, style: '' },
+  ],
   direction: 'ltr' as const,
   format: '' as const,
   indent: 0,
@@ -74,55 +78,64 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       title: 'Branding',
       slug: 'branding',
       description: 'Professional branding services to define and elevate your brand identity.',
-      pageContent: 'We create cohesive brand identities that resonate with your target audience. From logo design to brand guidelines, our team ensures every touchpoint communicates your unique value proposition.',
+      pageContent:
+        'We create cohesive brand identities that resonate with your target audience. From logo design to brand guidelines, our team ensures every touchpoint communicates your unique value proposition.',
     },
     {
       title: 'Design',
       slug: 'design',
       description: 'Creative design solutions that bring your vision to life across all media.',
-      pageContent: 'Our design team crafts stunning visuals for digital and print media. We blend aesthetics with functionality to create designs that captivate audiences and drive results.',
+      pageContent:
+        'Our design team crafts stunning visuals for digital and print media. We blend aesthetics with functionality to create designs that captivate audiences and drive results.',
     },
     {
       title: 'Marketing',
       slug: 'marketing',
       description: 'Strategic marketing campaigns that drive growth and engagement.',
-      pageContent: 'We develop data-driven marketing strategies that connect with your audience at every stage of the customer journey. From market research to campaign execution, we deliver measurable results.',
+      pageContent:
+        'We develop data-driven marketing strategies that connect with your audience at every stage of the customer journey. From market research to campaign execution, we deliver measurable results.',
     },
     {
       title: 'Ad & SEO',
       slug: 'ad-seo',
       description: 'Performance advertising and SEO to maximize your online visibility.',
-      pageContent: 'Our advertising and SEO experts optimize your digital presence for maximum visibility and conversions. We combine paid media strategies with organic search optimization for sustainable growth.',
+      pageContent:
+        'Our advertising and SEO experts optimize your digital presence for maximum visibility and conversions. We combine paid media strategies with organic search optimization for sustainable growth.',
     },
     {
       title: 'Website',
       slug: 'website',
       description: 'Custom website development built for performance and user experience.',
-      pageContent: 'We build modern, responsive websites that deliver exceptional user experiences. From e-commerce platforms to corporate sites, our development team creates solutions that scale with your business.',
+      pageContent:
+        'We build modern, responsive websites that deliver exceptional user experiences. From e-commerce platforms to corporate sites, our development team creates solutions that scale with your business.',
     },
     {
       title: 'Social Media',
       slug: 'social-media',
       description: 'Social media management and strategy to grow your online community.',
-      pageContent: 'We manage and grow your social media presence across all major platforms. Our strategies focus on community building, content creation, and engagement to strengthen your brand online.',
+      pageContent:
+        'We manage and grow your social media presence across all major platforms. Our strategies focus on community building, content creation, and engagement to strengthen your brand online.',
     },
     {
       title: 'Content Creation',
       slug: 'content-creation',
       description: 'High-quality content that tells your story and engages your audience.',
-      pageContent: 'From video production to copywriting, we create compelling content that tells your brand story. Our content team produces materials that educate, entertain, and inspire action.',
+      pageContent:
+        'From video production to copywriting, we create compelling content that tells your brand story. Our content team produces materials that educate, entertain, and inspire action.',
     },
     {
       title: 'Consultation',
       slug: 'consultation',
       description: 'Expert digital consultation to guide your business transformation.',
-      pageContent: 'Our consultants bring years of industry experience to help you navigate the digital landscape. We provide actionable insights and strategic roadmaps tailored to your business goals.',
+      pageContent:
+        'Our consultants bring years of industry experience to help you navigate the digital landscape. We provide actionable insights and strategic roadmaps tailored to your business goals.',
     },
     {
       title: 'Strategy',
       slug: 'strategy',
       description: 'Comprehensive digital strategy to align your business goals with execution.',
-      pageContent: 'We develop holistic digital strategies that align your business objectives with market opportunities. Our strategic planning process ensures every initiative contributes to your long-term success.',
+      pageContent:
+        'We develop holistic digital strategies that align your business objectives with market opportunities. Our strategic planning process ensures every initiative contributes to your long-term success.',
     },
   ]
   for (const svc of serviceData) {
@@ -145,10 +158,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
             columns: [
               {
                 size: 'full',
-                richText: richText([
-                  heading(svc.title, 'h2'),
-                  paragraph(svc.pageContent),
-                ]),
+                richText: richText([heading(svc.title, 'h2'), paragraph(svc.pageContent)]),
               },
             ],
           },
@@ -157,7 +167,30 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
     })
   }
 
-  // 4. Create Portfolio
+  // 4. Create Scopes (Scope of Work)
+  const scopeNames = [
+    'UI/UX Design',
+    'Web Development',
+    'Mobile Development',
+    'SEO Optimization',
+    'Content Writing',
+    'Social Media Management',
+  ]
+  const scopes = []
+  for (const name of scopeNames) {
+    const scope = await payload.create({
+      collection: 'scopes',
+      draft: false,
+      context: { disableRevalidate: true },
+      data: {
+        title: name,
+        slug: name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''),
+      },
+    })
+    scopes.push(scope)
+  }
+
+  // 5. Create Portfolio
   for (let i = 1; i <= 5; i++) {
     await payload.create({
       collection: 'portfolio',
@@ -166,26 +199,18 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       data: {
         title: `Project ${i}`,
         slug: `project-${i}`,
-        description: richText([paragraph(`A showcase of our premium work for Client ${i}, focused on digital excellence.`)]),
+        description: richText([
+          paragraph(
+            `A showcase of our premium work for Client ${i}, focused on digital excellence.`,
+          ),
+        ]),
         _status: 'published',
         hero: {
           type: 'mediumImpact',
           richText: richText([heading(`Project ${i}`)]),
           media: mediaId || 1,
         },
-      },
-    })
-  }
-
-  // 5. Create About Items
-  for (let i = 1; i <= 5; i++) {
-    await payload.create({
-      collection: 'about-items',
-      context: { disableRevalidate: true },
-      data: {
-        title: `Our Value ${i}`,
-        description: `We believe in digital innovation and providing value ${i} to our clients globally.`,
-        image: mediaId || 1,
+        scopes: [scopes[i % scopes.length].id, scopes[(i + 1) % scopes.length].id],
       },
     })
   }
@@ -215,7 +240,11 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
         { name: 'name', label: 'Name', required: true, blockType: 'text' as const },
         { name: 'email', label: 'Email', required: true, blockType: 'email' as const },
         { name: 'message', label: 'Message', required: true, blockType: 'textarea' as const },
-        { siteKey: '10000000-ffff-ffff-ffff-000000000001', secretKey: '0x0000000000000000000000000000000000000000', blockType: 'hCaptcha' as const },
+        {
+          siteKey: '10000000-ffff-ffff-ffff-000000000001',
+          secretKey: '0x0000000000000000000000000000000000000000',
+          blockType: 'hCaptcha' as const,
+        },
       ],
       confirmationType: 'message' as const,
       confirmationMessage: richText([paragraph('Thank you for your inquiry!')]),
@@ -236,7 +265,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
           label: 'Department',
           required: true,
           blockType: 'select' as const,
-          options: deptNames.map(name => ({ label: name, value: name.toLowerCase() })),
+          options: deptNames.map((name) => ({ label: name, value: name.toLowerCase() })),
         },
         { name: 'resume', label: 'Resume (PDF)', required: true, blockType: 'file' as const },
         { name: 'message', label: 'Message', required: true, blockType: 'textarea' as const },
@@ -265,19 +294,31 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
         {
           blockType: 'contentMedia',
           mediaPosition: 'right',
-          richText: richText([paragraph('Welcome to Gaia Digital Agency. We transform digital ideas into premium experiences.')]),
+          richText: richText([
+            paragraph(
+              'Welcome to Gaia Digital Agency. We transform digital ideas into premium experiences.',
+            ),
+          ]),
           media: mediaId || 1,
         },
         {
           blockType: 'contentMedia',
           mediaPosition: 'left',
-          richText: richText([paragraph('Our features include cutting-edge design and strategic marketing solutions.')]),
+          richText: richText([
+            paragraph(
+              'Our features include cutting-edge design and strategic marketing solutions.',
+            ),
+          ]),
           media: mediaId || 1,
         },
         {
           blockType: 'contentMedia',
           mediaPosition: 'right',
-          richText: richText([paragraph('Our writing team produces high-quality content that resonates with your audience and drives engagement.')]),
+          richText: richText([
+            paragraph(
+              'Our writing team produces high-quality content that resonates with your audience and drives engagement.',
+            ),
+          ]),
           media: mediaId || 1,
         },
       ],
@@ -459,11 +500,14 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
     slug: 'settings',
     context: { disableRevalidate: true },
     data: {
-      whatsappNumber: '+5281337568977',
-      contactEmail: 'contact@gaiada.com',
+      whatsappNumber: '+628123894471',
+      contactEmail: 'info@gaiada.com',
+      address: 'Jl. Raya Mas No.111, Mas, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571',
+      googleMapsEmbed:
+        '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7891.02588149395!2d115.26729852580397!3d-8.546573089513863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23d4965bc26ad%3A0x7980cb2827360637!2sGaia%20Digital%20Agency!5e0!3m2!1sen!2sid!4v1775714212493!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
       socialLinks: [
         { platform: 'facebook', url: 'https://www.facebook.com/gaiadigitalagency' },
-        { platform: 'instagram', url: 'http://34.124.244.233/seosample/' },
+        { platform: 'instagram', url: 'https://www.instagram.com/gaiadigitalagency/' },
         { platform: 'linkedin', url: 'https://www.linkedin.com/company/gaia-digital-agency/' },
       ],
     },
