@@ -10,6 +10,7 @@ import { PortfolioInsight } from '../blocks/PortfolioInsight/config'
 import { PortfolioImageBanner } from '../blocks/PortfolioImageBanner/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
+import { generatePreviewPath } from '../utilities/generatePreviewPath'
 
 import {
   MetaDescriptionField,
@@ -33,6 +34,20 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    livePreview: {
+      url: ({ data, req }) =>
+        generatePreviewPath({
+          slug: data?.slug,
+          collection: 'portfolio',
+          req,
+        }),
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: data?.slug as string,
+        collection: 'portfolio',
+        req,
+      }),
     useAsTitle: 'title',
     group: 'GAIA Content',
   },

@@ -15,6 +15,7 @@ import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { revalidateService, revalidateServiceDelete } from './hooks/revalidateService'
 import { colorPickerField } from '@innovixx/payload-color-picker-field'
+import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import {
   MetaDescriptionField,
@@ -38,6 +39,20 @@ export const Services: CollectionConfig<'services'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    livePreview: {
+      url: ({ data, req }) =>
+        generatePreviewPath({
+          slug: data?.slug,
+          collection: 'services',
+          req,
+        }),
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: data?.slug as string,
+        collection: 'services',
+        req,
+      }),
     useAsTitle: 'title',
     group: 'GAIA Content',
   },
