@@ -16,6 +16,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
+import { FooterWrapper } from '@/components/FooterWrapper'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -40,7 +41,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <Header />
           {children}
-          <Footer />
+          <FooterWrapper>
+            <Footer />
+          </FooterWrapper>
           <WhatsAppCTA />
           <BackToTop />
         </Providers>

@@ -37,6 +37,15 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
   },
   fields: [
     {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,

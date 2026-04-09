@@ -351,6 +351,14 @@ export interface Page {
         steps?:
           | {
               title: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ourProcessBlock';
+      }
+    | {
         title?: string | null;
         insights?:
           | {
@@ -376,11 +384,15 @@ export interface Page {
           | null;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'ourProcessBlock';
-      }
         blockType: 'portfolioInsight';
       }
     | PortfolioImageBanner
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ourWorksBlock';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -627,7 +639,11 @@ export interface Service {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
+    /**
+     * Title
+     */
+    title?: string | null;
     richText?: {
       root: {
         type: string;
@@ -644,14 +660,21 @@ export interface Service {
       [k: string]: unknown;
     } | null;
     /**
-     * Teks raksasa untuk foreground (contoh: Branding)
-     */
-    title?: string | null;
-    /**
      * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
      */
     giantTitleColor?: string | null;
     gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    buttons?:
+      | {
+          label: string;
+          url: string;
+          icon?: ('none' | 'arrow' | 'search') | null;
+          iconPosition?: ('left' | 'right') | null;
+          variant?: ('default' | 'link') | null;
+          newTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
     links?:
       | {
           link: {
@@ -787,6 +810,7 @@ export interface Service {
  */
 export interface Portfolio {
   id: number;
+  featuredImage: number | Media;
   title: string;
   description: {
     root: {
@@ -1826,6 +1850,11 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     title?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         portfolioInsight?:
           | T
           | {
@@ -1842,6 +1871,13 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
+        ourWorksBlock?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -2243,6 +2279,7 @@ export interface ServicesSelect<T extends boolean = true> {
  * via the `definition` "portfolio_select".
  */
 export interface PortfolioSelect<T extends boolean = true> {
+  featuredImage?: T;
   title?: T;
   description?: T;
   services?: T;
@@ -2250,10 +2287,21 @@ export interface PortfolioSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        richText?: T;
         title?: T;
+        richText?: T;
         giantTitleColor?: T;
         gradientColor?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              icon?: T;
+              iconPosition?: T;
+              variant?: T;
+              newTab?: T;
+              id?: T;
+            };
         links?:
           | T
           | {

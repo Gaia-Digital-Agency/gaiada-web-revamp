@@ -22,6 +22,7 @@ import { ButtonBlock } from '@/blocks/ButtonBlock/config'
 import { OurProcessBlock } from '@/blocks/OurProcess/config'
 import { PortfolioInsight } from '../../blocks/PortfolioInsight/config'
 import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/config'
+import { OurWorksBlock } from '@/blocks/OurWorksBlock/config'
 
 import {
   MetaDescriptionField,
@@ -98,6 +99,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 OurProcessBlock,
                 PortfolioInsight,
                 PortfolioImageBanner,
+                OurWorksBlock,
               ],
               required: true,
               admin: {

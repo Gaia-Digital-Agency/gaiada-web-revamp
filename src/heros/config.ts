@@ -170,7 +170,7 @@ export const hero: Field = {
       type: 'upload',
       admin: {
         condition: (_, { type } = {}) =>
-          ['highImpact', 'mediumImpact', 'nonHomepageHero'].includes(type),
+          ['highImpact', 'mediumImpact', 'nonHomepageHero', 'homepageHero'].includes(type),
       },
       relationTo: 'media',
       required: true,

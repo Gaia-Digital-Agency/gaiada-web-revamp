@@ -119,6 +119,32 @@
       max-width: var(--breakpoint-2xl);
     }
   }
+
+  .snap-container {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+
+  .snap-section {
+    position: sticky;
+    top: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--background);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+  }
 }
 
 :root {
@@ -458,6 +484,10 @@ body {
 }
 
 /* C O N T A I N E R */
+.site-main {
+  background-color: #000;
+}
+
 .container {
   max-width: 1112px;
 }
@@ -512,6 +542,11 @@ h3,
   font-weight: 600;
   line-height: 1.3em;
   letter-spacing: 0.32px;
+}
+
+.heading-5 {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .text-avenir {
