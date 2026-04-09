@@ -387,6 +387,12 @@ export interface Page {
         blockType: 'portfolioInsight';
       }
     | PortfolioImageBanner
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ourWorksBlock';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -804,6 +810,7 @@ export interface Service {
  */
 export interface Portfolio {
   id: number;
+  featuredImage: number | Media;
   title: string;
   description: {
     root: {
@@ -1868,6 +1875,13 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
+        ourWorksBlock?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -2292,6 +2306,7 @@ export interface ServicesSelect<T extends boolean = true> {
  * via the `definition` "portfolio_select".
  */
 export interface PortfolioSelect<T extends boolean = true> {
+  featuredImage?: T;
   title?: T;
   description?: T;
   services?: T;

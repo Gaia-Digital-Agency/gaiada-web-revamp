@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react'
-import { BlockWrapper } from './BlockWrapper'
-
-import type { Page, Service } from '@/payload-types'
+import React from 'react'
+import type { Page } from '@/payload-types'
+import { RenderHero } from '@/heros/RenderHero'
+import { HomepageStack } from '@/components/HomepageStack'
+import { Footer } from '@/Footer/Component'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
@@ -21,9 +22,7 @@ import { PortfolioInsightBlock } from '@/blocks/PortfolioInsight/Component'
 import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/Component'
 import { OurWorksBlock } from '@/blocks/OurWorksBlock/component'
 
-// Mapping of block slugs to their corresponding React components
-
-const blockComponents = {
+const blockComponents: Record<string, any> = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
@@ -43,40 +42,43 @@ const blockComponents = {
   ourWorksBlock: OurWorksBlock,
 }
 
-// Component that iterates through and renders an array of page layout blocks
-export const RenderBlocks: React.FC<{
-  blocks: (Page['layout'][0] | NonNullable<Service['layout']>[0])[]
-  isHomepage?: boolean
-}> = (props) => {
-  const { blocks, isHomepage } = props
+interface HomepageSectionsProps {
+  hero: Page['hero']
+  layout: Page['layout']
+}
 
-  const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
+export const HomepageSections: React.FC<HomepageSectionsProps> = async ({ hero, layout }) => {
+  const sections: React.ReactNode[] = []
 
-  if (hasBlocks) {
-    return (
-      <Fragment>
-        {blocks.map((block, index) => {
-          const { blockType } = block
+  // Section 0: Hero
+  sections.push(
+    <div key="hero" className="w-full h-full overflow-hidden bg-background">
+      <RenderHero {...hero} />
+    </div>,
+  )
 
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
-
-            if (Block) {
-              const isEven = index % 2 === 0
-
-              return (
-                <BlockWrapper key={index} index={index + 1} isHomepage={isHomepage}>
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
-                </BlockWrapper>
-              )
-            }
-          }
-          return null
-        })}
-      </Fragment>
-    )
+  // Sections 1…N: Layout blocks
+  if (layout && Array.isArray(layout)) {
+    for (let i = 0; i < layout.length; i++) {
+      const block = layout[i]
+      const { blockType } = block as { blockType: string }
+      const Block = blockComponents[blockType]
+      if (Block) {
+        sections.push(
+          <div key={`block-${i}`} className="w-full h-full overflow-hidden bg-background">
+            <Block {...block} disableInnerContainer />
+          </div>,
+        )
+      }
+    }
   }
 
-  return null
+  // Last section: Footer
+  sections.push(
+    <div key="footer" className="w-full h-full overflow-auto bg-background">
+      <Footer />
+    </div>,
+  )
+
+  return <HomepageStack>{sections}</HomepageStack>
 }

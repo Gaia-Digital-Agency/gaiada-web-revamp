@@ -14,12 +14,14 @@ type HomepageHeroType =
       richText?: never
       title?: never
       buttons?: never
+      media?: never
     }
   | (Omit<Page['hero'], 'richText'> & {
       children?: never
       richText?: Page['hero']['richText']
       title?: Page['hero']['title']
-      buttons?: Page['hero']['buttons']
+      buttons?: any[]
+      media?: any
     })
 
 export const HomepageHero: React.FC<HomepageHeroType> = ({
@@ -27,6 +29,7 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
   richText,
   title,
   buttons,
+  media,
 }) => {
   const interBubbleRef = useRef<HTMLDivElement>(null)
 
@@ -60,8 +63,16 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
   }, [])
 
   return (
-    <section className="section-homepage relative overflow-hidden">
-      <div className="gradient-bg absolute inset-0 -z-10">
+    <section
+      className="section-homepage relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${media?.url})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <div className="gradient-bg absolute inset-0 z-1">
         <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
           <defs>
             <filter id="goo">
@@ -86,7 +97,7 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
         </div>
       </div>
 
-      <div className="container mx-auto min-h-screen flex items-center relative">
+      <div className="container mx-auto min-h-screen flex items-center relative z-10">
         <div className="flex flex-row justify-between">
           <div className="md:col-span-6">
             <BlurIn tag="h1">{title}</BlurIn>
