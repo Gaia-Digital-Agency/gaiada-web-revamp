@@ -77,6 +77,7 @@ export interface Config {
     'about-items': AboutItem;
     departments: Department;
     team: Team;
+    scopes: Scope;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -104,6 +105,7 @@ export interface Config {
     'about-items': AboutItemsSelect<false> | AboutItemsSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    scopes: ScopesSelect<false> | ScopesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -821,6 +823,7 @@ export interface Portfolio {
     [k: string]: unknown;
   };
   services?: (number | Service)[] | null;
+  scopes?: (number | Scope)[] | null;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
     /**
@@ -968,6 +971,21 @@ export interface Portfolio {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scopes".
+ */
+export interface Scope {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1650,6 +1668,10 @@ export interface PayloadLockedDocument {
         value: number | Team;
       } | null)
     | ({
+        relationTo: 'scopes';
+        value: number | Scope;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -2268,6 +2290,7 @@ export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   services?: T;
+  scopes?: T;
   hero?:
     | T
     | {
@@ -2382,6 +2405,17 @@ export interface TeamSelect<T extends boolean = true> {
   role?: T;
   image?: T;
   department?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scopes_select".
+ */
+export interface ScopesSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
