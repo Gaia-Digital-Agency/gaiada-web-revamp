@@ -35,13 +35,13 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
     <div>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300"
+        className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300 cursor-pointer"
       >
         <div className="flex items-baseline gap-6">
           <span
             className={cn(
               'text-[32px] font-semibold leading-[130%] transition-colors duration-300',
-              isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+              isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -50,7 +50,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           <span
             className={cn(
               'text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
-              isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+              isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -65,7 +65,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             <Plus
               className={cn(
                 'w-8 h-8 transition-colors duration-300',
-                isOpen ? 'text-[#1A1A1B]' : 'text-[#1A1A1B] group-hover:text-[#FFC22C]',
+                isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
               )}
             />
           </motion.div>
@@ -83,7 +83,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           >
             <div className="pl-[60px] md:pl-[66px] w-[450px]">
               <p
-                className="text-[14px] leading-[22px] text-[#6D758F] font-normal pb-6"
+                className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {description}
@@ -108,56 +108,58 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
   useGSAPImageParallax(imageWrapperRef)
 
   return (
-    <div ref={sectionRef} id="about-us" className="container px-0!">
-      <div id="about-section-1" className="mb-20">
-        <div className="flex flex-col md:flex-row items-start gap-[48px]">
-          {/* Bagian Kiri: Image */}
-          <div id="about-section-1-image" className="w-full md:w-[708px] md:h-[480px] shrink-0">
-            {image && (
-              <div ref={imageWrapperRef} className="relative w-full h-full overflow-hidden">
-                <Media
-                  resource={image}
-                  fill
-                  className="about-us-image w-full h-full"
-                  imgClassName="object-cover scale-[1.2]"
-                  htmlElement={null}
-                  pictureClassName="w-full h-full"
-                />
-              </div>
-            )}
-          </div>
+    <div ref={sectionRef} className="bg-background">
+      <div id="about-us" className="container px-0! py-20">
+        <div id="about-section-1" className="mb-20">
+          <div className="flex flex-col md:flex-row items-start gap-[48px]">
+            {/* Bagian Kiri: Image */}
+            <div id="about-section-1-image" className="w-full md:w-[708px] md:h-[480px] shrink-0">
+              {image && (
+                <div ref={imageWrapperRef} className="relative w-full h-full overflow-hidden">
+                  <Media
+                    resource={image}
+                    fill
+                    className="about-us-image w-full h-full"
+                    imgClassName="object-cover scale-[1.2]"
+                    htmlElement={null}
+                    pictureClassName="w-full h-full"
+                  />
+                </div>
+              )}
+            </div>
 
-          {/* Bagian Kanan: Title, Description, and Accordion */}
-          <div id="about-section-1-content" className="flex-1 pr-[180px]">
-            {title && (
-              <h2 ref={titleRef} id="title-about-us">
-                {title}
-              </h2>
-            )}
+            {/* Bagian Kanan: Title, Description, and Accordion */}
+            <div id="about-section-1-content" className="flex-1 pr-[180px]">
+              {title && (
+                <h2 ref={titleRef} id="title-about-us">
+                  {title}
+                </h2>
+              )}
 
-            {description && (
-              <div ref={descriptionRef} id="description-about-us">
-                <RichText data={description} enableGutter={false} />
-              </div>
-            )}
+              {description && (
+                <div ref={descriptionRef} id="description-about-us">
+                  <RichText data={description} enableGutter={false} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* about-section-2: Accordion List */}
-      <div id="about-section-2" className="w-full max-w-[657px] mx-auto">
-        {items && items.length > 0 && (
-          <div className="flex flex-col">
-            {items.map((item, index) => (
-              <AccordionItem
-                key={item.id || index}
-                title={item.title}
-                description={item.description}
-                index={index}
-              />
-            ))}
-          </div>
-        )}
+        {/* about-section-2: Accordion List */}
+        <div id="about-section-2" className="w-full max-w-[657px] mx-auto">
+          {items && items.length > 0 && (
+            <div className="flex flex-col">
+              {items.map((item, index) => (
+                <AccordionItem
+                  key={item.id || index}
+                  title={item.title}
+                  description={item.description}
+                  index={index}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
