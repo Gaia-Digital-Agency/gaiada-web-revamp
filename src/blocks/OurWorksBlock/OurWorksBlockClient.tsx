@@ -64,8 +64,8 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   }
 
   return (
-    <section className="h-screen flex items-center">
-      <div className="relative overflow-hidden w-full py-24 md:py-32" id="our-works">
+    <section className="h-screen flex items-center" id="our-works">
+      <div className="relative overflow-hidden w-full py-24 md:py-32">
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
