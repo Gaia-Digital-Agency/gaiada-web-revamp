@@ -75,7 +75,7 @@ export const HomepageSections: React.FC<HomepageSectionsProps> = async ({ hero, 
 
   // Last section: Footer
   sections.push(
-    <div key="footer" className="w-full h-full overflow-auto bg-background">
+    <div key="footer" className="w-full h-auto bg-background shadow-[0_-10px_30px_rgba(0,0,0,0.15)] relative z-10">
       <Footer />
     </div>,
   )

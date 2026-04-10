@@ -9,7 +9,7 @@ const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({
   return (
     <input
       data-slot="input"
-      className={cn('w-full py-2 px-4 outline-none border-b border-[#78716C]', className)}
+      className={cn('w-full py-2 px-0 outline-none border-b border-[#78716C]', className)}
       type={type}
       {...props}
     />
