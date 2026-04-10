@@ -100,13 +100,22 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       {sections.map((section, i) => {
         const isCovered = i < currentIndex
         const isAhead = i > currentIndex
+        const isLast = i === total - 1
+        
+        // Don't shrink the second-to-last section if the Footer is sliding up over it
+        const isCoveredOnlyByFooter = isCovered && currentIndex === total - 1 && i === total - 2
+        const shouldScale = isCovered && !isCoveredOnlyByFooter
 
         return (
           <div
             key={i}
             style={{
               position: 'absolute',
-              inset: 0,
+              top: isLast ? 'auto' : 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: isLast ? 'auto' : '100%',
               transform: isAhead ? 'translateY(100%)' : 'translateY(0%)',
               transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
               zIndex: i + 1,
@@ -117,11 +126,11 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
             <div
               style={{
                 width: '100%',
-                height: '100%',
-                transform: isCovered ? 'scale(0.93)' : 'scale(1)',
+                height: isLast ? 'auto' : '100%',
+                transform: shouldScale ? 'scale(0.93)' : 'scale(1)',
                 transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
                 transformOrigin: 'center bottom',
-                borderRadius: isCovered ? '20px' : '0px',
+                borderRadius: shouldScale ? '20px' : '0px',
                 overflow: 'hidden',
               }}
             >

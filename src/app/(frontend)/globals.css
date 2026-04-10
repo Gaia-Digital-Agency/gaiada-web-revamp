@@ -515,6 +515,10 @@ header {
 /* F O O T E R */
 footer {
   background-color: var(--gda-brand-white);
+
+  .required {
+    display: none;
+  }
 }
 
 /* T Y P O G R A P H Y */
@@ -636,7 +640,7 @@ h3,
 .split-line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.05em; /* Menghindari huruf terpotong di bawah */
+  padding-bottom: 0.05em;
   margin-bottom: -0.05em;
 }
 
