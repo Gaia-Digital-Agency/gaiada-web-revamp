@@ -351,6 +351,7 @@ export interface Page {
         steps?:
           | {
               title: string;
+              description: string;
               id?: string | null;
             }[]
           | null;
@@ -1854,6 +1855,7 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     title?: T;
+                    description?: T;
                     id?: T;
                   };
               id?: T;
