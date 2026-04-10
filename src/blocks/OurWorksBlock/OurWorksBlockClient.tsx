@@ -4,8 +4,9 @@ import React, { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/utilities/ui'
-import { Search, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { AppButton } from '@/components/common/AppButton'
+import { TextFade } from '@/components/FramerMotion/TextFade'
 
 import './OurBlockStyle.css'
 
@@ -68,11 +69,13 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
-              <h2 className="heading-1">
-                Our
-                <br />
-                Works
-              </h2>
+              <TextFade direction="up">
+                <h2 className="heading-1">
+                  Our
+                  <br />
+                  Works
+                </h2>
+              </TextFade>
 
               <div className="filter-wrapper flex flex-col items-start gap-4">
                 <button

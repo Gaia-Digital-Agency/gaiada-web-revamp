@@ -1,0 +1,54 @@
+#our-process {
+  .our-process-wrapper {
+    overflow: visible;
+
+    .our-process-item {
+      overflow: visible;
+
+      h3 {
+        font-family: var(--font-roboto);
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 0;
+        color: #78716c;
+      }
+
+      .description-wrapper {
+        overflow: visible;
+        position: relative;
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid #78716c;
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100%;
+          height: 100%;
+          background: var(--gda-brand-yellow);
+          filter: blur(50px);
+          z-index: 1;
+        }
+
+        p {
+          position: relative;
+          letter-spacing: 0.01em;
+          z-index: 2;
+        }
+      }
+
+      &.active {
+        h3 {
+          font-weight: 700;
+          color: var(--gda-brand-black);
+        }
+
+        .description-wrapper {
+        }
+      }
+    }
+  }
+}

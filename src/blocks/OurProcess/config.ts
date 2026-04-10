@@ -22,6 +22,11 @@ export const OurProcessBlock: Block = {
           type: 'text',
           required: true,
         },
+        {
+          name: 'description',
+          type: 'textarea',
+          required: true,
+        },
       ],
     },
   ],

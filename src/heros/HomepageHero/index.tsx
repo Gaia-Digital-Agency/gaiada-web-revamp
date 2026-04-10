@@ -5,8 +5,8 @@ import type { Page } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { AppButton } from '@/components/common/AppButton'
 import './homepageHero.css'
-import { BlurIn } from '@/components/FramerMorion/Blur-in'
-import { TextFade } from '@/components/FramerMorion/TextFade'
+import { BlurIn } from '@/components/FramerMotion/Blur-in'
+import { TextFade } from '@/components/FramerMotion/TextFade'
 
 type HomepageHeroType =
   | {
