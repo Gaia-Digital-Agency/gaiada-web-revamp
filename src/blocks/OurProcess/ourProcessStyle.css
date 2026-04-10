@@ -4,6 +4,14 @@
 
     .our-process-item {
       overflow: visible;
+      cursor: pointer;
+
+      &:hover {
+        h3 {
+          font-weight: 700;
+          color: var(--gda-brand-black);
+        }
+      }
 
       h3 {
         font-family: var(--font-roboto);
@@ -11,6 +19,7 @@
         font-weight: 400;
         margin-bottom: 0;
         color: #78716c;
+        transition: 0.3s all;
       }
 
       .description-wrapper {
