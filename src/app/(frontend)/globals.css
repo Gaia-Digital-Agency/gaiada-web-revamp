@@ -149,7 +149,8 @@
 
 :root {
   /* --background: oklch(100% 0 0deg); */
-  --background: #f9f9f9;
+  --background: var(--gda-brand-white);
+  --background-even: var(--gda-brand-grey-20);
   --foreground: oklch(14.5% 0 0deg);
   --card: oklch(96.5% 0.005 265deg);
   --card-foreground: oklch(14.5% 0 0deg);
@@ -190,6 +191,7 @@
   --gda-brand-yellow: #ffc22c;
   --gda-brand-earth: #78716c;
   --gda-brand-grey: #c6c6c6;
+  --gda-brand-grey-20: #f2f2f2;
   --gda-white-bone: #f9f9f9;
   --gda-earth: #78716c;
   --font-avenir: 'Avenir Next', sans-serif;
@@ -197,38 +199,39 @@
 }
 
 [data-theme='dark'] {
-  --background: oklch(14.5% 0 0deg);
-  --foreground: oklch(98.5% 0 0deg);
-  --card: oklch(17% 0 0deg);
-  --card-foreground: oklch(98.5% 0 0deg);
-  --popover: oklch(14.5% 0 0deg);
-  --popover-foreground: oklch(98.5% 0 0deg);
-  --primary: oklch(98.5% 0 0deg);
-  --primary-foreground: oklch(20.5% 0 0deg);
-  --secondary: oklch(26.9% 0 0deg);
-  --secondary-foreground: oklch(98.5% 0 0deg);
-  --muted: oklch(26.9% 0 0deg);
-  --muted-foreground: oklch(70.8% 0 0deg);
-  --accent: oklch(26.9% 0 0deg);
-  --accent-foreground: oklch(98.5% 0 0deg);
+  --background: var(--gda-brand-black);
+  --background-even: var(--gda-brand-black);
+  --foreground: var(--gda-brand-white);
+  --card: #262627;
+  --card-foreground: var(--gda-brand-white);
+  --popover: #262627;
+  --popover-foreground: var(--gda-brand-white);
+  --primary: var(--gda-brand-yellow);
+  --primary-foreground: var(--gda-brand-black);
+  --secondary: var(--gda-brand-earth);
+  --secondary-foreground: var(--gda-brand-white);
+  --muted: color-mix(in srgb, var(--gda-brand-earth), transparent 60%);
+  --muted-foreground: var(--gda-brand-grey);
+  --accent: var(--gda-brand-yellow);
+  --accent-foreground: var(--gda-brand-black);
   --destructive: oklch(39.6% 0.141 25.723deg);
   --destructive-foreground: oklch(63.7% 0.237 25.331deg);
-  --border: oklch(26.9% 0 0deg);
-  --input: oklch(26.9% 0 0deg);
-  --ring: oklch(43.9% 0 0deg);
+  --border: color-mix(in srgb, var(--gda-brand-earth), transparent 70%);
+  --input: color-mix(in srgb, var(--gda-brand-earth), transparent 70%);
+  --ring: var(--gda-brand-yellow);
   --chart-1: oklch(48.8% 0.243 264.376deg);
   --chart-2: oklch(69.6% 0.17 162.48deg);
   --chart-3: oklch(76.9% 0.188 70.08deg);
   --chart-4: oklch(62.7% 0.265 303.9deg);
   --chart-5: oklch(64.5% 0.246 16.439deg);
-  --sidebar: oklch(20.5% 0 0deg);
-  --sidebar-foreground: oklch(98.5% 0 0deg);
-  --sidebar-primary: oklch(48.8% 0.243 264.376deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(26.9% 0 0deg);
-  --sidebar-accent-foreground: oklch(98.5% 0 0deg);
-  --sidebar-border: oklch(26.9% 0 0deg);
-  --sidebar-ring: oklch(43.9% 0 0deg);
+  --sidebar: var(--gda-brand-black);
+  --sidebar-foreground: var(--gda-brand-white);
+  --sidebar-primary: var(--gda-brand-yellow);
+  --sidebar-primary-foreground: var(--gda-brand-black);
+  --sidebar-accent: #262627;
+  --sidebar-accent-foreground: var(--gda-brand-white);
+  --sidebar-border: color-mix(in srgb, var(--gda-brand-earth), transparent 70%);
+  --sidebar-ring: var(--gda-brand-yellow);
   --success: oklch(28% 0.1 200deg);
   --warning: oklch(35% 0.08 70deg);
   --error: oklch(45% 0.1 25deg);
@@ -236,6 +239,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-even: var(--background-even);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
