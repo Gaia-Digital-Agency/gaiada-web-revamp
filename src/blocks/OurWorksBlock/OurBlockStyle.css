@@ -1,4 +1,9 @@
 #our-works {
+  background-image: url('../../../public/bg-our-works.webp');
+  background-size: contain;
+  background-position: left top;
+  background-repeat: no-repeat;
+
   .filter-wrapper {
     button {
       cursor: pointer;
