@@ -6,7 +6,6 @@ import type { Department, Team } from '@/payload-types'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import { AppButton } from '@/components/common/AppButton'
 import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
-import { BlurIn } from '@/components/FramerMorion/Blur-in'
 
 type Props = {
   departments: (Department & { members: Team[] })[]

@@ -199,6 +199,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       data: {
         title: `Project ${i}`,
         slug: `project-${i}`,
+        featuredImage: mediaId || 1,
         description: richText([
           paragraph(
             `A showcase of our premium work for Client ${i}, focused on digital excellence.`,
