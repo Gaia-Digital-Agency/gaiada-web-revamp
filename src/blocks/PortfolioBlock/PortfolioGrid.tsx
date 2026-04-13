@@ -14,6 +14,11 @@ interface PortfolioGridProps {
 export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services }) => {
   const [activeService, setActiveService] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [mounted, setMounted] = useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const filteredItems = useMemo(() => {
     const lowerQuery = searchQuery.trim().toLowerCase()
@@ -106,20 +111,28 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
           {/* Left Column */}
           <div className="flex flex-col gap-10 md:gap-16">
-            <AnimatePresence mode="popLayout">
-              {leftColumnItems.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
-              ))}
-            </AnimatePresence>
+            {mounted ? (
+              <AnimatePresence mode="popLayout">
+                {leftColumnItems.map((item) => (
+                  <PortfolioCard key={item.id} item={item} />
+                ))}
+              </AnimatePresence>
+            ) : (
+              leftColumnItems.map((item) => <PortfolioCard key={item.id} item={item} />)
+            )}
           </div>
 
           {/* Right Column - Staggered offset */}
           <div className="flex flex-col gap-10 md:gap-16 md:mt-24">
-            <AnimatePresence mode="popLayout">
-              {rightColumnItems.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
-              ))}
-            </AnimatePresence>
+            {mounted ? (
+              <AnimatePresence mode="popLayout">
+                {rightColumnItems.map((item) => (
+                  <PortfolioCard key={item.id} item={item} />
+                ))}
+              </AnimatePresence>
+            ) : (
+              rightColumnItems.map((item) => <PortfolioCard key={item.id} item={item} />)
+            )}
           </div>
         </div>
       </div>
@@ -144,19 +157,22 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       className="group"
     >
-      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative group">
+      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative group/card">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
           <Media
             resource={thumbnail}
             fill
-            imgClassName="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            imgClassName="object-cover transition-transform duration-700 ease-out group-hover/card:scale-[1.05]"
           />
           {/* Yellow Overlay Layer */}
-          <div className="absolute inset-0 bg-[var(--gda-brand-yellow)]/50 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-10 opacity-100 flex items-center justify-center">
+          <div className="absolute inset-0 bg-(--gda-brand-yellow)/70 translate-y-[120%] group-hover/card:translate-y-0 transition-transform duration-700 ease-in-out z-10 opacity-95 flex items-center justify-center">
+            {/* Feathered/Bias Edge - Only visible during and after transition */}
+            <div className="absolute bottom-full left-0 right-0 h-32 bg-linear-to-t from-(--gda-brand-yellow)/70 to-transparent pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
+
             <img
               src="/eye-icon.webp"
               alt="View Project"
-              className="w-18 h-18 object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200"
+              className="w-12 h-12 object-contain opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 delay-200"
             />
           </div>
         </div>
@@ -164,9 +180,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
 
       <div className="mt-6 space-y-2 border-t border-black pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h4 className="text-[19px] font-medium leading-tight text-[#111] hover:underline underline-offset-4 decoration-1">
-            {item.title}
-          </h4>
+          <h3 className="hover:underline underline-offset-4 decoration-1">{item.title}</h3>
         </Link>
         {servicesLabel && (
           <div className="flex flex-wrap gap-2">
