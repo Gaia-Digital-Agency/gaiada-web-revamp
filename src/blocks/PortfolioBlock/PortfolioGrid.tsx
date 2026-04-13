@@ -133,7 +133,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
     .filter(Boolean)
     .join(', ')
 
-  const thumbnail = item.hero?.media
+  const thumbnail = item.featuredImage
 
   return (
     <motion.div
@@ -144,13 +144,21 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       className="group"
     >
-      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden">
+      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative group">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
           <Media
             resource={thumbnail}
             fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            imgClassName="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
           />
+          {/* Yellow Overlay Layer */}
+          <div className="absolute inset-0 bg-[var(--gda-brand-yellow)]/50 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-10 opacity-100 flex items-center justify-center">
+            <img
+              src="/eye-icon.webp"
+              alt="View Project"
+              className="w-18 h-18 object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200"
+            />
+          </div>
         </div>
       </Link>
 
