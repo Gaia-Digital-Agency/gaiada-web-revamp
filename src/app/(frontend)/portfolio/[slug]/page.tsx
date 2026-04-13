@@ -49,9 +49,9 @@ export function PortfolioTitle({
     <div className="bg-(--gda-brand-white)">
       <div className="flex flex-col justify-center items-center w-[700px] mx-auto py-20 gap-y-4">
         <BlurIn tag="h1">{title}</BlurIn>
-        <TextFade direction="up">
+        <BlurIn>
           <RichText data={description} className="text-center" />
-        </TextFade>
+        </BlurIn>
       </div>
     </div>
   )
