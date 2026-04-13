@@ -192,10 +192,10 @@ export interface Page {
       [k: string]: unknown;
     } | null;
     /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     * Manual color input for the giant title (e.g. white for white , yellow for yellow)
      */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    giantTitleColor?: ('yellow' | 'white') | null;
+    gradientColor?: ('yellow' | 'white') | null;
     buttons?:
       | {
           label: string;
@@ -661,10 +661,10 @@ export interface Service {
       [k: string]: unknown;
     } | null;
     /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     * Manual color input for the giant title (e.g. white for white , yellow for yellow)
      */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    giantTitleColor?: ('yellow' | 'white') | null;
+    gradientColor?: ('yellow' | 'white') | null;
     buttons?:
       | {
           label: string;
@@ -852,10 +852,10 @@ export interface Portfolio {
       [k: string]: unknown;
     } | null;
     /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     * Manual color input for the giant title (e.g. white for white , yellow for yellow)
      */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    giantTitleColor?: ('yellow' | 'white') | null;
+    gradientColor?: ('yellow' | 'white') | null;
     buttons?:
       | {
           label: string;

@@ -22,14 +22,6 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       hex: '#FFC22C',
       rgba: 'rgba(255, 194, 44, 0)',
     },
-    orange: {
-      hex: '#f97316',
-      rgba: 'rgba(249, 115, 22, 0)',
-    },
-    blue: {
-      hex: '#2563eb',
-      rgba: 'rgba(37, 99, 235, 0)',
-    },
     white: {
       hex: '#f9f9f9',
       rgba: 'rgba(249, 249, 249, 0)',
@@ -38,6 +30,9 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
 
   const activeColor =
     colorConfigs[(gradientColor as keyof typeof colorConfigs) || 'yellow'] || colorConfigs.yellow
+
+  const activeTitleColor =
+    colorConfigs[(giantTitleColor as keyof typeof colorConfigs) || 'yellow'] || colorConfigs.yellow
 
   return (
     <section className="relative -mt-[10.4rem] w-full h-screen min-h-[600px] overflow-hidden bg-white flex flex-col justify-end">
@@ -68,7 +63,7 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       {/* LAYER 3: Foreground - Giant Typography */}
       <div className="relative z-20 w-full overflow-hidden translate-y-[15%] pointer-events-none">
         <div className="container mx-auto px-4 mb-5">
-          <h1 className="gda-hero-banner-title" style={{ color: giantTitleColor || undefined }}>
+          <h1 className="gda-hero-banner-title" style={{ color: activeTitleColor || undefined }}>
             {title}
           </h1>
         </div>
