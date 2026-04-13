@@ -1,0 +1,14 @@
+#blog-hero {
+  .search-wrapper {
+    input {
+      font-family: var(--font-roboto);
+      border-radius: 8px;
+      border: 1px solid var(--gda-brand-grey);
+      background: var(--gda-brand-white);
+
+      &::placeholder {
+        color: var(--gda-brand-earth);
+      }
+    }
+  }
+}

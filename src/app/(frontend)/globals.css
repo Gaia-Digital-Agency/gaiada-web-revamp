@@ -496,6 +496,10 @@ body {
   max-width: 1112px;
 }
 
+.container-xl {
+  max-width: 1440px;
+}
+
 /* H E A D E R */
 header {
   .nav-wrapper {
@@ -549,7 +553,7 @@ h3,
   font-style: normal;
   font-weight: 600;
   line-height: 1.3em;
-  letter-spacing: 0.32px;
+  letter-spacing: -0.03em;
 }
 
 .heading-5 {
@@ -563,6 +567,10 @@ h3,
 
 .text-yellow {
   color: var(--gda-brand-yellow);
+}
+
+.text-earth {
+  color: var(--gda-brand-earth);
 }
 
 /* B U T T O N S */
