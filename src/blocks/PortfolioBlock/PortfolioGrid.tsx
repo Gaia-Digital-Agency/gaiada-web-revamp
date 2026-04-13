@@ -13,13 +13,29 @@ interface PortfolioGridProps {
 
 export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services }) => {
   const [activeService, setActiveService] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const filteredItems = useMemo(() => {
+    const lowerQuery = searchQuery.trim().toLowerCase()
+
+    // If there is a search query, perform a global search (ignoring activeService filter)
+    if (lowerQuery !== '') {
+      return items.filter((item) => {
+        const matchesTitle = item.title.toLowerCase().includes(lowerQuery)
+        const matchesServiceTitle = item.services?.some((s) =>
+          typeof s === 'object' ? s.title.toLowerCase().includes(lowerQuery) : false,
+        )
+        return matchesTitle || matchesServiceTitle
+      })
+    }
+
+    // If search is empty, filter by activeService if one is selected
     if (!activeService) return items
+
     return items.filter((item) =>
       item.services?.some((s) => (typeof s === 'object' ? s.slug === activeService : false)),
     )
-  }, [items, activeService])
+  }, [items, activeService, searchQuery])
 
   // Split items into two columns for the staggered masonry effect
   const leftColumnItems = filteredItems.filter((_, i) => i % 2 === 0)
@@ -63,25 +79,23 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
           </div>
 
           {/* Search bar */}
-          {/* style searchbar nya : 
-            width: 300;
-            height: 54;
-            gap: 10px;
-            angle: 0 deg;
-            opacity: 1;
-            border-radius: 8px;
-            border-width: 1px;
-            padding: 16px;
-
-          */}
-
           <div className="pt-4 border-t border-border/50 ">
             <div className="relative">
               <input
                 type="text"
                 placeholder="Search for..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-[54px] rounded-md bg-[#f2f2f2] border border-border px-3 py-2 text-[14px] p-[16px] tracking-widest focus:outline-none focus:border-foreground transition-colors"
               />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground text-xs uppercase tracking-tighter"
+                >
+                  Clear
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -139,10 +153,6 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
           />
         </div>
       </Link>
-
-      {/* garis bawah
-        border-top: 1px solid var(--Black, #1A1A1B)
-      */}
 
       <div className="mt-6 space-y-2 border-t border-black pt-4">
         <Link href={`/portfolio/${item.slug}`}>

@@ -14,7 +14,7 @@ export type PortfolioBlockType = {
 // Component that renders the Portfolio section with projects fetched from the CMS
 export const PortfolioBlock: React.FC<PortfolioBlockType> = async ({ title, description }) => {
   const payload = await getPayload({ config: configPromise })
-  
+
   // Fetch portfolio items
   const portfolioItems = await payload.find({
     collection: 'portfolio',
@@ -54,7 +54,7 @@ export const PortfolioBlock: React.FC<PortfolioBlockType> = async ({ title, desc
             )}
           </div>
         )}
-        
+
         <PortfolioGrid items={items} services={services} />
       </div>
     </section>
