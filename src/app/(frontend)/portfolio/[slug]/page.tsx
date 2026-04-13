@@ -13,6 +13,8 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import PageClient from './page.client'
 import RichText from '@/components/RichText'
 import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+import { BlurIn } from '@/components/FramerMotion/Blur-in'
+import { TextFade } from '@/components/FramerMotion/TextFade'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -46,8 +48,10 @@ export function PortfolioTitle({
   return (
     <div className="bg-(--gda-brand-white)">
       <div className="flex flex-col justify-center items-center w-[700px] mx-auto py-20 gap-y-4">
-        <h1 className="text-center">{title}</h1>
-        <RichText data={description} className="text-center" />
+        <BlurIn tag="h1">{title}</BlurIn>
+        <TextFade direction="up">
+          <RichText data={description} className="text-center" />
+        </TextFade>
       </div>
     </div>
   )

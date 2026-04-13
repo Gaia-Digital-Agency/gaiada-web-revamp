@@ -17,25 +17,27 @@ export const PortfolioImageBanner: React.FC<Props> = (props) => {
   useGSAPImageParallax(wrapperRef)
 
   return (
-    <div className={cn('w-full flex justify-center py-0', className)}>
-      <div
-        ref={wrapperRef}
-        className="w-full max-w-[1440px] relative overflow-hidden py-0"
-        style={{
-          height: '532.033203125px',
-          opacity: 1,
-          transform: 'rotate(0deg)',
-          marginTop: '-0.03px', // Based on user request "top: -0.03px"
-        }}
-      >
-        {image && typeof image === 'object' && (
-          <Media
-            resource={image}
-            imgClassName="w-full h-full object-cover"
-            className="w-full h-full"
-          />
-        )}
+    <section>
+      <div className={cn('w-full flex justify-center py-0 bg-background', className)}>
+        <div
+          ref={wrapperRef}
+          className="w-full max-w-[1440px] relative overflow-hidden py-20"
+          style={{
+            height: '532.033203125px',
+            opacity: 1,
+            transform: 'rotate(0deg)',
+            marginTop: '-0.03px',
+          }}
+        >
+          {image && typeof image === 'object' && (
+            <Media
+              resource={image}
+              imgClassName="w-full h-full object-cover"
+              className="w-full h-full"
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

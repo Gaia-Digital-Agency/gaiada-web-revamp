@@ -80,16 +80,20 @@ const PortfolioInsightItem: React.FC<{
 
 export const PortfolioInsightBlock: React.FC<PortfolioInsightBlockType> = ({ title, insights }) => {
   return (
-    <div className="container bg-(--gda-brand-white)">
-      <div>
-        {title && <h2 className="text-center">{title}</h2>}
+    <section>
+      <div className="w-full bg-background">
+        <div className="container bg-(--gda-brand-white)">
+          <div>
+            {title && <h2 className="text-center">{title}</h2>}
 
-        <div className="flex flex-col">
-          {insights?.map((insight, index) => (
-            <PortfolioInsightItem key={index} insight={insight} index={index} />
-          ))}
+            <div className="flex flex-col">
+              {insights?.map((insight, index) => (
+                <PortfolioInsightItem key={index} insight={insight} index={index} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
