@@ -14,6 +14,11 @@ interface PortfolioGridProps {
 export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services }) => {
   const [activeService, setActiveService] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [mounted, setMounted] = useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const filteredItems = useMemo(() => {
     const lowerQuery = searchQuery.trim().toLowerCase()
@@ -106,20 +111,28 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
           {/* Left Column */}
           <div className="flex flex-col gap-10 md:gap-16">
-            <AnimatePresence mode="popLayout">
-              {leftColumnItems.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
-              ))}
-            </AnimatePresence>
+            {mounted ? (
+              <AnimatePresence mode="popLayout">
+                {leftColumnItems.map((item) => (
+                  <PortfolioCard key={item.id} item={item} />
+                ))}
+              </AnimatePresence>
+            ) : (
+              leftColumnItems.map((item) => <PortfolioCard key={item.id} item={item} />)
+            )}
           </div>
 
           {/* Right Column - Staggered offset */}
           <div className="flex flex-col gap-10 md:gap-16 md:mt-24">
-            <AnimatePresence mode="popLayout">
-              {rightColumnItems.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
-              ))}
-            </AnimatePresence>
+            {mounted ? (
+              <AnimatePresence mode="popLayout">
+                {rightColumnItems.map((item) => (
+                  <PortfolioCard key={item.id} item={item} />
+                ))}
+              </AnimatePresence>
+            ) : (
+              rightColumnItems.map((item) => <PortfolioCard key={item.id} item={item} />)
+            )}
           </div>
         </div>
       </div>
@@ -133,7 +146,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
     .filter(Boolean)
     .join(', ')
 
-  const thumbnail = item.hero?.media
+  const thumbnail = item.featuredImage
 
   return (
     <motion.div
@@ -142,30 +155,58 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      className="group"
+      className="group/card"
     >
-      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden">
+      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
           <Media
             resource={thumbnail}
             fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            imgClassName="object-cover transition-transform duration-700 ease-out group-hover/card:scale-[1.05]"
           />
+          {/* Yellow Overlay Layer */}
+          <div className="absolute inset-0 bg-(--gda-brand-yellow)/70 translate-y-[120%] group-hover/card:translate-y-0 transition-transform duration-700 ease-in-out z-10 opacity-95 flex items-center justify-center">
+            {/* Feathered/Bias Edge - Only visible during and after transition */}
+            <div className="absolute bottom-full left-0 right-0 h-32 bg-linear-to-t from-(--gda-brand-yellow)/70 to-transparent pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
+
+            <img
+              src="/eye-icon.webp"
+              alt="View Project"
+              className="w-12 h-12 object-contain opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 delay-200"
+            />
+          </div>
         </div>
       </Link>
 
       <div className="mt-6 space-y-2 border-t border-black pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h4 className="text-[19px] font-medium leading-tight text-[#111] hover:underline underline-offset-4 decoration-1">
+          <h3 className="text-[19px] font-medium leading-tight text-[#111] hover:underline underline-offset-4 decoration-1">
             {item.title}
-          </h4>
+          </h3>
         </Link>
-        {servicesLabel && (
-          <div className="flex flex-wrap gap-2">
+        {item.services && item.services.length > 0 && (
+          <div className="flex flex-wrap gap-x-1.5 items-baseline">
             <span className="text-[11px] capitalize tracking-[0.12em] text-[#888] italic">in</span>
-            <span className="text-[11px] uppercase tracking-[0.12em] text-[#888]">
-              {servicesLabel}
-            </span>
+            <div className="flex flex-wrap gap-x-1">
+              {item.services.map((service, index) => {
+                if (typeof service === 'object' && service !== null) {
+                  return (
+                    <React.Fragment key={service.id}>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="text-[11px] uppercase tracking-[0.12em] text-[#888] hover:text-[var(--gda-brand-yellow)] hover:underline transition-colors duration-200"
+                      >
+                        {service.title}
+                      </Link>
+                      {index < (item.services?.length || 0) - 1 && (
+                        <span className="text-[11px] text-[#888]">,</span>
+                      )}
+                    </React.Fragment>
+                  )
+                }
+                return null
+              })}
+            </div>
           </div>
         )}
       </div>
