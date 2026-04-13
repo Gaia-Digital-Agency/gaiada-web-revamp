@@ -26,11 +26,7 @@ export const FormBlock: React.FC<
     id?: string
   } & FormBlockType
 > = (props) => {
-  const {
-    enableIntro,
-    form: formFromProps,
-    introContent,
-  } = props
+  const { enableIntro, form: formFromProps, introContent } = props
 
   const {
     id: formID,
@@ -169,10 +165,7 @@ export const FormBlock: React.FC<
                     const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                     if (Field) {
                       return (
-                        <div
-                          className="mb-6 last:mb-10 last:pb-10 last:border-b last:border-[#78716C]"
-                          key={index}
-                        >
+                        <div className="mb-6" key={index}>
                           <Field
                             form={formFromProps}
                             {...field}

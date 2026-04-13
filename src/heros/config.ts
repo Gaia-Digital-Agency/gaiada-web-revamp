@@ -43,6 +43,10 @@ export const hero: Field = {
           label: 'Homepage Hero',
           value: 'homepageHero',
         },
+        {
+          label: 'Blog Hero',
+          value: 'blogHero',
+        },
       ],
       required: true,
     },
@@ -52,7 +56,8 @@ export const hero: Field = {
       label: 'Title',
       required: true,
       admin: {
-        condition: (_, { type } = {}) => type === 'nonHomepageHero' || type === 'homepageHero',
+        condition: (_, { type } = {}) =>
+          type === 'nonHomepageHero' || type === 'homepageHero' || type === 'blogHero',
         description: 'Title',
       },
     },
@@ -60,7 +65,7 @@ export const hero: Field = {
       name: 'richText',
       type: 'richText',
       admin: {
-        condition: (_, { type } = {}) => type !== 'nonHomepageHero',
+        condition: (_, { type } = {}) => type !== 'nonHomepageHero' && type !== 'blogHero',
       },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
@@ -76,13 +81,18 @@ export const hero: Field = {
     },
     {
       name: 'giantTitleColor',
-      type: 'text',
+      type: 'select',
       label: 'Giant Title Color',
+      defaultValue: 'yellow',
       admin: {
         condition: (_, { type } = {}) => type === 'nonHomepageHero' && type !== 'homepageHero',
         description:
-          'Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)',
+          'Manual color input for the giant title (e.g. white for white , yellow for yellow)',
       },
+      options: [
+        { label: 'Yellow', value: 'yellow' },
+        { label: 'White', value: 'white' },
+      ],
     },
     {
       name: 'gradientColor',
@@ -94,8 +104,6 @@ export const hero: Field = {
       },
       options: [
         { label: 'Yellow', value: 'yellow' },
-        { label: 'Orange', value: 'orange' },
-        { label: 'Blue', value: 'blue' },
         { label: 'White', value: 'white' },
       ],
     },
@@ -161,7 +169,8 @@ export const hero: Field = {
       overrides: {
         maxRows: 2,
         admin: {
-          condition: (_, { type } = {}) => type !== 'nonHomepageHero' && type !== 'homepageHero',
+          condition: (_, { type } = {}) =>
+            type !== 'nonHomepageHero' && type !== 'homepageHero' && type !== 'blogHero',
         },
       },
     }),

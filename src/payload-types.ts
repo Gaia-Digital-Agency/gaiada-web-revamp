@@ -171,7 +171,7 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero' | 'blogHero';
     /**
      * Title
      */
@@ -192,10 +192,10 @@ export interface Page {
       [k: string]: unknown;
     } | null;
     /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     * Manual color input for the giant title (e.g. white for white , yellow for yellow)
      */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    giantTitleColor?: ('yellow' | 'white') | null;
+    gradientColor?: ('yellow' | 'white') | null;
     buttons?:
       | {
           label: string;
@@ -394,6 +394,8 @@ export interface Page {
         blockName?: string | null;
         blockType: 'ourWorksBlock';
       }
+    | FeaturedBlogBlock
+    | ListingPostBlock
   )[];
   meta?: {
     title?: string | null;
@@ -420,6 +422,7 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
+  categories?: (number | Category)[] | null;
   heroImage?: (number | null) | Media;
   content: {
     root: {
@@ -437,7 +440,6 @@ export interface Post {
     [k: string]: unknown;
   };
   relatedPosts?: (number | Post)[] | null;
-  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -462,6 +464,30 @@ export interface Post {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  parent?: (number | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -584,30 +610,6 @@ export interface FolderInterface {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  parent?: (number | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -640,7 +642,7 @@ export interface Service {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero' | 'blogHero';
     /**
      * Title
      */
@@ -661,10 +663,10 @@ export interface Service {
       [k: string]: unknown;
     } | null;
     /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     * Manual color input for the giant title (e.g. white for white , yellow for yellow)
      */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    giantTitleColor?: ('yellow' | 'white') | null;
+    gradientColor?: ('yellow' | 'white') | null;
     buttons?:
       | {
           label: string;
@@ -831,7 +833,7 @@ export interface Portfolio {
   services?: (number | Service)[] | null;
   scopes?: (number | Scope)[] | null;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero' | 'blogHero';
     /**
      * Title
      */
@@ -852,10 +854,10 @@ export interface Portfolio {
       [k: string]: unknown;
     } | null;
     /**
-     * Manual color input for the giant title (e.g. #ffffff for white , #ffc22c for yellow)
+     * Manual color input for the giant title (e.g. white for white , yellow for yellow)
      */
-    giantTitleColor?: string | null;
-    gradientColor?: ('yellow' | 'orange' | 'blue' | 'white') | null;
+    giantTitleColor?: ('yellow' | 'white') | null;
+    gradientColor?: ('yellow' | 'white') | null;
     buttons?:
       | {
           label: string;
@@ -1408,6 +1410,29 @@ export interface TeamBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedBlogBlock".
+ */
+export interface FeaturedBlogBlock {
+  /**
+   * Leave blank to automatically show the newest post
+   */
+  featuredPost?: (number | null) | Post;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredBlogBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ListingPostBlock".
+ */
+export interface ListingPostBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'listingPostBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "departments".
  */
 export interface Department {
@@ -1884,6 +1909,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        featuredBlogBlock?: T | FeaturedBlogBlockSelect<T>;
+        listingPostBlock?: T | ListingPostBlockSelect<T>;
       };
   meta?:
     | T
@@ -2004,14 +2031,32 @@ export interface PortfolioImageBannerSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedBlogBlock_select".
+ */
+export interface FeaturedBlogBlockSelect<T extends boolean = true> {
+  featuredPost?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ListingPostBlock_select".
+ */
+export interface ListingPostBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  categories?: T;
   heroImage?: T;
   content?: T;
   relatedPosts?: T;
-  categories?: T;
   meta?:
     | T
     | {

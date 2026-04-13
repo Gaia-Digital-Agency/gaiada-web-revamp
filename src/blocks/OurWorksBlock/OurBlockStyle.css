@@ -68,7 +68,7 @@
           .swiper-content {
             padding-top: 24px;
             margin-top: 24px;
-            border-top: 1px solid #78716c;
+            border-top: 1px solid var(--gda-brand-earth);
           }
         }
       }

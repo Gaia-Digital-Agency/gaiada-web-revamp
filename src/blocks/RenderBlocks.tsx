@@ -20,6 +20,8 @@ import { ServicesDetailBlock } from '@/blocks/ServicesDetail/Component'
 import { PortfolioInsightBlock } from '@/blocks/PortfolioInsight/Component'
 import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/Component'
 import { OurWorksBlock } from '@/blocks/OurWorksBlock/component'
+import { FeaturedBlogBlockComponent } from '@/blocks/FeaturedBlogBlock/component'
+import { ListingPostBlockComponent } from '@/blocks/ListingPostBlock/component'
 
 // Mapping of block slugs to their corresponding React components
 
@@ -41,6 +43,8 @@ const blockComponents = {
   portfolioInsight: PortfolioInsightBlock,
   portfolioImageBanner: PortfolioImageBanner,
   ourWorksBlock: OurWorksBlock,
+  featuredBlogBlock: FeaturedBlogBlockComponent,
+  listingPostBlock: ListingPostBlockComponent,
 }
 
 // Component that iterates through and renders an array of page layout blocks

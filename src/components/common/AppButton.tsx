@@ -8,7 +8,8 @@ import { ArrowRight, Search } from 'lucide-react'
 
 export type AppButtonProps = {
   label: string
-  href: string
+  href?: string
+  onClick?: () => void
   variant?: 'default' | 'link'
   newTab?: boolean
   className?: string
@@ -22,13 +23,14 @@ const SearchIcon = () => <Search size={16} />
 export const AppButton: React.FC<AppButtonProps> = ({
   label,
   href,
+  onClick,
   variant = 'default',
   newTab = false,
   className,
   icon = 'none',
   iconPosition = 'right',
 }) => {
-  const isExternal = href.startsWith('http')
+  const isExternal = href?.startsWith('http')
 
   const renderIcon = () => {
     switch (icon) {
@@ -54,7 +56,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
   const baseClass = cn('inline-flex items-center justify-center gap-2', className)
 
   // External
-  if (isExternal) {
+  if (href && isExternal) {
     return (
       <Button variant={variant} className={baseClass} asChild>
         <a href={href} target={newTab ? '_blank' : '_self'} rel="noopener noreferrer">
@@ -64,12 +66,21 @@ export const AppButton: React.FC<AppButtonProps> = ({
     )
   }
 
-  // Internal
+  // Internal Link
+  if (href) {
+    return (
+      <Button variant={variant} className={baseClass} asChild>
+        <Link href={href}>
+          <span className="inline-flex items-center gap-2">{content}</span>
+        </Link>
+      </Button>
+    )
+  }
+
+  // Standard Button Action
   return (
-    <Button variant={variant} className={baseClass} asChild>
-      <Link href={href}>
-        <span className="inline-flex items-center gap-2">{content}</span>
-      </Link>
+    <Button variant={variant} className={baseClass} onClick={onClick}>
+      <span className="inline-flex items-center gap-2">{content}</span>
     </Button>
   )
 }
