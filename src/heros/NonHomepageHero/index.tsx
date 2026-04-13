@@ -63,7 +63,7 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       {/* LAYER 3: Foreground - Giant Typography */}
       <div className="relative z-20 w-full overflow-hidden translate-y-[15%] pointer-events-none">
         <div className="container mx-auto px-4 mb-5">
-          <h1 className="gda-hero-banner-title" style={{ color: activeTitleColor || undefined }}>
+          <h1 className="gda-hero-banner-title" style={{ color: activeTitleColor.hex }}>
             {title}
           </h1>
         </div>
