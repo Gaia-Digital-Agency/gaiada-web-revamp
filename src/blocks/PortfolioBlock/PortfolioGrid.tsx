@@ -155,9 +155,9 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      className="group"
+      className="group/card"
     >
-      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative group/card">
+      <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
           <Media
             resource={thumbnail}
@@ -180,14 +180,33 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
 
       <div className="mt-6 space-y-2 border-t border-black pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h3 className="hover:underline underline-offset-4 decoration-1">{item.title}</h3>
+          <h3 className="text-[19px] font-medium leading-tight text-[#111] hover:underline underline-offset-4 decoration-1">
+            {item.title}
+          </h3>
         </Link>
-        {servicesLabel && (
-          <div className="flex flex-wrap gap-2">
+        {item.services && item.services.length > 0 && (
+          <div className="flex flex-wrap gap-x-1.5 items-baseline">
             <span className="text-[11px] capitalize tracking-[0.12em] text-[#888] italic">in</span>
-            <span className="text-[11px] uppercase tracking-[0.12em] text-[#888]">
-              {servicesLabel}
-            </span>
+            <div className="flex flex-wrap gap-x-1">
+              {item.services.map((service, index) => {
+                if (typeof service === 'object' && service !== null) {
+                  return (
+                    <React.Fragment key={service.id}>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="text-[11px] uppercase tracking-[0.12em] text-[#888] hover:text-[var(--gda-brand-yellow)] hover:underline transition-colors duration-200"
+                      >
+                        {service.title}
+                      </Link>
+                      {index < (item.services?.length || 0) - 1 && (
+                        <span className="text-[11px] text-[#888]">,</span>
+                      )}
+                    </React.Fragment>
+                  )
+                }
+                return null
+              })}
+            </div>
           </div>
         )}
       </div>
