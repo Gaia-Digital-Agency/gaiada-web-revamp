@@ -43,6 +43,10 @@ export const hero: Field = {
           label: 'Homepage Hero',
           value: 'homepageHero',
         },
+        {
+          label: 'Blog Hero',
+          value: 'blogHero',
+        },
       ],
       required: true,
     },
@@ -52,7 +56,8 @@ export const hero: Field = {
       label: 'Title',
       required: true,
       admin: {
-        condition: (_, { type } = {}) => type === 'nonHomepageHero' || type === 'homepageHero',
+        condition: (_, { type } = {}) =>
+          type === 'nonHomepageHero' || type === 'homepageHero' || type === 'blogHero',
         description: 'Title',
       },
     },
@@ -60,7 +65,7 @@ export const hero: Field = {
       name: 'richText',
       type: 'richText',
       admin: {
-        condition: (_, { type } = {}) => type !== 'nonHomepageHero',
+        condition: (_, { type } = {}) => type !== 'nonHomepageHero' && type !== 'blogHero',
       },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
@@ -161,7 +166,8 @@ export const hero: Field = {
       overrides: {
         maxRows: 2,
         admin: {
-          condition: (_, { type } = {}) => type !== 'nonHomepageHero' && type !== 'homepageHero',
+          condition: (_, { type } = {}) =>
+            type !== 'nonHomepageHero' && type !== 'homepageHero' && type !== 'blogHero',
         },
       },
     }),

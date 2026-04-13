@@ -72,6 +72,15 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'categories',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: true,
+      relationTo: 'categories',
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -119,15 +128,6 @@ export const Posts: CollectionConfig<'posts'> = {
               },
               hasMany: true,
               relationTo: 'posts',
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'categories',
             },
           ],
           label: 'Meta',

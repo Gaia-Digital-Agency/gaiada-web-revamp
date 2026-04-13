@@ -24,7 +24,7 @@
         font-size: 16px;
         font-weight: 400;
         margin-bottom: 0;
-        color: #78716c;
+        color: var(--gda-brand-earth);
         transition: 0.3s all;
       }
 
@@ -33,7 +33,7 @@
         position: relative;
         padding-top: 20px;
         margin-top: 20px;
-        border-top: 1px solid #78716c;
+        border-top: 1px solid var(--gda-brand-earth);
 
         &:before {
           content: '';

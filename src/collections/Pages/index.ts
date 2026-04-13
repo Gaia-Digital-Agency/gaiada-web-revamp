@@ -23,6 +23,8 @@ import { OurProcessBlock } from '@/blocks/OurProcess/config'
 import { PortfolioInsight } from '../../blocks/PortfolioInsight/config'
 import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/config'
 import { OurWorksBlock } from '@/blocks/OurWorksBlock/config'
+import { FeaturedBlogBlock } from '@/blocks/FeaturedBlogBlock/config'
+import { ListingPostBlock } from '@/blocks/ListingPostBlock/config'
 
 import {
   MetaDescriptionField,
@@ -100,6 +102,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 PortfolioInsight,
                 PortfolioImageBanner,
                 OurWorksBlock,
+                FeaturedBlogBlock,
+                ListingPostBlock,
               ],
               required: true,
               admin: {
