@@ -12,7 +12,7 @@ type BlurInProps = {
 export const BlurIn: React.FC<BlurInProps> = ({ children, tag = 'div' }) => {
   const ref = React.useRef<HTMLElement | null>(null)
   const isInView = useInView(ref, { once: true })
-  const MotionTag = motion(tag as any)
+  const MotionTag = motion.create(tag as any)
 
   return (
     <MotionTag
