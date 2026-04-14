@@ -502,13 +502,22 @@ body {
 
 /* H E A D E R */
 header {
-  padding-top: 20px;
+  padding: 20px;
   display: flex;
   align-items: flex-start;
   transition: 0.5s all;
+  height: 70px;
 
-  min-height: 90px;
   .container {
+    @media (max-width: 1024px) {
+      padding: 0;
+    }
+
+    img {
+      width: 120px;
+      height: 30px;
+    }
+
     .nav-wrapper {
       .has-submenu {
         .sub-menu-wrapper {
@@ -530,6 +539,14 @@ header {
     align-items: flex-start;
     backdrop-filter: blur(12.5px) !important;
     -webkit-backdrop-filter: blur(12.5px) !important;
+  }
+}
+
+/* M O B I L E   M E N U */
+.mobile-menu {
+  .nav-wrapper {
+    padding-top: 20px;
+    border-top: 1px solid var(--gda-brand-grey);
   }
 }
 
@@ -738,3 +755,40 @@ h3,
 .animate-slide-out-right {
   animation: slideOutToRight 0.3s ease-in forwards;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutToTop {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
