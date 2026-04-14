@@ -49,8 +49,8 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
   return (
     <div className="flex flex-col md:flex-row gap-12 md:gap-20">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 flex-shrink-0">
-        <div className="sticky top-32 space-y-8">
+      <aside className="w-full md:w-64 shrink-0">
+        <div className="sticky space-y-8">
           <div>
             {/* <p className="font-bold uppercase tracking-[0.2em] mb-6"></p> */}
             <nav className="flex flex-col gap-3">
@@ -59,7 +59,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
                   onClick={() => setActiveService(null)}
                   className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
                     activeService === null
-                      ? 'font-bold text-[var(--gda-brand-yellow)]'
+                      ? 'font-bold text-(--gda-brand-yellow)'
                       : 'text-muted-foreground'
                   }`}
                 >
@@ -72,7 +72,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
                     onClick={() => setActiveService(service.slug)}
                     className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
                       activeService === service.slug
-                        ? 'font-bold text-[var(--gda-brand-yellow)]'
+                        ? 'font-bold text-(--gda-brand-yellow)'
                         : 'text-muted-foreground'
                     }`}
                   >
@@ -158,7 +158,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
       className="group/card"
     >
       <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
+        <div className="relative aspect-4/5 overflow-hidden bg-[#f5f5f5]">
           <Media
             resource={thumbnail}
             fill
@@ -194,7 +194,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
                     <React.Fragment key={service.id}>
                       <Link
                         href={`/services/${service.slug}`}
-                        className="text-[11px] uppercase tracking-[0.12em] text-[#888] hover:text-[var(--gda-brand-yellow)] hover:underline transition-colors duration-200"
+                        className="text-[11px] uppercase tracking-[0.12em] text-[#888] hover:text-(--gda-brand-yellow) hover:underline transition-colors duration-200"
                       >
                         {service.title}
                       </Link>
