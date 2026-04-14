@@ -16,9 +16,38 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
   const [searchQuery, setSearchQuery] = useState('')
   const [mounted, setMounted] = useState(false)
 
+  // Handle hash change and initial hash
   React.useEffect(() => {
     setMounted(true)
-  }, [])
+
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (hash) {
+        const serviceExists = services.find((s) => s.slug === hash)
+        if (serviceExists) {
+          setActiveService(hash)
+        }
+      } else {
+        setActiveService(null)
+      }
+    }
+
+    // Initial check
+    handleHashChange()
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [services])
+
+  const handleServiceClick = (slug: string | null) => {
+    setActiveService(slug)
+    if (slug) {
+      window.location.hash = slug
+    } else {
+      // Remove hash without jumping the page
+      history.pushState(null, '', window.location.pathname)
+    }
+  }
 
   const filteredItems = useMemo(() => {
     const lowerQuery = searchQuery.trim().toLowerCase()
@@ -56,7 +85,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
             <nav className="flex flex-wrap md:flex-col gap-3">
               <div className="shrink-0">
                 <button
-                  onClick={() => setActiveService(null)}
+                  onClick={() => handleServiceClick(null)}
                   className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
                     activeService === null
                       ? 'font-bold text-(--gda-brand-yellow)'
@@ -69,7 +98,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
               {services.map((service) => (
                 <div key={service.id} className="md:pl-9 shrink-0">
                   <button
-                    onClick={() => setActiveService(service.slug)}
+                    onClick={() => handleServiceClick(service.slug)}
                     className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
                       activeService === service.slug
                         ? 'font-bold text-(--gda-brand-yellow)'
@@ -180,7 +209,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
 
       <div className="mt-6 space-y-2 border-t border-(--gda-earth) pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h3 className="text-[19px] font-medium leading-tight hover:underline underline-offset-4 decoration-1">
+          <h3 className="text-[19px] mb-2! font-medium leading-tight hover:underline underline-offset-4 decoration-1">
             {item.title}
           </h3>
         </Link>

@@ -51,8 +51,9 @@ const blockComponents = {
 export const RenderBlocks: React.FC<{
   blocks: (Page['layout'][0] | NonNullable<Service['layout']>[0])[]
   isHomepage?: boolean
+  parentSlug?: string
 }> = (props) => {
-  const { blocks, isHomepage } = props
+  const { blocks, isHomepage, parentSlug } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -71,7 +72,7 @@ export const RenderBlocks: React.FC<{
               return (
                 <BlockWrapper key={index} index={index + 1} isHomepage={isHomepage}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
+                  <Block {...block} parentSlug={parentSlug} disableInnerContainer />
                 </BlockWrapper>
               )
             }
