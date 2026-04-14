@@ -14,7 +14,7 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
 
   useEffect(() => {
     setHeaderTheme('dark')
-  })
+  }, [setHeaderTheme])
 
   // Konfigurasi warna presisi untuk gradient
   const colorConfigs = {
@@ -35,7 +35,7 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
     colorConfigs[(giantTitleColor as keyof typeof colorConfigs) || 'yellow'] || colorConfigs.yellow
 
   return (
-    <section className="relative -mt-[10.4rem] w-full h-screen min-h-[600px] overflow-hidden bg-white flex flex-col justify-end">
+    <section className="relative -mt-20 md:-mt-[10.4rem] w-full h-[60vh] md:h-screen min-h-[600px] overflow-hidden bg-white flex flex-col justify-end">
       {/* LAYER 1: Background - Full Image */}
       <div className="absolute inset-0 z-0">
         {media && typeof media !== 'string' && (
@@ -61,8 +61,8 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       />
 
       {/* LAYER 3: Foreground - Giant Typography */}
-      <div className="relative z-20 w-full overflow-hidden translate-y-[15%] pointer-events-none">
-        <div className="container mx-auto px-4 mb-5">
+      <div className="relative z-20 w-full overflow-hidden translate-y-[10%] md:translate-y-[15%] pointer-events-none">
+        <div className="container mx-auto mb-5">
           <h1 className="gda-hero-banner-title" style={{ color: activeTitleColor.hex }}>
             {title}
           </h1>

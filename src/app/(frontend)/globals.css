@@ -677,10 +677,22 @@ h3,
 .gda-hero-banner-title {
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: 220px;
+  font-size: 80px;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: #f9f9f9;
+}
+
+@media (min-width: 768px) {
+  .gda-hero-banner-title {
+    font-size: 120px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gda-hero-banner-title {
+    font-size: 220px;
+  }
 }
 
 .gda-nav-item {

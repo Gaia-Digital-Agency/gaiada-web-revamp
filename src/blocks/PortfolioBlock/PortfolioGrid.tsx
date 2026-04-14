@@ -47,19 +47,19 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
   const rightColumnItems = filteredItems.filter((_, i) => i % 2 !== 0)
 
   return (
-    <div className="flex flex-col md:flex-row gap-12 md:gap-20">
+    <div className="flex flex-col md:flex-row gap-8 md:gap-20">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 flex-shrink-0">
-        <div className="sticky top-32 space-y-8">
+      <aside className="w-full md:w-64 shrink-0">
+        <div className="sticky top-24 space-y-8">
           <div>
             {/* <p className="font-bold uppercase tracking-[0.2em] mb-6"></p> */}
-            <nav className="flex flex-col gap-3">
-              <div>
+            <nav className="flex flex-wrap md:flex-col gap-3">
+              <div className="shrink-0">
                 <button
                   onClick={() => setActiveService(null)}
                   className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
                     activeService === null
-                      ? 'font-bold text-[var(--gda-brand-yellow)]'
+                      ? 'font-bold text-(--gda-brand-yellow)'
                       : 'text-muted-foreground'
                   }`}
                 >
@@ -67,12 +67,12 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
                 </button>
               </div>
               {services.map((service) => (
-                <div key={service.id} className="pl-9">
+                <div key={service.id} className="md:pl-9 shrink-0">
                   <button
                     onClick={() => setActiveService(service.slug)}
                     className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
                       activeService === service.slug
-                        ? 'font-bold text-[var(--gda-brand-yellow)]'
+                        ? 'font-bold text-(--gda-brand-yellow)'
                         : 'text-muted-foreground'
                     }`}
                   >
@@ -84,7 +84,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
           </div>
 
           {/* Search bar */}
-          <div className="pt-4 border-t border-border/50 ">
+          <div className="hidden md:block pt-4 border-t border-border/50 ">
             <div className="relative">
               <input
                 type="text"
@@ -158,7 +158,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
       className="group/card"
     >
       <Link href={`/portfolio/${item.slug}`} className="block overflow-hidden relative">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
+        <div className="relative aspect-4/3 md:aspect-4/5 overflow-hidden bg-[#f5f5f5]">
           <Media
             resource={thumbnail}
             fill
@@ -178,15 +178,17 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
         </div>
       </Link>
 
-      <div className="mt-6 space-y-2 border-t border-black pt-4">
+      <div className="mt-6 space-y-2 border-t border-(--gda-earth) pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h3 className="text-[19px] font-medium leading-tight text-[#111] hover:underline underline-offset-4 decoration-1">
+          <h3 className="text-[19px] font-medium leading-tight hover:underline underline-offset-4 decoration-1">
             {item.title}
           </h3>
         </Link>
         {item.services && item.services.length > 0 && (
           <div className="flex flex-wrap gap-x-1.5 items-baseline">
-            <span className="text-[11px] capitalize tracking-[0.12em] text-[#888] italic">in</span>
+            <span className="text-[11px] capitalize tracking-[0.12em] text-(--gda-earth) italic">
+              in
+            </span>
             <div className="flex flex-wrap gap-x-1">
               {item.services.map((service, index) => {
                 if (typeof service === 'object' && service !== null) {
@@ -194,12 +196,12 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
                     <React.Fragment key={service.id}>
                       <Link
                         href={`/services/${service.slug}`}
-                        className="text-[11px] uppercase tracking-[0.12em] text-[#888] hover:text-[var(--gda-brand-yellow)] hover:underline transition-colors duration-200"
+                        className="text-[11px] uppercase tracking-[0.12em] text-(--gda-earth) hover:text-(--gda-brand-yellow) hover:underline transition-colors duration-200"
                       >
                         {service.title}
                       </Link>
                       {index < (item.services?.length || 0) - 1 && (
-                        <span className="text-[11px] text-[#888]">,</span>
+                        <span className="text-[11px] text-(--gda-earth)">,</span>
                       )}
                     </React.Fragment>
                   )
