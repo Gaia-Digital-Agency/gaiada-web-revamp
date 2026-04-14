@@ -16,6 +16,7 @@ export type ServicesDetailBlockType = {
     image: any
     description: string
   }> | null
+  parentSlug?: string
 }
 
 export default function SubServiceList({
@@ -32,7 +33,7 @@ export default function SubServiceList({
         return (
           <div
             key={service.id}
-            className={`relative w-full h-[400px] group overflow-hidden cursor-pointer ${isOdd ? 'mt-20' : ''}`}
+            className={`relative w-full h-[400px] group overflow-hidden cursor-pointer ${isOdd ? 'md:mt-0 mt-0' : 'md:mt-20 mt-0'}`}
           >
             <Media
               resource={service.image}
@@ -43,11 +44,7 @@ export default function SubServiceList({
             <div
               className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
               style={{
-                background: `linear-gradient(180deg, rgba(26, 26, 27, 0) -25%, rgba(26, 26, 27, 0.6) 100%);`,
-                // background: `
-                //   linear-gradient(180deg, rgba(26, 26, 27, 0) -17.7%, rgba(26, 26, 27, 0.6) 100%),
-                //   linear-gradient(180deg, rgba(255, 194, 44, 0) -9.62%, rgba(255, 194, 44, 0.5) 100%)
-                // `,
+                background: `linear-gradient(180deg, rgba(26, 26, 27, 0) -25%, rgba(26, 26, 27, 0.6) 100%)`,
               }}
             />
             {/* Hover Overlay */}
@@ -86,50 +83,60 @@ export default function SubServiceList({
   )
 }
 
-export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({ intro, subServices }) => {
+export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({
+  intro,
+  subServices,
+  parentSlug,
+}) => {
   if (!intro) return null
 
   return (
-    <div className="bg-background w-full">
-      <div className="px-0 mx-auto max-w-7xl overflow-hidden">
-        <div className="py-16 md:py-24 pr-0">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
-            <div className="space-y-8 max-w-2xl">
-              <div className="space-y-4 pl-[180px]">
-                <h2 className="text-(--gda-brand-yellow)">{intro.title}</h2>
-                <div>{intro.description}</div>
-              </div>
-            </div>
-
-            {intro.image && (
-              <div className="flex justify-end w-full lg:w-[708px]">
-                <div className="relative w-full max-w-[708px] aspect-video overflow-hidden group">
-                  <Media
-                    resource={intro.image}
-                    fill
-                    imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+    <section>
+      <div className="bg-background w-full">
+        <div className="px-0 mx-auto max-w-7xl overflow-hidden">
+          <div className="py-8 md:py-5 md:pr-0 px-4 md:px-0">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-center">
+              <div className="space-y-8 max-w-2xl bg-blue-400">
+                <div className="space-y-4 md:pl-[180px] pl-0">
+                  <h2 className="text-(--gda-brand-yellow)">{intro.title}</h2>
+                  <div>{intro.description}</div>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
 
-        <div id="sub-services" className="pt-0">
-          <div className="grid grid-cols-2 gap-x-12 px-20 items-center">
-            <SubServiceList subServices={subServices} />
+              {intro.image && (
+                <div className="flex justify-end w-full lg:w-[708px]">
+                  <div className="relative w-full max-w-[708px] aspect-video overflow-hidden group">
+                    <Media
+                      resource={intro.image}
+                      fill
+                      imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex justify-center mt-12">
-            <AppButton
-              href="/"
-              label="See Our Portfolio"
-              icon="arrow"
-              variant="default"
-              iconPosition="right"
-            />
+
+          <div id="sub-services" className="pt-0 md:pt-16 pb-[40px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-12 px-4 md:px-20 items-center">
+              <SubServiceList subServices={subServices} />
+            </div>
+            <div className="flex justify-center mt-8 md:mt-12 px-4 md:px-0">
+              <AppButton
+                // href={`/portfolio/#${parentSlug || ''}`}
+                // aku ingin href nya /portfolio/#(slug)}
+                href={`/portfolio/${'#' + parentSlug || ''}`}
+                label="See Our Portfolio"
+                icon="arrow"
+                variant="default"
+                iconPosition="right"
+                // ketika di layar mobile tombol full screen
+                className="w-full md:w-fit"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

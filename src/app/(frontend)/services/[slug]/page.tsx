@@ -55,7 +55,7 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
 
       {service.hero && <RenderHero {...service.hero} />}
 
-      {service.layout && <RenderBlocks blocks={service.layout} />}
+      {service.layout && <RenderBlocks blocks={service.layout} parentSlug={service.slug} />}
 
       {/* Fallback: if no layout blocks, show description */}
       {/* {(!service.layout || service.layout.length === 0) && (
