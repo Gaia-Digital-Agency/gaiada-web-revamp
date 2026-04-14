@@ -6,7 +6,10 @@ import { CMSLink } from '@/components/Link'
 import { ChevronDown } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
-export const HeaderNav: React.FC<{ data: HeaderType | null }> = ({ data }) => {
+export const HeaderNav: React.FC<{ data: HeaderType | null; isMobile?: boolean }> = ({
+  data,
+  isMobile = false,
+}) => {
   const navItems = data?.navItems || []
   const pathname = usePathname()
   const getHref = (link: any) => {
@@ -17,7 +20,11 @@ export const HeaderNav: React.FC<{ data: HeaderType | null }> = ({ data }) => {
   }
 
   return (
-    <nav className="flex gap-6 items-center nav-wrapper">
+    <nav
+      className={`${
+        isMobile ? 'flex flex-col items-start gap-6' : 'flex gap-6 items-center'
+      } nav-wrapper`}
+    >
       {navItems.map((item, i) => {
         const hasSubItems = item.subItems && item.subItems.length > 0
 
@@ -25,7 +32,7 @@ export const HeaderNav: React.FC<{ data: HeaderType | null }> = ({ data }) => {
         const isActive = pathname === href
 
         if (hasSubItems) {
-          return <DropdownNavItem key={i} item={item} pathname={pathname} />
+          return <DropdownNavItem key={i} item={item} pathname={pathname} isMobile={isMobile} />
         }
 
         return (
@@ -44,18 +51,23 @@ export const HeaderNav: React.FC<{ data: HeaderType | null }> = ({ data }) => {
 const DropdownNavItem: React.FC<{
   item: NonNullable<HeaderType['navItems']>[number]
   pathname: string
-}> = ({ item, pathname }) => {
+  isMobile?: boolean
+}> = ({ item, pathname, isMobile = false }) => {
   const [open, setOpen] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleEnter = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    setOpen(true)
+    if (!isMobile) {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      setOpen(true)
+    }
   }
 
   const handleLeave = () => {
-    timeoutRef.current = setTimeout(() => setOpen(false), 150)
+    if (!isMobile) {
+      timeoutRef.current = setTimeout(() => setOpen(false), 150)
+    }
   }
 
   useEffect(() => {
@@ -84,7 +96,7 @@ const DropdownNavItem: React.FC<{
   return (
     <div
       ref={containerRef}
-      className={`has-submenu relative ${open ? 'submenu-open' : ''}`}
+      className={`has-submenu relative ${open ? 'submenu-open' : ''} ${isMobile ? 'w-full text-left' : ''}`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
@@ -100,18 +112,20 @@ const DropdownNavItem: React.FC<{
 
       {shouldRender && (
         <div
-          className={`sub-menu-wrapper absolute top-full left-0 pt-2 pb-2 min-w-[450px] z-50 flex flex-row flex-wrap ${
-            open ? 'animate-slide-in-right' : 'animate-slide-out-right'
-          }`}
+          className={`sub-menu-wrapper ${
+            isMobile
+              ? 'relative flex flex-col items-start bg-transparent pt-0'
+              : 'absolute top-full left-0 pt-2 pb-2 min-w-[450px] z-50 flex flex-row flex-wrap'
+          } ${open ? 'animate-slide-in-right' : 'animate-slide-out-right'}`}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >
           {item.subItems?.map((subItem, j) => (
-            <div key={j} className="px-1 min-w-[140px]">
+            <div key={j} className={`${isMobile ? 'pl-5' : 'px-1 min-w-[140px]'}`}>
               <CMSLink
                 {...subItem.link}
                 appearance="inline"
-                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${subItem.link.url === pathname ? 'active' : ''}`}
+                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${subItem.link.url === pathname ? 'active' : ''} ${isMobile ? 'justify-start' : ''}`}
               >
                 <div className="relative w-3 h-3 flex-shrink-0">
                   <div
