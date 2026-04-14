@@ -95,6 +95,13 @@ export default buildConfig({
       auth: undefined, // MailHog doesn't need auth
     },
   }),
+  upload: {
+    abortOnLimit: true,
+    responseOnLimit: 'File size limit has been reached (max 25MB)',
+    limits: {
+      fileSize: 25 * 1024 * 1024, // 25MB
+    },
+  },
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
