@@ -502,17 +502,34 @@ body {
 
 /* H E A D E R */
 header {
-  .nav-wrapper {
-    .has-submenu {
-      .sub-menu-wrapper {
-        .sub-menu {
-          &:hover {
-            color: var(--gda-brand-yellow);
-            transition: 0.3s all;
+  padding-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  transition: 0.5s all;
+
+  min-height: 90px;
+  .container {
+    .nav-wrapper {
+      .has-submenu {
+        .sub-menu-wrapper {
+          margin-top: 16px;
+
+          .sub-menu {
+            &:hover {
+              color: var(--gda-brand-yellow);
+              transition: 0.3s all;
+            }
           }
         }
       }
     }
+  }
+
+  &:has(.submenu-open) {
+    height: 220px;
+    align-items: flex-start;
+    backdrop-filter: blur(12.5px) !important;
+    -webkit-backdrop-filter: blur(12.5px) !important;
   }
 }
 

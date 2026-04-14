@@ -31,6 +31,11 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
     [currentIndex, total],
   )
 
+  useEffect(() => {
+    const event = new CustomEvent('homepage-stack-index', { detail: { index: currentIndex } })
+    window.dispatchEvent(event)
+  }, [currentIndex])
+
   // Wheel event
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
