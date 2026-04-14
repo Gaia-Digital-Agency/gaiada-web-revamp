@@ -39,7 +39,7 @@ export async function Footer() {
         style={{
           backgroundColor: '#F9F9F9',
           backgroundImage: bgImage ? `url(${bgImage})` : 'none',
-          backgroundSize: '50% 100%',
+          backgroundSize: 'cover',
           backgroundPosition: 'left bottom',
           backgroundRepeat: 'no-repeat',
         }}
@@ -67,7 +67,7 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="bg-[#F2F2F2] flex items-center justify-start py-20 px-8 md:px-16 lg:px-24">
+        <div className="bg-[#C6C6C633] backdrop-blur-[12px] flex items-center justify-start py-20 px-8 md:px-16 lg:px-24">
           <div className="w-full max-w-md">
             {form && <FormBlock form={form as any} enableIntro={false} />}
           </div>
