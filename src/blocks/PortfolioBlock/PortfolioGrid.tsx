@@ -50,7 +50,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
     <div className="flex flex-col md:flex-row gap-12 md:gap-20">
       {/* Sidebar */}
       <aside className="w-full md:w-64 shrink-0">
-        <div className="sticky space-y-8">
+        <div className="sticky top-24 space-y-8">
           <div>
             {/* <p className="font-bold uppercase tracking-[0.2em] mb-6"></p> */}
             <nav className="flex flex-col gap-3">

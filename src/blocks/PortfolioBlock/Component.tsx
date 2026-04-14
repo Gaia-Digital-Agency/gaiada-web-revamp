@@ -38,7 +38,7 @@ export const PortfolioBlock: React.FC<PortfolioBlockType> = async ({ title, desc
   const services = servicesData.docs as unknown as Service[]
 
   return (
-    <section className="bg-background overflow-hidden">
+    <section className="bg-background">
       <div className="max-w-[1312px] mx-auto px-6 md:px-12 py-8 md:py-12">
         {(title || description) && (
           <div className="max-w-3xl mb-24">
