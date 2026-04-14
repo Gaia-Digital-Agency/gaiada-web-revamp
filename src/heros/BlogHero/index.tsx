@@ -97,7 +97,7 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
   }
 
   return (
-    <section className="mt-20 bg-white py-20" id="blog-hero">
+    <section className="bg-white py-20 pt-40" id="blog-hero">
       <div className="container">
         <div className="flex flex-col items-center justify-center">
           <h1 className="heading-1 text-center">{title}</h1>

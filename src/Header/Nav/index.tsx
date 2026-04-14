@@ -55,7 +55,7 @@ const DropdownNavItem: React.FC<{
   }
 
   const handleLeave = () => {
-    // timeoutRef.current = setTimeout(() => setOpen(false), 150)
+    timeoutRef.current = setTimeout(() => setOpen(false), 150)
   }
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const DropdownNavItem: React.FC<{
   return (
     <div
       ref={containerRef}
-      className="has-submenu relative"
+      className={`has-submenu relative ${open ? 'submenu-open' : ''}`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
@@ -100,7 +100,7 @@ const DropdownNavItem: React.FC<{
 
       {shouldRender && (
         <div
-          className={`sub-menu-wrapper absolute top-full left-0 mt-2 py-2 min-w-[450px] z-50 flex flex-row flex-wrap ${
+          className={`sub-menu-wrapper absolute top-full left-0 pt-2 pb-2 min-w-[450px] z-50 flex flex-row flex-wrap ${
             open ? 'animate-slide-in-right' : 'animate-slide-out-right'
           }`}
           onMouseEnter={handleEnter}
