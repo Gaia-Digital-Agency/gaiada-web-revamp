@@ -82,8 +82,8 @@ export const SeedV2Button: React.FC = () => {
 
   return (
     <Fragment>
-      <button className="seedButton" onClick={handleClick} style={{ marginLeft: '10px' }}>
-        Seed Gaia V2
+      <button className="seedButton" onClick={handleClick}>
+        Seed Your Database
       </button>
       {message}
     </Fragment>

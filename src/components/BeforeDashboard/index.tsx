@@ -16,7 +16,6 @@ const BeforeDashboard: React.FC = () => {
       Here&apos;s what to do next:
       <ul className={`${baseClass}__instructions`}>
         <li>
-          <SeedButton />
           <SeedV2Button />
           {' with a few pages, posts, and projects to jump-start your new site, then '}
           <a href="/" target="_blank">
