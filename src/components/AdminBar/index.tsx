@@ -71,7 +71,7 @@ export const AdminBar: React.FC<{
           logo={<Title />}
           onAuthChange={onAuthChange}
           onPreviewExit={() => {
-            fetch('/gaiadaweb/next/exit-preview').then(() => {
+            fetch('/next/exit-preview').then(() => {
               router.push('/')
               router.refresh()
             })

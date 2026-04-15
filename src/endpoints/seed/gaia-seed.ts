@@ -154,13 +154,13 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
         },
         layout: [
           {
-            blockType: 'content',
-            columns: [
-              {
-                size: 'full',
-                richText: richText([heading(svc.title, 'h2'), paragraph(svc.pageContent)]),
-              },
-            ],
+            blockType: 'servicesDetail',
+            intro: {
+              title: svc.title,
+              description: svc.pageContent,
+              image: mediaId || 1,
+            },
+            subServices: [],
           },
         ],
       },
@@ -341,7 +341,7 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       },
       layout: [
         {
-          blockType: 'servicesBlock',
+          blockType: 'portfolioBlock',
           title: 'Premium Solutions',
           description: 'We provide a wide range of digital services to help your business grow.',
         },

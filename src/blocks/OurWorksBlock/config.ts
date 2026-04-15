@@ -4,7 +4,7 @@ export const OurWorksBlock: Block = {
   slug: 'ourWorksBlock',
   admin: {
     images: {
-      thumbnail: '/block-preview/our-works-portfolios-gallery-blocks.png',
+      thumbnail: '/block-preview/homepage-our-works-section-preview.png',
     },
   },
   labels: {

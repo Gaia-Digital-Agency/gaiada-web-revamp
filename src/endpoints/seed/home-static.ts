@@ -49,7 +49,7 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
                 fields: {
                   linkType: 'custom',
                   newTab: false,
-                  url: '/gaiadaweb/admin',
+                  url: '/admin',
                 },
                 format: '',
                 indent: 0,
