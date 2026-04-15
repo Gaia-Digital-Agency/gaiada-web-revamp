@@ -55,11 +55,10 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const basePath = '/'
-        const catRes = await fetch(`${basePath}/api/categories?limit=100`)
+        const catRes = await fetch('/api/categories?limit=100')
         const catData = await catRes.json()
         const postRes = await fetch(
-          `${basePath}/api/posts?limit=1000&depth=0&select[categories]=true`,
+          '/api/posts?limit=1000&depth=0&select[categories]=true',
         )
         const postData = await postRes.json()
 

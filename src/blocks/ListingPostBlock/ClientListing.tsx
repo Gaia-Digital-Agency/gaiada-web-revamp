@@ -40,8 +40,7 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) =
 
       setIsLoading(true)
       try {
-        const basePath = '/'
-        let url = `${basePath}/api/posts?limit=6&page=${pageNum}&sort=-publishedAt&depth=1&select[title]=true&select[slug]=true&select[meta]=true`
+        let url = `/api/posts?limit=6&page=${pageNum}&sort=-publishedAt&depth=1&select[title]=true&select[slug]=true&select[meta]=true`
 
         const conditions: string[] = []
 
