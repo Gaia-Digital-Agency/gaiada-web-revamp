@@ -616,6 +616,98 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
   })
 
+  //Home Page
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Home',
+      slug: 'home',
+      _status: 'published',
+      hero: {
+        type: 'homepageHero',
+        title: 'Designed to grow. Rooted to lead.',
+        richText: richText([
+          paragraph(
+            'Before a brand reaches for the sky, it must find its footing. At Gaia we believe at Marketing as the foundational work—understanding your heart and your audience—to ensure your digital growth is sustainable.',
+          ),
+        ]),
+        media: mediaId,
+        buttons: [
+          {
+            label: 'Grow With Us',
+            url: '/',
+            icon: 'arrow',
+            iconPosition: 'right',
+            variant: 'default',
+            newTab: false,
+          },
+        ],
+      },
+      layout: [
+        {
+          blockType: 'ourWorksBlock',
+          title: 'Our Works',
+        },
+        {
+          blockType: 'ourProcessBlock',
+          title: 'Our Process',
+          steps: [
+            {
+              title: 'Goal and Objective',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Audience & Buyer Personas',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Competitive Analysis',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Market Share',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'SWOT Analysis',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Plan a Digital Budget',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Digital Channels',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Develop Strategies and Tactics',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Creating a Marketing Calendar',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+            {
+              title: 'Measure the result and KPIs',
+              description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tincidunt eros, sagittis elementum ex.',
+            },
+          ],
+        },
+      ],
+    },
+  })
+
   // 9. Update Header Global
   await payload.updateGlobal({
     slug: 'header',
