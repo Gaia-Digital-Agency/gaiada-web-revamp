@@ -55,7 +55,7 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const basePath = '/gaiadaweb'
+        const basePath = '/'
         const catRes = await fetch(`${basePath}/api/categories?limit=100`)
         const catData = await catRes.json()
         const postRes = await fetch(

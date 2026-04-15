@@ -10,6 +10,7 @@ import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
 import { seedGaia } from './gaia-seed'
+import { seedGaiaV2 } from './gaia-seeds-v2'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -234,6 +235,70 @@ export const seed = async ({
   await seedGaia({ payload, req })
 
   payload.logger.info('Seeded database successfully!')
+}
+
+export const seedV2 = async ({
+  payload,
+  req,
+}: {
+  payload: Payload
+  req: PayloadRequest
+}): Promise<void> => {
+  payload.logger.info('Seeding database V2...')
+
+  payload.logger.info(`— Clearing collections and globals...`)
+
+  // clear the globals
+  await Promise.all(
+    globals.map((global) => {
+      const data: any = {}
+      if (global === 'header' || global === 'footer') {
+        data.navItems = []
+      }
+
+      if (global === 'settings') {
+        data.address = 'Placeholder Address'
+      }
+
+      return payload.updateGlobal({
+        slug: global,
+        data,
+        depth: 0,
+        context: {
+          disableRevalidate: true,
+        },
+      })
+    }),
+  )
+
+  // clear the collections
+  const collectionsToDelete: CollectionSlug[] = [
+    'team',
+    'departments',
+    'services',
+    'portfolio',
+    'scopes',
+    'posts',
+    'pages',
+    'categories',
+    'media',
+  ]
+
+  for (const collection of collectionsToDelete) {
+    await payload.db.deleteMany({ collection, req, where: {} })
+  }
+
+  await Promise.all(
+    collections
+      .filter((collection) => Boolean(payload.collections[collection].config.versions))
+      .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
+  )
+
+  payload.logger.info(`— Seeding Gaia Digital Agency V2...`)
+
+  await seedGaiaV2({ payload, req })
+
+  payload.logger.info('Seeded database V2 successfully!')
 }
 
 async function fetchFileByURL(url: string): Promise<File> {

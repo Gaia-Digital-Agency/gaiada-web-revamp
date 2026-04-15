@@ -2,6 +2,11 @@ import type { Block } from 'payload'
 
 export const PortfolioBlock: Block = {
   slug: 'portfolioBlock',
+  admin: {
+    images: {
+      thumbnail: '/block-preview/our-works-portfolios-gallery-blocks.png',
+    },
+  },
   labels: {
     singular: 'Portfolio Block',
     plural: 'Portfolio Blocks',
