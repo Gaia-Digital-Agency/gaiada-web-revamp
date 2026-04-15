@@ -3,6 +3,11 @@ import type { Block } from 'payload'
 export const FeaturedBlogBlock: Block = {
   slug: 'featuredBlogBlock',
   interfaceName: 'FeaturedBlogBlock',
+  admin: {
+    images: {
+      thumbnail: '/block-preview/preview-featured-blog-block.png',
+    },
+  },
   fields: [
     {
       name: 'featuredPost',

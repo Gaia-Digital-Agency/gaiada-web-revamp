@@ -272,9 +272,32 @@ export interface Page {
     | {
         title?: string | null;
         description?: string | null;
+        form: number | Form;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'servicesBlock';
+        blockType: 'careerBlock';
+      }
+    | {
+        columns?:
+          | {
+              size?: ('full' | 'half' | 'oneThird' | 'twoThirds') | null;
+              buttons?:
+                | {
+                    label: string;
+                    url: string;
+                    icon?: ('none' | 'arrow' | 'search') | null;
+                    iconPosition?: ('left' | 'right') | null;
+                    variant?: ('default' | 'link') | null;
+                    newTab?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'buttonBlock';
       }
     | {
         title?: string | null;
@@ -315,37 +338,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'aboutBlock';
       }
-    | {
-        title?: string | null;
-        description?: string | null;
-        form: number | Form;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'careerBlock';
-      }
     | TeamBlock
-    | {
-        columns?:
-          | {
-              size?: ('full' | 'half' | 'oneThird' | 'twoThirds') | null;
-              buttons?:
-                | {
-                    label: string;
-                    url: string;
-                    icon?: ('none' | 'arrow' | 'search') | null;
-                    iconPosition?: ('left' | 'right') | null;
-                    variant?: ('default' | 'link') | null;
-                    newTab?: boolean | null;
-                    id?: string | null;
-                  }[]
-                | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'buttonBlock';
-      }
     | {
         title: string;
         steps?:
@@ -713,81 +706,24 @@ export interface Service {
     media?: (number | null) | Media;
   };
   layout?:
-    | (
-        | CallToActionBlock
-        | ContentBlock
-        | MediaBlock
-        | FormBlock
-        | {
-            mediaPosition: 'left' | 'right';
-            richText: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            media: number | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contentMedia';
-          }
-        | {
-            intro: {
+    | {
+        intro: {
+          title: string;
+          description: string;
+          image: number | Media;
+        };
+        subServices?:
+          | {
               title: string;
               description: string;
               image: number | Media;
-            };
-            subServices?:
-              | {
-                  title: string;
-                  description: string;
-                  image: number | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'servicesDetail';
-          }
-        | {
-            title?: string | null;
-            insights?:
-              | {
-                  title: string;
-                  description: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
-                        [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  };
-                  image: number | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'portfolioInsight';
-          }
-        | PortfolioImageBanner
-      )[]
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'servicesDetail';
+      }[]
     | null;
   meta?: {
     title?: string | null;
@@ -905,32 +841,6 @@ export interface Portfolio {
   };
   layout?:
     | (
-        | CallToActionBlock
-        | ContentBlock
-        | MediaBlock
-        | FormBlock
-        | {
-            mediaPosition: 'left' | 'right';
-            richText: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            media: number | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contentMedia';
-          }
         | {
             title?: string | null;
             insights?:
@@ -994,6 +904,16 @@ export interface Scope {
   slug: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioImageBanner".
+ */
+export interface PortfolioImageBanner {
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioImageBanner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1118,6 +1038,40 @@ export interface MediaBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock".
+ */
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1352,50 +1306,6 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PortfolioImageBanner".
- */
-export interface PortfolioImageBanner {
-  image: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'portfolioImageBanner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock".
- */
-export interface ArchiveBlock {
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
-  categories?: (number | Category)[] | null;
-  limit?: number | null;
-  selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: number | Post;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'archive';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1807,11 +1717,35 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        servicesBlock?:
+        careerBlock?:
           | T
           | {
               title?: T;
               description?: T;
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        buttonBlock?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    size?: T;
+                    buttons?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          icon?: T;
+                          iconPosition?: T;
+                          variant?: T;
+                          newTab?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1839,39 +1773,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        careerBlock?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
         teamBlock?: T | TeamBlockSelect<T>;
-        buttonBlock?:
-          | T
-          | {
-              columns?:
-                | T
-                | {
-                    size?: T;
-                    buttons?:
-                      | T
-                      | {
-                          label?: T;
-                          url?: T;
-                          icon?: T;
-                          iconPosition?: T;
-                          variant?: T;
-                          newTab?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
         ourProcessBlock?:
           | T
           | {
@@ -2283,19 +2185,6 @@ export interface ServicesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        contentMedia?:
-          | T
-          | {
-              mediaPosition?: T;
-              richText?: T;
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
         servicesDetail?:
           | T
           | {
@@ -2317,22 +2206,6 @@ export interface ServicesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        portfolioInsight?:
-          | T
-          | {
-              title?: T;
-              insights?:
-                | T
-                | {
-                    title?: T;
-                    description?: T;
-                    image?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
       };
   meta?:
     | T
@@ -2397,19 +2270,6 @@ export interface PortfolioSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        contentMedia?:
-          | T
-          | {
-              mediaPosition?: T;
-              richText?: T;
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
         portfolioInsight?:
           | T
           | {

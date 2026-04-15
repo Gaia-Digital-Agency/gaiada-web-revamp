@@ -8,6 +8,7 @@ import {
 
 export const PortfolioInsight: Block = {
   slug: 'portfolioInsight',
+  imageURL: '/block-preview/portfolio-insights-block.png',
   labels: {
     singular: "Portfolio's Insight Block",
     plural: "Portfolio's Insight Blocks",

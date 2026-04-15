@@ -9,7 +9,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ContentMediaBlock } from '@/blocks/ContentMedia/Component'
-import { ServicesBlock } from '@/blocks/Services/Component'
+// import { ServicesBlock } from '@/blocks/Services/Component'
 import { PortfolioBlock } from '@/blocks/PortfolioBlock/Component'
 import { AboutBlock } from '@/blocks/AboutBlock/Component'
 import { CareerBlock } from '@/blocks/CareerBlock/Component'
@@ -32,7 +32,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   contentMedia: ContentMediaBlock,
-  servicesBlock: ServicesBlock,
+  // servicesBlock: ServicesBlock,
   portfolioBlock: PortfolioBlock,
   aboutBlock: AboutBlock,
   careerBlock: CareerBlock,
