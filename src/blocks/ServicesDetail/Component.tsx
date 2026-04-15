@@ -96,7 +96,7 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({
         <div className="px-0 mx-auto max-w-7xl overflow-hidden">
           <div className="py-8 md:py-5 md:pr-0 px-4 md:px-0">
             <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-center">
-              <div className="space-y-8 max-w-2xl bg-blue-400">
+              <div className="space-y-8 max-w-2xl">
                 <div className="space-y-4 md:pl-[180px] pl-0">
                   <h2 className="text-(--gda-brand-yellow)">{intro.title}</h2>
                   <div>{intro.description}</div>

@@ -496,6 +496,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   for (let i = 1; i <= 3; i++) {
     const post = await payload.create({
       collection: 'posts',
+      context: { disableRevalidate: true },
       data: {
         title: `Gaia Insights #${i}: Navigating the Digital Future`,
         slug: `gaia-insights-${i}`,
@@ -520,6 +521,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   // Portfolio Page
   await payload.create({
     collection: 'pages',
+    context: { disableRevalidate: true },
     data: {
       title: 'Portfolio Page',
       slug: 'portfolio',
@@ -544,6 +546,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   // About Us Page
   await payload.create({
     collection: 'pages',
+    context: { disableRevalidate: true },
     data: {
       title: 'About Us',
       slug: 'about',
@@ -595,6 +598,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   // Blog Page
   await payload.create({
     collection: 'pages',
+    context: { disableRevalidate: true },
     data: {
       title: 'Blog Page',
       slug: 'blog',
@@ -619,6 +623,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   //Home Page
   await payload.create({
     collection: 'pages',
+    context: { disableRevalidate: true },
     data: {
       title: 'Home Page',
       slug: 'home',
@@ -711,6 +716,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   // 9. Update Header Global
   await payload.updateGlobal({
     slug: 'header',
+    context: { disableRevalidate: true },
     data: {
       navItems: [
         {
@@ -722,6 +728,22 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
         { link: { type: 'custom', url: '/portfolio', label: 'Portfolio' } },
         { link: { type: 'custom', url: '/about', label: 'About Us' } },
         { link: { type: 'custom', url: '/blog', label: 'Blog' } },
+      ],
+    },
+  })
+
+  // 10. Footer
+  await payload.updateGlobal({
+    slug: 'footer',
+    context: { disableRevalidate: true },
+    data: {
+      formId: 1,
+      heading: 'Start a project with Gaia',
+      copyright: '',
+      developedBy: '© 2026 Gaia Digital Agency',
+      navItems: [
+        { link: { type: 'custom', url: '/', label: 'Terms and Conditions' } },
+        { link: { type: 'custom', url: '/', label: 'Privacy Policy' } },
       ],
     },
   })
