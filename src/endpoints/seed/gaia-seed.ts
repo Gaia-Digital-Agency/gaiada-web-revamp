@@ -184,13 +184,15 @@ export const seedGaia = async ({ payload, req }: { payload: Payload; req: Payloa
       context: { disableRevalidate: true },
       data: {
         title: name,
-        slug: name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''),
+        slug: name
+          .toLowerCase()
+          .replace(/ /g, '-')
+          .replace(/[^\w-]+/g, ''),
       },
     })
     scopes.push(scope)
   }
 
-  // 5. Create Portfolio
   for (let i = 1; i <= 5; i++) {
     await payload.create({
       collection: 'portfolio',
