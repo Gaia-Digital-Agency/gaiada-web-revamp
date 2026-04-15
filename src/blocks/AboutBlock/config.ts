@@ -3,6 +3,7 @@ import type { Block } from 'payload'
 // Configuration for the AboutBlock in Payload CMS
 export const AboutBlock: Block = {
   slug: 'aboutBlock',
+  imageURL: '/block-preview/about-us-intro-block.png',
   labels: {
     singular: 'About Block',
     plural: 'About Blocks',

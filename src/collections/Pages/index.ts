@@ -8,7 +8,7 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { ContentMedia } from '../../blocks/ContentMedia/config'
-import { ServicesBlock } from '../../blocks/Services/config'
+// import { ServicesBlock } from '../../blocks/Services/config'
 import { PortfolioBlock } from '../../blocks/PortfolioBlock/config'
 import { AboutBlock } from '../../blocks/AboutBlock/config'
 import { CareerBlock } from '../../blocks/CareerBlock/config'
@@ -92,12 +92,12 @@ export const Pages: CollectionConfig<'pages'> = {
                 Archive,
                 FormBlock,
                 ContentMedia,
-                ServicesBlock,
+                CareerBlock,
+                // ServicesBlock,
+                ButtonBlock,
                 PortfolioBlock,
                 AboutBlock,
-                CareerBlock,
                 TeamBlock,
-                ButtonBlock,
                 OurProcessBlock,
                 PortfolioInsight,
                 PortfolioImageBanner,

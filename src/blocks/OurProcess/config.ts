@@ -2,6 +2,11 @@ import { Block } from 'payload'
 
 export const OurProcessBlock: Block = {
   slug: 'ourProcessBlock',
+  admin: {
+    images: {
+      thumbnail: '/block-preview/our-process-section-block.png',
+    },
+  },
   labels: {
     singular: 'Our Process Block',
     plural: 'Our Process Blocks',

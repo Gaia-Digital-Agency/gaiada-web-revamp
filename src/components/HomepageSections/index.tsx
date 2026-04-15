@@ -10,7 +10,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ContentMediaBlock } from '@/blocks/ContentMedia/Component'
-import { ServicesBlock } from '@/blocks/Services/Component'
+// import { ServicesBlock } from '@/blocks/Services/Component'
 import { PortfolioBlock } from '@/blocks/PortfolioBlock/Component'
 import { AboutBlock } from '@/blocks/AboutBlock/Component'
 import { CareerBlock } from '@/blocks/CareerBlock/Component'
@@ -29,7 +29,7 @@ const blockComponents: Record<string, any> = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   contentMedia: ContentMediaBlock,
-  servicesBlock: ServicesBlock,
+  // servicesBlock: ServicesBlock,
   portfolioBlock: PortfolioBlock,
   aboutBlock: AboutBlock,
   careerBlock: CareerBlock,
@@ -75,7 +75,10 @@ export const HomepageSections: React.FC<HomepageSectionsProps> = async ({ hero, 
 
   // Last section: Footer
   sections.push(
-    <div key="footer" className="w-full h-auto bg-background shadow-[0_-10px_30px_rgba(0,0,0,0.15)] relative z-10">
+    <div
+      key="footer"
+      className="w-full h-auto bg-background shadow-[0_-10px_30px_rgba(0,0,0,0.15)] relative z-10"
+    >
       <Footer />
     </div>,
   )
