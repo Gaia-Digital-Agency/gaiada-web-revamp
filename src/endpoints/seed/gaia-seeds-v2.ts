@@ -521,7 +521,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   await payload.create({
     collection: 'pages',
     data: {
-      title: 'Our Work',
+      title: 'Portfolio Page',
       slug: 'portfolio',
       _status: 'published',
       hero: {
@@ -596,7 +596,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   await payload.create({
     collection: 'pages',
     data: {
-      title: 'Gaia Stories',
+      title: 'Blog Page',
       slug: 'blog',
       _status: 'published',
       hero: {
@@ -620,7 +620,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   await payload.create({
     collection: 'pages',
     data: {
-      title: 'Home',
+      title: 'Home Page',
       slug: 'home',
       _status: 'published',
       hero: {
@@ -714,7 +714,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     data: {
       navItems: [
         {
-          link: { type: 'custom', url: '/services', label: 'Services' },
+          link: { type: 'custom', url: '/', label: 'Services' },
           subItems: services.map((svc) => ({
             link: { type: 'custom' as const, url: `/services/${svc.slug}`, label: svc.title },
           })),
