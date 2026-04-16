@@ -23,6 +23,12 @@ export const Footer: GlobalConfig = {
       label: 'Background Image',
     },
     {
+      name: 'backgroundImageMobile',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Background Image Mobile',
+    },
+    {
       name: 'heading',
       type: 'text',
       label: 'Heading',

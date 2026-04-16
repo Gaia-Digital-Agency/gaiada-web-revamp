@@ -97,8 +97,6 @@ export const PortfolioInsightBlock: React.FC<
     </div>
   )
 
-  console.log(disableInnerContainer)
-
   if (disableInnerContainer) {
     return content
   }

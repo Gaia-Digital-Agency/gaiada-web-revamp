@@ -1,0 +1,21 @@
+{
+  "name": "Gaia Digital Agency",
+  "short_name": "Gaia",
+  "description": "Strategy, Design, and Technology for your brand.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
