@@ -82,7 +82,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
   if (!steps || steps.length === 0) return null
 
   return (
-    <section id="our-process" className="md:h-screen flex items-center py-16 md:py-0">
+    <section id="our-process" className="lg:h-screen flex items-center py-16 lg:py-0">
       <div className="container mx-0">
         <div className="flex flex-col gap-10">
           <div>

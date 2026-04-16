@@ -64,8 +64,8 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   }
 
   return (
-    <section className="md:h-screen flex items-center" id="our-works">
-      <div className="relative overflow-hidden w-full py-24 md:py-32">
+    <section className="lg:h-screen flex items-center" id="our-works">
+      <div className="relative overflow-hidden w-full py-12 lg:py-32">
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
@@ -73,7 +73,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                 <h2 className="heading-1">{title}</h2>
               </TextFade>
 
-              <div className="filter-wrapper flex flex-row flex-flex-wrap md:flex-col items-start gap-4">
+              <div className="filter-wrapper flex flex-row flex-wrap lg:flex-col items-start gap-4">
                 <button
                   onClick={() => setActiveServiceId(null)}
                   className={cn(
@@ -125,13 +125,13 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-                        className="swiper-slide shrink-0 w-[260px] md:w-[420px] snap-start"
+                        className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
                       >
                         <Link
                           href={`/portfolio/${item.slug}`}
                           className="swiper-body group flex flex-col"
                         >
-                          <div className="image-wrapper h-[240px] md:h-full aspect-3/4 relative overflow-hidden">
+                          <div className="image-wrapper h-[240px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
                             {item.featuredImage && (
                               <img
                                 src={
@@ -180,7 +180,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                 />
               </div>
 
-              <div className="flex justify-center hidden md:flex lg:justify-start gap-4">
+              <div className="flex justify-center hidden lg:flex lg:justify-start gap-4">
                 <button
                   onClick={() => scroll('left')}
                   className="w-12 h-12 flex items-center justify-center bg-[#CCC]/20 rounded-none transition-colors hover:bg-[#CCC]/40 text-[#111]"

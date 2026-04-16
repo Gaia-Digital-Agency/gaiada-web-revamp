@@ -11,7 +11,7 @@ function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
+    const check = () => setIsMobile(window.innerWidth < 1025)
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
@@ -176,7 +176,6 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
                 overflow: 'hidden',
               }}
             >
-
               {section}
             </div>
           </div>
