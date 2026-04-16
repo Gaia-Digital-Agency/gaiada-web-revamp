@@ -169,13 +169,14 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
               style={{
                 width: '100%',
                 height: isLast ? 'auto' : '100%',
-                transform: shouldScale ? 'scale(0.93)' : 'scale(1)',
+                transform: 'scale(1)',
                 transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
                 transformOrigin: 'center bottom',
-                borderRadius: shouldScale ? '20px' : '0px',
+                borderRadius: '0px',
                 overflow: 'hidden',
               }}
             >
+
               {section}
             </div>
           </div>

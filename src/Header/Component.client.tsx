@@ -55,7 +55,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   return (
     <>
       <header
-        className={`sticky top-0 z-[200] w-full h-[79px] px-6 md:px-10 flex items-center transition-colors duration-300 backdrop-blur-md mt-[-80px] ${
+        className={`fixed top-0 z-[200] w-full h-[79px] px-6 md:px-10 flex items-center transition-[height,background-color] duration-300 backdrop-blur-md ${
           isScrolled
             ? 'bg-white/80 backdrop-blur-[25px]'
             : isHomepage
