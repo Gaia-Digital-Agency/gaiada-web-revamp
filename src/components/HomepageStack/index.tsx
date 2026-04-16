@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState, Children, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
-import { useGSAP } from '@gsap/react'
+import './homepageStack.css'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollToPlugin)
@@ -19,9 +19,40 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+  const interBubbleRef = useRef<HTMLDivElement>(null)
   const isAnimating = useRef(false)
 
-  // Setup Intersection Observer to track active section (for manual scroll or sync)
+  // Mouse tracking for interactive gradient
+  useEffect(() => {
+    let curX = 0
+    let curY = 0
+    let tgX = 0
+    let tgY = 0
+
+    const move = () => {
+      curX += (tgX - curX) / 20
+      curY += (tgY - curY) / 20
+
+      if (interBubbleRef.current) {
+        interBubbleRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
+      }
+      requestAnimationFrame(move)
+    }
+
+    const handleMouseMove = (event: MouseEvent) => {
+      tgX = event.clientX
+      tgY = event.clientY
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    move()
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [])
+
+  // Setup Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -147,20 +178,38 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       className="homepage-scroll-container w-full h-auto md:h-screen md:overflow-y-auto overflow-x-hidden hide-scrollbar bg-background relative"
       style={{ scrollBehavior: 'auto' }}
     >
-      {/* Global Background Layer - Remains static while content scrolls over it */}
+      {/* Global Moving Gradient Background Layer */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* Subtle Grain Texture */}
-        <div 
+        <div className="gradient-bg absolute inset-0">
+          <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
+            <defs>
+              <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                  result="goo"
+                />
+                <feBlend in="SourceGraphic" in2="goo" />
+              </filter>
+            </defs>
+          </svg>
+          <div className="gradients-container h-full w-full">
+            <div className="g1"></div>
+            <div className="g2"></div>
+            <div className="g3"></div>
+            <div className="g4"></div>
+            <div className="g5"></div>
+            <div ref={interBubbleRef} className="interactive"></div>
+          </div>
+        </div>
+
+        {/* Subtle Grain Overlay */}
+        <div
           className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
-          style={{ 
+          style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
-        {/* Soft Radial Glow */}
-        <div 
-          className="absolute inset-0 opacity-[0.4]"
-          style={{ 
-            background: 'radial-gradient(circle at 20% 30%, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%)' 
           }}
         />
       </div>

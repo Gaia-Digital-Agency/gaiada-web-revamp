@@ -240,6 +240,7 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    background_hero_homepage?: (number | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -704,6 +705,7 @@ export interface Service {
         }[]
       | null;
     media?: (number | null) | Media;
+    background_hero_homepage?: (number | null) | Media;
   };
   layout?:
     | {
@@ -838,6 +840,7 @@ export interface Portfolio {
         }[]
       | null;
     media?: (number | null) | Media;
+    background_hero_homepage?: (number | null) | Media;
   };
   layout?:
     | (
@@ -1699,6 +1702,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        background_hero_homepage?: T;
       };
   layout?:
     | T
@@ -2181,6 +2185,7 @@ export interface ServicesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        background_hero_homepage?: T;
       };
   layout?:
     | T
@@ -2266,6 +2271,7 @@ export interface PortfolioSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        background_hero_homepage?: T;
       };
   layout?:
     | T
