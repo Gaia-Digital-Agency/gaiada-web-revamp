@@ -22,7 +22,14 @@ export const FooterMobile = ({
       <div className="heading-wrapper flex flex-col px-4">
         <h2 className="heading-2">{footerData?.heading}</h2>
       </div>
-      <div className="form-wrapper flex flex-col px-4">
+      <div
+        className="form-wrapper flex flex-col px-4"
+        style={
+          footerData?.backgroundImageMobile && typeof footerData.backgroundImageMobile !== 'number'
+            ? { backgroundImage: `url(${footerData?.backgroundImageMobile?.url})` }
+            : {}
+        }
+      >
         {form && <FormBlock form={form} enableIntro={false} />}
       </div>
       <div className="contact-wrapper flex flex-row items-center justify-center gap-2 mt-8 px-4">
