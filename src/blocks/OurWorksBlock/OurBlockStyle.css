@@ -26,12 +26,12 @@
       }
 
       &.active {
-        color: var(--gda-brand-yellow);
+        color: var(--gda-brand-black);
         font-weight: 700;
       }
 
       &:hover {
-        color: var(--gda-brand-yellow);
+        color: var(--gda-brand-black);
       }
     }
   }

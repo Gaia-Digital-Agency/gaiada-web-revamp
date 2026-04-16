@@ -20,7 +20,74 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
   const interBubbleRef = useRef<HTMLDivElement>(null)
+  const leafRef = useRef<HTMLImageElement>(null)
+  const leafRef2 = useRef<HTMLImageElement>(null)
   const isAnimating = useRef(false)
+
+  // Leaf Animation Logic
+  useEffect(() => {
+    if (!leafRef.current || !leafRef2.current) return
+
+    const isLast = currentIndex === total - 1
+    const windowHeight = window.innerHeight
+
+    if (isLast) {
+      // Gust of wind exit - slower and more graceful
+      gsap.to(leafRef.current, {
+        y: windowHeight + 300,
+        x: 500,
+        rotation: 720,
+        scale: 0.4,
+        opacity: 0,
+        duration: 4.5, // Increased from 2.5
+        ease: 'power2.inOut',
+      })
+      gsap.to(leafRef2.current, {
+        y: windowHeight + 300,
+        x: -500,
+        rotation: -720,
+        scale: 0.4,
+        opacity: 0,
+        duration: 5, // Increased from 2.5
+        ease: 'power2.inOut',
+      })
+    } else {
+      // Drifting movement between sections - Much slower for a "floating" feel
+      // Leaf 1 (leaf2.png)
+      const targetY1 = (currentIndex / (total - 1)) * (windowHeight * 0.75) + (windowHeight * 0.1)
+      const horizontalBase1 = currentIndex % 2 === 0 ? 80 : 20
+      const drift1 = Math.sin(currentIndex) * 10
+
+      gsap.to(leafRef.current, {
+        y: 0,
+        x: 0,
+        top: `${targetY1}px`,
+        left: `${horizontalBase1 + drift1}%`,
+        rotation: currentIndex * 150,
+        scale: 1 + Math.sin(currentIndex * 2) * 0.2,
+        opacity: 1,
+        duration: 4, // Increased from 2.2
+        ease: 'power2.out', // Smoother ease for slower motion
+      })
+
+      // Leaf 2 (leaf1.png)
+      const targetY2 = ((currentIndex + 0.4) / total) * (windowHeight * 0.65) + (windowHeight * 0.15)
+      const horizontalBase2 = currentIndex % 2 === 0 ? 15 : 85
+      const drift2 = Math.cos(currentIndex) * 15
+
+      gsap.to(leafRef2.current, {
+        y: 0,
+        x: 0,
+        top: `${targetY2}px`,
+        left: `${horizontalBase2 + drift2}%`,
+        rotation: currentIndex * -180,
+        scale: 0.8 + Math.cos(currentIndex * 1.5) * 0.15,
+        opacity: 0.8,
+        duration: 5, // Increased from 2.5
+        ease: 'power2.out',
+      })
+    }
+  }, [currentIndex, total])
 
   // Mouse tracking for interactive gradient
   useEffect(() => {
@@ -208,6 +275,32 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
             <div ref={interBubbleRef} className="interactive"></div>
           </div>
         </div>
+
+        {/* Falling Leaves - Hidden on mobile */}
+        <img
+          ref={leafRef}
+          src="/leaf2.png"
+          alt=""
+          className="hidden md:block fixed w-24 h-auto pointer-events-none z-[100]"
+          style={{ 
+            top: '5%',
+            left: '80%',
+            opacity: 0,
+            filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.15))' 
+          }}
+        />
+        <img
+          ref={leafRef2}
+          src="/leaf1.png"
+          alt=""
+          className="hidden md:block fixed w-20 h-auto pointer-events-none z-[100]"
+          style={{ 
+            top: '15%',
+            left: '10%',
+            opacity: 0,
+            filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.12))' 
+          }}
+        />
 
         {/* Subtle Grain Overlay */}
         <div
