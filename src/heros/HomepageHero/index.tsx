@@ -31,72 +31,17 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
   buttons,
   media,
 }) => {
-  const interBubbleRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    let curX = 0
-    let curY = 0
-    let tgX = 0
-    let tgY = 0
-
-    const move = () => {
-      curX += (tgX - curX) / 20
-      curY += (tgY - curY) / 20
-
-      if (interBubbleRef.current) {
-        interBubbleRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
-      }
-      requestAnimationFrame(move)
-    }
-
-    const handleMouseMove = (event: MouseEvent) => {
-      tgX = event.clientX
-      tgY = event.clientY
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    move()
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [])
-
-  return (
-    <section
-      className="section-homepage relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${media?.url})`,
+  const bgStyle = media?.url
+    ? {
+        backgroundImage: `url(${media.url})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-      }}
-    >
-      <div className="gradient-bg absolute inset-0 z-1">
-        <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-              <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
-                result="goo"
-              />
-              <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-          </defs>
-        </svg>
-        <div className="gradients-container h-full w-full">
-          <div className="g1"></div>
-          <div className="g2"></div>
-          <div className="g3"></div>
-          <div className="g4"></div>
-          <div className="g5"></div>
-          <div ref={interBubbleRef} className="interactive"></div>
-        </div>
-      </div>
+      }
+    : {}
 
+  return (
+    <section className="section-homepage relative overflow-hidden" style={bgStyle}>
       <div className="container mx-auto py-16 md:py-32 min-h-screen flex items-center relative z-10">
         <div className="flex flex-col md:flex-row md:justify-between gap-4 md:gap-10 w-full">
           <div className="md:col-span-6">

@@ -745,6 +745,51 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
         { link: { type: 'custom', url: '/', label: 'Terms and Conditions' } },
         { link: { type: 'custom', url: '/', label: 'Privacy Policy' } },
       ],
+      navItemsWithIcon: [
+        {
+          link: {
+            url: 'mailto:info@gaiada.com',
+            label: 'info@gaiada.com',
+            icon: 'email',
+          },
+        },
+        {
+          link: {
+            url: 'https://maps.app.goo.gl/TGxwmpZGCDMhvi418',
+            label: 'Jl. Raya Mas, Ubud',
+            icon: 'map',
+          },
+        },
+      ],
+    },
+  })
+
+  // 11. Settings
+  await payload.updateGlobal({
+    slug: 'settings',
+    context: { disableRevalidate: true },
+    data: {
+      address: 'Jl. Raya Mas, Ubud',
+      contactEmail: 'info@gaiada.com',
+      whatsappNumber: '6281337568977',
+      googleMapsEmbed:
+        '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.5130163225626!2d115.26977377697892!3d-8.546565786643544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23d4965bc26ad%3A0x7980cb2827360637!2sGaia%20Digital%20Agency!5e0!3m2!1sen!2sid!4v1776307154955!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+      siteTitle: 'Gaia Digital Agency',
+      tagline: '',
+      socialLinks: [
+        {
+          platform: 'facebook',
+          url: 'https://www.facebook.com/gaiadigitalagency',
+        },
+        {
+          platform: 'instagram',
+          url: 'https://www.instagram.com/gaiadigitalagency/',
+        },
+        {
+          platform: 'linkedin',
+          url: 'https://www.linkedin.com/company/gaia-digital-agency/',
+        },
+      ],
     },
   })
 

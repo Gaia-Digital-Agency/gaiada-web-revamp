@@ -3,7 +3,7 @@ import { Footer } from '@/payload-types'
 import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
 
 export const RowLabel: React.FC<RowLabelProps> = () => {
-  const { data, rowNumber } = useRowLabel<NonNullable<Footer['navItems']>[number]>()
+  const { data, rowNumber } = useRowLabel<NonNullable<Footer['navItemsWithIcon']>[number]>()
 
   if (!data) return <div>Row</div>
 

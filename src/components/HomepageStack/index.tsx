@@ -1,113 +1,93 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useCallback, Children } from 'react'
+import React, { useEffect, useRef, useState, Children, useCallback } from 'react'
+import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
+import './homepageStack.css'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollToPlugin)
+}
 
 interface HomepageStackProps {
   children: React.ReactNode
 }
 
-/** Returns true when the viewport is mobile-sized (< 768px). */
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1025)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  return isMobile
-}
-
 export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
-  const isMobile = useIsMobile()
   const sections = Children.toArray(children)
   const total = sections.length
   const [currentIndex, setCurrentIndex] = useState(0)
-  const isAnimating = useRef(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const touchStartY = useRef(0)
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+  const interBubbleRef = useRef<HTMLDivElement>(null)
+  const isAnimating = useRef(false)
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (isAnimating.current) return
-      const next = Math.max(0, Math.min(total - 1, index))
-      if (next === currentIndex) return
-
-      isAnimating.current = true
-      setCurrentIndex(next)
-
-      setTimeout(() => {
-        isAnimating.current = false
-      }, 900)
-    },
-    [currentIndex, total],
-  )
-
-  // Broadcast current index (desktop only — mobile doesn't navigate)
+  // Mouse tracking for interactive gradient
   useEffect(() => {
-    if (isMobile) return
-    const event = new CustomEvent('homepage-stack-index', { detail: { index: currentIndex } })
-    window.dispatchEvent(event)
-  }, [currentIndex, isMobile])
+    let curX = 0
+    let curY = 0
+    let tgX = 0
+    let tgY = 0
 
-  // Wheel event — desktop only
-  useEffect(() => {
-    if (isMobile) return
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault()
-      if (e.deltaY > 0) goTo(currentIndex + 1)
-      else if (e.deltaY < 0) goTo(currentIndex - 1)
-    }
-    window.addEventListener('wheel', handleWheel, { passive: false })
-    return () => window.removeEventListener('wheel', handleWheel)
-  }, [goTo, currentIndex, isMobile])
+    const move = () => {
+      curX += (tgX - curX) / 20
+      curY += (tgY - curY) / 20
 
-  // Touch events — desktop only (mobile scrolls naturally)
-  useEffect(() => {
-    if (isMobile) return
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY
+      if (interBubbleRef.current) {
+        interBubbleRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
+      }
+      requestAnimationFrame(move)
     }
-    const handleTouchEnd = (e: TouchEvent) => {
-      const delta = touchStartY.current - e.changedTouches[0].clientY
-      if (Math.abs(delta) < 40) return
-      if (delta > 0) goTo(currentIndex + 1)
-      else goTo(currentIndex - 1)
+
+    const handleMouseMove = (event: MouseEvent) => {
+      tgX = event.clientX
+      tgY = event.clientY
     }
-    window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+    window.addEventListener('mousemove', handleMouseMove)
+    move()
+
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchend', handleTouchEnd)
+      window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [goTo, currentIndex, isMobile])
+  }, [])
 
-  // Keyboard — desktop only
+  // Setup Intersection Observer
   useEffect(() => {
-    if (isMobile) return
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(currentIndex + 1)
-      if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(currentIndex - 1)
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [goTo, currentIndex, isMobile])
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Only update if we're NOT in the middle of a GSAP animation
+        if (isAnimating.current) return
 
-  // Lock overflow on desktop; release it on mobile
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute('data-index'))
+            setCurrentIndex(index)
+            const event = new CustomEvent('homepage-stack-index', { detail: { index } })
+            window.dispatchEvent(event)
+          }
+        })
+      },
+      {
+        root: containerRef.current,
+        threshold: 0.5,
+      },
+    )
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref)
+    })
+
+    return () => observer.disconnect()
+  }, [total])
+
+  // Lock body/html overflow to ensure HomepageStack is the only scrollable element
   useEffect(() => {
     const html = document.documentElement
     const body = document.body
-
-    if (isMobile) {
-      html.style.overflow = ''
-      body.style.overflow = ''
-      return
-    }
-
     const prevHtmlOverflow = html.style.overflow
     const prevBodyOverflow = body.style.overflow
+
     html.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
 
@@ -115,86 +95,149 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       html.style.overflow = prevHtmlOverflow
       body.style.overflow = prevBodyOverflow
     }
-  }, [isMobile])
+  }, [])
 
-  // ─── MOBILE: plain vertical flow, no stacking ──────────────────────────────
-  if (isMobile) {
-    return (
-      <div className="homepage-mobile-stack">
-        {sections.map((section, i) => (
-          <div key={i} className="homepage-mobile-section">
-            {section}
-          </div>
-        ))}
-      </div>
-    )
-  }
+  const goTo = useCallback(
+    (index: number) => {
+      if (isAnimating.current || !containerRef.current) return
+      // Disable GSAP snap on mobile
+      if (window.innerWidth < 768) return
 
-  // ─── DESKTOP: stacking animation ────────────────────────────────────────────
+      const targetIndex = Math.max(0, Math.min(total - 1, index))
+      const targetElement = sectionRefs.current[targetIndex]
+
+      if (targetElement) {
+        isAnimating.current = true
+        setCurrentIndex(targetIndex)
+
+        gsap.to(containerRef.current, {
+          scrollTo: { y: targetElement, autoKill: false },
+          duration: 1.2,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            isAnimating.current = false
+            // Final broadcast
+            const event = new CustomEvent('homepage-stack-index', {
+              detail: { index: targetIndex },
+            })
+            window.dispatchEvent(event)
+          },
+        })
+      }
+    },
+    [total],
+  )
+
+  // Handle Wheel Events for Desktop
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (window.innerWidth < 768) return
+      e.preventDefault()
+
+      if (isAnimating.current) return
+
+      if (e.deltaY > 30) {
+        goTo(currentIndex + 1)
+      } else if (e.deltaY < -30) {
+        goTo(currentIndex - 1)
+      }
+    }
+
+    const container = containerRef.current
+    if (container) {
+      container.addEventListener('wheel', handleWheel, { passive: false })
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleWheel)
+      }
+    }
+  }, [currentIndex, goTo])
+
+  // Handle Keyboard Events for Desktop
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (window.innerWidth < 768) return
+      if (isAnimating.current) return
+
+      // Prevent default scrolling for navigation keys
+      if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
+        e.preventDefault()
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          goTo(currentIndex + 1)
+        } else {
+          goTo(currentIndex - 1)
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [currentIndex, goTo])
+
   return (
     <div
       ref={containerRef}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        overflow: 'hidden',
-        zIndex: 0,
-      }}
+      className="homepage-scroll-container w-full h-screen overflow-y-auto overflow-x-hidden hide-scrollbar bg-background relative"
+      style={{ scrollBehavior: 'auto' }}
     >
-      {sections.map((section, i) => {
-        const isCovered = i < currentIndex
-        const isAhead = i > currentIndex
-        const isLast = i === total - 1
+      {/* Global Moving Gradient Background Layer */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="gradient-bg absolute inset-0">
+          <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
+            <defs>
+              <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                  result="goo"
+                />
+                <feBlend in="SourceGraphic" in2="goo" />
+              </filter>
+            </defs>
+          </svg>
+          <div className="gradients-container h-full w-full">
+            <div className="g1"></div>
+            <div className="g2"></div>
+            <div className="g3"></div>
+            <div className="g4"></div>
+            <div className="g5"></div>
+            <div ref={interBubbleRef} className="interactive"></div>
+          </div>
+        </div>
 
-        const isCoveredOnlyByFooter = isCovered && currentIndex === total - 1 && i === total - 2
-        const shouldScale = isCovered && !isCoveredOnlyByFooter
+        {/* Subtle Grain Overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
+      </div>
 
-        return (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              top: isLast ? 'auto' : 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: isLast ? 'auto' : '100%',
-              transform: isAhead ? 'translateY(100%)' : 'translateY(0%)',
-              transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
-              zIndex: i + 1,
-              willChange: 'transform',
-            }}
-          >
+      <div className="relative z-10">
+        {sections.map((section, i) => {
+          const isLast = i === total - 1
+          return (
             <div
-              style={{
-                width: '100%',
-                height: isLast ? 'auto' : '100%',
-                transform: 'scale(1)',
-                transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
-                transformOrigin: 'center bottom',
-                borderRadius: '0px',
-                overflow: 'hidden',
+              key={i}
+              ref={(el) => {
+                sectionRefs.current[i] = el
               }}
+              data-index={i}
+              className={`w-full relative ${isLast ? 'h-auto' : 'min-h-screen md:h-screen'}`}
             >
               {section}
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
 
-      {/* Navigation Dots */}
-      <div
-        style={{
-          position: 'fixed',
-          right: '24px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          zIndex: 9999,
-        }}
-      >
+      {/* Navigation Dots - Hidden on mobile */}
+      <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-2.5 z-[9999]">
         {sections.map((_, i) => (
           <button
             key={i}

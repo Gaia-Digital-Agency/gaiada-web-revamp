@@ -39,6 +39,12 @@ export const Footer: GlobalConfig = {
       label: 'Nav Items (with Icon)',
       type: 'array',
       fields: [linkWithIcon()],
+      admin: {
+        initCollapsed: true,
+        components: {
+          RowLabel: '@/Footer/RowLabelWithIcon#RowLabel',
+        },
+      },
     },
     {
       name: 'copyright',
