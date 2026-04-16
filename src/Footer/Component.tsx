@@ -28,7 +28,6 @@ export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as FooterType | null
   const settingsData = (await getCachedGlobal('settings', 1)()) as SettingsType | null
 
-  console.log(settingsData)
   const navItems = footerData?.navItems || []
   const form = await getForm(footerData?.formId || 1)
 

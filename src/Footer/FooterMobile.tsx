@@ -1,4 +1,5 @@
 import { Mail, MapPin } from 'lucide-react'
+import Image from 'next/image'
 import { FormBlock } from '@/blocks/Form/Component'
 import type { Footer as FooterType } from '@/payload-types'
 import type { Setting as SettingsType } from '@/payload-types'
@@ -50,7 +51,9 @@ export const FooterMobile = ({
         })}
       </div>
       <div className="flex flex-col items-center justify-center mt-12">
-        <img src={logoUrl} />
+        {logoUrl && (
+          <Image src={logoUrl} alt="Gaia Digital Agency" width={120} height={40} />
+        )}
       </div>
     </div>
   )
