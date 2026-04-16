@@ -81,25 +81,28 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
     return () => observer.disconnect()
   }, [total])
 
-  // Lock body overflow on desktop
+  // Lock body/html overflow to ensure HomepageStack is the only scrollable element
   useEffect(() => {
-    const isMobile = window.innerWidth < 768
-    if (isMobile) return
-
     const html = document.documentElement
     const body = document.body
+    const prevHtmlOverflow = html.style.overflow
+    const prevBodyOverflow = body.style.overflow
+
     html.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
 
     return () => {
-      html.style.overflow = ''
-      body.style.overflow = ''
+      html.style.overflow = prevHtmlOverflow
+      body.style.overflow = prevBodyOverflow
     }
   }, [])
 
   const goTo = useCallback(
     (index: number) => {
       if (isAnimating.current || !containerRef.current) return
+      // Disable GSAP snap on mobile
+      if (window.innerWidth < 768) return
+
       const targetIndex = Math.max(0, Math.min(total - 1, index))
       const targetElement = sectionRefs.current[targetIndex]
 
@@ -161,12 +164,11 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       // Prevent default scrolling for navigation keys
       if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
         e.preventDefault()
-      }
-
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        goTo(currentIndex + 1)
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        goTo(currentIndex - 1)
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          goTo(currentIndex + 1)
+        } else {
+          goTo(currentIndex - 1)
+        }
       }
     }
 
@@ -177,7 +179,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   return (
     <div
       ref={containerRef}
-      className="homepage-scroll-container w-full h-auto md:h-screen md:overflow-y-auto overflow-x-hidden hide-scrollbar bg-background relative"
+      className="homepage-scroll-container w-full h-screen overflow-y-auto overflow-x-hidden hide-scrollbar bg-background relative"
       style={{ scrollBehavior: 'auto' }}
     >
       {/* Global Moving Gradient Background Layer */}
@@ -226,7 +228,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
                 sectionRefs.current[i] = el
               }}
               data-index={i}
-              className={`w-full relative ${isLast ? 'h-auto' : 'h-auto md:h-screen'}`}
+              className={`w-full relative ${isLast ? 'h-auto' : 'min-h-screen md:h-screen'}`}
             >
               {section}
             </div>

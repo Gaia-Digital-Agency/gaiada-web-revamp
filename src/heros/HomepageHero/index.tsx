@@ -31,16 +31,17 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
   buttons,
   media,
 }) => {
-  return (
-    <section
-      className="section-homepage relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${media?.url})`,
+  const bgStyle = media?.url
+    ? {
+        backgroundImage: `url(${media.url})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-      }}
-    >
+      }
+    : {}
+
+  return (
+    <section className="section-homepage relative overflow-hidden" style={bgStyle}>
       <div className="container mx-auto py-16 md:py-32 min-h-screen flex items-center relative z-10">
         <div className="flex flex-col md:flex-row md:justify-between gap-4 md:gap-10 w-full">
           <div className="md:col-span-6">
