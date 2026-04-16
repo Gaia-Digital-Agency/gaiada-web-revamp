@@ -64,20 +64,16 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   }
 
   return (
-    <section className="h-screen flex items-center" id="our-works">
+    <section className="md:h-screen flex items-center" id="our-works">
       <div className="relative overflow-hidden w-full py-24 md:py-32">
         <div className="container relative z-10">
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
               <TextFade direction="up">
-                <h2 className="heading-1">
-                  Our
-                  <br />
-                  Works
-                </h2>
+                <h2 className="heading-1">{title}</h2>
               </TextFade>
 
-              <div className="filter-wrapper flex flex-col items-start gap-4">
+              <div className="filter-wrapper flex flex-row flex-flex-wrap md:flex-col items-start gap-4">
                 <button
                   onClick={() => setActiveServiceId(null)}
                   className={cn(
@@ -102,7 +98,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                 ))}
               </div>
 
-              <div className="mt-12">
+              <div className="mt-12 hidden lg:block">
                 <AppButton
                   href="/portfolio"
                   label="All Portfolio"
@@ -113,7 +109,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
               </div>
             </div>
 
-            <div className="lg:w-3/4 flex flex-col gap-8 min-w-0">
+            <div className="lg:w-3/4 flex flex-col gap-0 md:gap-8 min-w-0">
               <div className="swiper lg:mr-[calc(-1*(100vw-100%)/2)]">
                 <div
                   ref={scrollContainerRef}
@@ -129,13 +125,13 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-                        className="swiper-slide shrink-0 w-[320px] md:w-[420px] snap-start"
+                        className="swiper-slide shrink-0 w-[260px] md:w-[420px] snap-start"
                       >
                         <Link
                           href={`/portfolio/${item.slug}`}
                           className="swiper-body group flex flex-col"
                         >
-                          <div className="image-wrapper aspect-3/4 relative overflow-hidden">
+                          <div className="image-wrapper h-[240px] md:h-full aspect-3/4 relative overflow-hidden">
                             {item.featuredImage && (
                               <img
                                 src={
@@ -144,7 +140,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                                     : ''
                                 }
                                 alt={item.title}
-                                className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                                className="object-cover w-full h-[240px] md:h-full transition-transform duration-700 group-hover:scale-105"
                               />
                             )}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -174,7 +170,17 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                 </div>
               </div>
 
-              <div className="flex justify-center lg:justify-start gap-4">
+              <div className="lg:hidden">
+                <AppButton
+                  href="/portfolio"
+                  label="All Portfolio"
+                  variant="default"
+                  icon="search"
+                  iconPosition="left"
+                />
+              </div>
+
+              <div className="flex justify-center hidden md:flex lg:justify-start gap-4">
                 <button
                   onClick={() => scroll('left')}
                   className="w-12 h-12 flex items-center justify-center bg-[#CCC]/20 rounded-none transition-colors hover:bg-[#CCC]/40 text-[#111]"
