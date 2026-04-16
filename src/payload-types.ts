@@ -2698,6 +2698,7 @@ export interface Footer {
   id: number;
   formId?: number | null;
   backgroundImage?: (number | null) | Media;
+  backgroundImageMobile?: (number | null) | Media;
   heading?: string | null;
   navItemsWithIcon?:
     | {
@@ -2846,6 +2847,7 @@ export interface HeaderSelect<T extends boolean = true> {
 export interface FooterSelect<T extends boolean = true> {
   formId?: T;
   backgroundImage?: T;
+  backgroundImageMobile?: T;
   heading?: T;
   navItemsWithIcon?:
     | T
