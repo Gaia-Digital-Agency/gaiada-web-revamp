@@ -114,7 +114,9 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
           onComplete: () => {
             isAnimating.current = false
             // Final broadcast
-            const event = new CustomEvent('homepage-stack-index', { detail: { index: targetIndex } })
+            const event = new CustomEvent('homepage-stack-index', {
+              detail: { index: targetIndex },
+            })
             window.dispatchEvent(event)
           },
         })
@@ -216,20 +218,20 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
 
       <div className="relative z-10">
         {sections.map((section, i) => {
-        const isLast = i === total - 1
-        return (
-          <div
-            key={i}
-            ref={(el) => {
-              sectionRefs.current[i] = el
-            }}
-            data-index={i}
-            className={`w-full relative ${isLast ? 'h-auto' : 'h-auto md:h-screen'}`}
-          >
-            {section}
-          </div>
-        )
-      })}
+          const isLast = i === total - 1
+          return (
+            <div
+              key={i}
+              ref={(el) => {
+                sectionRefs.current[i] = el
+              }}
+              data-index={i}
+              className={`w-full relative ${isLast ? 'h-auto' : 'h-auto md:h-screen'}`}
+            >
+              {section}
+            </div>
+          )
+        })}
       </div>
 
       {/* Navigation Dots - Hidden on mobile */}
