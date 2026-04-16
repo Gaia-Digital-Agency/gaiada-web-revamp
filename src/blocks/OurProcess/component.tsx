@@ -40,7 +40,16 @@ const itemVariants: Variants = {
 export const OurProcess: React.FC<ContentBlockProps> = (props) => {
   const { title, steps } = props
   const [activeStepId, setActiveStepId] = useState<string | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -56,11 +65,25 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (gridRef.current) {
+        const scrollLeft = gridRef.current.scrollLeft
+        const itemWidth = gridRef.current.offsetWidth
+        setActiveIndex(Math.round(scrollLeft / itemWidth))
+      }
+    }
+
+    const ref = gridRef.current
+    ref?.addEventListener('scroll', handleScroll)
+    return () => ref?.removeEventListener('scroll', handleScroll)
+  }, [])
+
   if (!steps || steps.length === 0) return null
 
   return (
-    <section id="our-process" className="h-screen flex items-center">
-      <div className="container mx-auto px-4">
+    <section id="our-process" className="md:h-screen flex items-center py-16 md:py-0">
+      <div className="container mx-0">
         <div className="flex flex-col gap-10">
           <div>
             <h2 className="text-center">{title}</h2>
@@ -68,7 +91,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
 
           <motion.div
             ref={gridRef}
-            className="our-process-wrapper grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-9"
+            className="our-process-wrapper flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-0 md:gap-9 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-0 md:px-0"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -81,7 +104,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                 <motion.div
                   key={step.id}
                   variants={itemVariants}
-                  className={`our-process-item flex flex-col transition-all duration-300 ${
+                  className={`our-process-item flex flex-col items-center md:items-start text-center md:text-left transition-all duration-300 flex-shrink-0 w-full md:w-auto snap-center ${
                     isActive ? 'active' : 'hover:bg-gray-50 bg-transparent'
                   }`}
                   onClick={() => setActiveStepId((prev) => (prev === step.id ? null : step.id))}
@@ -90,7 +113,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                   <h3>{step.title}</h3>
 
                   <AnimatePresence>
-                    {isActive && (
+                    {(isActive || isMobile) && (
                       <motion.div
                         initial={{ height: 0, opacity: 0, overflow: 'visible' }}
                         animate={{ height: 'auto', opacity: 1 }}
@@ -106,6 +129,26 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
               )
             })}
           </motion.div>
+
+          <div className="pagination-bullet-wrapper flex justify-center gap-2 md:hidden">
+            {steps.map((_, index) => (
+              <button
+                key={index}
+                className={`pagination-bullet w-2 h-2 rounded-full transition-colors ${
+                  activeIndex === index ? 'bg-[var(--gda-brand-yellow)]' : 'bg-gray-300'
+                }`}
+                onClick={() => {
+                  if (gridRef.current) {
+                    const itemWidth = gridRef.current.offsetWidth
+                    gridRef.current.scrollTo({
+                      left: index * itemWidth,
+                      behavior: 'smooth',
+                    })
+                  }
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

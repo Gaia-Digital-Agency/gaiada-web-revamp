@@ -6,7 +6,22 @@ interface HomepageStackProps {
   children: React.ReactNode
 }
 
+/** Returns true when the viewport is mobile-sized (< 768px). */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  return isMobile
+}
+
 export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
+  const isMobile = useIsMobile()
   const sections = Children.toArray(children)
   const total = sections.length
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -23,7 +38,6 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       isAnimating.current = true
       setCurrentIndex(next)
 
-      // Debounce: block next navigation until transition ends
       setTimeout(() => {
         isAnimating.current = false
       }, 900)
@@ -31,13 +45,16 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
     [currentIndex, total],
   )
 
+  // Broadcast current index (desktop only — mobile doesn't navigate)
   useEffect(() => {
+    if (isMobile) return
     const event = new CustomEvent('homepage-stack-index', { detail: { index: currentIndex } })
     window.dispatchEvent(event)
-  }, [currentIndex])
+  }, [currentIndex, isMobile])
 
-  // Wheel event
+  // Wheel event — desktop only
   useEffect(() => {
+    if (isMobile) return
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault()
       if (e.deltaY > 0) goTo(currentIndex + 1)
@@ -45,10 +62,11 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
     }
     window.addEventListener('wheel', handleWheel, { passive: false })
     return () => window.removeEventListener('wheel', handleWheel)
-  }, [goTo, currentIndex])
+  }, [goTo, currentIndex, isMobile])
 
-  // Touch events
+  // Touch events — desktop only (mobile scrolls naturally)
   useEffect(() => {
+    if (isMobile) return
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY
     }
@@ -64,25 +82,32 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       window.removeEventListener('touchstart', handleTouchStart)
       window.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [goTo, currentIndex])
+  }, [goTo, currentIndex, isMobile])
 
-  // Keyboard
+  // Keyboard — desktop only
   useEffect(() => {
+    if (isMobile) return
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(currentIndex + 1)
       if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(currentIndex - 1)
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [goTo, currentIndex])
+  }, [goTo, currentIndex, isMobile])
 
-  // Hide scrollbar and overflow on mount
+  // Lock overflow on desktop; release it on mobile
   useEffect(() => {
     const html = document.documentElement
     const body = document.body
+
+    if (isMobile) {
+      html.style.overflow = ''
+      body.style.overflow = ''
+      return
+    }
+
     const prevHtmlOverflow = html.style.overflow
     const prevBodyOverflow = body.style.overflow
-
     html.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
 
@@ -90,8 +115,22 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       html.style.overflow = prevHtmlOverflow
       body.style.overflow = prevBodyOverflow
     }
-  }, [])
+  }, [isMobile])
 
+  // ─── MOBILE: plain vertical flow, no stacking ──────────────────────────────
+  if (isMobile) {
+    return (
+      <div className="homepage-mobile-stack">
+        {sections.map((section, i) => (
+          <div key={i} className="homepage-mobile-section">
+            {section}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  // ─── DESKTOP: stacking animation ────────────────────────────────────────────
   return (
     <div
       ref={containerRef}
@@ -106,8 +145,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
         const isCovered = i < currentIndex
         const isAhead = i > currentIndex
         const isLast = i === total - 1
-        
-        // Don't shrink the second-to-last section if the Footer is sliding up over it
+
         const isCoveredOnlyByFooter = isCovered && currentIndex === total - 1 && i === total - 2
         const shouldScale = isCovered && !isCoveredOnlyByFooter
 
@@ -127,7 +165,6 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
               willChange: 'transform',
             }}
           >
-            {/* Scale-down + rounded corners on covered sections for depth */}
             <div
               style={{
                 width: '100%',

@@ -1,0 +1,14 @@
+.footer-mobile {
+  .heading-wrapper {
+    h2 {
+      max-width: 80%;
+      margin-bottom: 32px;
+    }
+  }
+
+  .form-wrapper {
+    padding-top: 42px;
+    background: rgba(198, 198, 198, 0.2);
+    backdrop-filter: blur(20px);
+  }
+}
