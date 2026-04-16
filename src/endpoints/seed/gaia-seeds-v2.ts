@@ -636,7 +636,6 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
             'Before a brand reaches for the sky, it must find its footing. At Gaia we believe at Marketing as the foundational work—understanding your heart and your audience—to ensure your digital growth is sustainable.',
           ),
         ]),
-        media: mediaId,
         buttons: [
           {
             label: 'Grow With Us',
