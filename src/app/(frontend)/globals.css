@@ -560,14 +560,19 @@ footer {
   }
 
   .footer-bottom {
-    a,
-    p {
-      color: var(--gda-brand-earth);
+    a {
+      &:hover {
+        font-weight: 500;
+      }
     }
   }
 }
 
 /* T Y P O G R A P H Y */
+a {
+  transition: 0.3s all;
+}
+
 h1,
 .heading-1 {
   font-family: var(--font-brand);
@@ -789,18 +794,28 @@ h3,
 
 @keyframes slideInFromTop {
   from {
-    transform: translateY(-100%);
+    opacity: 0;
+    transform: translateY(-20px);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes slideOutToTop {
   from {
+    opacity: 1;
     transform: translateY(0);
   }
   to {
-    transform: translateY(-100%);
+    opacity: 0;
+    transform: translateY(-20px);
   }
+}
+.animate-slide-in-from-top {
+  animation: slideInFromTop 0.5s ease-out forwards;
+}
+.animate-slide-out-to-top {
+  animation: slideOutToTop 0.5s ease-in forwards;
 }
