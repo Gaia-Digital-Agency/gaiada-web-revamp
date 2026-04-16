@@ -58,14 +58,18 @@ export async function Footer() {
               <CMSLink
                 key={navItem.id}
                 {...navItem.link}
-                className="flex items-center gap-4 text-sm after:content-['|'] last:after:content-['']"
+                className="flex items-center text-[var(--gda-brand-earth)] md:text-[var(--gda-brand-black)] underline gap-4 text-sm md:text-base after:content-['|'] last:after:content-['']"
               />
             ))}
           </div>
 
           <div className="flex flex-row justify-center md:justify-end gap-1">
-            <p className="text-sm">{footerData?.copyright}</p>
-            <p className="text-sm">{footerData?.developedBy}</p>
+            <p className="text-sm md:text-base text-[var(--gda-brand-earth)] md:text-[var(--gda-brand-black)]">
+              {footerData?.copyright}
+            </p>
+            <p className="text-sm md:text-base text-[var(--gda-brand-earth)] md:text-[var(--gda-brand-black)]">
+              {footerData?.developedBy}
+            </p>
           </div>
         </div>
       </div>
