@@ -87,7 +87,7 @@ const DropdownNavItem: React.FC<{
     if (open) {
       setShouldRender(true)
     } else {
-      timeoutId = setTimeout(() => setShouldRender(false), 300)
+      timeoutId = setTimeout(() => setShouldRender(false), 150)
     }
 
     return () => clearTimeout(timeoutId)
@@ -110,12 +110,12 @@ const DropdownNavItem: React.FC<{
         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
-      {shouldRender && (
+      <div className={`absolute top-full left-0 ${shouldRender ? 'block' : 'hidden'}`}>
         <div
           className={`sub-menu-wrapper ${
             isMobile
               ? 'relative flex flex-col items-start bg-transparent pt-0'
-              : 'absolute top-full left-0 pt-2 pb-2 min-w-[450px] z-50 flex flex-row flex-wrap'
+              : 'pt-2 pb-2 min-w-[450px] z-50 flex flex-row flex-wrap'
           } ${open ? 'animate-slide-in-right' : 'animate-slide-out-right'}`}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
@@ -139,7 +139,7 @@ const DropdownNavItem: React.FC<{
             </div>
           ))}
         </div>
-      )}
+      </div>
     </div>
   )
 }
