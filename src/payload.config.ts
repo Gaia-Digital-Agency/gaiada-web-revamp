@@ -69,6 +69,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    // Never auto-push schema changes; always go through a migration file.
+    push: false,
   }),
   collections: [
     Pages,
