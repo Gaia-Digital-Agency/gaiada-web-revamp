@@ -80,8 +80,25 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
   const handleCategoryClick = (catID: string) => {
     if (currentCat === catID) {
       setCurrentCat(null)
+      window.dispatchEvent(new CustomEvent('categoryChanged', { detail: null }))
     } else {
       setCurrentCat(catID)
+      window.dispatchEvent(new CustomEvent('categoryChanged', { detail: catID }))
+      
+      // Scroll to listing section with offset
+      const listingSection = document.getElementById('post-listing')
+      if (listingSection) {
+        const offset = 200
+        const bodyRect = document.body.getBoundingClientRect().top
+        const elementRect = listingSection.getBoundingClientRect().top
+        const elementPosition = elementRect - bodyRect
+        const offsetPosition = elementPosition - offset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        })
+      }
     }
   }
 

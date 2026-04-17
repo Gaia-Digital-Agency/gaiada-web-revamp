@@ -15,15 +15,24 @@ type Props = {
   categoryID?: string | null
 }
 
-const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, categoryID }) => {
+const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, categoryID: initialCatID }) => {
   const searchParams = useSearchParams()
   const q = searchParams.get('q')
   const [posts, setPosts] = useState<Post[]>(initialPosts)
+  const [categoryID, setCategoryID] = useState<string | null>(initialCatID || null)
   const [page, setPage] = useState(1)
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage)
   const [isLoading, setIsLoading] = useState(false)
   const isFirstMount = useRef(true)
   const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    const handleCategoryChange = (event: any) => {
+      setCategoryID(event.detail)
+    }
+    window.addEventListener('categoryChanged', handleCategoryChange)
+    return () => window.removeEventListener('categoryChanged', handleCategoryChange)
+  }, [])
 
   const fetchPosts = useCallback(
     async (
@@ -179,7 +188,7 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, cat
 
 export const ClientListing: React.FC<Props> = (props) => {
   return (
-    <section className="flex justify-center min-h-[400px]">
+    <section className="flex justify-center min-h-[400px]" id="post-listing">
       <Suspense
         fallback={
           <div className="container py-20 flex justify-center items-center">
