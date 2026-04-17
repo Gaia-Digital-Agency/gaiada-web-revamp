@@ -54,7 +54,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
     } else {
       // Drifting movement between sections - Much slower for a "floating" feel
       // Leaf 1 (leaf2.png)
-      const targetY1 = (currentIndex / (total - 1)) * (windowHeight * 0.75) + (windowHeight * 0.1)
+      const targetY1 = (currentIndex / (total - 1)) * (windowHeight * 0.75) + windowHeight * 0.1
       const horizontalBase1 = currentIndex % 2 === 0 ? 80 : 20
       const drift1 = Math.sin(currentIndex) * 10
 
@@ -71,7 +71,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       })
 
       // Leaf 2 (leaf1.png)
-      const targetY2 = ((currentIndex + 0.4) / total) * (windowHeight * 0.65) + (windowHeight * 0.15)
+      const targetY2 = ((currentIndex + 0.4) / total) * (windowHeight * 0.65) + windowHeight * 0.15
       const horizontalBase2 = currentIndex % 2 === 0 ? 15 : 85
       const drift2 = Math.cos(currentIndex) * 15
 
@@ -148,8 +148,10 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
     return () => observer.disconnect()
   }, [total])
 
-  // Lock body/html overflow to ensure HomepageStack is the only scrollable element
+  // Lock body/html overflow to ensure HomepageStack is the only scrollable element (Desktop only)
   useEffect(() => {
+    if (window.innerWidth < 1024) return
+
     const html = document.documentElement
     const body = document.body
     const prevHtmlOverflow = html.style.overflow
@@ -167,8 +169,8 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const goTo = useCallback(
     (index: number) => {
       if (isAnimating.current || !containerRef.current) return
-      // Disable GSAP snap on mobile
-      if (window.innerWidth < 768) return
+      // Disable GSAP snap on mobile/tablet
+      if (window.innerWidth < 1024) return
 
       const targetIndex = Math.max(0, Math.min(total - 1, index))
       const targetElement = sectionRefs.current[targetIndex]
@@ -198,7 +200,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   // Handle Wheel Events for Desktop
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (window.innerWidth < 768) return
+      if (window.innerWidth < 1024) return
       e.preventDefault()
 
       if (isAnimating.current) return
@@ -225,7 +227,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   // Handle Keyboard Events for Desktop
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (window.innerWidth < 768) return
+      if (window.innerWidth < 1024) return
       if (isAnimating.current) return
 
       // Prevent default scrolling for navigation keys
@@ -281,24 +283,24 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
           ref={leafRef}
           src="/leaf2.png"
           alt=""
-          className="hidden md:block fixed w-24 h-auto pointer-events-none z-[100]"
-          style={{ 
+          className="hidden lg:block fixed w-24 h-auto pointer-events-none z-[100]"
+          style={{
             top: '5%',
             left: '80%',
             opacity: 0,
-            filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.15))' 
+            filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.15))',
           }}
         />
         <img
           ref={leafRef2}
           src="/leaf1.png"
           alt=""
-          className="hidden md:block fixed w-20 h-auto pointer-events-none z-[100]"
-          style={{ 
+          className="hidden lg:block fixed w-20 h-auto pointer-events-none z-[100]"
+          style={{
             top: '15%',
             left: '10%',
             opacity: 0,
-            filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.12))' 
+            filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.12))',
           }}
         />
 
@@ -321,7 +323,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
                 sectionRefs.current[i] = el
               }}
               data-index={i}
-              className={`w-full relative ${isLast ? 'h-auto' : 'min-h-screen md:h-screen'}`}
+              className={`w-full relative ${isLast ? 'h-auto' : 'lg:h-screen'}`}
             >
               {section}
             </div>
@@ -330,7 +332,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       </div>
 
       {/* Navigation Dots - Hidden on mobile */}
-      <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-2.5 z-[9999]">
+      <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-2.5 z-[9999]">
         {sections.map((_, i) => (
           <button
             key={i}

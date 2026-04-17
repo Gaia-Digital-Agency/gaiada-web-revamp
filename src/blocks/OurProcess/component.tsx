@@ -91,7 +91,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
 
           <motion.div
             ref={gridRef}
-            className="our-process-wrapper flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-0 md:gap-9 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-0 md:px-0"
+            className="our-process-wrapper flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-0 md:gap-9 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide md:pb-0 px-0 md:px-0"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -135,7 +135,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
               <button
                 key={index}
                 className={`pagination-bullet w-2 h-2 rounded-full transition-colors ${
-                  activeIndex === index ? 'bg-[var(--gda-brand-yellow)]' : 'bg-gray-300'
+                  activeIndex === index ? 'bg-[var(--gda-brand-yellow)]' : 'bg-[#D9D9D9]'
                 }`}
                 onClick={() => {
                   if (gridRef.current) {

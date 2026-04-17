@@ -137,7 +137,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
 
       {/* Grid Content */}
       <div className="flex-1">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-16 items-start">
           {/* Left Column */}
           <div className="flex flex-col gap-10 md:gap-16">
             {mounted ? (
