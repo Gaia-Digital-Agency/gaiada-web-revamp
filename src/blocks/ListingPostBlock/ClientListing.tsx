@@ -11,12 +11,13 @@ type Props = {
   initialPosts: Post[]
   initialHasNextPage: boolean
   title?: string
+  heroImage?: string
+  categoryID?: string | null
 }
 
-const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) => {
+const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, categoryID }) => {
   const searchParams = useSearchParams()
   const q = searchParams.get('q')
-  const cat = searchParams.get('cat')
   const [posts, setPosts] = useState<Post[]>(initialPosts)
   const [page, setPage] = useState(1)
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage)
@@ -28,7 +29,7 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) =
     async (
       pageNum: number,
       searchQ?: string | null,
-      categoryID?: string | null,
+      catID?: string | null,
       isLoadMore = false,
     ) => {
       if (abortControllerRef.current) {
@@ -40,7 +41,7 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) =
 
       setIsLoading(true)
       try {
-        let url = `/api/posts?limit=6&page=${pageNum}&sort=-publishedAt&depth=1&select[title]=true&select[slug]=true&select[meta]=true`
+        let url = `/api/posts?limit=6&page=${pageNum}&sort=-publishedAt&depth=1&select[title]=true&select[slug]=true&select[meta]=true&select[heroImage]=true`
 
         const conditions: string[] = []
 
@@ -49,8 +50,8 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) =
           conditions.push(`where[or][1][meta.description][like]=${encodeURIComponent(searchQ)}`)
         }
 
-        if (categoryID) {
-          url += `&where[categories][contains]=${categoryID}`
+        if (catID) {
+          url += `&where[categories][contains]=${catID}`
         }
 
         if (conditions.length > 0) {
@@ -86,19 +87,19 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) =
   useEffect(() => {
     if (isFirstMount.current) {
       isFirstMount.current = false
-      if (q || cat) fetchPosts(1, q, cat)
+      if (q || categoryID) fetchPosts(1, q, categoryID)
       return
     }
-    fetchPosts(1, q, cat)
+    fetchPosts(1, q, categoryID)
 
     return () => {
       if (abortControllerRef.current) abortControllerRef.current.abort()
     }
-  }, [q, cat, fetchPosts])
+  }, [q, categoryID, fetchPosts])
 
   const loadMore = async () => {
     if (isLoading || !hasNextPage) return
-    fetchPosts(page + 1, q, cat, true)
+    fetchPosts(page + 1, q, categoryID, true)
   }
 
   return (
@@ -114,9 +115,13 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage }) =
                   href={`/posts/${post.slug}`}
                   className="block w-full aspect-video bg-gray-100 overflow-hidden mb-6 relative"
                 >
-                  {post.meta?.image && typeof post.meta.image === 'object' ? (
+                  {((typeof post.heroImage === 'object' && post.heroImage) ||
+                    (typeof post.meta?.image === 'object' && post.meta?.image)) ? (
                     <Media
-                      resource={post.meta.image}
+                      resource={
+                        (typeof post.heroImage === 'object' && post.heroImage) ||
+                        (post.meta?.image as any)
+                      }
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125"
                       imgClassName="w-full h-full object-cover"
                     />
