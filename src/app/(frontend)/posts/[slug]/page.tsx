@@ -5,8 +5,9 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import React, { Fragment, cache } from 'react'
 import RichText from '@/components/RichText'
+import { SharePost } from '@/components/SharePost'
 
 import type { Post } from '@/payload-types'
 
@@ -44,42 +45,64 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
-  // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const url = '/posts/' + decodedSlug
   const post = await queryPostBySlug({ slug: decodedSlug })
 
+  // Fetch 3 newest posts
+  const payload = await getPayload({ config: configPromise })
+  const newestPostsResult = await payload.find({
+    collection: 'posts',
+    draft: false,
+    limit: 3,
+    sort: '-publishedAt',
+    where: {
+      slug: {
+        not_equals: decodedSlug,
+      },
+    },
+  })
+  const newestPosts = newestPostsResult.docs
+
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <article className="pt-16 pb-16">
-      <PageClient />
+    <Fragment>
+      <article className="pt-8 pb-8 lg:pt-16 lg:pb-16">
+        <PageClient />
 
-      {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+        {/* Allows redirects for valid pages too */}
+        <PayloadRedirects disableNotFound url={url} />
 
-      {draft && <LivePreviewListener />}
+        {draft && <LivePreviewListener />}
 
-      <PostHero post={post} />
+        <PostHero post={post} />
 
-      <div className="flex flex-col items-center gap-4 pt-8">
+        <div className="flex flex-col items-center gap-4 pt-12">
+          <div className="container">
+            <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+            <div className="max-w-[48rem] mx-auto">
+              <SharePost />
+            </div>
+          </div>
+        </div>
+      </article>
+      <section className="bg-[#C6C6C64D] py-12">
         <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
-          {post.relatedPosts && post.relatedPosts.length > 0 && (
+          <div className="flex flex-col">
             <RelatedPosts
               className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
+              docs={newestPosts}
             />
-          )}
+          </div>
         </div>
-      </div>
-    </article>
+      </section>
+    </Fragment>
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '' } = await paramsPromise
-  // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
 

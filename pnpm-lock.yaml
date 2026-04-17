@@ -8,6 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: ^7.2.0
+        version: 7.2.0
+      '@fortawesome/free-brands-svg-icons':
+        specifier: ^7.2.0
+        version: 7.2.0
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^7.2.0
+        version: 7.2.0
+      '@fortawesome/react-fontawesome':
+        specifier: ^3.3.0
+        version: 3.3.0(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.4)
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.14.2)(react@19.2.4)
@@ -113,6 +125,9 @@ importers:
       react-hook-form:
         specifier: 7.71.1
         version: 7.71.1(react@19.2.4)
+      react-share:
+        specifier: ^5.3.0
+        version: 5.3.0(react@19.2.4)
       sharp:
         specifier: 0.34.2
         version: 0.34.2
@@ -965,6 +980,29 @@ packages:
 
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
+
+  '@fortawesome/fontawesome-common-types@7.2.0':
+    resolution: {integrity: sha512-IpR0bER9FY25p+e7BmFH25MZKEwFHTfRAfhOyJubgiDnoJNsSvJ7nigLraHtp4VOG/cy8D7uiV0dLkHOne5Fhw==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/fontawesome-svg-core@7.2.0':
+    resolution: {integrity: sha512-6639htZMjEkwskf3J+e6/iar+4cTNM9qhoWuRfj9F3eJD6r7iCzV1SWnQr2Mdv0QT0suuqU8BoJCZUyCtP9R4Q==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/free-brands-svg-icons@7.2.0':
+    resolution: {integrity: sha512-VNG8xqOip1JuJcC3zsVsKRQ60oXG9+oYNDCosjoU/H9pgYmLTEwWw8pE0jhPz/JWdHeUuK6+NQ3qsM4gIbdbYQ==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/free-solid-svg-icons@7.2.0':
+    resolution: {integrity: sha512-YTVITFGN0/24PxzXrwqCgnyd7njDuzp5ZvaCx5nq/jg55kUYd94Nj8UTchBdBofi/L0nwRfjGOg0E41d2u9T1w==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/react-fontawesome@3.3.0':
+    resolution: {integrity: sha512-EHmHeTf8WgO29sdY3iX/7ekE3gNUdlc2RW6mm/FzELlHFKfTrA9S4MlyquRR+RRCRCn8+jXfLFpLGB2l7wCWyw==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ~6 || ~7
+      react: ^18.0.0 || ^19.0.0
 
   '@gsap/react@2.1.2':
     resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
@@ -2686,6 +2724,9 @@ packages:
   class-variance-authority@0.7.1:
     resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
 
+  classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
@@ -2797,6 +2838,14 @@ packages:
 
   dateformat@4.6.3:
     resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
+
+  debug@2.6.9:
+    resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
 
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -3688,6 +3737,9 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  jsonp@0.2.1:
+    resolution: {integrity: sha512-pfog5gdDxPdV4eP7Kg87M8/bHgshlZ5pybl+yKxAnCZ5O7lCIn7Ixydj03wOlnDQesky2BPyA91SQ+5Y/mNwzw==}
+
   jsox@1.2.121:
     resolution: {integrity: sha512-9Ag50tKhpTwS6r5wh3MJSAvpSof0UBr39Pto8OnzFT32Z/pAbxAsKHzyvsyMEHVslELvHyO/4/jaQELHk8wDcw==}
     hasBin: true
@@ -3970,6 +4022,9 @@ packages:
 
   motion-utils@12.36.0:
     resolution: {integrity: sha512-eHWisygbiwVvf6PZ1vhaHCLamvkSbPIeAYxWUuL3a2PD/TROgE7FvfHWTIH4vMl798QLfMw15nRqIaRDXTlYRg==}
+
+  ms@2.0.0:
+    resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -4408,6 +4463,11 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  react-share@5.3.0:
+    resolution: {integrity: sha512-NU4TqizVi2TuyLpN93/ng2ux+uIGHK5b2dT15cHvZDwfi5b5NuzGych4htCGObN8lubygeamhRxUot4lZ0Pv6Q==}
+    peerDependencies:
+      react: ^17 || ^18 || ^19
 
   react-style-singleton@2.2.3:
     resolution: {integrity: sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ==}
@@ -5736,6 +5796,25 @@ snapshots:
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.11': {}
+
+  '@fortawesome/fontawesome-common-types@7.2.0': {}
+
+  '@fortawesome/fontawesome-svg-core@7.2.0':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.2.0
+
+  '@fortawesome/free-brands-svg-icons@7.2.0':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.2.0
+
+  '@fortawesome/free-solid-svg-icons@7.2.0':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.2.0
+
+  '@fortawesome/react-fontawesome@3.3.0(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.4)':
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 7.2.0
+      react: 19.2.4
 
   '@gsap/react@2.1.2(gsap@3.14.2)(react@19.2.4)':
     dependencies:
@@ -7492,6 +7571,8 @@ snapshots:
     dependencies:
       clsx: 2.1.1
 
+  classnames@2.5.1: {}
+
   client-only@0.0.1: {}
 
   clsx@2.1.1: {}
@@ -7602,6 +7683,10 @@ snapshots:
   date-fns@4.1.0: {}
 
   dateformat@4.6.3: {}
+
+  debug@2.6.9:
+    dependencies:
+      ms: 2.0.0
 
   debug@3.2.7:
     dependencies:
@@ -8620,6 +8705,12 @@ snapshots:
 
   json5@2.2.3: {}
 
+  jsonp@0.2.1:
+    dependencies:
+      debug: 2.6.9
+    transitivePeerDependencies:
+      - supports-color
+
   jsox@1.2.121: {}
 
   jsx-ast-utils@3.3.5:
@@ -9000,6 +9091,8 @@ snapshots:
       motion-utils: 12.36.0
 
   motion-utils@12.36.0: {}
+
+  ms@2.0.0: {}
 
   ms@2.1.3: {}
 
@@ -9481,6 +9574,14 @@ snapshots:
       use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.14)(react@19.2.4)
     transitivePeerDependencies:
       - '@types/react'
+      - supports-color
+
+  react-share@5.3.0(react@19.2.4):
+    dependencies:
+      classnames: 2.5.1
+      jsonp: 0.2.1
+      react: 19.2.4
+    transitivePeerDependencies:
       - supports-color
 
   react-style-singleton@2.2.3(@types/react@19.2.14)(react@19.2.4):

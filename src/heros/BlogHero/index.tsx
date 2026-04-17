@@ -17,10 +17,10 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
   const [value, setValue] = useState(searchParams.get('q') || '')
   const debouncedValue = useDebounce(value, 300)
   const [categories, setCategories] = useState<(Category & { postCount?: number })[]>([])
-  const currentCat = searchParams.get('cat')
+  const [currentCat, setCurrentCat] = useState<string | null>(searchParams.get('cat'))
 
   const updateURL = useCallback(
-    (q?: string | null, cat?: string | null) => {
+    (q?: string | null) => {
       const params = new URLSearchParams(searchParams.toString())
 
       if (q !== undefined) {
@@ -28,22 +28,12 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
         else params.delete('q')
       }
 
-      if (cat !== undefined) {
-        if (cat) params.set('cat', cat)
-        else params.delete('cat')
-      }
-
       params.delete('page')
+      params.delete('cat')
       router.replace(`${pathname}?${params.toString()}`, { scroll: false })
     },
     [pathname, router, searchParams],
   )
-
-  useEffect(() => {
-    if (searchParams.has('cat')) {
-      updateURL(undefined, null)
-    }
-  }, [])
 
   useEffect(() => {
     const currentQ = searchParams.get('q') || ''
@@ -89,9 +79,26 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
 
   const handleCategoryClick = (catID: string) => {
     if (currentCat === catID) {
-      updateURL(undefined, null)
+      setCurrentCat(null)
+      window.dispatchEvent(new CustomEvent('categoryChanged', { detail: null }))
     } else {
-      updateURL(undefined, catID)
+      setCurrentCat(catID)
+      window.dispatchEvent(new CustomEvent('categoryChanged', { detail: catID }))
+      
+      // Scroll to listing section with offset
+      const listingSection = document.getElementById('post-listing')
+      if (listingSection) {
+        const offset = 200
+        const bodyRect = document.body.getBoundingClientRect().top
+        const elementRect = listingSection.getBoundingClientRect().top
+        const elementPosition = elementRect - bodyRect
+        const offsetPosition = elementPosition - offset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        })
+      }
     }
   }
 

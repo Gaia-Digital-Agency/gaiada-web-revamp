@@ -55,9 +55,9 @@ export const FeaturedBlogBlockComponent: React.FC<FeaturedBlogBlockProps> = asyn
     <section className="bg-[#f0f0f0] flex justify-center py-16 pt-0 lg:pt-16">
       <div className="container-xl grid grid-cols-1 lg:grid-cols-2 mt-auto">
         <div className="aspect-4/3 lg:aspect-auto w-full h-full min-h-[400px] overflow-hidden relative">
-          {post.meta?.image && typeof post.meta.image === 'object' ? (
+          {post.heroImage && typeof post.heroImage === 'object' ? (
             <Media
-              resource={post.meta.image}
+              resource={post.heroImage}
               className="w-full h-full object-cover absolute inset-0"
               imgClassName="w-full h-full object-cover"
             />
