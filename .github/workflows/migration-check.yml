@@ -1,0 +1,36 @@
+name: migration-check
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  check-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure schema changes include a migration
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          CHANGED=$(git diff --name-only "$BASE" "$HEAD")
+
+          SCHEMA_PATHS='^src/(collections|heros|blocks|globals|fields)/'
+          MIGRATION_PATH='^src/migrations/[0-9]{8}_[0-9]{6}\.ts$'
+
+          SCHEMA_CHANGES=$(echo "$CHANGED" | grep -E "$SCHEMA_PATHS" || true)
+          NEW_MIGRATION=$(echo "$CHANGED" | grep -E "$MIGRATION_PATH" || true)
+
+          if [ -n "$SCHEMA_CHANGES" ] && [ -z "$NEW_MIGRATION" ]; then
+            echo "::error::Schema-touching files changed but no new migration was added."
+            echo "Changed schema files:"
+            echo "$SCHEMA_CHANGES"
+            echo ""
+            echo "Run 'pnpm payload migrate:create --name <description>' and commit the generated file under src/migrations/."
+            exit 1
+          fi
+
+          echo "OK"
