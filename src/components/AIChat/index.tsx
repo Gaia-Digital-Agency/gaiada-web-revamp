@@ -17,7 +17,7 @@ export const AIChat: React.FC = () => {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Close AI chat' : 'Open AI chat'}
         aria-expanded={open}
-        className="fixed bottom-24 right-6 z-50 bg-[#80FF00] text-black p-3 rounded-full shadow-lg hover:opacity-80 transition-opacity flex items-center justify-center"
+        className="fixed bottom-24 right-6 z-50 bg-[#80FF00] text-black p-4 rounded-full shadow-lg hover:opacity-80 transition-opacity flex items-center justify-center"
       >
         <Sparkles size={24} />
       </button>
