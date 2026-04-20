@@ -66,7 +66,7 @@ export const HomepageSections: React.FC<HomepageSectionsProps> = async ({ hero, 
       if (Block) {
         sections.push(
           <div key={`block-${i}`} className="w-full lg:h-full overflow-hidden bg-transparent">
-            <Block {...block} disableInnerContainer />
+            <Block {...block} disableInnerContainer index={i + 1} />
           </div>,
         )
       }

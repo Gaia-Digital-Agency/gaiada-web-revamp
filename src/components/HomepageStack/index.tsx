@@ -179,17 +179,18 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
         isAnimating.current = true
         setCurrentIndex(targetIndex)
 
+        // Broadcast immediately when starting to scroll
+        const event = new CustomEvent('homepage-stack-index', {
+          detail: { index: targetIndex },
+        })
+        window.dispatchEvent(event)
+
         gsap.to(containerRef.current, {
           scrollTo: { y: targetElement, autoKill: false },
           duration: 1.2,
           ease: 'power2.inOut',
           onComplete: () => {
             isAnimating.current = false
-            // Final broadcast
-            const event = new CustomEvent('homepage-stack-index', {
-              detail: { index: targetIndex },
-            })
-            window.dispatchEvent(event)
           },
         })
       }
