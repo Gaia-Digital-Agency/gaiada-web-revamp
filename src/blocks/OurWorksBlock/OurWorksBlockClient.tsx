@@ -53,8 +53,11 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   const checkScroll = useCallback(() => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+      // canScrollLeft: true if we have scrolled more than 10px from the start
       setCanScrollLeft(scrollLeft > 10)
-      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10)
+      // canScrollRight: true if the remaining scrollable distance is more than 20px
+      const remainingScroll = scrollWidth - (scrollLeft + clientWidth)
+      setCanScrollRight(remainingScroll > 20)
     }
   }, [])
 
