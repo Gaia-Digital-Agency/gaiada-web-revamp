@@ -27,15 +27,37 @@ interface OurWorksBlockClientProps {
   title: string
   services: Service[]
   portfolioItems: PortfolioItem[]
+  index?: number
 }
 
 export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   title,
   services,
   portfolioItems,
+  index,
 }) => {
   const [activeServiceId, setActiveServiceId] = useState<string | number | null>(null)
+  const [currentIndex, setCurrentIndex] = useState<number | undefined>(undefined)
+  const [animationKey, setAnimationKey] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || index === undefined) return
+
+    const handleIndexChange = (e: any) => {
+      const idx = e.detail?.index
+      setCurrentIndex(idx)
+    }
+
+    window.addEventListener('homepage-stack-index', handleIndexChange)
+    return () => window.removeEventListener('homepage-stack-index', handleIndexChange)
+  }, [index])
+
+  useEffect(() => {
+    if (currentIndex === index) {
+      setAnimationKey((prev) => prev + 1)
+    }
+  }, [currentIndex, index])
 
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -69,7 +91,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
-              <TextFade direction="up">
+              <TextFade direction="up" key={animationKey}>
                 <h2 className="heading-1">{title}</h2>
               </TextFade>
 

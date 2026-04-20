@@ -5,9 +5,10 @@ import { OurWorksBlockClient } from './OurWorksBlockClient'
 
 interface OurWorksBlockProps {
   title: string
+  index?: number
 }
 
-export const OurWorksBlock: React.FC<OurWorksBlockProps> = async ({ title }) => {
+export const OurWorksBlock: React.FC<OurWorksBlockProps> = async ({ title, index }) => {
   const payload = await getPayload({ config: configPromise })
   
   // Fetch all published services for the sub-menu
@@ -59,6 +60,7 @@ export const OurWorksBlock: React.FC<OurWorksBlockProps> = async ({ title }) => 
       title={title}
       services={services}
       portfolioItems={portfolioItems}
+      index={index}
     />
   )
 }
