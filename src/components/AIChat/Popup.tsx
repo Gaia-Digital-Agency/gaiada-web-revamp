@@ -70,7 +70,7 @@ export const AIChatPopup: React.FC<Props> = ({ onClose }) => {
     <div
       role="dialog"
       aria-label="Ask Gaiada AI"
-      className="fixed bottom-40 right-6 z-50 w-[min(92vw,380px)] bg-background text-foreground rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[70vh]"
+      className="fixed bottom-[10.5rem] right-6 z-50 w-[min(92vw,380px)] bg-background text-foreground rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[70vh]"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-primary text-primary-foreground">
         <div className="font-semibold text-sm">Ask Gaiada AI</div>
