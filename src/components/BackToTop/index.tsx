@@ -2,33 +2,60 @@
 import React, { useEffect, useState } from 'react'
 import { ArrowUp } from 'lucide-react'
 
-// Button component to scroll back to the top of the page
+// Button component to scroll back to the top of the page.
+// Homepage locks body/html overflow and scrolls inside
+// `.homepage-scroll-container`; on other pages the window scrolls.
+// We listen to both sources so the button works everywhere.
 export const BackToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false)
 
-  // Toggles the visibility of the back-to-top button based on scroll position
-  const toggleVisibility = () => {
-    if (window.scrollY > 300) {
-      setIsVisible(true)
-    } else {
-      setIsVisible(false)
-    }
-  }
-
-  // Smoothly scrolls the window to the top
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
-
   useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility, { passive: true })
+    const getContainer = () =>
+      document.querySelector<HTMLElement>('.homepage-scroll-container')
+
+    const check = () => {
+      const container = getContainer()
+      const scrolled = container ? container.scrollTop : window.scrollY
+      setIsVisible(scrolled > 300)
+    }
+
+    // Initial check in case the page is already scrolled on mount.
+    check()
+
+    window.addEventListener('scroll', check, { passive: true })
+    // Re-attach container listener whenever the container appears (SPA nav).
+    let container = getContainer()
+    container?.addEventListener('scroll', check, { passive: true })
+
+    // If the container mounts after us (rare), catch it via a short poll.
+    const poll = window.setInterval(() => {
+      const next = getContainer()
+      if (next && next !== container) {
+        container?.removeEventListener('scroll', check)
+        container = next
+        container.addEventListener('scroll', check, { passive: true })
+        check()
+      }
+    }, 1000)
+
     return () => {
-      window.removeEventListener('scroll', toggleVisibility)
+      window.removeEventListener('scroll', check)
+      container?.removeEventListener('scroll', check)
+      window.clearInterval(poll)
     }
   }, [])
+
+  // Scroll whichever element is actually scrolled.
+  const scrollToTop = () => {
+    const container = document.querySelector<HTMLElement>(
+      '.homepage-scroll-container',
+    )
+    if (container && container.scrollTop > 0) {
+      container.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   if (!isVisible) return null
 
