@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/utilities/ui'
@@ -39,7 +39,40 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   const [activeServiceId, setActiveServiceId] = useState<string | number | null>(null)
   const [currentIndex, setCurrentIndex] = useState<number | undefined>(undefined)
   const [animationKey, setAnimationKey] = useState(0)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const filteredItems = useMemo(() => {
+    if (activeServiceId === null) return portfolioItems
+    return portfolioItems.filter((item) =>
+      item.services.some((service) => service.id === activeServiceId),
+    )
+  }, [activeServiceId, portfolioItems])
+
+  const checkScroll = useCallback(() => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+      setCanScrollLeft(scrollLeft > 10)
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10)
+    }
+  }, [])
+
+  useEffect(() => {
+    const container = scrollContainerRef.current
+    if (container) {
+      const handleScroll = () => checkScroll()
+      container.addEventListener('scroll', handleScroll)
+      // Initial check
+      checkScroll()
+      // Re-check after a short delay for layout calculation
+      const timer = setTimeout(checkScroll, 100)
+      return () => {
+        container.removeEventListener('scroll', handleScroll)
+        clearTimeout(timer)
+      }
+    }
+  }, [checkScroll, filteredItems])
 
   useEffect(() => {
     if (typeof window === 'undefined' || index === undefined) return
@@ -67,13 +100,6 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
       })
     }
   }, [activeServiceId])
-
-  const filteredItems = useMemo(() => {
-    if (activeServiceId === null) return portfolioItems
-    return portfolioItems.filter((item) =>
-      item.services.some((service) => service.id === activeServiceId),
-    )
-  }, [activeServiceId, portfolioItems])
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -138,15 +164,21 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   className="swiper-wrapper flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory"
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                  <AnimatePresence mode="popLayout" initial={false}>
-                    {filteredItems.map((item) => (
+                  <AnimatePresence mode="popLayout" initial={true}>
+                    {filteredItems.map((item, i) => (
                       <motion.div
-                        key={item.slug}
+                        key={`${item.slug}-${animationKey}`}
                         layout
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                        initial={{ opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
+                        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
+                        transition={{
+                          duration: 1.4,
+                          ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
+                          delay: i * 0.12,
+                          opacity: { duration: 1 },
+                          filter: { duration: 1.2 },
+                        }}
                         className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
                       >
                         <Link
@@ -201,22 +233,35 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   iconPosition="left"
                 />
               </div>
-
-              <div className="flex justify-center hidden lg:flex lg:justify-start gap-4">
-                <button
-                  onClick={() => scroll('left')}
-                  className="w-12 h-12 flex items-center justify-center bg-[#CCC]/20 rounded-none transition-colors hover:bg-[#CCC]/40 text-[#111]"
-                >
-                  <ArrowLeft className="w-6 h-6" strokeWidth={1} />
-                </button>
-                <button
-                  onClick={() => scroll('right')}
-                  className="w-12 h-12 flex items-center justify-center bg-[#111] rounded-none transition-all hover:bg-primary text-white p-2"
-                >
-                  <ArrowRight className="w-6 h-6" strokeWidth={1} />
-                </button>
-              </div>
             </div>
+          </div>
+
+          {/* Centered Navigation Arrows */}
+          <div className="flex justify-center gap-6 mt-16 lg:mt-24">
+            <button
+              onClick={() => scroll('left')}
+              disabled={!canScrollLeft}
+              className={cn(
+                'w-14 h-14 flex items-center justify-center rounded-none transition-all duration-300',
+                canScrollLeft
+                  ? 'bg-[#111] text-white cursor-pointer hover:bg-(--gda-brand-yellow) hover:text-[#111]'
+                  : 'bg-[#CCC]/20 text-[#999] cursor-default',
+              )}
+            >
+              <ArrowLeft className="w-6 h-6" strokeWidth={1} />
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              disabled={!canScrollRight}
+              className={cn(
+                'w-14 h-14 flex items-center justify-center rounded-none transition-all duration-300',
+                canScrollRight
+                  ? 'bg-[#111] text-white cursor-pointer hover:bg-(--gda-brand-yellow) hover:text-[#111]'
+                  : 'bg-[#CCC]/20 text-[#999] cursor-default',
+              )}
+            >
+              <ArrowRight className="w-6 h-6" strokeWidth={1} />
+            </button>
           </div>
         </div>
       </div>
