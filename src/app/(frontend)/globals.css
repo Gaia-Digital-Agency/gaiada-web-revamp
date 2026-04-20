@@ -713,21 +713,35 @@ h3,
 .gda-hero-banner-title {
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: 80px;
-  line-height: 1.1;
+  font-size: 56px;
+  line-height: 1;
   letter-spacing: -0.02em;
   color: #f9f9f9;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal; /* Jangan pecah kata di tengah */
+}
+
+.gda-hero-banner-title--long {
+  font-size: 40px;
+  line-height: 1.1;
 }
 
 @media (min-width: 768px) {
   .gda-hero-banner-title {
-    font-size: 120px;
+    font-size: 80px;
+  }
+  .gda-hero-banner-title--long {
+    font-size: 64px;
   }
 }
 
 @media (min-width: 1024px) {
   .gda-hero-banner-title {
-    font-size: 220px;
+    font-size: clamp(100px, 12vw, 180px);
+  }
+  .gda-hero-banner-title--long {
+    font-size: clamp(60px, 8vw, 110px);
   }
 }
 

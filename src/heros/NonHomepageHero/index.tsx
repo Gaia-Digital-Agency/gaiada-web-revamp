@@ -34,6 +34,9 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
   const activeTitleColor =
     colorConfigs[(giantTitleColor as keyof typeof colorConfigs) || 'yellow'] || colorConfigs.yellow
 
+  // Judul dianggap panjang jika lebih dari 2 kata ATAU total karakter lebih dari 12 (seperti "InstaVibe Community")
+  const isLongTitle = title && (title.split(' ').length > 2 || title.length > 12)
+
   return (
     <section className="relative -mt-20 md:-mt-[10.4rem] w-full h-[60vh] md:h-screen min-h-[600px] overflow-hidden bg-white flex flex-col justify-end">
       {/* LAYER 1: Background - Full Image */}
@@ -63,11 +66,15 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       {/* LAYER 3: Foreground - Giant Typography */}
       <div className="relative z-20 w-full overflow-hidden translate-y-[10%] md:translate-y-[15%] pointer-events-none">
         <div className="container mx-auto mb-5">
-          <h1 className="gda-hero-banner-title" style={{ color: activeTitleColor.hex }}>
+          <h1
+            className={`gda-hero-banner-title ${isLongTitle ? 'gda-hero-banner-title--long' : ''}`}
+            style={{ color: activeTitleColor.hex }}
+          >
             {title}
           </h1>
         </div>
       </div>
     </section>
   )
-}
+  }
+
