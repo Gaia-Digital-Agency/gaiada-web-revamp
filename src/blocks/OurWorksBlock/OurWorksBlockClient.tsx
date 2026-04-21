@@ -38,10 +38,11 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
 }) => {
   const [activeServiceId, setActiveServiceId] = useState<string | number | null>(null)
   const [currentIndex, setCurrentIndex] = useState<number | undefined>(undefined)
-  const [animationKey, setAnimationKey] = useState(0)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const isVisible = index !== undefined && currentIndex === index
 
   const filteredItems = useMemo(() => {
     if (activeServiceId === null) return portfolioItems
@@ -90,12 +91,6 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   }, [index])
 
   useEffect(() => {
-    if (currentIndex === index) {
-      setAnimationKey((prev) => prev + 1)
-    }
-  }, [currentIndex, index])
-
-  useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
         left: 0,
@@ -120,7 +115,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
-              <TextFade direction="up" key={animationKey}>
+              <TextFade direction="up" key={isVisible ? 'visible' : 'hidden'}>
                 <h2 className="heading-1">{title}</h2>
               </TextFade>
 
@@ -170,15 +165,19 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   <AnimatePresence mode="popLayout" initial={true}>
                     {filteredItems.map((item, i) => (
                       <motion.div
-                        key={`${item.slug}-${animationKey}`}
+                        key={item.slug}
                         layout
                         initial={{ opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                        animate={
+                          isVisible
+                            ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+                            : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
+                        }
                         exit={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
                         transition={{
                           duration: 1.4,
                           ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
-                          delay: i * 0.12,
+                          delay: isVisible ? i * 0.12 : 0,
                           opacity: { duration: 1 },
                           filter: { duration: 1.2 },
                         }}
