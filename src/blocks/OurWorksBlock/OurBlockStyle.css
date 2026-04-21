@@ -39,7 +39,7 @@
   .swiper {
     .swiper-wrapper {
       .swiper-slide {
-        transition: 0.3s all;
+        transition: width 0.3s ease;
         &:hover {
           width: 600px;
 
