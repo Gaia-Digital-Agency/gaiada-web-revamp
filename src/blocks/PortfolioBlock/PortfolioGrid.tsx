@@ -15,6 +15,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
   const [activeService, setActiveService] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [mounted, setMounted] = useState(false)
+  const gridRef = React.useRef<HTMLDivElement>(null)
 
   // Handle hash change and initial hash
   React.useEffect(() => {
@@ -39,6 +40,14 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [services])
 
+  const scrollToTop = () => {
+    if (gridRef.current) {
+      const offset = 300 // Adjust this value based on your header height
+      const elementPosition = gridRef.current.getBoundingClientRect().top + window.scrollY
+      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' })
+    }
+  }
+
   const handleServiceClick = (slug: string | null) => {
     setActiveService(slug)
     if (slug) {
@@ -47,6 +56,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
       // Remove hash without jumping the page
       history.pushState(null, '', window.location.pathname)
     }
+    scrollToTop()
   }
 
   const filteredItems = useMemo(() => {
@@ -76,7 +86,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
   const rightColumnItems = filteredItems.filter((_, i) => i % 2 !== 0)
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 md:gap-20">
+    <div ref={gridRef} className="flex flex-col md:flex-row gap-8 md:gap-20">
       {/* Sidebar */}
       <aside className="w-full md:w-64 shrink-0">
         <div className="sticky top-24 space-y-8">
@@ -119,7 +129,10 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
                 type="text"
                 placeholder="Search for..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value)
+                  scrollToTop()
+                }}
                 className="w-full h-[54px] rounded-md bg-[#f2f2f2] border border-border px-3 py-2 text-[14px] p-[16px] tracking-widest focus:outline-none focus:border-foreground transition-colors"
               />
               {searchQuery && (
