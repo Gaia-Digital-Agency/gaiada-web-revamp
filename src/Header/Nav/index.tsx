@@ -56,6 +56,7 @@ const DropdownNavItem: React.FC<{
   const [open, setOpen] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const submenuId = React.useId()
 
   const handleEnter = () => {
     if (!isMobile) {
@@ -101,6 +102,8 @@ const DropdownNavItem: React.FC<{
       onMouseLeave={handleLeave}
     >
       <button
+        aria-controls={submenuId}
+        aria-expanded={open}
         className="has-submenu inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline"
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
@@ -110,7 +113,10 @@ const DropdownNavItem: React.FC<{
         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
-      <div className={`transition-all duration-300 ease-in-out ${isMobile ? 'flex' : 'absolute top-full left-0'} ${shouldRender ? 'block' : 'hidden'}`}>
+      <div
+        id={submenuId}
+        className={`transition-all duration-300 ease-in-out ${isMobile ? 'flex' : 'absolute top-full left-0'} ${shouldRender ? 'block' : 'hidden'}`}
+      >
         <div
           className={`sub-menu-wrapper ${
             isMobile

@@ -28,6 +28,8 @@ export const Textarea: React.FC<
       </Label>
 
       <TextAreaComponent
+        aria-describedby={errors[name] ? `error-${name}` : undefined}
+        aria-invalid={!!errors[name]}
         defaultValue={defaultValue}
         id={name}
         rows={rows}

@@ -26,6 +26,8 @@ export const Email: React.FC<
         )}
       </Label>
       <Input
+        aria-describedby={errors[name] ? `error-${name}` : undefined}
+        aria-invalid={!!errors[name]}
         defaultValue={defaultValue}
         id={name}
         type="text"
