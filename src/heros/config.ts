@@ -47,6 +47,10 @@ export const hero: Field = {
           label: 'Blog Hero',
           value: 'blogHero',
         },
+        {
+          label: 'Careers Hero',
+          value: 'careersHero',
+        },
       ],
       required: true,
     },
@@ -57,7 +61,10 @@ export const hero: Field = {
       required: true,
       admin: {
         condition: (_, { type } = {}) =>
-          type === 'nonHomepageHero' || type === 'homepageHero' || type === 'blogHero',
+          type === 'nonHomepageHero' ||
+          type === 'homepageHero' ||
+          type === 'blogHero' ||
+          type === 'careersHero',
         description: 'Title',
       },
     },
@@ -100,7 +107,8 @@ export const hero: Field = {
       label: 'Gradient Color',
       defaultValue: 'yellow',
       admin: {
-        condition: (_, { type } = {}) => type === 'nonHomepageHero' && type !== 'homepageHero',
+        condition: (_, { type } = {}) =>
+          type === 'nonHomepageHero' || type === 'homepageHero' || type === 'careersHero',
       },
       options: [
         { label: 'Yellow', value: 'yellow' },
@@ -113,7 +121,8 @@ export const hero: Field = {
       label: 'Buttons',
       minRows: 1,
       admin: {
-        condition: (_, { type } = {}) => type === 'nonHomepageHero' || type === 'homepageHero',
+        condition: (_, { type } = {}) =>
+          type === 'nonHomepageHero' || type === 'homepageHero' || type === 'careersHero',
       },
       fields: [
         {
@@ -170,7 +179,10 @@ export const hero: Field = {
         maxRows: 2,
         admin: {
           condition: (_, { type } = {}) =>
-            type !== 'nonHomepageHero' && type !== 'homepageHero' && type !== 'blogHero',
+            type !== 'nonHomepageHero' &&
+            type !== 'homepageHero' &&
+            type !== 'blogHero' &&
+            type !== 'careersHero',
         },
       },
     }),

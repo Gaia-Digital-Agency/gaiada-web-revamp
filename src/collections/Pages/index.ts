@@ -12,6 +12,7 @@ import { ContentMedia } from '../../blocks/ContentMedia/config'
 import { PortfolioBlock } from '../../blocks/PortfolioBlock/config'
 import { AboutBlock } from '../../blocks/AboutBlock/config'
 import { CareerBlock } from '../../blocks/CareerBlock/config'
+import { CareerFormBlock } from '../../blocks/CareerFormBlock/config'
 import { TeamBlock } from '../../blocks/TeamBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
@@ -25,6 +26,7 @@ import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/config'
 import { OurWorksBlock } from '@/blocks/OurWorksBlock/config'
 import { FeaturedBlogBlock } from '@/blocks/FeaturedBlogBlock/config'
 import { ListingPostBlock } from '@/blocks/ListingPostBlock/config'
+import { HiringProcess } from '@/blocks/HiringProcess/index'
 
 import {
   MetaDescriptionField,
@@ -104,6 +106,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 OurWorksBlock,
                 FeaturedBlogBlock,
                 ListingPostBlock,
+                HiringProcess,
+                CareerFormBlock,
               ],
               required: true,
               admin: {

@@ -13,6 +13,7 @@ import { ContentMediaBlock } from '@/blocks/ContentMedia/Component'
 import { PortfolioBlock } from '@/blocks/PortfolioBlock/Component'
 import { AboutBlock } from '@/blocks/AboutBlock/Component'
 import { CareerBlock } from '@/blocks/CareerBlock/Component'
+import { CareerFormBlock } from '@/blocks/CareerFormBlock/Component'
 import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { ButtonBlock } from '@/blocks/ButtonBlock/Components'
 import { OurProcess } from '@/blocks/OurProcess/component'
@@ -22,6 +23,7 @@ import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/Component'
 import { OurWorksBlock } from '@/blocks/OurWorksBlock/component'
 import { FeaturedBlogBlockComponent } from '@/blocks/FeaturedBlogBlock/component'
 import { ListingPostBlockComponent } from '@/blocks/ListingPostBlock/component'
+import { HiringProcessBlock } from '@/blocks/HiringProcess/Component'
 
 // Mapping of block slugs to their corresponding React components
 
@@ -36,6 +38,7 @@ const blockComponents = {
   portfolioBlock: PortfolioBlock,
   aboutBlock: AboutBlock,
   careerBlock: CareerBlock,
+  careerFormBlock: CareerFormBlock,
   teamBlock: TeamBlock,
   buttonBlock: ButtonBlock,
   ourProcessBlock: OurProcess,
@@ -45,6 +48,7 @@ const blockComponents = {
   ourWorksBlock: OurWorksBlock,
   featuredBlogBlock: FeaturedBlogBlockComponent,
   listingPostBlock: ListingPostBlockComponent,
+  hiringProcess: HiringProcessBlock,
 }
 
 // Component that iterates through and renders an array of page layout blocks

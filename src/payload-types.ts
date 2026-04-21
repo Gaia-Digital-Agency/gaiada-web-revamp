@@ -171,7 +171,15 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero' | 'blogHero';
+    type:
+      | 'none'
+      | 'highImpact'
+      | 'mediumImpact'
+      | 'lowImpact'
+      | 'nonHomepageHero'
+      | 'homepageHero'
+      | 'blogHero'
+      | 'careersHero';
     /**
      * Title
      */
@@ -390,6 +398,25 @@ export interface Page {
       }
     | FeaturedBlogBlock
     | ListingPostBlock
+    | {
+        title: string;
+        items: {
+          number: string;
+          title: string;
+          description: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'hiringProcess';
+      }
+    | {
+        title?: string | null;
+        form: number | Form;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'careerFormBlock';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -636,7 +663,15 @@ export interface Service {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero' | 'blogHero';
+    type:
+      | 'none'
+      | 'highImpact'
+      | 'mediumImpact'
+      | 'lowImpact'
+      | 'nonHomepageHero'
+      | 'homepageHero'
+      | 'blogHero'
+      | 'careersHero';
     /**
      * Title
      */
@@ -771,7 +806,15 @@ export interface Portfolio {
   services?: (number | Service)[] | null;
   scopes?: (number | Scope)[] | null;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'nonHomepageHero' | 'homepageHero' | 'blogHero';
+    type:
+      | 'none'
+      | 'highImpact'
+      | 'mediumImpact'
+      | 'lowImpact'
+      | 'nonHomepageHero'
+      | 'homepageHero'
+      | 'blogHero'
+      | 'careersHero';
     /**
      * Title
      */
@@ -1817,6 +1860,29 @@ export interface PagesSelect<T extends boolean = true> {
             };
         featuredBlogBlock?: T | FeaturedBlogBlockSelect<T>;
         listingPostBlock?: T | ListingPostBlockSelect<T>;
+        hiringProcess?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    number?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        careerFormBlock?:
+          | T
+          | {
+              title?: T;
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
