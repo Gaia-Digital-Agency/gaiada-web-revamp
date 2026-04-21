@@ -1,6 +1,6 @@
 import React from 'react'
 import { Media } from '@/components/Media'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { AppButton } from '@/components/common/AppButton'
 
 export type ServicesDetailBlockType = {
@@ -33,7 +33,9 @@ export default function SubServiceList({
         return (
           <div
             key={service.id}
-            className={`relative w-full h-[400px] group overflow-hidden cursor-pointer ${isOdd ? 'md:mt-0 mt-0' : 'md:mt-20 mt-0'}`}
+            className={`relative w-full h-[350px] md:h-[400px] group overflow-hidden cursor-pointer transition-all duration-500 ${
+              !isOdd ? 'md:mt-20 mt-0' : 'mt-0'
+            }`}
           >
             <Media
               resource={service.image}
@@ -58,13 +60,13 @@ export default function SubServiceList({
               }}
             />
 
-            <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col items-center">
-              <h3 className="text-(--gda-brand-white) text-center transition-transform duration-500 group-hover:-translate-y-2">
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-col items-center">
+              <h3 className="text-(--gda-brand-white) text-center text-xl md:text-2xl transition-transform duration-500 group-hover:-translate-y-2">
                 {service.title}
               </h3>
 
               <div className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out">
-                <p className="text-(--gda-brand-white) text-center px-4 mt-2">
+                <p className="text-(--gda-brand-white) text-center px-4 mt-2 text-sm md:text-base">
                   {service.description}
                 </p>
               </div>
@@ -72,7 +74,7 @@ export default function SubServiceList({
               <div className="mt-4">
                 <ChevronDown
                   className="text-(--gda-brand-white) transition-transform duration-500 group-hover:rotate-180"
-                  size={40}
+                  size={36}
                 />
               </div>
             </div>
@@ -94,44 +96,40 @@ export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({
     <section>
       <div className="bg-background w-full">
         <div className="px-0 mx-auto max-w-7xl overflow-hidden">
-          <div className="py-8 md:py-5 md:pr-0 px-4 md:px-0">
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-center">
-              <div className="space-y-8 max-w-2xl">
-                <div className="space-y-4 md:pl-[180px] pl-0">
-                  <h2 className="text-(--gda-brand-yellow)">{intro.title}</h2>
-                  <div>{intro.description}</div>
+          <div className="py-12 md:py-20 px-4 md:px-6 lg:px-0">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div className="space-y-6 md:space-y-8 max-w-2xl order-2 lg:order-1 text-center lg:text-left mx-auto lg:mx-0">
+                <div className="space-y-4 lg:pl-[120px] xl:pl-[180px]">
+                  <h2 className="text-(--gda-brand-yellow) text-3xl md:text-4xl lg:text-5xl font-bold">
+                    {intro.title}
+                  </h2>
+                  <div className="text-base md:text-lg leading-relaxed">{intro.description}</div>
                 </div>
               </div>
-
-              {intro.image && (
-                <div className="flex justify-end w-full lg:w-[708px]">
-                  <div className="relative w-full max-w-[708px] aspect-video overflow-hidden group">
-                    <Media
-                      resource={intro.image}
-                      fill
-                      imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
+              <div className="flex justify-center lg:justify-end w-full order-1 lg:order-2">
+                <div className="relative w-full max-w-[708px] aspect-[4/3] md:aspect-video overflow-hidden group">
+                  <Media
+                    resource={intro.image}
+                    fill
+                    imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
-              )}
+              </div>
             </div>
           </div>
 
-          <div id="sub-services" className="pt-0 md:pt-16 pb-[40px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-12 px-4 md:px-20 items-center">
+          <div id="sub-services" className="pt-0 md:pt-16 pb-16 md:pb-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 px-4 md:px-12 lg:px-20 items-start">
               <SubServiceList subServices={subServices} />
             </div>
-            <div className="flex justify-center mt-8 md:mt-12 px-4 md:px-0">
+            <div className="flex justify-center mt-12 md:mt-20 px-4 md:px-0">
               <AppButton
-                // href={`/portfolio/#${parentSlug || ''}`}
-                // aku ingin href nya /portfolio/#(slug)}
-                href={`/portfolio/${'#' + parentSlug || ''}`}
+                href={`/portfolio/${parentSlug ? `#${parentSlug}` : ''}`}
                 label="See Our Portfolio"
                 icon="arrow"
                 variant="default"
                 iconPosition="right"
-                // ketika di layar mobile tombol full screen
-                className="w-full md:w-fit"
+                className="w-full md:w-fit min-w-[220px]"
               />
             </div>
           </div>

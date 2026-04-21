@@ -37,10 +37,10 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300 cursor-pointer"
       >
-        <div className="flex items-baseline gap-6">
+        <div className="flex items-baseline gap-4 md:gap-6">
           <span
             className={cn(
-              'text-[32px] font-semibold leading-[130%] transition-colors duration-300',
+              'text-[24px] md:text-[32px] font-semibold leading-[130%] transition-colors duration-300',
               isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
@@ -49,7 +49,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           </span>
           <span
             className={cn(
-              'text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
+              'text-[24px] md:text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
               isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
@@ -64,7 +64,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           >
             <Plus
               className={cn(
-                'w-8 h-8 transition-colors duration-300',
+                'w-6 h-6 md:w-8 md:h-8 transition-colors duration-300',
                 isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
               )}
             />
@@ -81,7 +81,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="pl-[60px] md:pl-[66px] w-[450px]">
+            <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
               <p
                 className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
                 style={{ fontFamily: 'Inter, sans-serif' }}
@@ -109,11 +109,14 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
 
   return (
     <div ref={sectionRef} className="bg-background">
-      <div id="about-us" className="container px-0! py-20">
+      <div id="about-us" className="container px-4 md:px-8 lg:px-24 py-10 md:py-20">
         <div id="about-section-1" className="mb-20">
-          <div className="flex flex-col md:flex-row items-start gap-[48px]">
+          <div className="flex flex-col lg:flex-row items-start gap-[48px]">
             {/* Bagian Kiri: Image */}
-            <div id="about-section-1-image" className="w-full md:w-[708px] md:h-[480px] shrink-0">
+            <div
+              id="about-section-1-image"
+              className="w-full lg:w-[708px] aspect-video lg:h-[480px] shrink-0"
+            >
               {image && (
                 <div ref={imageWrapperRef} className="relative w-full h-full overflow-hidden">
                   <Media
@@ -129,7 +132,7 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
             </div>
 
             {/* Bagian Kanan: Title, Description, and Accordion */}
-            <div id="about-section-1-content" className="flex-1 pr-[180px]">
+            <div id="about-section-1-content" className="flex-1 lg:pr-10 xl:pr-[180px]">
               {title && (
                 <h2 ref={titleRef} id="title-about-us">
                   {title}

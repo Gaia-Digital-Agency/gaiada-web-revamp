@@ -45,6 +45,28 @@ const heading = (text: string, tag: 'h1' | 'h2' | 'h3' = 'h1') => ({
 export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
   payload.logger.info('Seeding Gaia Digital Agency V2 data...')
 
+  // 12. Contact Form
+  const contactUsForm = await payload.create({
+    collection: 'forms',
+    context: { disableRevalidate: true },
+    data: {
+      title: 'Contact Us',
+      fields: [
+        { name: 'name', label: 'Name', required: true, blockType: 'text' as const },
+        { name: 'email', label: 'Email', required: true, blockType: 'email' as const },
+        { name: 'message', label: 'Message', required: true, blockType: 'textarea' as const },
+        {
+          siteKey: '10000000-ffff-ffff-ffff-000000000001',
+          secretKey: '0x0000000000000000000000000000000000000000',
+          blockType: 'hCaptcha' as const,
+        },
+      ],
+      confirmationType: 'message' as const,
+      confirmationMessage: richText([paragraph('Thank you for your inquiry!')]),
+      submitButtonLabel: 'Submit',
+    },
+  })
+
   // 1. Create/Ensure Media exists
   let mediaId: string | number
   const existingMedia = await payload.find({
@@ -736,7 +758,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     slug: 'footer',
     context: { disableRevalidate: true },
     data: {
-      formId: 1,
+      formId: contactUsForm.id,
       heading: 'Start a project with Gaia',
       copyright: '',
       developedBy: '© 2026 Gaia Digital Agency',
