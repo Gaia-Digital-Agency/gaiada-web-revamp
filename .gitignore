@@ -4,6 +4,9 @@ node_modules
 .DS_Store
 .env
 .next
+
+# GCP service account keys (never commit)
+secure/
 next-env.d.ts
 .vercel
 
