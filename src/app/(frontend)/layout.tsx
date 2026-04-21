@@ -10,6 +10,7 @@ import { Header } from '@/Header/Component'
 import { Footer } from '@/Footer/Component'
 import { WhatsAppCTA } from '@/components/WhatsAppCTA'
 import { BackToTop } from '@/components/BackToTop'
+import { AIChat } from '@/components/AIChat'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -110,6 +111,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </FooterWrapper>
           <WhatsAppCTA />
           <BackToTop />
+          <AIChat />
         </Providers>
 
         {/* Custom Footer Scripts */}
