@@ -38,10 +38,11 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
 }) => {
   const [activeServiceId, setActiveServiceId] = useState<string | number | null>(null)
   const [currentIndex, setCurrentIndex] = useState<number | undefined>(undefined)
-  const [animationKey, setAnimationKey] = useState(0)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const isVisible = index !== undefined && currentIndex === index
 
   const filteredItems = useMemo(() => {
     if (activeServiceId === null) return portfolioItems
@@ -90,12 +91,6 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   }, [index])
 
   useEffect(() => {
-    if (currentIndex === index) {
-      setAnimationKey((prev) => prev + 1)
-    }
-  }, [currentIndex, index])
-
-  useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
         left: 0,
@@ -120,7 +115,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
-              <TextFade direction="up" key={animationKey}>
+              <TextFade direction="up" key={isVisible ? 'visible' : 'hidden'}>
                 <h2 className="heading-1">{title}</h2>
               </TextFade>
 
@@ -167,56 +162,64 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   className="swiper-wrapper flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory"
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                  <AnimatePresence mode="popLayout" initial={true}>
-                    {filteredItems.map((item, i) => (
-                      <motion.div
-                        key={`${item.slug}-${animationKey}`}
-                        layout
-                        initial={{ opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
-                        transition={{
-                          duration: 1.4,
-                          ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
-                          delay: i * 0.12,
-                          opacity: { duration: 1 },
-                          filter: { duration: 1.2 },
-                        }}
-                        className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
-                      >
-                        <Link
-                          href={`/portfolio/${item.slug}`}
-                          className="swiper-body group flex flex-col"
+                  <AnimatePresence mode="wait" initial={true}>
+                    <motion.div
+                      key={activeServiceId ?? 'all'}
+                      className="flex gap-8"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {filteredItems.map((item, i) => (
+                        <motion.div
+                          key={item.slug}
+                          initial={{ opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
+                          animate={
+                            isVisible
+                              ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+                              : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
+                          }
+                          transition={{
+                            duration: 1.4,
+                            ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
+                            delay: isVisible ? i * 0.12 : 0,
+                            opacity: { duration: 1 },
+                            filter: { duration: 1.2 },
+                          }}
+                          className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
                         >
-                          <div className="image-wrapper h-[240px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
-                            {item.featuredImage && (
-                              <img
-                                src={
-                                  typeof item.featuredImage === 'object'
-                                    ? item.featuredImage.url
-                                    : ''
-                                }
-                                alt={item.title}
-                                className="object-cover w-full h-[240px] md:h-full transition-transform duration-700 group-hover:scale-105"
-                              />
-                            )}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          </div>
-                          <div className="swiper-content space-y-1">
-                            <h3 className="heading-5 group-hover:text-primary transition-colors">
-                              {item.title}
-                            </h3>
-                            <p className="text-sm text-[#999] uppercase tracking-widest flex items-center gap-1">
-                              <span className="text-[#bbb] italic lowercase">in</span>
-                              {item.services?.map((s) => s.title).join(', ')}
-                            </p>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    ))}
-                    {filteredItems.length > 0 && (
-                      <div className="shrink-0 w-[calc(100vw-420px-100px)] lg:w-[calc(100%-420px)] h-1" />
-                    )}
+                          <Link
+                            href={`/portfolio/${item.slug}`}
+                            className="swiper-body group flex flex-col"
+                          >
+                            <div className="image-wrapper h-[240px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
+                              {item.featuredImage && (
+                                <img
+                                  src={
+                                    typeof item.featuredImage === 'object'
+                                      ? item.featuredImage.url
+                                      : ''
+                                  }
+                                  alt={item.title}
+                                  className="object-cover w-full h-[240px] md:h-full transition-transform duration-700 group-hover:scale-105"
+                                />
+                              )}
+                              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            </div>
+                            <div className="swiper-content space-y-1">
+                              <h3 className="heading-5 group-hover:text-primary transition-colors">
+                                {item.title}
+                              </h3>
+                              <p className="text-sm text-[#999] uppercase tracking-widest flex items-center gap-1">
+                                <span className="text-[#bbb] italic lowercase">in</span>
+                                {item.services?.map((s) => s.title).join(', ')}
+                              </p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
                   </AnimatePresence>
 
                   {filteredItems.length === 0 && (
