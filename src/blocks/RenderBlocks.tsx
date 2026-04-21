@@ -24,6 +24,8 @@ import { OurWorksBlock } from '@/blocks/OurWorksBlock/component'
 import { FeaturedBlogBlockComponent } from '@/blocks/FeaturedBlogBlock/component'
 import { ListingPostBlockComponent } from '@/blocks/ListingPostBlock/component'
 import { HiringProcessBlock } from '@/blocks/HiringProcess/Component'
+import { MapBlock } from '@/blocks/MapBlock/Component'
+import { VisitOurOfficeBlock } from '@/blocks/VisitOurOfficeBlock/Component'
 
 // Mapping of block slugs to their corresponding React components
 
@@ -49,6 +51,8 @@ const blockComponents = {
   featuredBlogBlock: FeaturedBlogBlockComponent,
   listingPostBlock: ListingPostBlockComponent,
   hiringProcess: HiringProcessBlock,
+  map: MapBlock,
+  visitOurOffice: VisitOurOfficeBlock,
 }
 
 // Component that iterates through and renders an array of page layout blocks

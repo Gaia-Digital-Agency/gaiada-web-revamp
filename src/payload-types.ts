@@ -417,6 +417,8 @@ export interface Page {
         blockName?: string | null;
         blockType: 'careerFormBlock';
       }
+    | MapBlock
+    | VisitOurOfficeBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1389,6 +1391,45 @@ export interface ListingPostBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapBlock".
+ */
+export interface MapBlock {
+  location?: string | null;
+  /**
+   * Optional: paste full Google Maps iframe embed code. If present, it will be used instead of the location field.
+   */
+  embedHtml?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'map';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VisitOurOfficeBlock".
+ */
+export interface VisitOurOfficeBlock {
+  title: string;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'visitOurOffice';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "departments".
  */
 export interface Department {
@@ -1883,6 +1924,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        map?: T | MapBlockSelect<T>;
+        visitOurOffice?: T | VisitOurOfficeBlockSelect<T>;
       };
   meta?:
     | T
@@ -2016,6 +2059,26 @@ export interface FeaturedBlogBlockSelect<T extends boolean = true> {
  */
 export interface ListingPostBlockSelect<T extends boolean = true> {
   title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapBlock_select".
+ */
+export interface MapBlockSelect<T extends boolean = true> {
+  location?: T;
+  embedHtml?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VisitOurOfficeBlock_select".
+ */
+export interface VisitOurOfficeBlockSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
   id?: T;
   blockName?: T;
 }

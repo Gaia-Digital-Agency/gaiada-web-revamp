@@ -27,6 +27,8 @@ import { OurWorksBlock } from '@/blocks/OurWorksBlock/config'
 import { FeaturedBlogBlock } from '@/blocks/FeaturedBlogBlock/config'
 import { ListingPostBlock } from '@/blocks/ListingPostBlock/config'
 import { HiringProcess } from '@/blocks/HiringProcess/index'
+import { MapBlock } from '@/blocks/MapBlock/config'
+import { VisitOurOfficeBlock } from '../../blocks/VisitOurOfficeBlock/config'
 
 import {
   MetaDescriptionField,
@@ -108,6 +110,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 ListingPostBlock,
                 HiringProcess,
                 CareerFormBlock,
+                MapBlock,
+                VisitOurOfficeBlock,
               ],
               required: true,
               admin: {
