@@ -1394,11 +1394,6 @@ export interface ListingPostBlock {
  * via the `definition` "MapBlock".
  */
 export interface MapBlock {
-  location?: string | null;
-  /**
-   * Optional: paste full Google Maps iframe embed code. If present, it will be used instead of the location field.
-   */
-  embedHtml?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'map';
@@ -2067,8 +2062,6 @@ export interface ListingPostBlockSelect<T extends boolean = true> {
  * via the `definition` "MapBlock_select".
  */
 export interface MapBlockSelect<T extends boolean = true> {
-  location?: T;
-  embedHtml?: T;
   id?: T;
   blockName?: T;
 }

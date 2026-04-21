@@ -1,20 +1,32 @@
 import type { MapBlock as MapBlockProps } from 'src/payload-types'
+import type { Setting } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import React from 'react'
 
 type Props = {
   className?: string
-  embedHtml?: string
-  location: string
 } & MapBlockProps
 
-export const MapBlock: React.FC<Props> = ({ className, location, embedHtml }) => {
-  const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
+export const MapBlock: React.FC<Props> = async ({ className }) => {
+  const payload = await getPayload({ config })
+
+  const settings = await payload.findGlobal({
+    slug: 'settings',
+    depth: 0,
+  })
+
+  const typedSettings = settings as Setting
+  const address = typedSettings?.address || ''
+  const googleMapsEmbed = typedSettings?.googleMapsEmbed || ''
+
+  const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&output=embed`
 
   const embedSrc = (() => {
-    if (!embedHtml) return null
-    const m = embedHtml.match(/src=(?:"|')([^"']+)(?:"|')/)
+    if (!googleMapsEmbed) return null
+    const m = googleMapsEmbed.match(/src=(?:"|')([^"']+)(?:"|')/)
     return m ? m[1] : null
   })()
 
@@ -38,7 +50,7 @@ export const MapBlock: React.FC<Props> = ({ className, location, embedHtml }) =>
           loading="lazy"
           allowFullScreen
           src={mapUrl}
-          title={`Map location: ${location}`}
+          title={`Map location: ${address}`}
         ></iframe>
       )}
     </div>
