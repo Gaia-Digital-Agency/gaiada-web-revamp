@@ -6,13 +6,12 @@ import React from 'react'
 type Props = {
   className?: string
   embedHtml?: string
+  location: string
 } & MapBlockProps
 
 export const MapBlock: React.FC<Props> = ({ className, location, embedHtml }) => {
-  // Using Google Maps simple iframe embed (no API key)
   const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
 
-  // Extract src from provided embed HTML (basic extraction to avoid raw injection)
   const embedSrc = (() => {
     if (!embedHtml) return null
     const m = embedHtml.match(/src=(?:"|')([^"']+)(?:"|')/)
@@ -20,7 +19,7 @@ export const MapBlock: React.FC<Props> = ({ className, location, embedHtml }) =>
   })()
 
   return (
-    <div className={cn('mx-auto my-8 w-full', className)}>
+    <div className={cn('mx-auto w-full', className)}>
       {embedSrc ? (
         <iframe
           width="100%"
