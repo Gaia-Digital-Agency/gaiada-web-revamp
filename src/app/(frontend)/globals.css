@@ -459,6 +459,7 @@
 }
 
 html {
+  scroll-behavior: smooth;
   opacity: 0;
 }
 
