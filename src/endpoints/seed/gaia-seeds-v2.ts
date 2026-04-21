@@ -45,7 +45,7 @@ const heading = (text: string, tag: 'h1' | 'h2' | 'h3' = 'h1') => ({
 export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
   payload.logger.info('Seeding Gaia Digital Agency V2 data...')
 
-  // 12. Contact Form
+  // A. Contact Form
   const contactUsForm = await payload.create({
     collection: 'forms',
     context: { disableRevalidate: true },
@@ -63,6 +63,35 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
       ],
       confirmationType: 'message' as const,
       confirmationMessage: richText([paragraph('Thank you for your inquiry!')]),
+      submitButtonLabel: 'Submit',
+    },
+  })
+
+  // B. Career Form
+  const careerForm = await payload.create({
+    collection: 'forms',
+    context: { disableRevalidate: true },
+    data: {
+      title: 'Career Form',
+      fields: [
+        { name: 'name', label: 'Name', required: true, blockType: 'text' as const },
+        { name: 'email', label: 'Email', required: true, blockType: 'email' as const },
+        { name: 'phone', label: 'Phone', required: true, blockType: 'text' as const },
+        {
+          name: 'resume',
+          label: 'Resume',
+          required: true,
+          blockType: 'file' as const,
+        },
+        { name: 'message', label: 'Message', required: true, blockType: 'textarea' as const },
+        {
+          siteKey: '10000000-ffff-ffff-ffff-000000000001',
+          secretKey: '0x0000000000000000000000000000000000000000',
+          blockType: 'hCaptcha' as const,
+        },
+      ],
+      confirmationType: 'message' as const,
+      confirmationMessage: richText([paragraph('Thank you for your application!')]),
       submitButtonLabel: 'Submit',
     },
   })
@@ -749,6 +778,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
         { link: { type: 'custom', url: '/portfolio', label: 'Portfolio' } },
         { link: { type: 'custom', url: '/about', label: 'About Us' } },
         { link: { type: 'custom', url: '/blog', label: 'Blog' } },
+        { link: { type: 'custom', url: '/career', label: 'Career' } },
       ],
     },
   })
@@ -809,6 +839,53 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
         {
           platform: 'linkedin',
           url: 'https://www.linkedin.com/company/gaia-digital-agency/',
+        },
+      ],
+    },
+  })
+
+  // 12. Career Page
+  await payload.create({
+    collection: 'pages',
+    context: { disableRevalidate: true },
+    data: {
+      title: 'Career Page',
+      slug: 'career',
+      _status: 'published',
+      hero: {
+        type: 'nonHomepageHero',
+        title: 'Careers',
+        giantTitleColor: 'white',
+        gradientColor: 'yellow',
+        media: mediaId,
+      },
+      layout: [
+        {
+          blockType: 'hiringProcess',
+          title: 'Hiring Process',
+          items: [
+            {
+              number: '1',
+              title: 'Technical Test',
+              description: `Each division has its own way of testing each candidate. All that's needed is mental preparation and experience.`,
+            },
+            {
+              number: '2',
+              title: 'Interview',
+              description:
+                'Candidates who pass the online technical test will be invited for interviews with senior staff and management. Confidence and being yourself are essential.',
+            },
+            {
+              number: '3',
+              title: 'Final Decision',
+              description: `Candidates who successfully pass the hiring process will receive a job offer. Don't hesitate to accept!`,
+            },
+          ],
+        },
+        {
+          blockType: 'careerFormBlock',
+          title: 'Join Our Team',
+          form: careerForm.id,
         },
       ],
     },
