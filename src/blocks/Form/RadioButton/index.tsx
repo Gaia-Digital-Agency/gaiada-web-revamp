@@ -47,10 +47,13 @@ export const RadioButton: React.FC<RadioButtonFieldProps> = ({
         rules={{ required: required ? `${label} is required` : false }}
         render={({ field: { onChange, value } }) => (
           <div className="flex flex-row gap-8">
-            {options.map((option) => (
-              <label key={option.value} className="flex items-center gap-3 cursor-pointer group">
+            {options.map((option, index) => (
+              <label
+                key={option.value}
+                className="flex items-center gap-3 cursor-pointer group outline-none"
+              >
                 {/* Visual Container for the Radio */}
-                <div className="relative flex items-center justify-center h-6 w-6">
+                <div className="relative flex items-center justify-center h-6 w-6 rounded-full group-has-[input:focus]:ring-2 group-has-[input:focus]:ring-[#EAB308] group-has-[input:focus]:ring-offset-2 transition-all duration-200">
                   <input
                     aria-describedby={errors[name] ? `error-${name}` : undefined}
                     aria-invalid={!!errors[name]}
@@ -59,6 +62,13 @@ export const RadioButton: React.FC<RadioButtonFieldProps> = ({
                     value={option.value}
                     checked={value === option.value}
                     onChange={() => onChange(option.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault()
+                        onChange(option.value)
+                      }
+                    }}
+                    tabIndex={0}
                     className="sr-only peer text-sm"
                   />
 
@@ -66,6 +76,7 @@ export const RadioButton: React.FC<RadioButtonFieldProps> = ({
                     className="
                     absolute inset-0 rounded-full border-2 border-gray-300 
                     peer-checked:border-[#EAB308] peer-checked:border-[3px] 
+                    peer-focus:ring-2 peer-focus:ring-[#EAB308] peer-focus:ring-offset-2
                     transition-all duration-200
                   "
                   />

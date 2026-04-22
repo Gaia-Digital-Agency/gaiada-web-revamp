@@ -105,6 +105,7 @@ const DropdownNavItem: React.FC<{
         aria-controls={submenuId}
         aria-expanded={open}
         className="has-submenu inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline"
+        className="has-submenu inline-flex items-center gap-1 text-sm font-medium underline-offset-4 hover:underline"
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
