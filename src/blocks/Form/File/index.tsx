@@ -18,6 +18,8 @@ export const FileField: React.FC<{
         {required && <span className="text-red-500">*</span>}
       </Label>
       <Input
+        aria-describedby={errors[name] ? `error-${name}` : undefined}
+        aria-invalid={!!errors[name]}
         id={name}
         type="file"
         accept=".pdf"

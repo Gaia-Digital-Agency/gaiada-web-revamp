@@ -22,11 +22,33 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const isHomepage = pathname === '/'
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const dialogRef = React.useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
     setHeaderTheme(null)
     setIsMobileMenuOpen(false) // Close mobile menu on route change
   }, [pathname])
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (isMobileMenuOpen) {
+      dialog?.showModal()
+      document.body.style.overflow = 'hidden'
+    } else {
+      dialog?.close()
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    const handleCancel = (e: Event) => {
+      e.preventDefault()
+      setIsMobileMenuOpen(false)
+    }
+    dialog?.addEventListener('cancel', handleCancel)
+    return () => dialog?.removeEventListener('cancel', handleCancel)
+  }, [])
 
   useEffect(() => {
     if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
@@ -78,6 +100,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
             className="lg:hidden p-2 z-[210]"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
+            aria-expanded={isMobileMenuOpen}
           >
             <div
               className={`w-6 h-0.5 bg-black transition-all duration-300 ${
@@ -99,17 +122,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
       </header>
 
       {/* Mobile Menu*/}
-      <div
-        className={`mobile-menu g:hidden mx-auto fixed inset-0 bg-white z-[190] flex flex-col pt-[70px] px-6 transition-all duration-300 ease-in-out ${
+      <dialog
+        ref={dialogRef}
+        className={`mobile-menu lg:hidden fixed inset-0 w-full h-full bg-white z-[190] flex flex-col pt-[70px] px-6 transition-all duration-300 ease-in-out border-none m-0 max-w-none max-h-none open:flex ${
           isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
         }`}
-        style={{
-          // Ensure it's not interactive when closed
-          visibility: isMobileMenuOpen ? 'visible' : 'hidden',
-        }}
+        onClose={() => setIsMobileMenuOpen(false)}
       >
         <HeaderNav data={data} isMobile={true} />
-      </div>
+      </dialog>
     </>
   )
 }

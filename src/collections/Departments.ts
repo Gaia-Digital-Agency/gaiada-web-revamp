@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { APIError } from 'payload'
 import { authenticated } from '../access/authenticated'
 
 export const Departments: CollectionConfig = {
@@ -12,6 +13,30 @@ export const Departments: CollectionConfig = {
     create: authenticated,
     update: authenticated,
     delete: authenticated,
+  },
+  hooks: {
+    beforeDelete: [
+      async ({ id, req }) => {
+        const teamMembers = await req.payload.find({
+          collection: 'team',
+          where: {
+            department: {
+              equals: id,
+            },
+          },
+          limit: 1,
+        })
+
+        if (teamMembers.totalDocs > 0) {
+          throw new APIError(
+            'Cannot delete this department because there are still team members assigned to it.',
+            400,
+            undefined,
+            true,
+          )
+        }
+      },
+    ],
   },
   fields: [
     {

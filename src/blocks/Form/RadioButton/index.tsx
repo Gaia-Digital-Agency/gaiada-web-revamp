@@ -55,6 +55,8 @@ export const RadioButton: React.FC<RadioButtonFieldProps> = ({
                 {/* Visual Container for the Radio */}
                 <div className="relative flex items-center justify-center h-6 w-6 rounded-full group-has-[input:focus]:ring-2 group-has-[input:focus]:ring-[#EAB308] group-has-[input:focus]:ring-offset-2 transition-all duration-200">
                   <input
+                    aria-describedby={errors[name] ? `error-${name}` : undefined}
+                    aria-invalid={!!errors[name]}
                     id={`${name}-${option.value}`}
                     type="radio"
                     value={option.value}
