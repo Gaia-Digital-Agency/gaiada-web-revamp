@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { APIError } from 'payload'
 import { authenticated } from '../access/authenticated'
 
 export const Departments: CollectionConfig = {
@@ -27,8 +28,11 @@ export const Departments: CollectionConfig = {
         })
 
         if (teamMembers.totalDocs > 0) {
-          throw new Error(
+          throw new APIError(
             'Cannot delete this department because there are still team members assigned to it.',
+            400,
+            undefined,
+            true,
           )
         }
       },
