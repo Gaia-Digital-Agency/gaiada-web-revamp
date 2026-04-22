@@ -14,13 +14,12 @@ export const revalidate = 600
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
-  const postOrderingResult = await payload.find({
-    collection: 'post-ordering',
-    limit: 1,
+  const postOrdering = await payload.findGlobal({
+    slug: 'post-ordering',
     depth: 1,
   })
 
-  const manualOrderedPosts = (postOrderingResult.docs?.[0]?.manualOrder || []) as any[]
+  const manualOrderedPosts = (postOrdering?.manualOrder || []) as any[]
   const manualOrderedIds = manualOrderedPosts.map((post) => (typeof post === 'object' ? post.id : post))
 
   const posts = await payload.find({

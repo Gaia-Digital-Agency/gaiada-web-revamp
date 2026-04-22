@@ -9,7 +9,6 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { PostOrdering } from './collections/PostOrdering'
 import { Users } from './collections/Users'
 import { Services } from './collections/Services/index'
 import { Portfolio } from './collections/Portfolio'
@@ -19,6 +18,7 @@ import { Team } from './collections/Team'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { Settings } from './Settings/config'
+import { PostOrdering } from './PostOrdering/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -77,7 +77,6 @@ export default buildConfig({
   collections: [
     Pages,
     Posts,
-    PostOrdering,
     Media,
     Categories,
     Users,
@@ -88,7 +87,7 @@ export default buildConfig({
     Scopes,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, Settings],
+  globals: [Header, Footer, Settings, PostOrdering],
   plugins,
   email: nodemailerAdapter({
     defaultFromName: 'Gaiada Local Test',

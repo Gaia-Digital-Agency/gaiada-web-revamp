@@ -28,13 +28,12 @@ export const FeaturedBlogBlockComponent: React.FC<FeaturedBlogBlockProps> = asyn
       post = featuredPost as Post
     }
   } else {
-    const postOrderingResult = await payload.find({
-      collection: 'post-ordering',
-      limit: 1,
+    const postOrdering = await payload.findGlobal({
+      slug: 'post-ordering',
       depth: 1,
     })
 
-    const manualOrderedPosts = (postOrderingResult.docs?.[0]?.manualOrder || []) as any[]
+    const manualOrderedPosts = (postOrdering?.manualOrder || []) as any[]
 
     if (manualOrderedPosts.length > 0) {
       post = manualOrderedPosts[0] as Post

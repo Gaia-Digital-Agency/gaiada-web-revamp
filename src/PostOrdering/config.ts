@@ -1,29 +1,18 @@
-import type { CollectionConfig } from 'payload'
+import type { GlobalConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
-import { revalidatePostOrdering } from '../PostOrdering/hooks/revalidatePostOrdering'
+import { revalidatePostOrdering } from './hooks/revalidatePostOrdering'
 
-export const PostOrdering: CollectionConfig = {
+export const PostOrdering: GlobalConfig = {
   slug: 'post-ordering',
-  admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'updatedAt'],
-  },
+  label: 'Post Ordering',
   access: {
     read: () => true,
-    create: authenticated,
     update: authenticated,
-    delete: authenticated,
   },
   hooks: {
     afterChange: [revalidatePostOrdering],
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      defaultValue: 'Main Blog Order',
-    },
     {
       name: 'manualOrder',
       type: 'relationship',
