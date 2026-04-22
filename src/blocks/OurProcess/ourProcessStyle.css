@@ -23,6 +23,13 @@
     .our-process-item {
       overflow: visible;
       cursor: pointer;
+      outline: none;
+
+      &:focus {
+        outline: 2px solid var(--gda-brand-yellow);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
 
       &:hover {
         background: transparent;
@@ -39,7 +46,7 @@
       }
 
       h3 {
-        font-family: var(--font-roboto);
+        font-family: var(--roboto);
         font-size: 16px;
         font-weight: 400;
         margin-bottom: 0;
@@ -109,6 +116,15 @@
     .pagination-bullet {
       width: 12px;
       height: 12px;
+      outline: none;
+      border: none;
+      padding: 0;
+
+      &:focus {
+        outline: 2px solid var(--gda-brand-yellow);
+        outline-offset: 2px;
+        border-radius: 50%;
+      }
     }
   }
 }
