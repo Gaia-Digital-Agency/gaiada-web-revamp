@@ -1,0 +1,23 @@
+.content-block {
+  h2 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  p {
+    margin-bottom: 8px;
+  }
+
+  .list-bullet {
+    margin-top: 0;
+
+    li {
+      margin: 0;
+      &::marker {
+        color: var(--gda-brand-black);
+      }
+    }
+  }
+}
