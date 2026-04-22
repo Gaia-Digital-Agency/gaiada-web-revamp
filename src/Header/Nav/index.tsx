@@ -101,7 +101,7 @@ const DropdownNavItem: React.FC<{
       onMouseLeave={handleLeave}
     >
       <button
-        className="has-submenu inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-4 hover:underline"
+        className="has-submenu inline-flex items-center gap-1 text-sm font-medium underline-offset-4 hover:underline"
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
@@ -110,7 +110,9 @@ const DropdownNavItem: React.FC<{
         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
-      <div className={`transition-all duration-300 ease-in-out ${isMobile ? 'flex' : 'absolute top-full left-0'} ${shouldRender ? 'block' : 'hidden'}`}>
+      <div
+        className={`transition-all duration-300 ease-in-out ${isMobile ? 'flex' : 'absolute top-full left-0'} ${shouldRender ? 'block' : 'hidden'}`}
+      >
         <div
           className={`sub-menu-wrapper ${
             isMobile

@@ -43,6 +43,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -79,6 +80,23 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
     return () => ref?.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const handleStepKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    index: number,
+    stepId: string,
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      setActiveStepId((prev) => (prev === stepId ? null : stepId))
+    } else if (e.key === 'ArrowRight' && index < steps.length - 1) {
+      e.preventDefault()
+      itemRefs.current[index + 1]?.focus()
+    } else if (e.key === 'ArrowLeft' && index > 0) {
+      e.preventDefault()
+      itemRefs.current[index - 1]?.focus()
+    }
+  }
+
   if (!steps || steps.length === 0) return null
 
   return (
@@ -103,11 +121,18 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
               return (
                 <motion.div
                   key={step.id}
+                  ref={(el) => {
+                    itemRefs.current[index] = el
+                  }}
                   variants={itemVariants}
                   className={`our-process-item flex flex-col items-center md:items-start text-center md:text-left transition-all duration-300 flex-shrink-0 w-full md:w-auto snap-center ${
                     isActive ? 'active' : 'hover:bg-gray-50 bg-transparent'
                   }`}
                   onClick={() => setActiveStepId((prev) => (prev === step.id ? null : step.id))}
+                  onKeyDown={(e) => handleStepKeyDown(e, index, step.id)}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={isActive}
                 >
                   <span className="heading-2 text-yellow mb-0">{index + 1}</span>
                   <h3>{step.title}</h3>
@@ -137,6 +162,8 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                 className={`pagination-bullet w-2 h-2 rounded-full transition-colors ${
                   activeIndex === index ? 'bg-[var(--gda-brand-yellow)]' : 'bg-[#D9D9D9]'
                 }`}
+                tabIndex={0}
+                aria-label={`Go to step ${index + 1}`}
                 onClick={() => {
                   if (gridRef.current) {
                     const itemWidth = gridRef.current.offsetWidth

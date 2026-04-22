@@ -30,7 +30,7 @@ const itemVariants = {
 
 export const HiringProcessBlock: React.FC<HiringProcessProps> = ({ title, items }) => {
   return (
-    <section className="bg-white py-20 px-8">
+    <section className="bg-white py-20">
       <div className="container mx-auto">
         <motion.div variants={containerVariants} initial="hidden" animate="visible">
           <TextFade direction="up">
