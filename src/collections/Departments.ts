@@ -13,6 +13,27 @@ export const Departments: CollectionConfig = {
     update: authenticated,
     delete: authenticated,
   },
+  hooks: {
+    beforeDelete: [
+      async ({ id, req }) => {
+        const teamMembers = await req.payload.find({
+          collection: 'team',
+          where: {
+            department: {
+              equals: id,
+            },
+          },
+          limit: 1,
+        })
+
+        if (teamMembers.totalDocs > 0) {
+          throw new Error(
+            'Cannot delete this department because there are still team members assigned to it.',
+          )
+        }
+      },
+    ],
+  },
   fields: [
     {
       name: 'name',
