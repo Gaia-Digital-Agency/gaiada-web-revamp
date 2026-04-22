@@ -3,7 +3,6 @@
 
 @config '../../../tailwind.config.mjs';
 
-@custom-variant dark (&:is([data-theme='dark'] *));
 @custom-variant sm (@media (width >= theme(--breakpoint-sm)));
 @custom-variant md (@media (width >= theme(--breakpoint-md)));
 @custom-variant lg (@media (width >= theme(--breakpoint-lg)));
@@ -199,44 +198,7 @@
   --font-roboto: 'Roboto', sans-serif;
 }
 
-[data-theme='dark'] {
-  --background: var(--gda-brand-black);
-  --background-even: var(--gda-brand-black);
-  --foreground: var(--gda-brand-white);
-  --card: #262627;
-  --card-foreground: var(--gda-brand-white);
-  --popover: #262627;
-  --popover-foreground: var(--gda-brand-white);
-  --primary: var(--gda-brand-yellow);
-  --primary-foreground: var(--gda-brand-black);
-  --secondary: var(--gda-brand-earth);
-  --secondary-foreground: var(--gda-brand-white);
-  --muted: color-mix(in srgb, var(--gda-brand-earth), transparent 60%);
-  --muted-foreground: var(--gda-brand-grey);
-  --accent: var(--gda-brand-yellow);
-  --accent-foreground: var(--gda-brand-black);
-  --destructive: oklch(39.6% 0.141 25.723deg);
-  --destructive-foreground: oklch(63.7% 0.237 25.331deg);
-  --border: color-mix(in srgb, var(--gda-brand-earth), transparent 70%);
-  --input: color-mix(in srgb, var(--gda-brand-earth), transparent 70%);
-  --ring: var(--gda-brand-yellow);
-  --chart-1: oklch(48.8% 0.243 264.376deg);
-  --chart-2: oklch(69.6% 0.17 162.48deg);
-  --chart-3: oklch(76.9% 0.188 70.08deg);
-  --chart-4: oklch(62.7% 0.265 303.9deg);
-  --chart-5: oklch(64.5% 0.246 16.439deg);
-  --sidebar: var(--gda-brand-black);
-  --sidebar-foreground: var(--gda-brand-white);
-  --sidebar-primary: var(--gda-brand-yellow);
-  --sidebar-primary-foreground: var(--gda-brand-black);
-  --sidebar-accent: #262627;
-  --sidebar-accent-foreground: var(--gda-brand-white);
-  --sidebar-border: color-mix(in srgb, var(--gda-brand-earth), transparent 70%);
-  --sidebar-ring: var(--gda-brand-yellow);
-  --success: oklch(28% 0.1 200deg);
-  --warning: oklch(35% 0.08 70deg);
-  --error: oklch(45% 0.1 25deg);
-}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -463,8 +425,7 @@ html {
   opacity: 0;
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
+html {
   opacity: initial;
 }
 

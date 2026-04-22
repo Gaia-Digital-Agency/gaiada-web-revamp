@@ -13,7 +13,7 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
-    setHeaderTheme('dark')
+    setHeaderTheme('light')
   }, [setHeaderTheme])
 
   // Konfigurasi warna presisi untuk gradient
