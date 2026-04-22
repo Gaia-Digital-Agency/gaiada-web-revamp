@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    'post-ordering': PostOrdering;
     media: Media;
     categories: Category;
     users: User;
@@ -96,6 +97,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'post-ordering': PostOrderingSelect<false> | PostOrderingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -1425,6 +1427,20 @@ export interface VisitOurOfficeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-ordering".
+ */
+export interface PostOrdering {
+  id: number;
+  title: string;
+  /**
+   * Select posts and drag to determine their order on the frontend. Posts not in this list will appear afterwards based on their publication date.
+   */
+  manualOrder?: (number | Post)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "departments".
  */
 export interface Department {
@@ -1645,6 +1661,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'post-ordering';
+        value: number | PostOrdering;
       } | null)
     | ({
         relationTo: 'media';
@@ -2105,6 +2125,16 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-ordering_select".
+ */
+export interface PostOrderingSelect<T extends boolean = true> {
+  title?: T;
+  manualOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

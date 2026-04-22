@@ -25,13 +25,30 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
+  const postOrderingResult = await payload.find({
+    collection: 'post-ordering',
+    limit: 1,
+    depth: 1,
+  })
+
+  const manualOrderedPosts = (postOrderingResult.docs?.[0]?.manualOrder || []) as any[]
+  const manualOrderedIds = manualOrderedPosts.map((post) => (typeof post === 'object' ? post.id : post))
+
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
     limit: 12,
     page: sanitizedPageNumber,
     overrideAccess: false,
+    where: {
+      id: {
+        not_in: manualOrderedIds,
+      },
+    },
   })
+
+  // Prepend manual posts only on the first page
+  const allPosts = sanitizedPageNumber === 1 ? [...manualOrderedPosts, ...posts.docs] : posts.docs
 
   return (
     <div className="pt-24 pb-24">
@@ -47,11 +64,11 @@ export default async function Page({ params: paramsPromise }: Args) {
           collection="posts"
           currentPage={posts.page}
           limit={12}
-          totalDocs={posts.totalDocs}
+          totalDocs={posts.totalDocs + manualOrderedIds.length}
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={allPosts as any} />
 
       <div className="container">
         {posts?.page && posts?.totalPages > 1 && (
@@ -71,12 +88,28 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
+
+  const postOrderingResult = await payload.find({
+    collection: 'post-ordering',
+    limit: 1,
+    depth: 0,
+  })
+
+  const manualOrderedIds = ((postOrderingResult.docs?.[0]?.manualOrder || []) as any[]).map((post) =>
+    typeof post === 'object' ? post.id : post,
+  )
+
   const { totalDocs } = await payload.count({
     collection: 'posts',
     overrideAccess: false,
+    where: {
+      id: {
+        not_in: manualOrderedIds,
+      },
+    },
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
+  const totalPages = Math.ceil(totalDocs / 12)
 
   const pages: { pageNumber: string }[] = []
 

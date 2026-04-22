@@ -22,6 +22,15 @@ export const ArchiveBlock: React.FC<
   if (populateBy === 'collection') {
     const payload = await getPayload({ config: configPromise })
 
+    const postOrderingResult = await payload.find({
+      collection: 'post-ordering',
+      limit: 1,
+      depth: 1,
+    })
+
+    const manualOrderedPosts = (postOrderingResult.docs?.[0]?.manualOrder || []) as any[]
+    const manualOrderedIds = manualOrderedPosts.map((post) => (typeof post === 'object' ? post.id : post))
+
     const flattenedCategories = categories?.map((category) => {
       if (typeof category === 'object') return category.id
       else return category
@@ -30,19 +39,28 @@ export const ArchiveBlock: React.FC<
     const fetchedPosts = await payload.find({
       collection: 'posts',
       depth: 1,
-      limit,
+      limit: Math.max(0, limit - manualOrderedIds.length),
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
             where: {
+              id: {
+                not_in: manualOrderedIds,
+              },
               categories: {
                 in: flattenedCategories,
               },
             },
           }
-        : {}),
+        : {
+            where: {
+              id: {
+                not_in: manualOrderedIds,
+              },
+            },
+          }),
     })
 
-    posts = fetchedPosts.docs
+    posts = [...manualOrderedPosts, ...fetchedPosts.docs] as Post[]
   } else {
     if (selectedDocs?.length) {
       const filteredSelectedPosts = selectedDocs.map((post) => {

@@ -9,6 +9,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { PostOrdering } from './collections/PostOrdering'
 import { Users } from './collections/Users'
 import { Services } from './collections/Services/index'
 import { Portfolio } from './collections/Portfolio'
@@ -76,6 +77,7 @@ export default buildConfig({
   collections: [
     Pages,
     Posts,
+    PostOrdering,
     Media,
     Categories,
     Users,
