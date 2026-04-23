@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { Variants, motion, AnimatePresence } from 'framer-motion'
+import { Plus, Minus } from 'lucide-react'
 import './ourProcessStyle.css'
 
 interface Step {
@@ -135,7 +136,16 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                   aria-pressed={isActive}
                 >
                   <span className="heading-2 text-yellow mb-0">{index + 1}</span>
-                  <h3>{step.title}</h3>
+                  <div className="flex items-center gap-2 w-full justify-center">
+                    <h3 className="mb-0">
+                      {step.title}
+                      {isActive ? (
+                        <Minus className="w-4 h-4 ml-2 mb-0.5 hidden md:inline-block" />
+                      ) : (
+                        <Plus className="w-4 h-4 ml-2 mb-0.5 hidden md:inline-block" />
+                      )}
+                    </h3>
+                  </div>
 
                   <AnimatePresence>
                     {(isActive || isMobile) && (
@@ -144,9 +154,9 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="description-wrapper"
+                        className="description-wrapper w-full flex justify-center"
                       >
-                        <p className="description text-sm">{step.description}</p>
+                        <p className="description text-sm px-8">{step.description}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

@@ -54,11 +54,9 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   const checkScroll = useCallback(() => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-      // canScrollLeft: true if we have scrolled more than 10px from the start
       setCanScrollLeft(scrollLeft > 10)
-      // canScrollRight: true if the remaining scrollable distance is more than 20px
       const remainingScroll = scrollWidth - (scrollLeft + clientWidth)
-      setCanScrollRight(remainingScroll > 20)
+      setCanScrollRight(remainingScroll > 2)
     }
   }, [])
 
@@ -67,9 +65,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
     if (container) {
       const handleScroll = () => checkScroll()
       container.addEventListener('scroll', handleScroll)
-      // Initial check
       checkScroll()
-      // Re-check after a short delay for layout calculation
       const timer = setTimeout(checkScroll, 100)
       return () => {
         container.removeEventListener('scroll', handleScroll)
@@ -101,11 +97,14 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 400
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      })
+      const firstSlide = scrollContainerRef.current.querySelector('.swiper-slide') as HTMLElement
+      if (firstSlide) {
+        const slideWidth = firstSlide.offsetWidth + 32 // 32 is the gap size
+        scrollContainerRef.current.scrollBy({
+          left: direction === 'left' ? -slideWidth : slideWidth,
+          behavior: 'smooth',
+        })
+      }
     }
   }
 
@@ -159,7 +158,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
               <div className="swiper lg:mr-[calc(-1*(100vw-100%)/2)]">
                 <div
                   ref={scrollContainerRef}
-                  className="swiper-wrapper flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory"
+                  className="swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide snap-x snap-mandatory"
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                   <AnimatePresence mode="wait" initial={true}>
@@ -213,7 +212,9 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                               </h3>
                               <p className="text-sm text-[#999] uppercase tracking-widest flex items-center gap-1">
                                 <span className="text-[#bbb] italic lowercase">in</span>
-                                {item.services?.map((s) => s.title).join(', ')}
+                                <span className="underline">
+                                  {item.services?.map((s) => s.title).join(', ')}
+                                </span>
                               </p>
                             </div>
                           </Link>
@@ -243,7 +244,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
           </div>
 
           {/* Centered Navigation Arrows */}
-          <div className="flex justify-center gap-6 mt-16 lg:mt-24">
+          <div className="flex justify-center gap-6 mt-8 lg:mt-8">
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}

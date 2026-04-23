@@ -1,5 +1,5 @@
 #our-process {
-  background-image: '' ; 
+  background-image: '';
   /* url('../../../public/bg-our-process.webp'); */
   background-size: contain;
   background-position: right bottom;
@@ -24,8 +24,11 @@
       overflow: visible;
       cursor: pointer;
       outline: none;
+      outline-color: var(--gda-brand-yellow);
+      outline-offset: 4px;
+      border-radius: 4px;
 
-      &:focus {
+      &:focus-visible {
         outline: 2px solid var(--gda-brand-yellow);
         outline-offset: 4px;
         border-radius: 4px;
@@ -104,6 +107,7 @@
       }
 
       &.active {
+        outline: none;
         h3 {
           font-weight: 700;
           color: var(--gda-brand-black);

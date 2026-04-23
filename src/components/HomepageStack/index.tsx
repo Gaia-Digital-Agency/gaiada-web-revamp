@@ -331,27 +331,6 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
           )
         })}
       </div>
-
-      {/* Navigation Dots - Hidden on mobile */}
-      <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-2.5 z-[9999]">
-        {sections.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Go to section ${i + 1}`}
-            style={{
-              width: i === currentIndex ? '8px' : '6px',
-              height: i === currentIndex ? '28px' : '6px',
-              borderRadius: '99px',
-              background: i === currentIndex ? '#1a1a1b' : 'rgba(26,26,27,0.25)',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-              transition: 'all 0.4s cubic-bezier(0.77, 0, 0.175, 1)',
-            }}
-          />
-        ))}
-      </div>
     </div>
   )
 }
