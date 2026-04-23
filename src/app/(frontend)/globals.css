@@ -198,8 +198,6 @@
   --font-roboto: 'Roboto', sans-serif;
 }
 
-
-
 @theme inline {
   --color-background: var(--background);
   --color-background-even: var(--background-even);
@@ -480,6 +478,17 @@ header {
     img {
       width: 120px;
       height: 30px;
+      transition: 0.3s all;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .hamburger-menu {
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     .nav-wrapper {
@@ -512,6 +521,10 @@ header {
     padding-top: 20px;
     border-top: 1px solid var(--gda-brand-grey);
   }
+}
+
+.mobile-menu::backdrop {
+  display: none !important;
 }
 
 /* F O O T E R */
