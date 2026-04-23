@@ -3,8 +3,10 @@
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Search } from 'lucide-react'
 import { Media } from '@/components/Media'
 import type { Portfolio, Service } from '@/payload-types'
+import { AppButton } from '@/components/common/AppButton'
 
 interface PortfolioGridProps {
   items: Portfolio[]
@@ -15,11 +17,13 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
   const [activeService, setActiveService] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [mounted, setMounted] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(6)
   const gridRef = React.useRef<HTMLDivElement>(null)
 
   // Handle hash change and initial hash
   React.useEffect(() => {
     setMounted(true)
+    setVisibleCount(6)
 
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '')
@@ -50,6 +54,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
 
   const handleServiceClick = (slug: string | null) => {
     setActiveService(slug)
+    setVisibleCount(6)
     if (slug) {
       window.location.hash = slug
     } else {
@@ -81,17 +86,18 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
     )
   }, [items, activeService, searchQuery])
 
+  const paginatedItems = useMemo(() => filteredItems.slice(0, visibleCount), [filteredItems, visibleCount])
+
   // Split items into two columns for the staggered masonry effect
-  const leftColumnItems = filteredItems.filter((_, i) => i % 2 === 0)
-  const rightColumnItems = filteredItems.filter((_, i) => i % 2 !== 0)
+  const leftColumnItems = paginatedItems.filter((_, i) => i % 2 === 0)
+  const rightColumnItems = paginatedItems.filter((_, i) => i % 2 !== 0)
 
   return (
     <div ref={gridRef} className="flex flex-col md:flex-row gap-8 md:gap-20">
       {/* Sidebar */}
       <aside className="w-full md:w-64 shrink-0">
         <div className="sticky top-24 space-y-8">
-          <div>
-            {/* <p className="font-bold uppercase tracking-[0.2em] mb-6"></p> */}
+          <div className="mb-0">
             <nav className="flex flex-wrap md:flex-col gap-3">
               <div className="shrink-0">
                 <button
@@ -125,15 +131,19 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
           {/* Search bar */}
           <div className="hidden md:block pt-4 border-t border-border/50 ">
             <div className="relative">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <Search className="w-4 h-4" />
+              </div>
               <input
                 type="text"
                 placeholder="Search for..."
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value)
+                  setVisibleCount(6)
                   scrollToTop()
                 }}
-                className="w-full h-[54px] rounded-md bg-[#f2f2f2] border border-border px-3 py-2 text-[14px] p-[16px] tracking-widest focus:outline-none focus:border-foreground transition-colors"
+                className="w-full h-[54px] rounded-md bg-[#f2f2f2] border border-border pl-8 pr-3 py-2 text-[14px] p-[16px] tracking-widest focus:outline-none focus:border-foreground transition-colors"
               />
               {searchQuery && (
                 <button
@@ -177,17 +187,22 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
             )}
           </div>
         </div>
+
+        {visibleCount < filteredItems.length && (
+          <div className="mt-16 flex justify-center">
+            <AppButton
+              label="Load More"
+              onClick={() => setVisibleCount((prev: number) => prev + 6)}
+              className="px-8 py-3"
+            />
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
 const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
-  const servicesLabel = item.services
-    ?.map((s) => (typeof s === 'object' ? s.title : ''))
-    .filter(Boolean)
-    .join(', ')
-
   const thumbnail = item.featuredImage
 
   return (
@@ -222,7 +237,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
 
       <div className="mt-6 space-y-2 border-t border-(--gda-earth) pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h3 className="text-[19px] mb-2! font-medium leading-tight hover:underline underline-offset-4 decoration-1">
+          <h3 className="text-[19px] mb-2! font-medium leading-tight hover:underline underline-offset-4 decoration-1 break-words">
             {item.title}
           </h3>
         </Link>
@@ -238,7 +253,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
                     <React.Fragment key={service.id}>
                       <Link
                         href={`/services/${service.slug}`}
-                        className="text-[11px] uppercase tracking-[0.12em] text-(--gda-earth) hover:text-(--gda-brand-yellow) hover:underline transition-colors duration-200"
+                        className="text-[11px] uppercase tracking-[0.12em] text-(--gda-earth) hover:text-(--gda-brand-yellow) underline transition-colors duration-200"
                       >
                         {service.title}
                       </Link>
