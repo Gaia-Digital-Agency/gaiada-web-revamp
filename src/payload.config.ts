@@ -101,6 +101,7 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromName: process.env.SMTP_FROM_NAME || 'Gaiada Local Test',
     defaultFromAddress: process.env.SMTP_FROM_ADDRESS || 'test@gaiada.local',
+    skipVerify: true,
     transportOptions: {
       host: process.env.SMTP_HOST || '127.0.0.1',
       port: smtpPort,
