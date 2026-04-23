@@ -32,7 +32,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   useEffect(() => {
     const dialog = dialogRef.current
     if (isMobileMenuOpen) {
-      dialog?.showModal()
+      dialog?.show()
       document.body.style.overflow = 'hidden'
     } else {
       dialog?.close()
@@ -77,7 +77,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   return (
     <>
       <header
-        className={`fixed top-0 z-[200] w-full h-[79px] px-6 md:px-10 flex items-center transition-[height,background-color] duration-300 backdrop-blur-md ${
+        className={`fixed top-0 z-99999 w-full h-[70px] px-6 md:px-10 flex items-center transition-[height,background-color] duration-300 backdrop-blur-md ${
           isScrolled
             ? 'bg-white/80 backdrop-blur-[25px]'
             : isHomepage
@@ -97,10 +97,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
 
           {/* Hamburger Menu Icon for Mobile */}
           <button
-            className="lg:hidden p-2 z-[210]"
+            className="hamburger-menu lg:hidden p-2 z-99 cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
+            type="button"
           >
             <div
               className={`w-6 h-0.5 bg-black transition-all duration-300 ${
@@ -124,8 +125,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
       {/* Mobile Menu*/}
       <dialog
         ref={dialogRef}
-        className={`mobile-menu lg:hidden fixed inset-0 w-full h-full bg-white z-[190] flex flex-col pt-[70px] px-6 transition-all duration-300 ease-in-out border-none m-0 max-w-none max-h-none open:flex ${
-          isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+        className={`mobile-menu lg:hidden fixed top-[70px] left-0 right-0 w-full h-[calc(100vh-79px)] bg-white z-90 flex flex-col px-6 transition-all duration-300 ease-in-out border-none m-0 max-w-none max-h-none open:flex ${
+          isMobileMenuOpen
+            ? 'translate-y-0 opacity-100 pointer-events-auto'
+            : '-translate-y-full opacity-0 pointer-events-none'
         }`}
         onClose={() => setIsMobileMenuOpen(false)}
       >

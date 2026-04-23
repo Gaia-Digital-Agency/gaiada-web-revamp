@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 interface Props {
   className?: string
@@ -16,15 +15,12 @@ export const Logo = (props: Props) => {
   const priority = priorityFromProps || 'low'
 
   return (
-    /* eslint-disable @next/next/no-img-element */
     <img
       alt={alt || 'Gaiada Logo'}
-      // width={193}
-      // height={34}
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[50px] object-contain', className)}
+      className={clsx('object-contain', className)}
       src={src || '/gaia-logo.webp'}
     />
   )
