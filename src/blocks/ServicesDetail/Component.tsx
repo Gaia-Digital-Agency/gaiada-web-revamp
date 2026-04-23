@@ -34,7 +34,7 @@ export default function SubServiceList({
           <div
             key={service.id}
             className={`relative w-full h-[350px] md:h-[400px] group overflow-hidden cursor-pointer transition-all duration-500 ${
-              !isOdd ? 'md:mt-20 mt-0' : 'mt-0'
+              !isOdd ? 'mt-0' : 'md:mt-20 mt-0'
             }`}
           >
             <Media
