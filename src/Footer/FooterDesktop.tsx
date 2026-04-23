@@ -24,8 +24,8 @@ export const FooterDesktop = ({
       }}
     >
       <div className="flex justify-end items-start py-20">
-        <div className="w-full px-4 lg:max-w-2xl py-8">
-          <h2 className="heading-1 w-3/4">{footerData?.heading}</h2>
+        <div className="w-full px-14 lg:max-w-xl py-8">
+          <h2 className="heading-1 max-w-md">{footerData?.heading}</h2>
           <div className="flex flex-col gap-4 mt-8">
             {footerData?.navItemsWithIcon?.map((item, i) => {
               const link = item.link
