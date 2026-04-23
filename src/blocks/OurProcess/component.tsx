@@ -136,7 +136,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                   aria-pressed={isActive}
                 >
                   <span className="heading-2 text-yellow mb-0">{index + 1}</span>
-                  <div className="flex items-center gap-2 w-full justify-center">
+                  <div className="flex items-center gap-2 w-full justify-center md:justify-start">
                     <h3 className="mb-0">
                       {step.title}
                       {isActive ? (
@@ -156,7 +156,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                         className="description-wrapper w-full flex justify-center"
                       >
-                        <p className="description text-sm px-8">{step.description}</p>
+                        <p className="description text-sm px-8 md:px-0">{step.description}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

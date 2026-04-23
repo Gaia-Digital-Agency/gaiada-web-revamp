@@ -104,12 +104,12 @@ const DropdownNavItem: React.FC<{
       <button
         aria-controls={submenuId}
         aria-expanded={open}
-        className="has-submenu inline-flex items-center gap-1 text-sm font-medium text-primary"
+        className="has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir"
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
       >
-        <CMSLink {...item.link} appearance="link" />
+        {item.link.label}
         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
