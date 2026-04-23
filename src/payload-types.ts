@@ -123,11 +123,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     settings: Setting;
+    'post-ordering': PostOrdering;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     settings: SettingsSelect<false> | SettingsSelect<true>;
+    'post-ordering': PostOrderingSelect<false> | PostOrderingSelect<true>;
   };
   locale: null;
   widgets: {
@@ -2932,6 +2934,19 @@ export interface Setting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-ordering".
+ */
+export interface PostOrdering {
+  id: number;
+  /**
+   * Select posts and drag to determine their order on the frontend. Posts not in this list will appear afterwards based on their publication date.
+   */
+  manualOrder?: (number | Post)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3043,6 +3058,16 @@ export interface SettingsSelect<T extends boolean = true> {
   smtpSecure?: T;
   fromName?: T;
   fromEmail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-ordering_select".
+ */
+export interface PostOrderingSelect<T extends boolean = true> {
+  manualOrder?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

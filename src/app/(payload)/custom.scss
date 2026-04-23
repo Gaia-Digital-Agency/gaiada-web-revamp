@@ -1,0 +1,111 @@
+/*
+  Custom Styles for Payload Admin Panel
+  This file is used to customize the appearance of the Payload dashboard.
+*/
+
+.drag-drop-cards {
+  /* Target the selected items container specifically */
+  .relationship--list,
+  .rs__value-container--is-multi {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+    gap: 16px !important;
+    padding: 16px 0 !important;
+    align-items: stretch !important;
+
+    /* Style each selected item as a neat Card */
+    > li,
+    > div.draggable-sortable,
+    > div[class*="multiValue"] {
+      margin: 0 !important;
+      border: 1px solid var(--theme-elevation-200) !important;
+      border-radius: 12px !important;
+      padding: 16px 40px 16px 16px !important; /* Extra padding on right for the remove button */
+      background: var(--theme-bg) !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+      
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: flex-start !important;
+      position: relative !important;
+      min-height: 100px !important;
+      
+      transition: all 0.2s ease !important;
+      cursor: grab !important;
+
+      &:active {
+        cursor: grabbing !important;
+        transform: scale(0.98);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      &:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08) !important;
+        border-color: var(--theme-elevation-300) !important;
+        transform: translateY(-2px);
+      }
+
+      /* Style the text/title inside the card */
+      span[class*="multiValueLabel"],
+      .relationship-node__title {
+        font-weight: 600 !important;
+        font-size: 15px !important;
+        line-height: 1.4 !important;
+        color: var(--theme-elevation-800) !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        text-align: left !important;
+        width: 100% !important;
+        display: block !important;
+      }
+
+      /* Style the remove/delete button */
+      button[class*="multiValueRemove"],
+      .relationship-node__remove,
+      .draggable-sortable__remove {
+        position: absolute !important;
+        top: 16px !important;
+        right: 16px !important;
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 50% !important;
+        background: var(--theme-elevation-100) !important;
+        color: var(--theme-elevation-500) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        padding: 0 !important;
+        margin: 0 !important;
+
+        &:hover {
+          background: var(--theme-error-100) !important;
+          color: var(--theme-error-600) !important;
+        }
+
+        svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+      }
+    }
+  }
+
+  /* Exclude the search input container from grid styling */
+  .rs__input-container {
+    grid-column: 1 / -1 !important;
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    min-height: auto !important;
+    
+    &:hover {
+      transform: none !important;
+    }
+  }
+}

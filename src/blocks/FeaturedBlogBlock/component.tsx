@@ -28,13 +28,24 @@ export const FeaturedBlogBlockComponent: React.FC<FeaturedBlogBlockProps> = asyn
       post = featuredPost as Post
     }
   } else {
-    const fetched = await payload.find({
-      collection: 'posts',
-      limit: 1,
+    const postOrdering = await payload.findGlobal({
+      slug: 'post-ordering',
       depth: 1,
-      sort: '-publishedAt',
     })
-    post = fetched.docs[0] as unknown as Post
+
+    const manualOrderedPosts = (postOrdering?.manualOrder || []) as any[]
+
+    if (manualOrderedPosts.length > 0) {
+      post = manualOrderedPosts[0] as Post
+    } else {
+      const fetched = await payload.find({
+        collection: 'posts',
+        limit: 1,
+        depth: 1,
+        sort: '-publishedAt',
+      })
+      post = fetched.docs[0] as unknown as Post
+    }
   }
 
   if (!post) {
