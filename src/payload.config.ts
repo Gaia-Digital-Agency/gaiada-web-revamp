@@ -26,6 +26,15 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const smtpPort = Number(process.env.SMTP_PORT || 1025)
+const smtpAuth =
+  process.env.SMTP_USER && process.env.SMTP_PASS
+    ? {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      }
+    : undefined
+
 // Main Payload CMS configuration defining collections, globals, plugins, and database settings
 export default buildConfig({
   admin: {
@@ -90,13 +99,13 @@ export default buildConfig({
   globals: [Header, Footer, Settings, PostOrdering],
   plugins,
   email: nodemailerAdapter({
-    defaultFromName: 'Gaiada Local Test',
-    defaultFromAddress: 'test@gaiada.local',
+    defaultFromName: process.env.SMTP_FROM_NAME || 'Gaiada Local Test',
+    defaultFromAddress: process.env.SMTP_FROM_ADDRESS || 'test@gaiada.local',
     transportOptions: {
-      host: '127.0.0.1',
-      port: 1025,
-      secure: false,
-      auth: undefined, // MailHog doesn't need auth
+      host: process.env.SMTP_HOST || '127.0.0.1',
+      port: smtpPort,
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: smtpAuth,
     },
   }),
   upload: {
