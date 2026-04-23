@@ -53,7 +53,7 @@ export async function Footer() {
       {/* BOTTOM */}
       <div style={{ backdropFilter: 'blur(10px)' }}>
         <div className="container footer-bottom grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 py-4 md:py-16">
-          <div className="flex flex-row flex-start flex-wrap gap-4">
+          <div className="flex flex-row flex-start justify-center md:justify-start flex-wrap gap-4">
             {navItems.map((navItem) => (
               <CMSLink
                 key={navItem.id}

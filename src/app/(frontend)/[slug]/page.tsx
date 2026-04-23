@@ -77,7 +77,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   // All other pages: standard rendering
   return (
-    <article className="site-main">
+    <article className="site-main pt-16">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}

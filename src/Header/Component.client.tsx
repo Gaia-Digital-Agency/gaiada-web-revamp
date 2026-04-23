@@ -30,6 +30,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
   }, [pathname])
 
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024 && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [isMobileMenuOpen])
+
+  useEffect(() => {
     const dialog = dialogRef.current
     if (isMobileMenuOpen) {
       dialog?.show()
