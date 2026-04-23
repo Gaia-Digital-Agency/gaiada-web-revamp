@@ -26,12 +26,12 @@
       }
 
       &.active {
-        color: var(--gda-brand-black);
+        color: var(--gda-brand-yellow);
         font-weight: 700;
       }
 
       &:hover {
-        color: var(--gda-brand-black);
+        color: var(--gda-brand-yellow);
       }
     }
   }
@@ -42,6 +42,12 @@
         transition: width 0.3s ease;
         &:hover {
           width: 600px;
+          flex: 0 0 600px;
+
+          @media (max-width: 767px) {
+            width: 343px;
+            flex: 0 0 343px;
+          }
 
           .swiper-body {
             .image-wrapper {

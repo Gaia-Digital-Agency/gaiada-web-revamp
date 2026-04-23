@@ -48,7 +48,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
   const content = (
     <>
       {iconPosition === 'left' && iconEl}
-      <span className="leading-none">{label}</span>
+      <span className="button-label">{label}</span>
       {iconPosition !== 'left' && iconEl}
     </>
   )
