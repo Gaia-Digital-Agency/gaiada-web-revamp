@@ -6,6 +6,7 @@ import type { Department, Team } from '@/payload-types'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import { AppButton } from '@/components/common/AppButton'
 import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
+import './TeamBlockStyle.css'
 
 type Props = {
   departments: (Department & { members: Team[] })[]
@@ -88,7 +89,8 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className="flex gap-4 overflow-x-auto overflow-y-visible cursor-grab select-none no-scrollbar "
+          className="our-team-wrapper flex gap-4 overflow-x-auto overflow-y-visible cursor-grab select-none no-scrollbar "
+          id="our-team"
           style={{
             width: 'calc(100% + 48px)',
             marginRight: '-24px',
@@ -111,15 +113,15 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                   setActiveDept(null)
                   setCurrentPage((prev) => ({ ...prev, [i]: 0 }))
                 }}
-                className={`relative shrink-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.3,0.64,1)]
+                className={`our-team-item relative shrink-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.3,0.64,1)]
                 ${isActive ? 'w-[800px]' : 'w-[227px]'}
                 ${activeDept !== null && !isActive ? 'w-[118px]' : ''}
               `}
               >
                 {/* Card Shell */}
                 <div
-                  className={`relative h-[420px] overflow-hidden transition-all duration-300 outline outline-1
-                  ${isActive ? 'shadow-[0_24px_64px_rgba(255,194,44,0.15)] outline-primary/20' : 'outline-border/10'}
+                  className={`our-team-body relative h-[420px] overflow-hidden transition-all duration-300 outline outline-1
+                  ${isActive ? 'active shadow-[0_24px_64px_rgba(255,194,44,0.15)] outline-primary/20' : 'outline-border/10'}
                 `}
                 >
                   {/* Face A - Dept Info */}

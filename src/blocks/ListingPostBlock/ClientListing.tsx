@@ -15,7 +15,11 @@ type Props = {
   categoryID?: string | null
 }
 
-const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, categoryID: initialCatID }) => {
+const ListingContent: React.FC<Props> = ({
+  initialPosts,
+  initialHasNextPage,
+  categoryID: initialCatID,
+}) => {
   const searchParams = useSearchParams()
   const q = searchParams.get('q')
   const [posts, setPosts] = useState<Post[]>(initialPosts)
@@ -35,12 +39,7 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, cat
   }, [])
 
   const fetchPosts = useCallback(
-    async (
-      pageNum: number,
-      searchQ?: string | null,
-      catID?: string | null,
-      isLoadMore = false,
-    ) => {
+    async (pageNum: number, searchQ?: string | null, catID?: string | null, isLoadMore = false) => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort()
       }
@@ -124,8 +123,8 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, cat
                   href={`/posts/${post.slug}`}
                   className="block w-full aspect-video bg-gray-100 overflow-hidden mb-6 relative"
                 >
-                  {((typeof post.heroImage === 'object' && post.heroImage) ||
-                    (typeof post.meta?.image === 'object' && post.meta?.image)) ? (
+                  {(typeof post.heroImage === 'object' && post.heroImage) ||
+                  (typeof post.meta?.image === 'object' && post.meta?.image) ? (
                     <Media
                       resource={
                         (typeof post.heroImage === 'object' && post.heroImage) ||
@@ -144,7 +143,7 @@ const ListingContent: React.FC<Props> = ({ initialPosts, initialHasNextPage, cat
                 </Link>
 
                 <p className="text-gray-500 leading-relaxed mb-6 line-clamp-3">
-                  {post.meta?.description || 'Read more about this article...'}
+                  {post.meta?.description}
                 </p>
 
                 <AppButton

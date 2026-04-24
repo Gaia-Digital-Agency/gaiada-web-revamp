@@ -45,7 +45,7 @@ const PortfolioInsightItem: React.FC<{
       <div
         className={cn(
           'flex flex-col gap-y-4',
-          index % 2 !== 0 ? 'md:order-2 pr-20' : 'md:order-1 pl-20',
+          index % 2 !== 0 ? 'md:order-2 pr-20' : 'md:order-1 md:pl-20',
         )}
       >
         <div ref={descriptionRef}>

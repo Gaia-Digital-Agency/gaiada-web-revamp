@@ -475,8 +475,8 @@ header {
   .container {
     padding: 0 30px !important;
 
-    @media (max-width: 1024px) {
-      padding: 0;
+    @media (max-width: 767px) {
+      padding: 0 !important;
     }
 
     img {
@@ -674,6 +674,13 @@ h3,
 
   &.active {
     color: var(--gda-brand-yellow) !important;
+  }
+}
+
+/* F O R M S */
+.gaiada-form {
+  .required {
+    display: none !important;
   }
 }
 
