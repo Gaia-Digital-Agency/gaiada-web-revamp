@@ -40,7 +40,7 @@ export const HeaderNav: React.FC<{ data: HeaderType | null; isMobile?: boolean }
             key={i}
             {...item.link}
             appearance="link"
-            className={`font-medium ${isActive ? 'active' : ''}`}
+            className={`font-medium transition-colors duration-300 ${isActive ? 'text-[#FFC22C]' : ''}`}
           />
         )
       })}
@@ -94,6 +94,8 @@ const DropdownNavItem: React.FC<{
     return () => clearTimeout(timeoutId)
   }, [open])
 
+  const isAnySubActive = item.subItems?.some((sub) => sub.link.url === pathname)
+
   return (
     <div
       ref={containerRef}
@@ -104,7 +106,7 @@ const DropdownNavItem: React.FC<{
       <button
         aria-controls={submenuId}
         aria-expanded={open}
-        className={`has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir cursor-pointer transition-colors duration-300 ${isMobile ? '' : 'group-hover:text-[#FFC22C] [&.submenu-open]:text-[#FFC22C]'}`}
+        className={`has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir cursor-pointer transition-colors duration-300 ${isMobile ? '' : 'group-hover:text-[#FFC22C] [&.submenu-open]:text-[#FFC22C]'} ${isAnySubActive ? 'text-[#FFC22C]' : ''}`}
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
@@ -139,7 +141,7 @@ const DropdownNavItem: React.FC<{
               <CMSLink
                 {...subItem.link}
                 appearance="inline"
-                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${subItem.link.url === pathname ? 'active' : ''} ${isMobile ? 'justify-start' : ''}`}
+                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${subItem.link.url === pathname ? 'text-[#FFC22C]' : ''} ${isMobile ? 'justify-start' : ''}`}
               >
                 <div className="relative w-3 h-3 flex-shrink-0">
                   <div

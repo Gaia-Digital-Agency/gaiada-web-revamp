@@ -483,15 +483,23 @@ header {
       width: 120px;
       height: 30px;
       transition: 0.3s all;
+      transform: scale(1);
 
       &:hover {
         opacity: 0.8;
+        transform: scale(0.9);
       }
     }
 
     .hamburger-menu {
+      transition: 0.3s all;
+
       &:hover {
         opacity: 0.8;
+
+        div {
+          background-color: var(--gda-brand-yellow);
+        }
       }
     }
 
@@ -535,8 +543,14 @@ header {
 footer {
   background-color: var(--gda-brand-white);
 
-  .required {
-    display: none;
+  img {
+    transition: 0.3s all;
+    transform: scale(1);
+
+    &:hover {
+      opacity: 0.8;
+      transform: scale(0.9);
+    }
   }
 
   .footer-bottom {
