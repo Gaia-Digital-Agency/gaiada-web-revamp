@@ -178,7 +178,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   }
 
   // 3. Create Scopes (Scope of Work)
-  const scopeData = [
+  const scopeData_old = [
     'Brand Identity',
     'Market Research',
     'UX Strategy',
@@ -191,6 +191,28 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     'Web Development',
     'Mobile App Development',
     'E-commerce Solutions',
+  ]
+
+  const scopeData = [
+    'Website Development',
+    'Website Optimisation',
+    'Website Optimization',
+    'Website Maintenance',
+    'UI/UX Design',
+    'Google Ads',
+    'Social Ads',
+    'SEO',
+    'Strategy',
+    'Guideline Concept',
+    'Social Media Management',
+    'Content Creation',
+    'Design',
+    'Photography',
+    'Videography',
+    '360 VR Photography',
+    'Logo Creation',
+    'Public Relations & Marketing Communications',
+    'Marketing Communication',
   ]
   const scopes: Scope[] = []
   for (const title of scopeData) {
@@ -699,7 +721,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   const portfolioEntries = [
     {
       title: 'Akoya Spa',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1], // Website, Ads & SEO, Social Media, Design
       paragraph:
         "Akoya Spa is considered one of Bali's most tranquil settings, the perfect location for the pursuit of health and wellbeing. Akoya is at its heart with unique traditions in health and healing that have given Ubud a reputation amongst spa practitioners worldwide. As a proud partner of GAIA Digital Agency, Akoya Spa's digital presence is crafted with the same level of care and attention to detail that goes into every aspect of their massage therapies.",
       scopes: [
@@ -717,7 +739,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Apéritif Restaurant',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1, 6, 2], // Website, Ads & SEO, Social Media, Design, Content Creation, Marketing
       paragraph:
         "Apéritif Restaurant and Bar offers a unique dining experience designed to be savoured. Drawing on the European tradition of pre-dinner drinks and canapés, the restaurant invites you to explore a degustation menu of modern global cuisine. As a valued client of GAIA Digital Agency, we've worked tirelessly to capture the essence of Apéritif's unique concept and bring it to life through their digital presence, ensuring that every aspect of their brand reflects the sophistication, elegance and charm that Apéritif is now known for.",
       scopes: [
@@ -738,21 +760,21 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Aquatir Caviar',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3], // Website, Ads & SEO
       paragraph:
         "Aquatir, the modern sturgeon breeding enterprise, located in Indonesia's tropical paradise, Bali. Aquatir's innovative approach utilizes cutting-edge technology to ensure a perfect and environmentally friendly practice. Aquatir Caviar is committed to producing high-quality products that meet international standards, whilst also prioritizing the health and productivity of our sturgeon fish. The fishes are raised on a diet of high-quality feed, free from hormones, antibiotics and GMOs, containing all the necessary micro nutrients and vitamins for them to flourish.",
       scopes: ['Website Development', 'Website Optimization', 'Website Maintenance', 'SEO'],
     },
     {
       title: 'AYR Water',
-      serviceIndex: 0,
+      serviceIndexes: [4], // Website only
       paragraph:
         'AYR Water is a premier provider of premium sparkling and still water solutions, allowing ythe ability to serve fresh, clean water on-site and on demand. Designed with environmental impact in mind, their systems provide top-quality hydration and reduce plastic waste. AYR systems support businesses in providing water efficiently, profitably, and sustainably.',
       scopes: ['Website Development', 'Website Optimisation', 'Website Maintenance'],
     },
     {
       title: 'Blossom Steakhouse',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 1, 6], // Website, Ads & SEO, Design, Content Creation
       paragraph:
         "‘Blossom' blossomed from the vision of its owners, Dewi and Anthony Syrowatka, who bring over 20 years of culinary passion and expertise. With this wealth of experience, their hearts brimmed with a desire to create a space where families and friends could weave memories as rich and flavourful as the steaks and seafood sizzling on our grills.",
       scopes: [
@@ -766,7 +788,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'BRCA',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5], // Website, Ads & SEO, Social Media
       paragraph:
         "The Bali Restaurant and Cafe Association (BRCA) is a newly formed association that seeks to unite Bali restaurateurs and represent Bali's burgeoning F&B industry by promoting the island as a world-class culinary destination while providing a platform for Bali restaurants and cafés to have access to the latest information and services about sustainable practices.",
       scopes: [
@@ -779,7 +801,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'CasCades Restaurant',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1, 6, 2], // Website, Ads & SEO, Social Media, Design, Content Creation, Marketing
       paragraph:
         "CasCades is a culinary gem nestled in the lush Valley of the Kings, just a 5-minute drive from the center of Ubud. As one of the original Ubud dining destinations, CasCades has been delighting guests with genuine cuisine and breath-taking jungle views since 2000. Boasting an impressive wine list and bold gourmet dishes, it's the perfect spot for a long lunch or a special dinner. At GAIA Digital Agency, we're very proud to partner with CasCades and provide them with website development, Google Ads, social ads, SEO, design, photography and other services to showcase their exceptional offerings and stunning location to the world.",
       scopes: [
@@ -800,14 +822,14 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Cloud Kitchen',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3], // Website, Ads & SEO
       paragraph:
         "Cloud Kitchen Bali located in Ubud offering 24-hour delivery every day have become a game-changer for food lovers seeking convenience and variety. With an extensive menu that caters to late-night cravings and early morning breakfasts alike, these kitchens ensure that delicious meals are just a few clicks away at any hour. Whether you're in the mood for international favorites, or healthy options, you can find something to satisfy your appetite. This round-the-clock service not only meets the needs of locals and tourists but also enhances Bali's vibrant food scene, making it easier than ever to enjoy a culinary adventure at any time of day or night.",
       scopes: ['Website Development', 'Website Optimization', 'Website Maintenance', 'SEO'],
     },
     {
       title: 'Dapur Raja',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1], // Website, Ads & SEO, Social Media, Design
       paragraph:
         'Dapur Raja “the kings kitchen” is a Balinese themed restaurant located in central Ubud serving a Balinese rijsttafel. Dapur Raja is located on Goutama Selatan street, next to the Golden Monkey Chinese Restaurant Ubud Bali. Vegetarians and non vegetarian are well catered to here. GAIA Digital Agency has provided a range of services, including Website Development, Google Ads, Social Ads, SEO, Design, Photography, and Marketing Communications, to help Dapur Raja build a distinctive personality that captures the essence of their craft.',
       scopes: [
@@ -825,14 +847,14 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Ginger Moon Bali',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3], // Website, Ads & SEO
       paragraph:
         "Ginger Moon Canteen, a Bali icon since 2012, has become a beloved destination for locals and visitors alike. Located on Seminyak's famous “Eat Street,” our modern Asian canteen offers a welcoming, casual oasis in the heart of Bali's vibrant dining and shopping scene. For many, Ginger Moon is a must-visit, a place that feels like home.",
       scopes: ['Website Development', 'Website Optimisation', 'Website Maintenance', 'SEO'],
     },
     {
       title: 'Golden Monkey',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1, 6, 2], // Website, Ads & SEO, Social Media, Design, Content Creation, Marketing
       paragraph:
         'Golden Monkey Chinese Restaurant is the ultimate destination for those seeking an authentic Chinese culinary experience in either Ubud or Canggu. From delicious Chinese BBQ, Dim Sum to traditional Cantonese dishes, every bite is crafted with passion and precision, creating a culinary masterpiece. As a strategic partner of GAIA Digital Agency, we have enjoyed working with Golden Monkey to create a digital platform that showcases their brand and menu. From a visually stunning website to a comprehensive social media strategy, our team has helped them build a loyal following of customers. Our expertise in marketing communications and events has allowed us to put Golden Monkey in the spotlight, hosting unforgettable dinners and securing top-tier media coverage.',
       scopes: [
@@ -853,35 +875,35 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Hunter Motorcycles',
-      serviceIndex: 0,
+      serviceIndexes: [4], // Website only
       paragraph:
         "Hunter Motorcycles is more than just a business – it's a way of life driven by passion. Built with cutting-edge engineering and only the finest components, each motorcycle is meticulously hand-assembled by skilled Indonesian technicians. Hunter's unwavering dedication to customer satisfaction ensures an unparalleled riding experience, from showroom to service. With a full inventory of spare parts and a trusted partnership with GAIA Digital Agency, Hunter Motorcycles has put itself in the best possible position to capture the hearts of the Indonesian motorcycle market.",
       scopes: ['Website Development', 'Website Optimisation', 'Website Maintenance'],
     },
     {
       title: 'Institute Escoffier',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3], // Website, Ads & SEO
       paragraph:
         "Institut Disciples Escoffier (IDE) is a professional culinary school accredited by the French Ministry of Education and supported by Disciples Escoffier International, the world's largest chefs' association. IDE offers programmes in cuisine, pastry, and bakery, ranging from dual bachelor's degrees and professional certifications to masterclasses and workshops. With a high teacher-to-student ratio and practical training in state-of-the-art facilities, IDE equips students for careers in international fine dining and luxury hospitality.",
       scopes: ['SEO', 'Website Maintenance'],
     },
     {
       title: 'Lacalita',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5], // Website, Ads & SEO, Social Media
       paragraph:
         "Lacalita is all about bringing people together over great food and drinks in a vibrant setting, combining Mexican tradition with a modern, local twist, creating a space that's warm, welcoming, and full of life. From the colourful interiors to the buzzing atmosphere, every detail is designed to make guests feel at home while they enjoy something a little out of the ordinary.",
       scopes: ['Website Maintenance', 'Google Ads', 'Social Ads', 'Social Media Management'],
     },
     {
       title: 'NOW! Magazine',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3], // Website (UI/UX), Ads & SEO
       paragraph:
         "Since its inception in 2009 as a printed magazine, NOW! Bali has been dedicated to promoting and cherishing the unique culture that sets the island apart. At GAIA Digital Agency, we've helped them to reach an even wider audience by providing exceptional UI/UX design, website optimization and SEO services. Through our partnership, NOW! Bali has continued sharing the island's rich cultural heritage while staying at the forefront of Bali's thriving tourism industry. From hotels and hostels to food and drink, from adventures and events to travel and tourism, we've helped them to promote all the industries that make Bali such a vibrant and exciting destination.",
       scopes: ['UI/UX Design', 'Website Optimisation', 'SEO'],
     },
     {
       title: 'Pegasus Media Logistic',
-      serviceIndex: 0,
+      serviceIndexes: [4, 0], // Website, Branding (Logo Creation)
       paragraph:
         "Pegasus Media & Logistics, established in July 2022, is a leading full-service production, sourcing, and distribution company based in Sydney. Operating from two strategic locations, Pegasus is among Australia's largest and most versatile print production and logistics companies. With an unparalleled commitment to quality, innovation, and efficiency, Pegasus delivers a seamless range of services tailored to meet the diverse needs of its clients across various industries.",
       scopes: [
@@ -893,7 +915,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Pinstripe Bar Ubud',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5], // Website, Ads & SEO, Social Media
       paragraph:
         "Evoking the grandeur and exhilarating vibes of the 1930s, the elegant colonial-style building housing Pinstripe Cocktail Bar immediately leaves a lasting impression. Overlooking lush paddy fields and jungle valley the tone is set for a unique, sophisticated dining and cocktail sojourn that is opulently decorated in marble, dark woods, and bronze elements that summons the convivial and grand atmosphere of a bygone era. The renowned European tradition of enjoying an aperitif — pre-dinner drink and snack to stimulate the appetite — has been seamlessly integrated into the dining experience. Pinstripe's gastronomic approach recognises fine global haute cuisine, with a hint of Indonesian influence, drawing on flavours of the old Spice Islands. The Bar is a celebration of the rich traditions of the 1930s when the world began to learn about the secret island of Bali and the exotic nature of Ubud and its sublime beauty.",
       scopes: [
@@ -908,7 +930,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'SGI',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5], // Website, Ads & SEO, Social Media
       paragraph:
         "SGI is an Indonesian & Australian owned, and incorporated company, with experience in helicopter and fixed wing operations throughout Indonesia and Asia Pacific. Sayap Garuda Indah (SGi) is an Indonesian based, and incorporated company whose primary activity is the provision of Rotary and Fixed Wing aviation services to the Mining, Tourism and Corporate VIP sectors. At GAIA Digital Agency, we're very proud to partner with SGi and provide them with website development, SEO, social ads and other services to showcase their exceptional services to the world.",
       scopes: [
@@ -923,7 +945,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'SGI Air Bali',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5], // Website, Ads & SEO, Social Media
       paragraph:
         "Air Bali Helicopter is the first dedicated and longest running helicopter tours company in Bali and the region. With over 20 years of experience, we take pride in maintaining a 100% safety record and the company has been with the flight safety foundation BARS Program since April 2013 and it's GOLD rating operator.",
       scopes: [
@@ -936,7 +958,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'SōHA Yoga',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1], // Website, Ads & SEO, Social Media, Design
       paragraph:
         'SoHA Yoga, School of Healing Arts. Experience your true self to become a skillful, certified yoga teacher and find your unique expression through the yoga universe, to Empower your purpose and access tools to share it with the world and to revive your inner wisdom and create a happy, healthy, and wealthy life for you and your loved ones. GAIA provide various services from website optimization, website maintenance, google ads, social ads, SEO, strategy, guideline concept, social media management and design.',
       scopes: [
@@ -954,21 +976,21 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Suri Residence',
-      serviceIndex: 0,
+      serviceIndexes: [4, 1], // Website, Design
       paragraph:
         "Suri Residence, with its five unique bamboo houses designed by IBUKU, is more than just a place to live. It's a celebration of Balinese culture and sustainable living. It's an embodiment of harmony, balance, and respect for the natural world, principles deeply rooted in Balinese philosophy.",
       scopes: ['Website Development', 'Website Optimisation', 'Website Maintenance', 'Design'],
     },
     {
       title: 'Talasi',
-      serviceIndex: 0,
+      serviceIndexes: [5], // Social Media only
       paragraph:
         'Talasi is about exploring and discovering the potential in obscurity. Talasi is about setting up and operating at the Origin. Talasi is about working with the community, providing them with knowledge, skills, and tools. Investing at the grassroots level and connecting the chain to sustain and maintain nature while enhancing livelihoods. With the end game of empowerment to the people of the land.',
       scopes: ['Strategy', 'Guideline Concept', 'Social Media Management'],
     },
     {
       title: 'The Fillup Club',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1, 6, 2], // Website, Ads & SEO, Social Media, Design, Content Creation, Marketing
       paragraph:
         "The Fillup Club, the world's first luxury inflatable furniture brand based in Belgium, offers a delightful selection of furniture that brings comfort and style to their clients' outdoor living space. Each inflatable item is made with Sunbrella fabrics, ensuring they are beautiful and functional. As proud partners of GAIA Digital Agency, we've worked closely with The Fillup Club to showcase their unique brand story and product offerings to the right audience.",
       scopes: [
@@ -989,7 +1011,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Ubud Beauty Centre',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5], // Website, Ads & SEO, Social Media
       paragraph:
         'Ubud Beauty Centre offers a wide range of hair and beauty excellent services for men and women like hair cutting, hair coloring, blow-drying, hair styling, and many more. They provide waxing for you to remove permanently unwanted hair, and nail care for manicure-painted nails. Enjoy other beauty treatments like massage, makeup, and facials. Besides paying attention to your hair, we understand that your body needs delicate care too! GAIA Digital Agency is proud to be their strategic partner, we have enjoyed working with UBC to create a digital platform that showcases their brand and treatments. From a visually stunning website to a comprehensive social media strategy, our team has helped them build a loyal following of customers.',
       scopes: [
@@ -1004,7 +1026,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Unreal',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 2], // Website (UI/UX), Ads & SEO, Marketing
       paragraph:
         "Unreal Bali isn't just your average property agency – it's a game-changer revolutionizing the industry. As a proud partner of GAIA Digital Agency, we've helped Unreal Bali amplify their message and connect with their target audience through cutting-edge digital strategies that showcase its unique value proposition. We've provided them with an efficient interface that's easy to navigate, in turn helping Unreal Bali to provide a seamless experience that's second to none. But what sets them apart is their unparalleled knowledge of Bali's latest lifestyle trends, assisted by GAIA's digital data collection team, they are able to stay ahead of the curve.",
       scopes: [
@@ -1017,7 +1039,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     },
     {
       title: 'Viceroy Bali',
-      serviceIndex: 0,
+      serviceIndexes: [4, 3, 5, 1, 6, 2], // Website, Ads & SEO, Social Media, Design, Content Creation, Marketing
       paragraph:
         "Viceroy Bali isn't just a 5-star resort – it's a luxurious tropical haven that offers an extraordinary expression of world-class luxury. From the moment their clients step onto the grounds, they're transported to a world of elegance and opulence, where their every need is anticipated, and their every desire fulfilled. As a proud partner of GAIA Digital Agency, we've worked closely with Viceroy Bali to ensure their digital presence reflects the resort's commitment to luxury, privacy and exceptional service.",
       scopes: [
@@ -1040,7 +1062,8 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
   ]
 
   for (const entry of portfolioEntries) {
-    const svcId = services[entry.serviceIndex].id
+    // const svcId = services[entry.serviceIndex].id
+    const svcIds = entry.serviceIndexes.map((i) => services[i].id)
     const scopeIds = entry.scopes
       .map((sName) => scopes.find((s) => s.title === sName)?.id)
       .filter((id): id is number => typeof id === 'number')
@@ -1056,7 +1079,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
         _status: 'published',
         featuredImage: mediaId,
         description: richText([paragraph(`${entry.paragraph}`)]),
-        services: [svcId],
+        services: svcIds,
         scopes: scopeIds,
         hero: {
           type: 'nonHomepageHero',
