@@ -72,7 +72,7 @@ export const FormBlock: React.FC<
               formData.append('file', file)
               formData.append('alt', `Upload for ${name}`)
 
-              const uploadReq = await fetch(`${getClientSideURL()}/api/media`, {
+              const uploadReq = await fetch(`${getClientSideURL()}/api/form-uploads`, {
                 body: formData,
                 method: 'POST',
               })

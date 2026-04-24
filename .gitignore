@@ -27,7 +27,11 @@ node_modules/
 #pribadi
 zafirmansyah
 *.tsbuildinfo
+
 # Database backups
 bak/
 *.dump
 *.sql.gz
+
+# uploads
+public/form-uploads/
