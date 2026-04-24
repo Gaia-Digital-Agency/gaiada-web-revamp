@@ -77,6 +77,7 @@ export interface Config {
     services: Service;
     portfolio: Portfolio;
     scopes: Scope;
+    'form-uploads': FormUpload;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -104,6 +105,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
     scopes: ScopesSelect<false> | ScopesSelect<true>;
+    'form-uploads': FormUploadsSelect<false> | FormUploadsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1452,6 +1454,25 @@ export interface Team {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-uploads".
+ */
+export interface FormUpload {
+  id: number;
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1679,6 +1700,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'scopes';
         value: number | Scope;
+      } | null)
+    | ({
+        relationTo: 'form-uploads';
+        value: number | FormUpload;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2441,6 +2466,24 @@ export interface ScopesSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-uploads_select".
+ */
+export interface FormUploadsSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

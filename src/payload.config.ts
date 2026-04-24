@@ -15,6 +15,7 @@ import { Portfolio } from './collections/Portfolio'
 import { Scopes } from './collections/Scopes'
 import { Departments } from './collections/Departments'
 import { Team } from './collections/Team'
+import { FormUploads } from './collections/FormUploads'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { Settings } from './Settings/config'
@@ -94,6 +95,7 @@ export default buildConfig({
     Services,
     Portfolio,
     Scopes,
+    FormUploads,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, Settings, PostOrdering],
