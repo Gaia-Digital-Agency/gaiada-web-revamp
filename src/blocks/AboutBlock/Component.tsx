@@ -35,13 +35,13 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
     <div>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300 cursor-pointer"
+        className="flex w-full items-center justify-between py-6 text-left group transition-colors duration-300 cursor-pointer hover:text-(--gda-brand-yellow)"
       >
         <div className="flex items-baseline gap-4 md:gap-6">
           <span
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] transition-colors duration-300',
-              isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
+              isOpen ? 'text-(--gda-brand-yellow)' : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -50,7 +50,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           <span
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
-              isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
+              isOpen ? 'text-(--gda-brand-yellow)' : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -65,33 +65,25 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             <Plus
               className={cn(
                 'w-6 h-6 md:w-8 md:h-8 transition-colors duration-300',
-                isOpen ? 'text-foreground' : 'text-foreground group-hover:text-primary',
+                isOpen ? 'text-(--gda-brand-yellow)' : 'text-foreground group-hover:text-(--gda-brand-yellow)',
               )}
             />
           </motion.div>
         </div>
       </button>
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
-              <p
-                className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                {description}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div className="flex flex-col">
+          <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
+            <p
+              className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              {description}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -108,10 +100,14 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
   useGSAPImageParallax(imageWrapperRef)
 
   return (
-    <div ref={sectionRef} className="bg-background">
-      <div id="about-us" className="container px-4 md:px-8 lg:px-24 py-10 md:py-20">
+    <section
+      ref={sectionRef}
+      id="about-us"
+      className="bg-background flex justify-center items-center"
+    >
+      <div className="container-xl px-4 md:px-8 py-18">
         <div id="about-section-1" className="mb-20">
-          <div className="flex flex-col lg:flex-row items-start gap-[48px]">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-[48px]">
             {/* Bagian Kiri: Image */}
             <div
               id="about-section-1-image"
@@ -132,7 +128,7 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
             </div>
 
             {/* Bagian Kanan: Title, Description, and Accordion */}
-            <div id="about-section-1-content" className="flex-1 lg:pr-10 xl:pr-[180px]">
+            <div id="about-section-1-content" className="flex-1 lg:pr-10 xl:pr-[80px]">
               {title && (
                 <h2 ref={titleRef} id="title-about-us">
                   {title}
@@ -164,6 +160,6 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
           )}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
