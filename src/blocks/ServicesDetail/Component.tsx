@@ -65,7 +65,10 @@ export default function SubServiceList({
                 {service.title}
               </h3>
 
-              <div className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out">
+              <div
+                className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-56 group-hover:opacity-100 group-hover:overflow-y-auto transition-all duration-500 ease-in-out"
+                style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.2) transparent' }}
+              >
                 <p className="text-(--gda-brand-white) text-center px-4 mt-2 text-sm md:text-base">
                   {service.description}
                 </p>

@@ -86,7 +86,10 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
     )
   }, [items, activeService, searchQuery])
 
-  const paginatedItems = useMemo(() => filteredItems.slice(0, visibleCount), [filteredItems, visibleCount])
+  const paginatedItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount],
+  )
 
   // Split items into two columns for the staggered masonry effect
   const leftColumnItems = paginatedItems.filter((_, i) => i % 2 === 0)
