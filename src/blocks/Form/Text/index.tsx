@@ -49,16 +49,13 @@ export const Text: React.FC<
             return true
           },
         }}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
+        render={({ field }) => (
           <Input
             aria-describedby={errors[name] ? `error-${name}` : undefined}
             aria-invalid={!!errors[name]}
             id={name}
             type="text"
-            value={value || ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            ref={ref}
+            {...field}
           />
         )}
       />
