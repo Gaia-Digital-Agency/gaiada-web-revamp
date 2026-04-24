@@ -44,7 +44,10 @@ export const FormBlock: React.FC<
     formState: { errors },
     handleSubmit,
     register,
+    watch,
   } = formMethods
+
+  const contactMethod = watch('Preferred Method of Contact') // Using the actual field name from the DOM
 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState<boolean>()
@@ -173,6 +176,7 @@ export const FormBlock: React.FC<
                             control={control}
                             errors={errors}
                             register={register}
+                            {...(field.name === 'contact' ? { contactMethod } : {})}
                           />
                         </div>
                       )

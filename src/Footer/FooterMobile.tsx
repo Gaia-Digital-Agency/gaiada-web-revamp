@@ -52,7 +52,9 @@ export const FooterMobile = ({
       </div>
       <div className="flex flex-col items-center justify-center mt-12">
         {logoUrl && (
-          <Image src={logoUrl} alt="Gaia Digital Agency" width={120} height={40} />
+          <a href="/">
+            <Image src={logoUrl} alt="Gaia Digital Agency" width={120} height={40} />
+          </a>
         )}
       </div>
     </div>
