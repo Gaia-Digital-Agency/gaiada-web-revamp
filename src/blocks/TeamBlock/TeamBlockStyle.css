@@ -1,0 +1,17 @@
+.our-team-wrapper {
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .our-team-item {
+      width: 100%;
+
+      .our-team-body {
+        height: 200px;
+
+        &.active {
+          height: 250px;
+        }
+      }
+    }
+  }
+}

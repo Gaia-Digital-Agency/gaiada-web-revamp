@@ -41,7 +41,7 @@ export const SharePost = () => {
 
       <button
         onClick={copyToClipboard}
-        className="p-2.5 bg-gray-100 rounded-full hover:bg-gray-200 transition relative flex items-center justify-center w-10 h-10"
+        className="p-2.5 bg-gray-100 rounded-full hover:bg-gray-200 transition relative flex items-center justify-center w-10 h-10 cursor-pointer"
         aria-label="Copy URL"
       >
         <FontAwesomeIcon

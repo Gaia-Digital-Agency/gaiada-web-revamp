@@ -675,6 +675,13 @@ h3,
   }
 }
 
+/* F O R M S */
+.gaiada-form {
+  .required {
+    display: none !important;
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
