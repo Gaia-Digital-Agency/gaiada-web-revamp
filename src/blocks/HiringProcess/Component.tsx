@@ -41,7 +41,7 @@ export const HiringProcessBlock: React.FC<HiringProcessProps> = ({ title, items 
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-[var(--gda-brand-white)] p-10 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                className="bg-[var(--gda-brand-white)] p-10"
               >
                 <div className="mb-4 text-6xl font-bold text-(--gda-brand-yellow)">
                   {item.number}

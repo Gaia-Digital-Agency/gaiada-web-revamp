@@ -1,9 +1,10 @@
 import type { TextField } from '@payloadcms/plugin-form-builder/types'
-import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import type { Control, FieldErrorsImpl } from 'react-hook-form'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
+import { Controller } from 'react-hook-form'
 
 import { Error } from '../Error'
 import { Width } from '../Width'
@@ -11,9 +12,10 @@ import { Width } from '../Width'
 export const Text: React.FC<
   TextField & {
     errors: Partial<FieldErrorsImpl>
-    register: UseFormRegister<FieldValues>
+    control: Control
+    contactMethod?: string
   }
-> = ({ name, defaultValue, errors, label, register, required, width }) => {
+> = ({ name, defaultValue, errors, label, required, width, control, contactMethod }) => {
   return (
     <Width width={width}>
       <Label htmlFor={name}>
@@ -25,13 +27,40 @@ export const Text: React.FC<
           </span>
         )}
       </Label>
-      <Input
-        aria-describedby={errors[name] ? `error-${name}` : undefined}
-        aria-invalid={!!errors[name]}
+      <Controller
+        control={control}
+        name={name}
         defaultValue={defaultValue}
-        id={name}
-        type="text"
-        {...register(name, { required })}
+        rules={{
+          required: required ? `${label} is required` : false,
+          validate: (value) => {
+            if (name === 'contact') {
+              if (contactMethod === 'email') {
+                const emailRegex = /^\S[^\s@]*@\S+$/
+                return emailRegex.test(value) || 'Invalid email address'
+              }
+              if (contactMethod === 'whatsapp') {
+                const whatsappRegex = /^\d+$/
+                if (!whatsappRegex.test(value)) return 'WhatsApp number must contain only numbers'
+                if (value.length < 9) return 'WhatsApp number must be at least 9 characters'
+                if (value.length > 13) return 'WhatsApp number must be at most 13 characters'
+              }
+            }
+            return true
+          },
+        }}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Input
+            aria-describedby={errors[name] ? `error-${name}` : undefined}
+            aria-invalid={!!errors[name]}
+            id={name}
+            type="text"
+            value={value || ''}
+            onChange={onChange}
+            onBlur={onBlur}
+            ref={ref}
+          />
+        )}
       />
       {errors[name] && <Error name={name} />}
     </Width>

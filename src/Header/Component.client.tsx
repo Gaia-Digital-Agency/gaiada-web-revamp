@@ -89,7 +89,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
     <>
       <header
         className={`fixed top-0 z-99999 w-full h-[70px] px-6 md:px-10 flex items-center transition-[height,background-color] duration-300 backdrop-blur-md ${
-          isScrolled
+          isScrolled || isMobileMenuOpen
             ? 'bg-white/80 backdrop-blur-[25px]'
             : isHomepage
               ? 'bg-transparent'

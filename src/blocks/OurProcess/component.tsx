@@ -105,7 +105,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
       <div className="container mx-0">
         <div className="flex flex-col gap-10">
           <div>
-            <h2 className="text-center">{title}</h2>
+            <h2 className="heading-1 text-center">{title}</h2>
           </div>
 
           <motion.div
