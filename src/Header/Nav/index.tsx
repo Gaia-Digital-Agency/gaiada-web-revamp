@@ -97,14 +97,14 @@ const DropdownNavItem: React.FC<{
   return (
     <div
       ref={containerRef}
-      className={`has-submenu relative ${open ? 'submenu-open' : ''} ${isMobile ? 'w-full text-left' : ''}`}
+      className={`has-submenu group relative ${open ? 'submenu-open' : ''} ${isMobile ? 'w-full text-left' : ''}`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       <button
         aria-controls={submenuId}
         aria-expanded={open}
-        className="has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir"
+        className={`has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir cursor-pointer transition-colors duration-300 ${isMobile ? '' : 'group-hover:text-[#FFC22C] [&.submenu-open]:text-[#FFC22C]'}`}
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
