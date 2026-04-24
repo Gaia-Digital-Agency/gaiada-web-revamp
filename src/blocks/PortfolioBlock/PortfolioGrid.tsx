@@ -197,6 +197,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
               label="Load More"
               onClick={() => setVisibleCount((prev: number) => prev + 6)}
               className="px-8 py-3"
+              icon="chevron-down"
             />
           </div>
         )}
