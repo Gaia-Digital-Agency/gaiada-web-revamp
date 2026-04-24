@@ -86,7 +86,10 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
     )
   }, [items, activeService, searchQuery])
 
-  const paginatedItems = useMemo(() => filteredItems.slice(0, visibleCount), [filteredItems, visibleCount])
+  const paginatedItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount],
+  )
 
   // Split items into two columns for the staggered masonry effect
   const leftColumnItems = paginatedItems.filter((_, i) => i % 2 === 0)
@@ -115,7 +118,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
                 <div key={service.id} className="md:pl-9 shrink-0">
                   <button
                     onClick={() => handleServiceClick(service.slug)}
-                    className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
+                    className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:no-underline hover:text-(--gda-brand-yellow) cursor-pointer ${
                       activeService === service.slug
                         ? 'font-bold text-(--gda-brand-yellow)'
                         : 'text-muted-foreground'

@@ -665,15 +665,16 @@ h3,
     background-color: transparent;
     border: 1px solid var(--gda-brand-black);
     color: var(--gda-brand-black);
-    padding: 20px 32px;
+    padding: 14px 20px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-size: 13.5px;
     font-weight: 700;
 
     &:hover {
-      background-color: var(--gda-brand-black);
+      background-color: var(--gda-brand-yellow);
       color: var(--gda-brand-white);
+      border-color: var(--gda-brand-yellow);
     }
   }
 
