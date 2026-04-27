@@ -8,6 +8,7 @@ import { MediaBlock } from '../blocks/MediaBlock/config'
 import { ContentMedia } from '../blocks/ContentMedia/config'
 import { PortfolioInsight } from '../blocks/PortfolioInsight/config'
 import { PortfolioImageBanner } from '../blocks/PortfolioImageBanner/config'
+import { PortfolioScope } from '../blocks/PortfolioScope/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
@@ -111,6 +112,7 @@ export const Portfolio: CollectionConfig<'portfolio'> = {
                 // ContentMedia,
                 PortfolioInsight,
                 PortfolioImageBanner,
+                PortfolioScope,
               ],
               admin: {
                 initCollapsed: true,

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { BlockWrapper } from './BlockWrapper'
 
-import type { Page, Service } from '@/payload-types'
+import type { Page, Portfolio, Service } from '@/payload-types'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
@@ -20,6 +20,7 @@ import { OurProcess } from '@/blocks/OurProcess/component'
 import { ServicesDetailBlock } from '@/blocks/ServicesDetail/Component'
 import { PortfolioInsightBlock } from '@/blocks/PortfolioInsight/Component'
 import { PortfolioImageBanner } from '@/blocks/PortfolioImageBanner/Component'
+import { PortfolioScopeBlock } from '@/blocks/PortfolioScope/Component'
 import { OurWorksBlock } from '@/blocks/OurWorksBlock/component'
 import { FeaturedBlogBlockComponent } from '@/blocks/FeaturedBlogBlock/component'
 import { ListingPostBlockComponent } from '@/blocks/ListingPostBlock/component'
@@ -47,6 +48,7 @@ const blockComponents = {
   servicesDetail: ServicesDetailBlock,
   portfolioInsight: PortfolioInsightBlock,
   portfolioImageBanner: PortfolioImageBanner,
+  portfolioScope: PortfolioScopeBlock,
   ourWorksBlock: OurWorksBlock,
   featuredBlogBlock: FeaturedBlogBlockComponent,
   listingPostBlock: ListingPostBlockComponent,
@@ -57,7 +59,11 @@ const blockComponents = {
 
 // Component that iterates through and renders an array of page layout blocks
 export const RenderBlocks: React.FC<{
-  blocks: (Page['layout'][0] | NonNullable<Service['layout']>[0])[]
+  blocks: (
+    | Page['layout'][0]
+    | NonNullable<Service['layout']>[0]
+    | NonNullable<Portfolio['layout']>[0]
+  )[]
   isHomepage?: boolean
   parentSlug?: string
 }> = (props) => {
