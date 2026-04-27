@@ -50,6 +50,7 @@
 
         svg {
           color: var(--gda-brand-yellow);
+          stroke-width: 5px;
         }
       }
 

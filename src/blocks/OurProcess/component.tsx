@@ -142,7 +142,10 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                       {isActive ? (
                         <Minus className="w-4 h-4 ml-2 mb-0.5 hidden md:inline-block" />
                       ) : (
-                        <Plus className="w-4 h-4 ml-2 mb-0.5 hidden md:inline-block" />
+                        <Plus
+                          strokeWidth={3}
+                          className="w-4 h-4 ml-2 mb-0.5 hidden md:inline-block"
+                        />
                       )}
                     </h3>
                   </div>

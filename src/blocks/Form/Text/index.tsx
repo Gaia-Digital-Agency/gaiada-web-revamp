@@ -46,6 +46,14 @@ export const Text: React.FC<
                 if (value.length > 13) return 'WhatsApp number must be at most 13 characters'
               }
             }
+
+            const isPhoneField =
+              name?.toLowerCase().includes('phone') || label?.toLowerCase().includes('phone')
+            if (isPhoneField && value) {
+              const digitsOnly = value.replace(/\D/g, '')
+              if (digitsOnly.length < 9) return 'Phone number must be at least 9 digits'
+              if (digitsOnly.length > 15) return 'Phone number must be at most 15 digits'
+            }
             return true
           },
         }}

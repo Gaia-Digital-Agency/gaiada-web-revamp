@@ -109,8 +109,8 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   }
 
   return (
-    <section className="lg:h-screen flex items-center" id="our-works">
-      <div className="relative overflow-hidden w-full py-16 lg:py-32">
+    <section className="min-h-0 lg:h-screen flex items-center" id="our-works">
+      <div className="relative overflow-hidden w-full py-8 lg:py-32">
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
@@ -192,7 +192,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                             href={`/portfolio/${item.slug}`}
                             className="swiper-body group flex flex-col"
                           >
-                            <div className="image-wrapper h-[240px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
+                            <div className="image-wrapper h-[200px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
                               {item.featuredImage && (
                                 <img
                                   src={
@@ -201,7 +201,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                                       : ''
                                   }
                                   alt={item.title}
-                                  className="object-cover w-full h-[240px] md:h-full transition-transform duration-700 group-hover:scale-105"
+                                  className="object-cover w-full h-[200px] md:h-full transition-transform duration-700 group-hover:scale-105"
                                 />
                               )}
                               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -244,7 +244,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
           </div>
 
           {/* Centered Navigation Arrows */}
-          <div className="flex justify-center gap-6 mt-8 lg:mt-8">
+          <div className="arrow-wrapper flex justify-center gap-6 mt-8 lg:mt-8">
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}

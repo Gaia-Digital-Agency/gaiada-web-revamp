@@ -31,7 +31,13 @@ export const Email: React.FC<
         defaultValue={defaultValue || ''}
         id={name}
         type="text"
-        {...register(name, { pattern: /^\S[^\s@]*@\S+$/, required })}
+        {...register(name, {
+          pattern: {
+            value: /^\S[^\s@]*@\S+$/,
+            message: 'Please enter a valid email address',
+          },
+          required: required ? 'Email is required' : false,
+        })}
       />
 
       {errors[name] && <Error name={name} />}
