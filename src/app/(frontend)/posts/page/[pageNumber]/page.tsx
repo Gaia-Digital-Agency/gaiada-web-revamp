@@ -31,7 +31,9 @@ export default async function Page({ params: paramsPromise }: Args) {
   })
 
   const manualOrderedPosts = (postOrdering?.manualOrder || []) as any[]
-  const manualOrderedIds = manualOrderedPosts.map((post) => (typeof post === 'object' ? post.id : post))
+  const manualOrderedIds = manualOrderedPosts.map((post) =>
+    typeof post === 'object' ? post.id : post,
+  )
 
   const posts = await payload.find({
     collection: 'posts',
@@ -81,7 +83,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
   return {
-    title: `Blog Posts Page ${pageNumber || ''} | Gaia Digital Agency`,
+    title: `Blog Posts Page ${pageNumber || ''}`,
   }
 }
 
