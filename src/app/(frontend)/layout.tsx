@@ -136,10 +136,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(getServerSideURL()),
-    title: {
-      default: settings?.siteTitle || 'Gaiada Digital Agency',
-      template: `%s | ${settings?.siteTitle || 'Gaiada Digital Agency'}`,
-    },
+    title: settings?.siteTitle || 'Gaiada Digital Agency',
     description: settings?.tagline || 'Premium Digital Agency Solutions',
     openGraph: mergeOpenGraph({
       title: settings?.siteTitle || 'Gaiada Digital Agency',
