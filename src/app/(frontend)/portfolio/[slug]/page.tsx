@@ -91,10 +91,10 @@ export default async function PortfolioPage({ params: paramsPromise }: Args) {
           <div className="container">
             <p className="text-center font-roboto text-earth mb-2">Scope:</p>
             <div className="flex flex-wrap justify-center text-earth font-roboto">
-              {portfolio.scopes.map((scope: any, index: number) => (
+              {portfolio.scopes?.map((scope: any, index: number) => (
                 <span key={scope.id} className="text-center">
                   {scope.title}
-                  {index < portfolio.scopes.length - 1 && <span className="mr-1">,</span>}
+                  {index < (portfolio.scopes?.length || 0) - 1 && <span className="mr-1">,</span>}
                 </span>
               ))}
             </div>
