@@ -1,11 +1,13 @@
+'use client'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { usePathname } from 'next/navigation'
 
 import type { Page, Portfolio, Post, Service } from '@/payload-types'
 
-type CMSLinkType = {
+export type CMSLinkType = {
   appearance?: 'inline' | ButtonProps['variant']
   children?: React.ReactNode
   className?: string
@@ -19,37 +21,50 @@ type CMSLinkType = {
   type?: 'custom' | 'reference' | null
   url?: string | null
   primaryColor?: string | null
+  isActive?: boolean
+}
+
+export const getHref = (props: CMSLinkType): string | null | undefined => {
+  const { type, reference, url } = props
+  if (type === 'reference' && typeof reference?.value === 'object' && reference.value.slug) {
+    return `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
+      reference.value.slug
+    }`
+  }
+  return url
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
-    type,
     appearance = 'inline',
     children,
     className,
     label,
     newTab,
-    reference,
     size: sizeFromProps,
-    url,
-    primaryColor,
+    isActive: isActiveFromProps,
   } = props
 
-  const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
-          reference.value.slug
-        }`
-      : url
+  const pathname = usePathname()
+  const href = getHref(props)
+
+  const isActive =
+    isActiveFromProps ||
+    pathname === href ||
+    (href !== '/' && href !== '' && href !== null && pathname?.startsWith(`${href}/`))
 
   if (!href) return null
 
   const size = appearance === 'link' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
+  const mergedClassName = cn(className, {
+    active: isActive,
+  })
+
   if (appearance === 'inline') {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link className={mergedClassName} href={href || ''} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
@@ -57,8 +72,8 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+    <Button asChild className={mergedClassName} size={size} variant={appearance}>
+      <Link className={mergedClassName} href={href || ''} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
