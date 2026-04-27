@@ -267,7 +267,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
         </div>
 
         <div className="flex items-center justify-center mt-[48px]">
-          <AppButton label="Join Our Team" href="/careers" variant="default" icon="arrow" />
+          <AppButton label="Join Our Team" href="/career" variant="default" icon="arrow" />
         </div>
       </div>
     </div>

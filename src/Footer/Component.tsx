@@ -58,7 +58,7 @@ export async function Footer() {
               <CMSLink
                 key={navItem.id}
                 {...navItem.link}
-                className="flex items-center text-[var(--gda-brand-earth)] md:text-[var(--gda-brand-black)] underline gap-4 text-sm md:text-base after:content-['|'] last:after:content-['']"
+                className="flex items-center text-[var(--gda-brand-earth)] md:text-[var(--gda-brand-black)] underline gap-4 text-sm md:text-base after:content-['|'] last:after:content-[''] last:gap-0"
               />
             ))}
           </div>
