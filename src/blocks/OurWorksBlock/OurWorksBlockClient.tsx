@@ -213,7 +213,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                               <p className="text-sm text-[#999] uppercase tracking-widest flex items-start gap-2">
                                 <span className="text-[#bbb] italic lowercase">in</span>
                                 <span className="underline">
-                                  {item.services?.map((s) => s.title).join(', ')}
+                                  {item.services?.map((s) => s.title).join(',')}
                                 </span>
                               </p>
                             </div>
