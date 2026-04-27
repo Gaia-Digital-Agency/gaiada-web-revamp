@@ -922,6 +922,27 @@ export interface Portfolio {
             blockType: 'portfolioInsight';
           }
         | PortfolioImageBanner
+        | {
+            title: string;
+            richText: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolioScope';
+          }
       )[]
     | null;
   meta?: {
@@ -2441,6 +2462,14 @@ export interface PortfolioSelect<T extends boolean = true> {
               blockName?: T;
             };
         portfolioImageBanner?: T | PortfolioImageBannerSelect<T>;
+        portfolioScope?:
+          | T
+          | {
+              title?: T;
+              richText?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
