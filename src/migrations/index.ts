@@ -7,6 +7,7 @@ import * as migration_20260421_add_missing_blocks from './20260421_add_missing_b
 import * as migration_20260423_drop_orphan_services_block from './20260423_drop_orphan_services_block';
 import * as migration_20260423_add_post_ordering from './20260423_add_post_ordering';
 import * as migration_20260424_add_form_uploads from './20260424_add_form_uploads';
+import * as migration_20260427_add_portfolio_scope_block from './20260427_add_portfolio_scope_block';
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260424_add_form_uploads.up,
     down: migration_20260424_add_form_uploads.down,
     name: '20260424_add_form_uploads'
+  },
+  {
+    up: migration_20260427_add_portfolio_scope_block.up,
+    down: migration_20260427_add_portfolio_scope_block.down,
+    name: '20260427_add_portfolio_scope_block'
   },
 ];
