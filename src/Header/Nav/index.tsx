@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import type { Header as HeaderType } from '@/payload-types'
-import { CMSLink } from '@/components/Link'
+import { CMSLink, getHref } from '@/components/Link'
 import { ChevronDown } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
@@ -12,12 +12,6 @@ export const HeaderNav: React.FC<{ data: HeaderType | null; isMobile?: boolean }
 }) => {
   const navItems = data?.navItems || []
   const pathname = usePathname()
-  const getHref = (link: any) => {
-    if (link?.type === 'reference') {
-      return `/${link?.reference?.value?.slug || ''}`
-    }
-    return link?.url || ''
-  }
 
   return (
     <nav
@@ -40,7 +34,7 @@ export const HeaderNav: React.FC<{ data: HeaderType | null; isMobile?: boolean }
             key={i}
             {...item.link}
             appearance="link"
-            className={`font-medium transition-colors duration-300 ${isActive ? 'text-[#FFC22C]' : ''}`}
+            className="font-medium transition-colors duration-300"
           />
         )
       })}
@@ -94,7 +88,7 @@ const DropdownNavItem: React.FC<{
     return () => clearTimeout(timeoutId)
   }, [open])
 
-  const isAnySubActive = item.subItems?.some((sub) => sub.link.url === pathname)
+  const isAnySubActive = item.subItems?.some((sub) => getHref(sub.link) === pathname)
 
   return (
     <div
@@ -141,7 +135,7 @@ const DropdownNavItem: React.FC<{
               <CMSLink
                 {...subItem.link}
                 appearance="inline"
-                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${subItem.link.url === pathname ? 'text-[#FFC22C]' : ''} ${isMobile ? 'justify-start' : ''}`}
+                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${isMobile ? 'justify-start' : ''}`}
               >
                 <div className="relative w-3 h-3 flex-shrink-0">
                   <div
