@@ -19,7 +19,6 @@ export const FooterDesktop = ({
         backgroundColor: '#F9F9F9',
         backgroundImage: bgImage ? `url(${bgImage})` : 'none',
         backgroundSize: 'contain',
-        backgroundPosition: 'left bottom',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
       }}

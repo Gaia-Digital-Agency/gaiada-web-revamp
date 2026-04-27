@@ -241,9 +241,9 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
 
       <div className="mt-6 space-y-2 border-t border-(--gda-earth) pt-4">
         <Link href={`/portfolio/${item.slug}`}>
-          <h3 className="text-[19px] mb-2! font-medium leading-tight hover:underline underline-offset-4 decoration-1 break-words">
+          <h2 className="heading-3 text-[19px] mb-2! font-medium leading-tight hover:underline underline-offset-4 decoration-1 break-words">
             {item.title}
-          </h3>
+          </h2>
         </Link>
         {item.services && item.services.length > 0 && (
           <div className="flex flex-wrap gap-x-1.5 items-baseline">

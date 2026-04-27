@@ -14,20 +14,21 @@ export const Number: React.FC<
     register: UseFormRegister<FieldValues>
   }
 > = ({ name, defaultValue, errors, label, register, required, width }) => {
-  const isPhoneField = label?.toLowerCase().includes('phone')
+  const isPhoneField =
+    name?.toLowerCase().includes('phone') || label?.toLowerCase().includes('phone')
 
   const validationRules: any = {
-    required,
+    required: required ? `${label} is required` : false,
   }
 
   if (isPhoneField) {
     validationRules.minLength = {
       value: 9,
-      message: 'Minimum length is 9 digits',
+      message: 'Phone number must be at least 9 digits',
     }
     validationRules.maxLength = {
-      value: 13,
-      message: 'Maximum length is 13 digits',
+      value: 15,
+      message: 'Phone number must be at most 15 digits',
     }
   }
 

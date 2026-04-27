@@ -5,6 +5,25 @@
   background-position: left top;
   background-repeat: no-repeat;
 
+  @media (max-height: 768px) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    .relative.overflow-hidden.w-full {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
+
+  @media (max-height: 768px) {
+    h2 {
+      font-size: 42px;
+    }
+    .arrow-wrapper {
+      display: none;
+    }
+  }
+
   .filter-wrapper {
     @media (max-width: 767px) {
       flex-direction: row;
@@ -40,6 +59,19 @@
     .swiper-wrapper {
       .swiper-slide {
         transition: width 0.3s ease;
+
+        @media (max-height: 768px) {
+          .image-wrapper {
+            height: 400px !important;
+            max-height: 400px !important;
+
+            img {
+              height: 100% !important;
+              object-fit: cover;
+            }
+          }
+        }
+
         &:hover {
           width: 600px;
           flex: 0 0 600px;
@@ -86,8 +118,8 @@
             max-height: 480px;
           }
           .swiper-content {
-            padding-top: 24px;
-            margin-top: 24px;
+            padding-top: 12px;
+            margin-top: 12px;
             border-top: 1px solid var(--gda-brand-earth);
           }
         }
