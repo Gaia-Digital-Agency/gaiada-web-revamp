@@ -18,9 +18,10 @@ export const FooterDesktop = ({
       style={{
         backgroundColor: '#F9F9F9',
         backgroundImage: bgImage ? `url(${bgImage})` : 'none',
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'left bottom',
         backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
       <div className="flex justify-end items-start py-20">

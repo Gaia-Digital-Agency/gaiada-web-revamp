@@ -21,7 +21,7 @@ export const FooterMobile = ({
   return (
     <div className="container py-10 pb-2 !px-0">
       <div className="heading-wrapper flex flex-col px-4">
-        <h2 className="heading-2">{footerData?.heading}</h2>
+        <h2 className="heading-1">{footerData?.heading}</h2>
       </div>
       <div
         className="form-wrapper flex flex-col px-4"

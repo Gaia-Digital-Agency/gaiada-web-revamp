@@ -12,7 +12,7 @@ export const VisitOurOfficeBlock: React.FC<Props> = ({ title, richText }) => {
     <section className="bg-white py-32">
       <div className="container">
         <div className="grid grid-cols-1 gap-2">
-          {title && <h2 className="heading-2 text-center">{title}</h2>}
+          {title && <h2 className="heading-1 text-center">{title}</h2>}
           {richText && (
             <RichText
               data={richText}

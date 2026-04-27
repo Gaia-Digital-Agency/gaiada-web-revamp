@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
-import { ArrowRight, Search } from 'lucide-react'
+import { ArrowRight, ChevronDownIcon, Search } from 'lucide-react'
 
 export type AppButtonProps = {
   label: string
@@ -13,7 +13,7 @@ export type AppButtonProps = {
   variant?: 'default' | 'link'
   newTab?: boolean
   className?: string
-  icon?: 'none' | 'arrow' | 'search'
+  icon?: 'none' | 'arrow' | 'search' | 'chevron-down'
   iconPosition?: 'left' | 'right'
 }
 
@@ -36,6 +36,8 @@ export const AppButton: React.FC<AppButtonProps> = ({
     switch (icon) {
       case 'arrow':
         return <ArrowIcon />
+      case 'chevron-down':
+        return <ChevronDownIcon />
       case 'search':
         return <SearchIcon />
       default:

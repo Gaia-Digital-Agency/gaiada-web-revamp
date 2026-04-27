@@ -34,7 +34,7 @@ export const HiringProcessBlock: React.FC<HiringProcessProps> = ({ title, items 
       <div className="container mx-auto">
         <motion.div variants={containerVariants} initial="hidden" animate="visible">
           <TextFade direction="up">
-            <h2 className="heading-2 mb-12">{title}</h2>
+            <h2 className="heading-1 mb-12">{title}</h2>
           </TextFade>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {items.map((item, index) => (

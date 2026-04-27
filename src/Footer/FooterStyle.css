@@ -12,5 +12,9 @@
     backdrop-filter: blur(20px);
     background-size: cover;
     background-position: right bottom;
+
+    .payload-richtext {
+      padding-bottom: 42px;
+    }
   }
 }

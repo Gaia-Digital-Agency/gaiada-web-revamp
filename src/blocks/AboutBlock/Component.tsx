@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
 import { useGSAPStaggerReveal } from '@/hooks/useGSAPStaggerReveal'
 import { useGSAPImageParallax } from '@/hooks/useGSAPImageParallax'
+import { TextFade } from '@/components/FramerMotion/TextFade'
 
 export type AboutBlockType = {
   blockType: 'aboutBlock'
@@ -41,7 +42,9 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           <span
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] transition-colors duration-300',
-              isOpen ? 'text-(--gda-brand-yellow)' : 'text-foreground group-hover:text-(--gda-brand-yellow)',
+              isOpen
+                ? 'text-(--gda-brand-black)'
+                : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -50,7 +53,9 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
           <span
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
-              isOpen ? 'text-(--gda-brand-yellow)' : 'text-foreground group-hover:text-(--gda-brand-yellow)',
+              isOpen
+                ? 'text-(--gda-brand-black)'
+                : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
           >
@@ -65,7 +70,9 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             <Plus
               className={cn(
                 'w-6 h-6 md:w-8 md:h-8 transition-colors duration-300',
-                isOpen ? 'text-(--gda-brand-yellow)' : 'text-foreground group-hover:text-(--gda-brand-yellow)',
+                isOpen
+                  ? 'text-(--gda-brand-black)'
+                  : 'text-foreground group-hover:text-(--gda-brand-yellow)',
               )}
             />
           </motion.div>
@@ -95,7 +102,7 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
   const imageWrapperRef = useRef<HTMLDivElement>(null)
 
   // Use the reusable animation hooks
-  useGSAPSplitTextReveal(titleRef, {}, [title])
+  // useGSAPSplitTextReveal(titleRef, {}, [title])
   useGSAPStaggerReveal(descriptionRef, { selector: 'p' }, [description])
   useGSAPImageParallax(imageWrapperRef)
 
@@ -129,11 +136,13 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
 
             {/* Bagian Kanan: Title, Description, and Accordion */}
             <div id="about-section-1-content" className="flex-1 lg:pr-10 xl:pr-[80px]">
-              {title && (
-                <h2 ref={titleRef} id="title-about-us">
-                  {title}
-                </h2>
-              )}
+              <TextFade direction={'up'}>
+                {title && (
+                  <h2 className="heading-1" ref={titleRef} id="title-about-us">
+                    {title}
+                  </h2>
+                )}
+              </TextFade>
 
               {description && (
                 <div ref={descriptionRef} id="description-about-us">

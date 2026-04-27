@@ -77,7 +77,7 @@ export const FeaturedBlogBlockComponent: React.FC<FeaturedBlogBlockProps> = asyn
           )}
         </div>
         <div className="p-4 py-12 pb-0 md:px-8 md:pb-0 lg:p-24 flex flex-col justify-center items-start text-[#222]">
-          <h2 className="heading-2">{title || post.title}</h2>
+          <h2 className="heading-1">{title || post.title}</h2>
           <p className="text-earth mb-8 leading-relaxed max-w-xl text-lg">
             {post.meta?.description || 'Read this featured article...'}
           </p>

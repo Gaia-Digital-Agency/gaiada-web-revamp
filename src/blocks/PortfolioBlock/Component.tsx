@@ -42,7 +42,7 @@ export const PortfolioBlock: React.FC<PortfolioBlockType> = async ({ title, desc
       <div className="max-w-[1312px] mx-auto px-6 md:px-12 py-8 md:py-12">
         {(title || description) && (
           <div className="max-w-3xl mb-12 lg:md-24">
-            {title && <h2 className="heading-2 mb-2">{title}</h2>}
+            {title && <h2 className="heading-1 mb-2">{title}</h2>}
             {description && (
               <p className="text-xl text-muted-foreground leading-relaxed font-light">
                 {description}
