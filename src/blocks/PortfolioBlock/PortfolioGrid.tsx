@@ -132,7 +132,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
           </div>
 
           {/* Search bar */}
-          <div className="hidden md:block pt-4 border-t border-border/50 ">
+          <div className="hidden md:block pt-4 border-border/50 ">
             <div className="relative">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                 <Search className="w-4 h-4" />
@@ -250,7 +250,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
             <span className="text-[11px] capitalize tracking-[0.12em] text-(--gda-earth) italic">
               in
             </span>
-            <div className="flex flex-wrap gap-x-1">
+            <div className="flex flex-wrap">
               {item.services.map((service, index) => {
                 if (typeof service === 'object' && service !== null) {
                   return (
@@ -262,7 +262,7 @@ const PortfolioCard: React.FC<{ item: Portfolio }> = ({ item }) => {
                         {service.title}
                       </Link>
                       {index < (item.services?.length || 0) - 1 && (
-                        <span className="text-[11px] text-(--gda-earth)">,</span>
+                        <span className="text-[11px] text-(--gda-earth)">, &nbsp;</span>
                       )}
                     </React.Fragment>
                   )
