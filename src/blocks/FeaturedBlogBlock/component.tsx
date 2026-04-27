@@ -17,15 +17,15 @@ export const FeaturedBlogBlockComponent: React.FC<FeaturedBlogBlockProps> = asyn
   let post: Post | null = null
 
   if (featuredPost) {
-    if (typeof featuredPost === 'string') {
+    if (typeof featuredPost === 'object' && 'id' in featuredPost) {
       const fetched = await payload.findByID({
         collection: 'posts',
-        id: featuredPost,
-        depth: 1,
+        id: featuredPost.id,
+        depth: 2,
       })
       post = fetched as unknown as Post
     } else {
-      post = featuredPost as Post
+      post = featuredPost as unknown as Post
     }
   } else {
     const postOrdering = await payload.findGlobal({
