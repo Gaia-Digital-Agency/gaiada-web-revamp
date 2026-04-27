@@ -1,6 +1,5 @@
 #our-process {
   background-image: '';
-  /* url('../../../public/bg-our-process.webp'); */
   background-size: contain;
   background-position: right bottom;
   background-repeat: no-repeat;
@@ -28,6 +27,10 @@
       outline-offset: 4px;
       border-radius: 4px;
 
+      span {
+        transition: all 0.3s;
+      }
+
       &:focus-visible {
         outline: 2px solid var(--gda-brand-yellow);
         outline-offset: 4px;
@@ -36,9 +39,17 @@
 
       &:hover {
         background: transparent;
+        span {
+          font-size: 56px !important;
+        }
+
         h3 {
           font-weight: 700;
           color: var(--gda-brand-black);
+        }
+
+        svg {
+          color: var(--gda-brand-yellow);
         }
       }
 

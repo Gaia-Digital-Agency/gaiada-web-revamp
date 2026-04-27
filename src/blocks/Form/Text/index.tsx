@@ -30,7 +30,7 @@ export const Text: React.FC<
       <Controller
         control={control}
         name={name}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue || ''}
         rules={{
           required: required ? `${label} is required` : false,
           validate: (value) => {

@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useGSAPSplitTextReveal } from '@/hooks/useGSAPSplitTextReveal'
 import { useGSAPStaggerReveal } from '@/hooks/useGSAPStaggerReveal'
 import { useGSAPImageParallax } from '@/hooks/useGSAPImageParallax'
+import { TextFade } from '@/components/FramerMotion/TextFade'
 
 export type AboutBlockType = {
   blockType: 'aboutBlock'
@@ -101,7 +102,7 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
   const imageWrapperRef = useRef<HTMLDivElement>(null)
 
   // Use the reusable animation hooks
-  useGSAPSplitTextReveal(titleRef, {}, [title])
+  // useGSAPSplitTextReveal(titleRef, {}, [title])
   useGSAPStaggerReveal(descriptionRef, { selector: 'p' }, [description])
   useGSAPImageParallax(imageWrapperRef)
 
@@ -135,11 +136,13 @@ export const AboutBlock: React.FC<AboutBlockType> = ({ title, description, image
 
             {/* Bagian Kanan: Title, Description, and Accordion */}
             <div id="about-section-1-content" className="flex-1 lg:pr-10 xl:pr-[80px]">
-              {title && (
-                <h2 ref={titleRef} id="title-about-us">
-                  {title}
-                </h2>
-              )}
+              <TextFade direction={'up'}>
+                {title && (
+                  <h2 className="heading-1" ref={titleRef} id="title-about-us">
+                    {title}
+                  </h2>
+                )}
+              </TextFade>
 
               {description && (
                 <div ref={descriptionRef} id="description-about-us">

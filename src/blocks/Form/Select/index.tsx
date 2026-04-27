@@ -33,7 +33,7 @@ export const Select: React.FC<
       </Label>
       <Controller
         control={control}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue || ''}
         name={name}
         render={({ field: { onChange, value } }) => {
           const controlledValue = options.find((t) => t.value === value)

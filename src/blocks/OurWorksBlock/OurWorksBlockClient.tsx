@@ -210,7 +210,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                               <h3 className="heading-5 group-hover:text-primary transition-colors">
                                 {item.title}
                               </h3>
-                              <p className="text-sm text-[#999] uppercase tracking-widest flex gap-2">
+                              <p className="text-sm text-[#999] uppercase tracking-widest flex items-start gap-2">
                                 <span className="text-[#bbb] italic lowercase">in</span>
                                 <span className="underline">
                                   {item.services?.map((s) => s.title).join(', ')}

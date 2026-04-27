@@ -44,6 +44,7 @@ export const RadioButton: React.FC<RadioButtonFieldProps> = ({
       <Controller
         control={control}
         name={name}
+        defaultValue={options[0]?.value}
         rules={{ required: required ? `${label} is required` : false }}
         render={({ field: { onChange, value } }) => (
           <div className="flex flex-row gap-8">
