@@ -87,14 +87,15 @@ export default async function PortfolioPage({ params: paramsPromise }: Args) {
       {/* Tampilkan layout blocks (Content, Media, CTA, dll) */}
       {portfolio.layout && <RenderBlocks blocks={portfolio.layout} />}
       {portfolio.scopes && portfolio.scopes.length > 0 && (
-        <div className="bg-background py-16 pt-0">
+        <div className="bg-background pb-16">
           <div className="container">
             <p className="text-center font-roboto text-earth mb-2">Scope:</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              {portfolio.scopes.map((scope: any) => (
-                <div key={scope.id} className="font-roboto text-center text-earth">
+            <div className="flex flex-wrap justify-center text-earth font-roboto">
+              {portfolio.scopes.map((scope: any, index: number) => (
+                <span key={scope.id} className="text-center">
                   {scope.title}
-                </div>
+                  {index < portfolio.scopes.length - 1 && <span className="mr-1">,</span>}
+                </span>
               ))}
             </div>
           </div>
