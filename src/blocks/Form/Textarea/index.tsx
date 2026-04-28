@@ -33,7 +33,7 @@ export const Textarea: React.FC<
         defaultValue={defaultValue || ''}
         id={name}
         rows={rows}
-        {...register(name, { required: required })}
+        {...register(name, { required: required ? `${label} is required` : false })}
       />
 
       {errors[name] && <Error name={name} />}

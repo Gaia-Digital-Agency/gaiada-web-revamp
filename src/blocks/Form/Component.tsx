@@ -2,7 +2,7 @@
 import type { FormFieldBlock, Form as FormType } from '@payloadcms/plugin-form-builder/types'
 
 import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
@@ -36,8 +36,22 @@ export const FormBlock: React.FC<
     submitButtonLabel,
   } = formFromProps || {}
 
+  const defaultValues = useMemo(() => {
+    return formFromProps?.fields?.reduce((acc, field) => {
+      if ('name' in field) {
+        // For radio buttons, if no default value is provided, use the first option
+        if (field.blockType === 'radio' && !field.defaultValue && 'options' in field && field.options?.length > 0) {
+          acc[field.name] = (field.options[0] as any).value
+        } else {
+          acc[field.name] = field.defaultValue || ''
+        }
+      }
+      return acc
+    }, {} as any)
+  }, [formFromProps])
+
   const formMethods = useForm({
-    defaultValues: formFromProps?.fields,
+    defaultValues,
   })
   const {
     control,
@@ -160,7 +174,7 @@ export const FormBlock: React.FC<
           {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
           {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
           {!hasSubmitted && (
-            <form id={formID} className="gaiada-form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="gaiada-form" onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4 last:mb-0">
                 {formFromProps &&
                   formFromProps.fields &&
@@ -186,7 +200,7 @@ export const FormBlock: React.FC<
                   })}
               </div>
 
-              <Button form={formID} type="submit" variant="default">
+              <Button type="submit" variant="default">
                 {submitButtonLabel}
               </Button>
             </form>
