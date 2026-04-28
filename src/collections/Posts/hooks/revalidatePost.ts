@@ -17,7 +17,7 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
       revalidatePath(path, 'page')
       revalidatePath('/posts', 'page')
-      revalidateTag('posts-sitemap', 'page')
+      revalidateTag('posts-sitemap', 'max')
       }
 
       // If the post was previously published, we need to revalidate the old path
@@ -28,7 +28,7 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
       revalidatePath(oldPath, 'page')
       revalidatePath('/posts', 'page')
-      revalidateTag('posts-sitemap', 'page')
+      revalidateTag('posts-sitemap', 'max')
       }
       }
       return doc
@@ -40,7 +40,7 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
       revalidatePath(path, 'page')
       revalidatePath('/posts', 'page')
-      revalidateTag('posts-sitemap', 'page')
+      revalidateTag('posts-sitemap', 'max')
       }
 
 
