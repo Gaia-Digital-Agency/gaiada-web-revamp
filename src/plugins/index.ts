@@ -58,6 +58,33 @@ export const plugins: Plugin[] = [
     fields: {
       payment: false,
     },
+    formSubmissionOverrides: {
+      fields: ({ defaultFields }) => {
+        return defaultFields.map((field) => {
+          if (field.type === 'array' && field.name === 'submissionData') {
+            return {
+              ...field,
+              fields: field.fields.map((subField: any) => {
+                if (subField.name === 'value') {
+                  return {
+                    ...subField,
+                    admin: {
+                      ...(subField.admin || {}),
+                      components: {
+                        ...(subField.admin?.components || {}),
+                        afterInput: ['@/components/FormSubmission/FilePreview'],
+                      },
+                    },
+                  }
+                }
+                return subField
+              }),
+            }
+          }
+          return field
+        })
+      },
+    },
     formOverrides: {
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
