@@ -223,15 +223,15 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                       key={activeServiceId ?? 'all'}
                       className="flex gap-8"
                       style={{ pointerEvents: 'auto' }}
-                      initial={isShortScreen ? false : { opacity: 0 }}
-                      animate={isShortScreen ? { opacity: 1 } : { opacity: 1 }}
-                      exit={isShortScreen ? false : { opacity: 0 }}
+                      initial={isShortScreen ? undefined : { opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={isShortScreen ? undefined : { opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       {filteredItems.map((item, i) => (
                         <motion.div
                           key={item.slug}
-                          initial={isShortScreen ? false : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
+                          initial={isShortScreen ? undefined : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
                           animate={
                             isShortScreen
                               ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
