@@ -10,8 +10,7 @@ export const BackToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const getContainer = () =>
-      document.querySelector<HTMLElement>('.homepage-scroll-container')
+    const getContainer = () => document.querySelector<HTMLElement>('.homepage-scroll-container')
 
     const check = () => {
       const container = getContainer()
@@ -47,9 +46,7 @@ export const BackToTop: React.FC = () => {
 
   // Scroll whichever element is actually scrolled.
   const scrollToTop = () => {
-    const container = document.querySelector<HTMLElement>(
-      '.homepage-scroll-container',
-    )
+    const container = document.querySelector<HTMLElement>('.homepage-scroll-container')
     if (container && container.scrollTop > 0) {
       container.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
@@ -62,7 +59,7 @@ export const BackToTop: React.FC = () => {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-[10.5rem] right-6 z-50 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:opacity-80 transition-opacity flex items-center justify-center"
+      className="fixed bottom-[10.5rem] right-6 z-50 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:opacity-80 transition-opacity flex items-center justify-center cursor-pointer"
       aria-label="Back to top"
     >
       <ArrowUp size={24} />
