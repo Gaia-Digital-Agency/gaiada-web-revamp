@@ -105,7 +105,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
               <div className="shrink-0">
                 <button
                   onClick={() => handleServiceClick(null)}
-                  className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:underline underline-offset-4 cursor-pointer ${
+                  className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:text-(--gda-brand-yellow) cursor-pointer ${
                     activeService === null
                       ? 'font-bold text-(--gda-brand-yellow)'
                       : 'text-muted-foreground'
@@ -118,7 +118,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ items, services })
                 <div key={service.id} className="md:pl-9 shrink-0">
                   <button
                     onClick={() => handleServiceClick(service.slug)}
-                    className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:no-underline hover:text-(--gda-brand-yellow) cursor-pointer ${
+                    className={`text-sm uppercase tracking-tight text-left transition-all duration-200 hover:text-(--gda-brand-yellow) cursor-pointer ${
                       activeService === service.slug
                         ? 'font-bold text-(--gda-brand-yellow)'
                         : 'text-muted-foreground'
