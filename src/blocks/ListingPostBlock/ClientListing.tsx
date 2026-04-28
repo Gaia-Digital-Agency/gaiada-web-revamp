@@ -49,7 +49,7 @@ const ListingContent: React.FC<Props> = ({
 
       setIsLoading(true)
       try {
-        let url = `/api/posts?limit=6&page=${pageNum}&sort=-publishedAt&depth=1&select[title]=true&select[slug]=true&select[meta]=true&select[heroImage]=true`
+        let url = `/api/posts?limit=6&page=${pageNum}&sort=-publishedAt&depth=1&select[title]=true&select[slug]=true&select[meta]=true&select[heroImage]=true&where[_status][equals]=published`
 
         const conditions: string[] = []
 
