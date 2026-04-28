@@ -62,8 +62,8 @@
 
         @media (max-height: 768px) {
           .image-wrapper {
-            height: 400px !important;
-            max-height: 400px !important;
+            height: 240px !important;
+            max-height: 240px !important;
 
             img {
               height: 100% !important;
