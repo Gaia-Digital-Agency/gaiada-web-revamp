@@ -244,7 +244,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
           </div>
 
           {/* Centered Navigation Arrows */}
-          <div className="arrow-wrapper flex justify-center gap-6 mt-8 lg:mt-8">
+          <div className="arrow-wrapper hidden md:flex justify-center gap-6 mt-8 lg:mt-8">
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
