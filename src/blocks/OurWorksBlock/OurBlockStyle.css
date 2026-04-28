@@ -24,6 +24,12 @@
     }
   }
 
+  @media (max-width: 1024px) {
+    .arrow-wrapper {
+      display: none;
+    }
+  }
+
   .filter-wrapper {
     @media (max-width: 767px) {
       flex-direction: row;
