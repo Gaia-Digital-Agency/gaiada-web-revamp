@@ -60,7 +60,7 @@ export const Select: React.FC<
             </SelectComponent>
           )
         }}
-        rules={{ required }}
+        rules={{ required: required ? `${label} is required` : false }}
       />
       {errors[name] && <Error name={name} />}
     </Width>
