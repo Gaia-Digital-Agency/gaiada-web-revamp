@@ -17,7 +17,9 @@ export const ListingPostBlockComponent: React.FC<ListingPostBlockProps> = async 
     depth: 1,
   })
 
-  const manualOrderedPosts = (postOrdering?.manualOrder || []) as any[]
+  const manualOrderedPosts = ((postOrdering?.manualOrder || []) as any[]).filter(
+    (post) => typeof post === 'object' && post._status === 'published',
+  )
   const manualOrderedIds = manualOrderedPosts.map((post) => (typeof post === 'object' ? post.id : post))
 
   const initialFetch = await payload.find({
@@ -26,9 +28,18 @@ export const ListingPostBlockComponent: React.FC<ListingPostBlockProps> = async 
     depth: 1,
     sort: '-publishedAt',
     where: {
-      id: {
-        not_in: manualOrderedIds,
-      },
+      and: [
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+        {
+          id: {
+            not_in: manualOrderedIds,
+          },
+        },
+      ],
     },
   })
 
