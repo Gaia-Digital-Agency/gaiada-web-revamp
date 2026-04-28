@@ -47,7 +47,7 @@ export function PortfolioTitle({
 }) {
   return (
     <div className="bg-(--gda-brand-white)">
-      <div className="flex flex-col justify-center items-center max-w-[700px] w-full mx-auto py-20 gap-y-4 text-center px-4">
+      <div className="flex flex-col justify-center items-center max-w-[800px] w-full mx-auto py-20 gap-y-4 text-center px-4">
         <BlurIn tag="h1">
           <span className="block">{title}</span>
         </BlurIn>

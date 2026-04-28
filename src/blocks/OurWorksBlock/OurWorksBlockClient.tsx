@@ -42,6 +42,51 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
+  const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0)
+
+  useEffect(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const isShortScreen = windowHeight < 768
+
+  const [isDragging, setIsDragging] = useState(false)
+  const startX = useRef(0)
+  const scrollLeft = useRef(0)
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return
+    setIsDragging(true)
+    startX.current = e.pageX - scrollContainerRef.current.offsetLeft
+    scrollLeft.current = scrollContainerRef.current.scrollLeft
+    scrollContainerRef.current.style.scrollSnapType = 'none'
+    scrollContainerRef.current.style.cursor = 'grabbing'
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.scrollSnapType = isShortScreen ? 'none' : 'x mandatory'
+      scrollContainerRef.current.style.cursor = 'grab'
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return
+    e.preventDefault()
+    const x = e.pageX - scrollContainerRef.current.offsetLeft
+    const walk = (x - startX.current) * 1.5 // Speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk
+  }
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    if (isDragging) {
+      e.preventDefault()
+    }
+  }
+
   const isVisible = index !== undefined && currentIndex === index
 
   const filteredItems = useMemo(() => {
@@ -158,38 +203,59 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
               <div className="swiper lg:mr-[calc(-1*(100vw-100%)/2)]">
                 <div
                   ref={scrollContainerRef}
-                  className="swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide snap-x snap-mandatory"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                  onMouseDown={handleMouseDown}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseUp}
+                  onMouseMove={handleMouseMove}
+                  className={cn(
+                    "swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide cursor-grab active:cursor-grabbing",
+                    !isShortScreen && "snap-x snap-mandatory"
+                  )}
+                  style={{
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                    touchAction: 'pan-x',
+                    pointerEvents: 'auto'
+                  }}
                 >
                   <AnimatePresence mode="wait" initial={true}>
                     <motion.div
                       key={activeServiceId ?? 'all'}
                       className="flex gap-8"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                      style={{ pointerEvents: 'auto' }}
+                      initial={isShortScreen ? false : { opacity: 0 }}
+                      animate={isShortScreen ? { opacity: 1 } : { opacity: 1 }}
+                      exit={isShortScreen ? false : { opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       {filteredItems.map((item, i) => (
                         <motion.div
                           key={item.slug}
-                          initial={{ opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
+                          initial={isShortScreen ? false : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
                           animate={
-                            isVisible
+                            isShortScreen
                               ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
-                              : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
+                              : isVisible
+                                ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+                                : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
                           }
-                          transition={{
-                            duration: 1.4,
-                            ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
-                            delay: isVisible ? i * 0.12 : 0,
-                            opacity: { duration: 1 },
-                            filter: { duration: 1.2 },
-                          }}
+                          transition={
+                            isShortScreen
+                              ? { duration: 0 }
+                              : {
+                                  duration: 1.4,
+                                  ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
+                                  delay: isVisible ? i * 0.12 : 0,
+                                  opacity: { duration: 1 },
+                                  filter: { duration: 1.2 },
+                                }
+                          }
                           className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
                         >
                           <Link
                             href={`/portfolio/${item.slug}`}
+                            onClick={handleLinkClick}
+                            draggable={false}
                             className="swiper-body group flex flex-col"
                           >
                             <div className="image-wrapper h-[200px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
@@ -201,6 +267,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                                       : ''
                                   }
                                   alt={item.title}
+                                  draggable={false}
                                   className="object-cover w-full h-[200px] md:h-full transition-transform duration-700 group-hover:scale-105"
                                 />
                               )}
