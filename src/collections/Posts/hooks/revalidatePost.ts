@@ -15,33 +15,34 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
       payload.logger.info(`Revalidating post at path: ${path}`)
 
-      revalidatePath(path)
-      revalidatePath('/posts')
+      revalidatePath(path, 'page')
+      revalidatePath('/posts', 'page')
       revalidateTag('posts-sitemap', 'max')
-    }
+      }
 
-    // If the post was previously published, we need to revalidate the old path
-    if (previousDoc._status === 'published' && doc._status !== 'published') {
+      // If the post was previously published, we need to revalidate the old path
+      if (previousDoc._status === 'published' && doc._status !== 'published') {
       const oldPath = `/posts/${previousDoc.slug}`
 
       payload.logger.info(`Revalidating old post at path: ${oldPath}`)
 
-      revalidatePath(oldPath)
-      revalidatePath('/posts')
+      revalidatePath(oldPath, 'page')
+      revalidatePath('/posts', 'page')
       revalidateTag('posts-sitemap', 'max')
-    }
-  }
-  return doc
-}
+      }
+      }
+      return doc
+      }
 
-export const revalidateDelete: CollectionAfterDeleteHook<Post> = ({ doc, req: { context } }) => {
-  if (!context.disableRevalidate) {
-    const path = `/posts/${doc?.slug}`
+      export const revalidateDelete: CollectionAfterDeleteHook<Post> = ({ doc, req: { context } }) => {
+      if (!context.disableRevalidate) {
+      const path = `/posts/${doc?.slug}`
 
-    revalidatePath(path)
-    revalidatePath('/posts')
-    revalidateTag('posts-sitemap', 'max')
-  }
+      revalidatePath(path, 'page')
+      revalidatePath('/posts', 'page')
+      revalidateTag('posts-sitemap', 'max')
+      }
+
 
   return doc
 }

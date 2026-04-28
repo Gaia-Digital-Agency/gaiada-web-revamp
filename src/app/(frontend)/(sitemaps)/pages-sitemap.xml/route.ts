@@ -66,3 +66,5 @@ export async function GET() {
 
   return getServerSideSitemap(sitemap)
 }
+
+export const dynamic = 'force-dynamic'
