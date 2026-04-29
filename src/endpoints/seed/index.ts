@@ -9,8 +9,6 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
-import { seedGaia } from './gaia-seed'
-import { seedGaiaV2 } from './gaia-seeds-v2'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -232,6 +230,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding Gaia Digital Agency...`)
 
+  const { seedGaia } = await import('./gaia-seed')
   await seedGaia({ payload, req })
 
   payload.logger.info('Seeded database successfully!')
@@ -296,6 +295,7 @@ export const seedV2 = async ({
 
   payload.logger.info(`— Seeding Gaia Digital Agency V2...`)
 
+  const { seedGaiaV2 } = await import('./gaia-seeds-v2')
   await seedGaiaV2({ payload, req })
 
   payload.logger.info('Seeded database V2 successfully!')

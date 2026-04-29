@@ -9,12 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { Error } from '../Error'
 import { Width } from '../Width'
-import { countryOptions } from './options'
+
+type CountryOption = { value: string; label: string }
 
 export const Country: React.FC<
   CountryField & {
@@ -22,6 +23,13 @@ export const Country: React.FC<
     errors: Partial<FieldErrorsImpl>
   }
 > = ({ name, control, errors, label, required, width }) => {
+  const [countryOptions, setCountryOptions] = useState<CountryOption[]>([])
+
+  // Load the 200+ country list only when this field is rendered
+  useEffect(() => {
+    import('./options').then((m) => setCountryOptions(m.countryOptions))
+  }, [])
+
   return (
     <Width width={width}>
       <Label className="" htmlFor={name}>

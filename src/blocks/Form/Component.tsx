@@ -43,7 +43,7 @@ export const FormBlock: React.FC<
         if (field.blockType === 'radio' && !field.defaultValue && 'options' in field && field.options?.length > 0) {
           acc[field.name] = (field.options[0] as any).value
         } else {
-          acc[field.name] = field.defaultValue || ''
+          acc[field.name] = ('defaultValue' in field ? field.defaultValue : '') || ''
         }
       }
       return acc

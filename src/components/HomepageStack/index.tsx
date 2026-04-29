@@ -1,13 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState, Children, useCallback } from 'react'
-import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
-import './homepageStack.css'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollToPlugin)
-}
+import type { gsap as GsapType } from 'gsap'
 
 interface HomepageStackProps {
   children: React.ReactNode
@@ -23,6 +17,16 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const leafRef = useRef<HTMLImageElement>(null)
   const leafRef2 = useRef<HTMLImageElement>(null)
   const isAnimating = useRef(false)
+  const gsapRef = useRef<typeof GsapType | null>(null)
+
+  // Load GSAP dynamically — keeps it out of the initial JS bundle
+  useEffect(() => {
+    import('gsap').then(async (mod) => {
+      const { ScrollToPlugin } = await import('gsap/dist/ScrollToPlugin')
+      mod.gsap.registerPlugin(ScrollToPlugin)
+      gsapRef.current = mod.gsap
+    })
+  }, [])
 
   // Leaf Animation Logic
   useEffect(() => {
@@ -33,7 +37,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
 
     if (isLast) {
       // Gust of wind exit - slower and more graceful
-      gsap.to(leafRef.current, {
+      gsapRef.current?.to(leafRef.current, {
         y: windowHeight + 300,
         x: 500,
         rotation: 720,
@@ -42,7 +46,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
         duration: 4.5, // Increased from 2.5
         ease: 'power2.inOut',
       })
-      gsap.to(leafRef2.current, {
+      gsapRef.current?.to(leafRef2.current, {
         y: windowHeight + 300,
         x: -500,
         rotation: -720,
@@ -58,7 +62,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       const horizontalBase1 = currentIndex % 2 === 0 ? 80 : 20
       const drift1 = Math.sin(currentIndex) * 10
 
-      gsap.to(leafRef.current, {
+      gsapRef.current?.to(leafRef.current, {
         y: 0,
         x: 0,
         top: `${targetY1}px`,
@@ -75,7 +79,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
       const horizontalBase2 = currentIndex % 2 === 0 ? 15 : 85
       const drift2 = Math.cos(currentIndex) * 15
 
-      gsap.to(leafRef2.current, {
+      gsapRef.current?.to(leafRef2.current, {
         y: 0,
         x: 0,
         top: `${targetY2}px`,
@@ -185,7 +189,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
         })
         window.dispatchEvent(event)
 
-        gsap.to(containerRef.current, {
+        gsapRef.current?.to(containerRef.current, {
           scrollTo: { y: targetElement, autoKill: false },
           duration: 1.2,
           ease: 'power2.inOut',
