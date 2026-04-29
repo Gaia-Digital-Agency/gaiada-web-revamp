@@ -17,7 +17,7 @@ export const BlurIn: React.FC<BlurInProps> = ({ children, tag = 'div' }) => {
   return (
     <MotionTag
       ref={ref}
-      initial={{ filter: 'blur(20px)', opacity: 0 }}
+      initial={{ filter: 'blur(20px)', opacity: 1 }}
       animate={isInView ? { filter: 'blur(0px)', opacity: 1 } : {}}
       transition={{ duration: 1.5 }}
     >

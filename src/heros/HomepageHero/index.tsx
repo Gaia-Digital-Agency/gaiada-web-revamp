@@ -7,6 +7,7 @@ import { AppButton } from '@/components/common/AppButton'
 import './homepageHero.css'
 import { BlurIn } from '@/components/FramerMotion/Blur-in'
 import { TextFade } from '@/components/FramerMotion/TextFade'
+import Image from 'next/image'
 
 type HomepageHeroType =
   | {
@@ -31,17 +32,19 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
   buttons,
   media,
 }) => {
-  const bgStyle = media?.url
-    ? {
-        backgroundImage: `url(${media.url})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }
-    : {}
-
   return (
-    <section className="section-homepage relative overflow-hidden" style={bgStyle}>
+    <section className="section-homepage relative overflow-hidden">
+      {/* Hero background — Next.js Image with priority so browser preloads it */}
+      {media?.url && (
+        <Image
+          src={media.url}
+          alt={media.alt || ''}
+          fill
+          priority
+          fetchPriority="high"
+          className="object-cover object-center -z-10"
+        />
+      )}
       <div className="container mx-auto py-16 md:py-32 min-h-screen flex items-center relative z-10">
         <div className="flex flex-col md:flex-row md:justify-between gap-4 md:gap-10 w-full">
           <div className="md:col-span-6">
