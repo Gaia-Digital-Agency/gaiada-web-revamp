@@ -101,7 +101,7 @@ export const FormBlock: React.FC<
 
               dataToSend.push({
                 field: name,
-                value: uploadRes.doc.url || uploadRes.doc.id,
+                value: uploadRes.doc.url ? `${getClientSideURL()}${uploadRes.doc.url}` : uploadRes.doc.id,
               })
             } else {
               dataToSend.push({
