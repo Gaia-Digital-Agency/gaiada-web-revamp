@@ -150,7 +150,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
 
   // Lock body/html overflow to ensure HomepageStack is the only scrollable element (Desktop only)
   useEffect(() => {
-    if (window.innerWidth < 1024) return
+    if (window.innerWidth < 1024 || window.innerHeight < 768) return
 
     const html = document.documentElement
     const body = document.body
@@ -169,8 +169,8 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const goTo = useCallback(
     (index: number) => {
       if (isAnimating.current || !containerRef.current) return
-      // Disable GSAP snap on mobile/tablet
-      if (window.innerWidth < 1024) return
+      // Disable GSAP snap on mobile/tablet or small screen height
+      if (window.innerWidth < 1024 || window.innerHeight < 768) return
 
       const targetIndex = Math.max(0, Math.min(total - 1, index))
       const targetElement = sectionRefs.current[targetIndex]
@@ -201,10 +201,41 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   // Handle Wheel Events for Desktop
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (window.innerWidth < 1024) return
-      e.preventDefault()
+      if (window.innerWidth < 1024 || window.innerHeight < 768) return
 
-      if (isAnimating.current) return
+      const container = containerRef.current
+      if (!container || isAnimating.current) return
+
+      const activeSection = sectionRefs.current[currentIndex]
+      if (activeSection) {
+        const viewportHeight = window.innerHeight
+        const sectionHeight = activeSection.offsetHeight
+
+        if (sectionHeight > viewportHeight) {
+          const scrollTop = container.scrollTop
+          const sectionTop = activeSection.offsetTop
+          const threshold = 10 // pixels
+
+          // Check if we're scrolling down and haven't reached the bottom of the section
+          if (e.deltaY > 0) {
+            const isAtBottom = scrollTop + viewportHeight >= sectionTop + sectionHeight - threshold
+            if (!isAtBottom) {
+              // Allow natural scroll
+              return
+            }
+          }
+          // Check if we're scrolling up and haven't reached the top of the section
+          else if (e.deltaY < 0) {
+            const isAtTop = scrollTop <= sectionTop + threshold
+            if (!isAtTop) {
+              // Allow natural scroll
+              return
+            }
+          }
+        }
+      }
+
+      e.preventDefault()
 
       if (e.deltaY > 30) {
         goTo(currentIndex + 1)
@@ -228,8 +259,36 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   // Handle Keyboard Events for Desktop
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (window.innerWidth < 1024) return
-      if (isAnimating.current) return
+      if (window.innerWidth < 1024 || window.innerHeight < 768) return
+
+      const container = containerRef.current
+      if (!container || isAnimating.current) return
+
+      const activeSection = sectionRefs.current[currentIndex]
+      if (activeSection) {
+        const viewportHeight = window.innerHeight
+        const sectionHeight = activeSection.offsetHeight
+
+        if (sectionHeight > viewportHeight) {
+          const scrollTop = container.scrollTop
+          const sectionTop = activeSection.offsetTop
+          const threshold = 10 // pixels
+
+          if (['ArrowDown', 'PageDown'].includes(e.key)) {
+            const isAtBottom = scrollTop + viewportHeight >= sectionTop + sectionHeight - threshold
+            if (!isAtBottom) {
+              // Allow natural scroll
+              return
+            }
+          } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
+            const isAtTop = scrollTop <= sectionTop + threshold
+            if (!isAtTop) {
+              // Allow natural scroll
+              return
+            }
+          }
+        }
+      }
 
       // Prevent default scrolling for navigation keys
       if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {

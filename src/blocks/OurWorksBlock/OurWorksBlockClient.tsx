@@ -42,7 +42,9 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0)
+  const [windowHeight, setWindowHeight] = useState(
+    typeof window !== 'undefined' ? window.innerHeight : 0,
+  )
 
   useEffect(() => {
     const handleResize = () => setWindowHeight(window.innerHeight)
@@ -159,10 +161,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
         <div className="container relative z-10">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
             <div className="lg:w-1/4 flex flex-col pt-4 shrink-0">
-              <TextFade direction="up" key={isVisible ? 'visible' : 'hidden'}>
-                <h2 className="heading-1">{title}</h2>
-              </TextFade>
-
+              <h2 className="heading-1">{title}</h2>
               <div className="filter-wrapper flex flex-row flex-wrap lg:flex-col items-start gap-4">
                 <button
                   onClick={() => setActiveServiceId(null)}
@@ -208,14 +207,14 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   onMouseLeave={handleMouseUp}
                   onMouseMove={handleMouseMove}
                   className={cn(
-                    "swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide cursor-grab active:cursor-grabbing",
-                    !isShortScreen && "snap-x snap-mandatory"
+                    'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide cursor-grab active:cursor-grabbing',
+                    !isShortScreen && 'snap-x snap-mandatory',
                   )}
                   style={{
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
                     touchAction: 'pan-x',
-                    pointerEvents: 'auto'
+                    pointerEvents: 'auto',
                   }}
                 >
                   <AnimatePresence mode="wait" initial={true}>
@@ -231,7 +230,11 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                       {filteredItems.map((item, i) => (
                         <motion.div
                           key={item.slug}
-                          initial={isShortScreen ? undefined : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }}
+                          initial={
+                            isShortScreen
+                              ? undefined
+                              : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
+                          }
                           animate={
                             isShortScreen
                               ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
