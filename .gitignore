@@ -34,4 +34,9 @@ bak/
 *.sql.gz
 
 # uploads
+public/form-uploads/*.bak.*
+
+# Env backups
+.env.bak*
+*.bak.*
 public/form-uploads/
