@@ -44,5 +44,9 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
 
   if (disableNotFound) return null
 
-  notFound()
+  if (url === '/404') {
+    notFound()
+  }
+
+  redirect('/404')
 }
