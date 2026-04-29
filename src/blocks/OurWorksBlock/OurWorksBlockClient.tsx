@@ -318,6 +318,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
+              aria-label="Scroll left"
               className={cn(
                 'w-14 h-14 flex items-center justify-center rounded-none transition-all duration-300',
                 canScrollLeft
@@ -330,6 +331,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
             <button
               onClick={() => scroll('right')}
               disabled={!canScrollRight}
+              aria-label="Scroll right"
               className={cn(
                 'w-14 h-14 flex items-center justify-center rounded-none transition-all duration-300',
                 canScrollRight

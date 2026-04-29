@@ -217,6 +217,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                             goToPage(i, currPage - 1, totalPages)
                           }}
                           disabled={currPage === 0}
+                          aria-label="Previous"
                           className="p-1 text-muted-foreground hover:text-primary disabled:opacity-20 transition-colors"
                         >
                           <ChevronLeft className="w-4 h-4" />
@@ -235,6 +236,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                             goToPage(i, currPage + 1, totalPages)
                           }}
                           disabled={currPage === totalPages - 1}
+                          aria-label="Next"
                           className="p-1 text-muted-foreground hover:text-primary disabled:opacity-20 transition-colors"
                         >
                           <ChevronRight className="w-4 h-4" />

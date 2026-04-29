@@ -42,11 +42,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* We keep the SVG fallback if needed */}
         {!faviconData && <link href="/favicon.svg" rel="icon" type="image/svg+xml" />}
 
-        {/* Google Tag Manager */}
+        {/* Preconnect to third-party origins */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+
+        {/* Google Tag Manager — lazyOnload so it never blocks first paint */}
         {settings?.gtmId && (
           <Script
             id="gtm-script"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -57,16 +62,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         )}
 
-        {/* Google Analytics */}
+        {/* Google Analytics — lazyOnload so it never blocks first paint */}
         {settings?.gaId && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${settings.gaId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
             <Script
               id="ga-script"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
