@@ -148,6 +148,18 @@
 }
 
 :root {
+  /* ── Gradient background variables (HomepageStack animated gradient) ── */
+  --color-bg1: #ffffff00;
+  --color-bg2: #ffffff00;
+  --color1: 255, 213, 79;
+  --color2: 255, 241, 118;
+  --color3: 255, 255, 255;
+  --color4: 250, 200, 90;
+  --color5: 255, 249, 196;
+  --color-interactive: 255, 194, 44;
+  --circle-size: 200%;
+  --blending: normal;
+
   color-scheme: light;
   /* --background: oklch(100% 0 0deg); */
   --background: var(--gda-brand-white);
