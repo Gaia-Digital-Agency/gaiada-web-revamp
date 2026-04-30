@@ -3,6 +3,17 @@
 import React, { useEffect, useRef, useState, Children, useCallback } from 'react'
 import type { gsap as GsapType } from 'gsap'
 
+// Kick off the GSAP chunk download immediately at module evaluation time —
+// before the component even mounts — so it's ready on first scroll/interaction.
+const gsapPromise =
+  typeof window !== 'undefined'
+    ? import('gsap').then(async (mod) => {
+        const { ScrollToPlugin } = await import('gsap/dist/ScrollToPlugin')
+        mod.gsap.registerPlugin(ScrollToPlugin)
+        return mod.gsap
+      })
+    : Promise.resolve(null)
+
 interface HomepageStackProps {
   children: React.ReactNode
 }
@@ -19,12 +30,10 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const isAnimating = useRef(false)
   const gsapRef = useRef<typeof GsapType | null>(null)
 
-  // Load GSAP dynamically — keeps it out of the initial JS bundle
+  // Resolve the module-level GSAP promise into the ref
   useEffect(() => {
-    import('gsap').then(async (mod) => {
-      const { ScrollToPlugin } = await import('gsap/dist/ScrollToPlugin')
-      mod.gsap.registerPlugin(ScrollToPlugin)
-      gsapRef.current = mod.gsap
+    gsapPromise.then((gsap) => {
+      if (gsap) gsapRef.current = gsap
     })
   }, [])
 
