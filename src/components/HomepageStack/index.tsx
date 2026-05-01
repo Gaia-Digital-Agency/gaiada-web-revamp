@@ -3,8 +3,7 @@
 import React, { useEffect, useRef, useState, Children, useCallback, memo } from 'react'
 import type { gsap as GsapType } from 'gsap'
 
-// Kick off the GSAP chunk download immediately at module evaluation time —
-// before the component even mounts — so it's ready on first scroll/interaction.
+// Kick off the GSAP chunk download immediately at module evaluation time
 const gsapPromise =
   typeof window !== 'undefined'
     ? import('gsap').then(async (mod) => {
@@ -15,92 +14,49 @@ const gsapPromise =
     : Promise.resolve(null)
 
 // ─── HomepageBackground ────────────────────────────────────────────────────
-// Memoized — never re-renders when currentIndex changes.
-// Listens to the 'homepage-stack-index' CustomEvent for leaf animations
-// so it stays decoupled from the parent's state.
 const HomepageBackground = memo(function HomepageBackground() {
   const interBubbleRef = useRef<HTMLDivElement>(null)
   const leafRef = useRef<HTMLImageElement>(null)
   const leafRef2 = useRef<HTMLImageElement>(null)
   const gsapRef = useRef<typeof GsapType | null>(null)
 
-  // Resolve GSAP into local ref
   useEffect(() => {
     gsapPromise.then((gsap) => {
       if (gsap) gsapRef.current = gsap
     })
   }, [])
 
-  // Mouse tracking for interactive gradient bubble
   useEffect(() => {
-    let curX = 0
-    let curY = 0
-    let tgX = 0
-    let tgY = 0
-    let rafId: number
-
+    let curX = 0, curY = 0, tgX = 0, tgY = 0, rafId: number
     const move = () => {
       curX += (tgX - curX) / 20
       curY += (tgY - curY) / 20
-      if (interBubbleRef.current) {
-        interBubbleRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
-      }
+      if (interBubbleRef.current) interBubbleRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
       rafId = requestAnimationFrame(move)
     }
-
-    const handleMouseMove = (event: MouseEvent) => {
-      tgX = event.clientX
-      tgY = event.clientY
-    }
-
+    const handleMouseMove = (event: MouseEvent) => { tgX = event.clientX; tgY = event.clientY }
     window.addEventListener('mousemove', handleMouseMove)
     rafId = requestAnimationFrame(move)
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      cancelAnimationFrame(rafId)
-    }
+    return () => { window.removeEventListener('mousemove', handleMouseMove); cancelAnimationFrame(rafId) }
   }, [])
 
-  // Leaf animation — driven by CustomEvent, not by props, so no re-render needed
   useEffect(() => {
     const handleIndex = (e: Event) => {
       const { index, total } = (e as CustomEvent).detail
       if (!leafRef.current || !leafRef2.current || !gsapRef.current) return
-
       const isLast = index === total - 1
       const windowHeight = window.innerHeight
 
       if (isLast) {
-        gsapRef.current.to(leafRef.current, {
-          y: windowHeight + 300, x: 500, rotation: 720, scale: 0.4,
-          opacity: 0, duration: 4.5, ease: 'power2.inOut',
-        })
-        gsapRef.current.to(leafRef2.current, {
-          y: windowHeight + 300, x: -500, rotation: -720, scale: 0.4,
-          opacity: 0, duration: 5, ease: 'power2.inOut',
-        })
+        gsapRef.current.to(leafRef.current, { y: windowHeight + 300, x: 500, rotation: 720, scale: 0.4, opacity: 0, duration: 4.5, ease: 'power2.inOut' })
+        gsapRef.current.to(leafRef2.current, { y: windowHeight + 300, x: -500, rotation: -720, scale: 0.4, opacity: 0, duration: 5, ease: 'power2.inOut' })
       } else {
         const targetY1 = (index / (total - 1)) * (windowHeight * 0.75) + windowHeight * 0.1
-        const horizontalBase1 = index % 2 === 0 ? 80 : 20
-        const drift1 = Math.sin(index) * 10
-        gsapRef.current.to(leafRef.current, {
-          y: 0, x: 0, top: `${targetY1}px`, left: `${horizontalBase1 + drift1}%`,
-          rotation: index * 150, scale: 1 + Math.sin(index * 2) * 0.2,
-          opacity: 1, duration: 4, ease: 'power2.out',
-        })
-
+        gsapRef.current.to(leafRef.current, { y: 0, x: 0, top: `${targetY1}px`, left: `${index % 2 === 0 ? 80 : 20}%`, rotation: index * 150, scale: 1 + Math.sin(index * 2) * 0.2, opacity: 1, duration: 4, ease: 'power2.out' })
         const targetY2 = ((index + 0.4) / total) * (windowHeight * 0.65) + windowHeight * 0.15
-        const horizontalBase2 = index % 2 === 0 ? 15 : 85
-        const drift2 = Math.cos(index) * 15
-        gsapRef.current.to(leafRef2.current, {
-          y: 0, x: 0, top: `${targetY2}px`, left: `${horizontalBase2 + drift2}%`,
-          rotation: index * -180, scale: 0.8 + Math.cos(index * 1.5) * 0.15,
-          opacity: 0.8, duration: 5, ease: 'power2.out',
-        })
+        gsapRef.current.to(leafRef2.current, { y: 0, x: 0, top: `${targetY2}px`, left: `${index % 2 === 0 ? 15 : 85}%`, rotation: index * -180, scale: 0.8 + Math.cos(index * 1.5) * 0.15, opacity: 0.8, duration: 5, ease: 'power2.out' })
       }
     }
-
     window.addEventListener('homepage-stack-index', handleIndex)
     return () => window.removeEventListener('homepage-stack-index', handleIndex)
   }, [])
@@ -108,58 +64,14 @@ const HomepageBackground = memo(function HomepageBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0">
       <div className="gradient-bg absolute inset-0">
-        <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-              <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
-                result="goo"
-              />
-              <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-          </defs>
-        </svg>
-        <div className="gradients-container h-full w-full">
-          <div className="g1"></div>
-          <div className="g2"></div>
-          <div className="g3"></div>
-          <div className="g4"></div>
-          <div className="g5"></div>
-          <div ref={interBubbleRef} className="interactive"></div>
-        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" className="hidden"><defs><filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" /><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" /><feBlend in="SourceGraphic" in2="goo" /></filter></defs></svg>
+        <div className="gradients-container h-full w-full"><div className="g1"></div><div className="g2"></div><div className="g3"></div><div className="g4"></div><div className="g5"></div><div ref={interBubbleRef} className="interactive"></div></div>
       </div>
-
-      {/* Falling Leaves — hidden on mobile */}
-      <img
-        ref={leafRef}
-        src="/leaf2.png"
-        alt=""
-        className="hidden lg:block fixed w-24 h-auto pointer-events-none z-[100]"
-        style={{ top: '5%', left: '80%', opacity: 0, filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.15))' }}
-      />
-      <img
-        ref={leafRef2}
-        src="/leaf1.png"
-        alt=""
-        className="hidden lg:block fixed w-20 h-auto pointer-events-none z-[100]"
-        style={{ top: '15%', left: '10%', opacity: 0, filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.12))' }}
-      />
-
-      {/* Subtle Grain Overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-      />
+      <img ref={leafRef} src="/leaf2.png" alt="" className="hidden lg:block fixed w-24 h-auto pointer-events-none z-[100]" style={{ top: '5%', left: '80%', opacity: 0 }} />
+      <img ref={leafRef2} src="/leaf1.png" alt="" className="hidden lg:block fixed w-20 h-auto pointer-events-none z-[100]" style={{ top: '15%', left: '10%', opacity: 0 }} />
     </div>
   )
 })
-
-// ─── HomepageStack ─────────────────────────────────────────────────────────
 
 interface HomepageStackProps {
   children: React.ReactNode
@@ -174,203 +86,50 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   const isAnimating = useRef(false)
   const gsapRef = useRef<typeof GsapType | null>(null)
 
-  // Resolve the module-level GSAP promise into the ref
   useEffect(() => {
     gsapPromise.then((gsap) => {
       if (gsap) gsapRef.current = gsap
     })
   }, [])
 
-  // Setup Intersection Observer
-  useEffect(() => {
-    let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Only update if we're NOT in the middle of a GSAP animation
-        if (isAnimating.current) return
-
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute('data-index'))
-            // Debounce 100ms — prevents double-fire when GSAP onComplete
-            // releases isAnimating and the observer fires immediately after
-            if (debounceTimer) clearTimeout(debounceTimer)
-            debounceTimer = setTimeout(() => {
-              setCurrentIndex(index)
-              const event = new CustomEvent('homepage-stack-index', { detail: { index, total } })
-              window.dispatchEvent(event)
-            }, 100)
-          }
-        })
-      },
-      {
-        root: containerRef.current,
-        threshold: 0.5,
-      },
-    )
-
-    sectionRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref)
-    })
-
-    return () => {
-      if (debounceTimer) clearTimeout(debounceTimer)
-      observer.disconnect()
-    }
-  }, [total])
-
-  // Lock body/html overflow to ensure HomepageStack is the only scrollable element (Desktop only)
-  useEffect(() => {
-    if (window.innerWidth < 1024 || window.innerHeight < 768) return
-
-    const html = document.documentElement
-    const body = document.body
-    const prevHtmlOverflow = html.style.overflow
-    const prevBodyOverflow = body.style.overflow
-
-    html.style.overflow = 'hidden'
-    body.style.overflow = 'hidden'
-
-    return () => {
-      html.style.overflow = prevHtmlOverflow
-      body.style.overflow = prevBodyOverflow
-    }
+  const isResponsive = useCallback(() => {
+    return typeof window !== 'undefined' && (window.innerWidth < 1024 || window.innerHeight < 768)
   }, [])
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (isAnimating.current || !containerRef.current) return
-      // Disable GSAP snap on mobile/tablet or small screen height
-      if (window.innerWidth < 1024 || window.innerHeight < 768) return
+  const goTo = useCallback((index: number) => {
+    if (isResponsive() || isAnimating.current || !containerRef.current || index < 0 || index >= total) return
+    const targetElement = sectionRefs.current[index]
+    if (targetElement) {
+      isAnimating.current = true
+      setCurrentIndex(index)
+      const event = new CustomEvent('homepage-stack-index', { detail: { index, total } })
+      window.dispatchEvent(event)
+      gsapRef.current?.to(containerRef.current, {
+        scrollTo: { y: targetElement, autoKill: false },
+        duration: 1.2,
+        ease: 'power2.inOut',
+        onComplete: () => { isAnimating.current = false }
+      })
+    }
+  }, [total, isResponsive])
 
-      const targetIndex = Math.max(0, Math.min(total - 1, index))
-      const targetElement = sectionRefs.current[targetIndex]
-
-      if (targetElement) {
-        isAnimating.current = true
-        setCurrentIndex(targetIndex)
-
-        // Broadcast immediately when starting to scroll
-        const event = new CustomEvent('homepage-stack-index', {
-          detail: { index: targetIndex, total },
-        })
-        window.dispatchEvent(event)
-
-        gsapRef.current?.to(containerRef.current, {
-          scrollTo: { y: targetElement, autoKill: false },
-          duration: 1.2,
-          ease: 'power2.inOut',
-          onComplete: () => {
-            isAnimating.current = false
-          },
-        })
-      }
-    },
-    [total],
-  )
-
-  // Handle Wheel Events for Desktop
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (window.innerWidth < 1024 || window.innerHeight < 768) return
-
-      const container = containerRef.current
-      if (!container || isAnimating.current) return
-
-      const activeSection = sectionRefs.current[currentIndex]
-      if (activeSection) {
-        const viewportHeight = window.innerHeight
-        const sectionHeight = activeSection.offsetHeight
-
-        if (sectionHeight > viewportHeight) {
-          const scrollTop = container.scrollTop
-          const sectionTop = activeSection.offsetTop
-          const threshold = 10
-
-          if (e.deltaY > 0) {
-            const isAtBottom = scrollTop + viewportHeight >= sectionTop + sectionHeight - threshold
-            if (!isAtBottom) return
-          } else if (e.deltaY < 0) {
-            const isAtTop = scrollTop <= sectionTop + threshold
-            if (!isAtTop) return
-          }
-        }
-      }
-
+      if (isResponsive()) return
       e.preventDefault()
-
-      if (e.deltaY > 30) {
-        goTo(currentIndex + 1)
-      } else if (e.deltaY < -30) {
-        goTo(currentIndex - 1)
-      }
+      if (isAnimating.current) return
+      if (e.deltaY > 30) goTo(currentIndex + 1)
+      else if (e.deltaY < -30) goTo(currentIndex - 1)
     }
-
     const container = containerRef.current
-    if (container) {
-      container.addEventListener('wheel', handleWheel, { passive: false })
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener('wheel', handleWheel)
-      }
-    }
-  }, [currentIndex, goTo])
-
-  // Handle Keyboard Events for Desktop
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (window.innerWidth < 1024 || window.innerHeight < 768) return
-
-      const container = containerRef.current
-      if (!container || isAnimating.current) return
-
-      const activeSection = sectionRefs.current[currentIndex]
-      if (activeSection) {
-        const viewportHeight = window.innerHeight
-        const sectionHeight = activeSection.offsetHeight
-
-        if (sectionHeight > viewportHeight) {
-          const scrollTop = container.scrollTop
-          const sectionTop = activeSection.offsetTop
-          const threshold = 10
-
-          if (['ArrowDown', 'PageDown'].includes(e.key)) {
-            const isAtBottom = scrollTop + viewportHeight >= sectionTop + sectionHeight - threshold
-            if (!isAtBottom) return
-          } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
-            const isAtTop = scrollTop <= sectionTop + threshold
-            if (!isAtTop) return
-          }
-        }
-      }
-
-      if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
-        e.preventDefault()
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-          goTo(currentIndex + 1)
-        } else {
-          goTo(currentIndex - 1)
-        }
-      }
-    }
-
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [currentIndex, goTo])
+    if (container) container.addEventListener('wheel', handleWheel, { passive: false })
+    return () => { if (container) container.removeEventListener('wheel', handleWheel) }
+  }, [currentIndex, goTo, isResponsive])
 
   return (
-    <div
-      ref={containerRef}
-      className="homepage-scroll-container w-full h-screen overflow-y-auto overflow-x-hidden hide-scrollbar bg-background relative"
-      style={{ scrollBehavior: 'auto' }}
-    >
-      {/* Gradient + leaves — memoized, never re-renders on section change */}
+    <div ref={containerRef} className="w-full h-screen overflow-y-auto lg:overflow-hidden bg-background relative">
       <HomepageBackground />
-
-      <div className="relative z-10">
+      <div className="relative z-10 w-full h-full">
         {sections.map((section, i) => {
           const isLast = i === total - 1
           return (
@@ -379,8 +138,9 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
               ref={(el) => {
                 sectionRefs.current[i] = el
               }}
-              data-index={i}
-              className={`w-full relative ${isLast ? 'h-auto' : 'lg:h-screen'}`}
+              className={`w-full relative flex items-center justify-center ${
+                isLast ? 'h-auto' : 'h-screen'
+              }`}
             >
               {section}
             </div>
