@@ -127,7 +127,7 @@ export const HomepageStack: React.FC<HomepageStackProps> = ({ children }) => {
   }, [currentIndex, goTo, isResponsive])
 
   return (
-    <div ref={containerRef} className="w-full h-screen overflow-y-auto lg:overflow-hidden bg-background relative">
+    <div ref={containerRef} className="w-full h-screen overflow-y-auto lg:overflow-y-scroll hide-scrollbar bg-background relative">
       <HomepageBackground />
       <div className="relative z-10 w-full h-full">
         {sections.map((section, i) => {
