@@ -111,13 +111,14 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
             <input
               type="text"
               placeholder="Search our blog..."
+              aria-label="Search blog posts"
               className="w-full px-4 py-4 pl-10 text-sm border focus:outline-none focus:ring-1 focus:ring-black transition-all"
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2">
               <svg
-                className="w-4 h-4 text-gray-400"
+                className="w-4 h-4 text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -135,7 +136,7 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
 
           {categories.length > 0 && (
             <div className="category-wrapper w-full mt-8 flex flex-wrap justify-start items-center gap-1.5">
-              <span className="text-sm text-gray-500 italic">Popular Tags:</span>
+              <span className="text-sm text-gray-600 italic">Popular Tags:</span>
               {categories.map((cat, index) => {
                 const isSelected = currentCat === String(cat.id)
                 return (
@@ -143,13 +144,13 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
                     <div className="category-item flex flex-row items-center">
                       <button
                         onClick={() => handleCategoryClick(String(cat.id))}
-                        className={`text-sm transition-all flex items-center gap-2 underline cursor-pointer uppercase ${
-                          isSelected ? 'text-black font-medium' : 'text-gray-500'
+                        className={`text-sm transition-all flex items-center gap-2 underline cursor-pointer uppercase min-h-[44px] px-1 ${
+                          isSelected ? 'text-black font-medium' : 'text-gray-600'
                         }`}
                       >
                         {cat.title}
                       </button>
-                      {index < categories.length - 1 && <span className="text-gray-400">,</span>}
+                      {index < categories.length - 1 && <span className="text-gray-500">,</span>}
                     </div>
                   </React.Fragment>
                 )

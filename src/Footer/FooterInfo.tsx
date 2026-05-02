@@ -25,7 +25,7 @@ export const FooterInfo: React.FC = () => {
   }, [])
 
   return (
-    <div className="flex flex-col gap-1 text-sm text-gray-400">
+    <div className="flex flex-col gap-1 text-sm text-gray-600">
       <p>Visitor Location: {location}</p>
       <p>Current Local Time: {time}</p>
     </div>

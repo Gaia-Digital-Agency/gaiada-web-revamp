@@ -143,7 +143,7 @@ const ListingContent: React.FC<Props> = ({
                   <h3 className="heading-3 mb-2">{post.title}</h3>
                 </Link>
 
-                <p className="text-gray-500 leading-relaxed mb-6 line-clamp-3">
+                <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
                   {post.meta?.description}
                 </p>
 
@@ -161,7 +161,7 @@ const ListingContent: React.FC<Props> = ({
         ) : !isLoading ? (
           <div className="text-center py-20">
             <h3 className="heading-3 mb-4">No posts found</h3>
-            <p className="text-gray-500">Try adjusting your search criteria.</p>
+            <p className="text-gray-600">Try adjusting your search criteria.</p>
           </div>
         ) : (
           <div className="flex justify-center items-center py-20">
