@@ -18,8 +18,7 @@ async function getForm(formId: number) {
     })
 
     return form
-  } catch (error) {
-    console.error('Error fetching form:', error)
+  } catch {
     return null
   }
 }
