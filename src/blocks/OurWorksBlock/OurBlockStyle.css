@@ -41,6 +41,9 @@
       color: #707070;
       letter-spacing: 0.05em;
       font-weight: 500;
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
 
       &:not(:first-child) {
         margin-left: 36px;
