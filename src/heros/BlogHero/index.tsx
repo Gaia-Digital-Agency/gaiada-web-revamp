@@ -70,8 +70,8 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
           .sort((a: any, b: any) => (b.postCount || 0) - (a.postCount || 0))
 
         setCategories(sortedCats)
-      } catch (err) {
-        console.error('Error fetching categories:', err)
+      } catch {
+        // Silent — categories are non-critical; UI shows without filters if fetch fails
       }
     }
     fetchCategories()

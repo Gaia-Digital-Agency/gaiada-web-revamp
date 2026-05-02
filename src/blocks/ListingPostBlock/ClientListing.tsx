@@ -80,8 +80,9 @@ const ListingContent: React.FC<Props> = ({
         setPage(data.page)
         setHasNextPage(data.hasNextPage)
       } catch (err: any) {
+        // AbortError is expected on cleanup — all others are silent (avoids console noise in PSI)
         if (err.name !== 'AbortError') {
-          console.error('Error fetching posts:', err)
+          setIsLoading(false)
         }
       } finally {
         if (abortControllerRef.current === controller) {
