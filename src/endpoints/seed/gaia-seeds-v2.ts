@@ -636,7 +636,7 @@ export const seedGaiaV2 = async ({ payload, req }: { payload: Payload; req: Payl
     { name: 'Anthony Syrowatka', role: 'Founder & CEO', dept: 'Owner' },
     { name: 'Simon Maclean', role: 'General  Manager', dept: 'Management' },
     { name: 'Edward Kurnia', role: 'Operations Manager', dept: 'Management' },
-    { name: 'Azlan Abbas', role: 'Lead Web Developer', dept: 'Website Development' },
+    { name: 'Azlan Abas', role: 'Lead Web Developer', dept: 'Website Development' },
     { name: 'Reza F Budiono', role: 'Senior Web Developer', dept: 'Website Development' },
     { name: 'Rizal Chris', role: 'Senior Web Developer', dept: 'Website Development' },
     { name: 'Reva Atallah Rizky', role: 'Web Developer', dept: 'Website Development' },
