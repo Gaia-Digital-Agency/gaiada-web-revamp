@@ -172,9 +172,7 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
             {steps.map((_, index) => (
               <button
                 key={index}
-                className={`pagination-bullet w-2 h-2 rounded-full transition-colors ${
-                  activeIndex === index ? 'bg-[var(--gda-brand-yellow)]' : 'bg-[#D9D9D9]'
-                }`}
+                className="pagination-bullet flex items-center justify-center w-6 h-6 rounded-full transition-colors bg-transparent"
                 tabIndex={0}
                 aria-label={`Go to step ${index + 1}`}
                 onClick={() => {
@@ -186,7 +184,9 @@ export const OurProcess: React.FC<ContentBlockProps> = (props) => {
                     })
                   }
                 }}
-              />
+              >
+                <span className={`w-2 h-2 rounded-full transition-colors ${activeIndex === index ? 'bg-[var(--gda-brand-yellow)]' : 'bg-[#D9D9D9]'}`} />
+              </button>
             ))}
           </div>
         </div>

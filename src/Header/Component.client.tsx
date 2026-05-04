@@ -108,7 +108,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, logo }) => {
 
           {/* Hamburger Menu Icon for Mobile */}
           <button
-            className="hamburger-menu lg:hidden p-2 z-99 cursor-pointer"
+            className="hamburger-menu lg:hidden p-2 z-99 cursor-pointer min-h-[44px] min-w-[44px] flex flex-col justify-center items-center"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}

@@ -8,6 +8,7 @@ import * as migration_20260423_drop_orphan_services_block from './20260423_drop_
 import * as migration_20260423_add_post_ordering from './20260423_add_post_ordering';
 import * as migration_20260424_add_form_uploads from './20260424_add_form_uploads';
 import * as migration_20260427_add_portfolio_scope_block from './20260427_add_portfolio_scope_block';
+import * as migration_20260504_remove_media_folders from './20260504_remove_media_folders';
 
 export const migrations = [
   {
@@ -59,5 +60,10 @@ export const migrations = [
     up: migration_20260427_add_portfolio_scope_block.up,
     down: migration_20260427_add_portfolio_scope_block.down,
     name: '20260427_add_portfolio_scope_block'
+  },
+  {
+    up: migration_20260504_remove_media_folders.up,
+    down: migration_20260504_remove_media_folders.down,
+    name: '20260504_remove_media_folders'
   },
 ];

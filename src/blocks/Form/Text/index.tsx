@@ -18,15 +18,16 @@ export const Text: React.FC<
 > = ({ name, defaultValue, errors, label, required, width, control, contactMethod }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>
-        {label}
-
-        {required && (
-          <span className="required">
-            * <span className="sr-only">(required)</span>
-          </span>
-        )}
-      </Label>
+      {label ? (
+        <Label htmlFor={name}>
+          {label}
+          {required && (
+            <span className="required">
+              * <span className="sr-only">(required)</span>
+            </span>
+          )}
+        </Label>
+      ) : null}
       <Controller
         control={control}
         name={name}
@@ -61,6 +62,7 @@ export const Text: React.FC<
           <Input
             aria-describedby={errors[name] ? `error-${name}` : undefined}
             aria-invalid={!!errors[name]}
+            aria-label={!label ? name : undefined}
             id={name}
             type="text"
             {...field}

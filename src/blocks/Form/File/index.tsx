@@ -24,7 +24,7 @@ export const FileField: React.FC<{
 
   return (
     <Width width={width ?? undefined}>
-      <Label htmlFor={name}>
+      <Label htmlFor={inputId}>
         {label}
         {required && (
           <span className="required">

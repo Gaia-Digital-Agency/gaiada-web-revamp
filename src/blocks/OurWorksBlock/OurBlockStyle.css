@@ -41,6 +41,9 @@
       color: #707070;
       letter-spacing: 0.05em;
       font-weight: 500;
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
 
       &:not(:first-child) {
         margin-left: 36px;
@@ -51,8 +54,10 @@
       }
 
       &.active {
-        color: var(--gda-brand-yellow);
+        color: #1a1a1a;
         font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
       }
 
       &:hover {

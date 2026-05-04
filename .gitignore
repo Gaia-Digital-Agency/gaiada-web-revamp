@@ -30,6 +30,7 @@ zafirmansyah
 
 # Database backups
 bak/
+backups/
 *.dump
 *.sql.gz
 
