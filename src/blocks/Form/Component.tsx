@@ -79,6 +79,10 @@ export const FormBlock: React.FC<
           setIsLoading(true)
         }, 1000)
 
+        const readResponseMessage = (payload: any, fallback: string) => {
+          return payload?.message || payload?.error || payload?.errors?.[0]?.message || fallback
+        }
+
         try {
           const dataToSend = []
 
@@ -96,12 +100,17 @@ export const FormBlock: React.FC<
 
               const uploadRes = await uploadReq.json()
               if (uploadReq.status >= 400) {
-                throw new Error(uploadRes.errors?.[0]?.message || 'File upload failed')
+                throw new Error(readResponseMessage(uploadRes, 'File upload failed'))
+              }
+
+              const uploadedFile = uploadRes?.doc
+              if (!uploadedFile?.url && !uploadedFile?.id) {
+                throw new Error('File upload succeeded, but the uploaded file was not returned.')
               }
 
               dataToSend.push({
                 field: name,
-                value: uploadRes.doc.url ? `${getClientSideURL()}${uploadRes.doc.url}` : uploadRes.doc.id,
+                value: uploadedFile.url ? `${getClientSideURL()}${uploadedFile.url}` : uploadedFile.id,
               })
             } else {
               dataToSend.push({
@@ -124,13 +133,11 @@ export const FormBlock: React.FC<
 
           const res = await req.json()
 
-          clearTimeout(loadingTimerID)
-
           if (req.status >= 400) {
             setIsLoading(false)
 
             setError({
-              message: res.errors?.[0]?.message || 'Internal Server Error',
+              message: readResponseMessage(res, 'Internal Server Error'),
               status: res.status,
             })
 
@@ -147,11 +154,13 @@ export const FormBlock: React.FC<
 
             if (redirectUrl) router.push(redirectUrl)
           }
-        } catch {
+        } catch (err) {
           setIsLoading(false)
           setError({
-            message: 'Something went wrong.',
+            message: err instanceof Error ? err.message : 'Something went wrong.',
           })
+        } finally {
+          clearTimeout(loadingTimerID)
         }
       }
 

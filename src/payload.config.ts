@@ -38,7 +38,7 @@ const smtpAuth =
 
 // Main Payload CMS configuration defining collections, globals, plugins, and database settings
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  serverURL: getServerSideURL(),
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.

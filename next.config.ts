@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
+        pathname: '/media/**',
+      },
+      {
         pathname: '/api/media/file/**',
       },
     ],

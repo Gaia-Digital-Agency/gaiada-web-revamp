@@ -3,6 +3,7 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import React, { useEffect } from 'react'
 import Image from 'next/image'
 import type { Media, Page } from '@/payload-types'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export const NonHomepageHero: React.FC<Page['hero']> = ({
   title,
@@ -43,7 +44,7 @@ export const NonHomepageHero: React.FC<Page['hero']> = ({
       <div className="absolute inset-0 z-0">
         {media && typeof media !== 'string' && (
           <Image
-            src={(media as Media).url || ''}
+            src={getMediaUrl((media as Media).url)}
             alt={(media as Media).alt || 'Hero Background'}
             fill
             priority
