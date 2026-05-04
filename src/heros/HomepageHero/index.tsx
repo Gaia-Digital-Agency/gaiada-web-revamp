@@ -6,6 +6,7 @@ import RichText from '@/components/RichText'
 import { AppButton } from '@/components/common/AppButton'
 import { BlurIn } from '@/components/FramerMotion/Blur-in'
 import { TextFade } from '@/components/FramerMotion/TextFade'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 import Image from 'next/image'
 
 type HomepageHeroType =
@@ -36,7 +37,7 @@ export const HomepageHero: React.FC<HomepageHeroType> = ({
       {/* Hero background — Next.js Image with priority so browser preloads it */}
       {media?.url && (
         <Image
-          src={media.url}
+          src={getMediaUrl(media.url)}
           alt={media.alt || ''}
           fill
           priority
