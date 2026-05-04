@@ -1,3 +1,5 @@
+import { getServerSideURL } from './getURL'
+
 /**
  * Processes media resource URL to ensure proper formatting
  * @param url The original URL from the resource
@@ -11,9 +13,17 @@
 export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | null): string => {
   if (!url) return ''
 
+  const serverURL = getServerSideURL()
+  let processedUrl = url
+
+  // If the URL is absolute and matches our server URL, make it relative
+  if (url.startsWith(serverURL)) {
+    processedUrl = url.replace(serverURL, '')
+  }
+
   if (cacheTag && cacheTag !== '') {
     cacheTag = encodeURIComponent(cacheTag)
   }
 
-  return cacheTag ? `${url}?${cacheTag}` : url
+  return cacheTag ? `${processedUrl}?${cacheTag}` : processedUrl
 }
