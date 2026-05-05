@@ -94,7 +94,7 @@ export const FooterDesktop = ({
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
             backgroundImage: `url(${bgImage})`,
-            backgroundSize: 'contain',
+            backgroundSize: '80%',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center bottom',
           }}
