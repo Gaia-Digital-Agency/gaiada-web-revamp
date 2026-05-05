@@ -96,7 +96,7 @@ export const FooterDesktop = ({
             backgroundImage: `url(${bgImage})`,
             backgroundSize: '80%',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center bottom',
+            backgroundPosition: 'center center',
           }}
         />
       )}
