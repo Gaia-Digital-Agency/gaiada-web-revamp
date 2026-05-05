@@ -56,7 +56,7 @@
       &.active {
         color: #1a1a1a;
         font-weight: 700;
-        text-decoration: underline;
+        /* text-decoration: underline; */
         text-underline-offset: 3px;
       }
 
