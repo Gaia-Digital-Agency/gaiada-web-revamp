@@ -42,17 +42,18 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  const [windowHeight, setWindowHeight] = useState(
-    typeof window !== 'undefined' ? window.innerHeight : 0,
-  )
+  const [windowHeight, setWindowHeight] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
+    setWindowHeight(window.innerHeight)
     const handleResize = () => setWindowHeight(window.innerHeight)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const isShortScreen = windowHeight < 768
+  const isShortScreen = isMounted ? windowHeight < 768 : false
 
   const [isDragging, setIsDragging] = useState(false)
   const startX = useRef(0)
