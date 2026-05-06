@@ -9,9 +9,8 @@
   .form-wrapper {
     padding-top: 42px;
     background: rgba(198, 198, 198, 0.2);
-    backdrop-filter: blur(20px);
-    background-size: cover;
-    background-position: right bottom;
+    backdrop-filter: blur(10%);
+    background-position: center center;
 
     .payload-richtext {
       padding-bottom: 42px;
