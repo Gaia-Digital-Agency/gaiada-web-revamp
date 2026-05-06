@@ -19,21 +19,26 @@ export const FooterMobile = ({
     typeof settingsData?.logo === 'object' && settingsData?.logo?.url ? settingsData.logo.url : ''
 
   return (
-    <div className="container py-10 pb-2 !px-0">
-      <div className="heading-wrapper flex flex-col px-4">
+    <div className="container relative py-10 pb-2 !px-0 overflow-hidden">
+      {footerData?.backgroundImageMobile &&
+        typeof footerData.backgroundImageMobile !== 'number' && (
+          <div
+            className="absolute inset-0 z-9 pointer-events-none"
+            style={{
+              backgroundImage: `url(${footerData.backgroundImageMobile.url})`,
+              backgroundSize: '90%',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
+            }}
+          />
+        )}
+      <div className="relative z-10 heading-wrapper flex flex-col px-4">
         <h2 className="heading-1">{footerData?.heading}</h2>
       </div>
-      <div
-        className="form-wrapper flex flex-col px-4"
-        style={
-          footerData?.backgroundImageMobile && typeof footerData.backgroundImageMobile !== 'number'
-            ? { backgroundImage: `url(${footerData?.backgroundImageMobile?.url})` }
-            : {}
-        }
-      >
+      <div className="relative z-10 form-wrapper flex flex-col px-4">
         {form && <FormBlock form={form} enableIntro={false} />}
       </div>
-      <div className="contact-wrapper flex flex-row items-center justify-center gap-2 mt-8 px-4">
+      <div className="relative z-10 contact-wrapper flex flex-row items-center justify-center gap-2 mt-8 px-4">
         {footerData?.navItemsWithIcon?.map((item, i) => {
           const link = item.link
           return (
@@ -50,7 +55,7 @@ export const FooterMobile = ({
           )
         })}
       </div>
-      <div className="flex flex-col items-center justify-center mt-12">
+      <div className="relative z-10 flex flex-col items-center justify-center mt-12">
         {logoUrl && (
           <a href="/">
             <Image src={logoUrl} alt="Logo Gaia" width={120} height={40} />
