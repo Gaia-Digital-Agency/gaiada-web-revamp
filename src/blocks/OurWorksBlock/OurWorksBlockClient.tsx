@@ -260,9 +260,9 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                             href={`/portfolio/${item.slug}`}
                             onClick={handleLinkClick}
                             draggable={false}
-                            className="swiper-body group flex flex-col"
+                            className="swiper-body group flex flex-col w-full h-full"
                           >
-                            <div className="image-wrapper h-[200px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden">
+                            <div className="image-wrapper h-[200px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden w-full">
                               {item.featuredImage && (
                                 <img
                                   src={
@@ -272,7 +272,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                                   }
                                   alt={item.title}
                                   draggable={false}
-                                  className="object-cover w-full h-[200px] md:h-full transition-transform duration-700 group-hover:scale-105"
+                                  className="absolute inset-0 object-cover w-full h-[200px] md:h-full transition-transform duration-700 group-hover:scale-105"
                                 />
                               )}
                               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
