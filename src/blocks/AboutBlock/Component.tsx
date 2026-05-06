@@ -79,18 +79,28 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
         </div>
       </button>
 
-      {isOpen && (
-        <div className="flex flex-col">
-          <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
-            <p
-              className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
-              style={{ fontFamily: 'Inter, sans-serif' }}
-            >
-              {description}
-            </p>
-          </div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-col">
+              <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
+                <p
+                  className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  {description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
