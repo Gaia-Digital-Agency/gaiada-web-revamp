@@ -478,9 +478,9 @@ body {
 
 /* H E A D E R */
 header {
-  padding: 20px;
+  padding: 0 20px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   transition: 0.5s all;
   height: 70px;
 
@@ -497,20 +497,24 @@ header {
       transition: 0.3s all;
       transform: scale(1);
 
-      &:hover {
-        opacity: 0.8;
-        transform: scale(0.9);
+      @media (hover: hover) {
+        &:hover {
+          opacity: 0.8;
+          transform: scale(0.9);
+        }
       }
     }
 
     .hamburger-menu {
       transition: 0.3s all;
 
-      &:hover {
-        opacity: 0.8;
+      @media (hover: hover) {
+        &:hover {
+          opacity: 0.8;
 
-        div {
-          background-color: var(--gda-brand-yellow);
+          div {
+            background-color: var(--gda-brand-yellow);
+          }
         }
       }
     }
@@ -521,9 +525,11 @@ header {
           margin-top: 16px;
 
           .sub-menu {
-            &:hover {
-              color: var(--gda-brand-yellow);
-              transition: 0.3s all;
+            @media (hover: hover) {
+              &:hover {
+                color: var(--gda-brand-yellow);
+                transition: 0.3s all;
+              }
             }
           }
         }
@@ -534,6 +540,7 @@ header {
   &:has(.submenu-open) {
     height: 220px;
     align-items: flex-start;
+    padding-top: 20px;
     backdrop-filter: blur(12.5px) !important;
     -webkit-backdrop-filter: blur(12.5px) !important;
   }
@@ -559,16 +566,20 @@ footer {
     transition: 0.3s all;
     transform: scale(1);
 
-    &:hover {
-      opacity: 0.8;
-      transform: scale(0.9);
+    @media (hover: hover) {
+      &:hover {
+        opacity: 0.8;
+        transform: scale(0.9);
+      }
     }
   }
 
   .footer-bottom {
     a {
-      &:hover {
-        font-weight: 500;
+      @media (hover: hover) {
+        &:hover {
+          font-weight: 500;
+        }
       }
     }
   }
@@ -656,8 +667,10 @@ h3,
       width: 100%;
     }
 
-    &:hover {
-      background-color: var(--gda-brand-yellow);
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--gda-brand-yellow);
+      }
     }
   }
 
@@ -668,8 +681,10 @@ h3,
     color: var(--gda-brand-black);
     text-transform: none;
 
-    &:hover {
-      color: var(--gda-brand-yellow) !important;
+    @media (hover: hover) {
+      &:hover {
+        color: var(--gda-brand-yellow) !important;
+      }
     }
   }
 
@@ -683,10 +698,12 @@ h3,
     font-size: 13.5px;
     font-weight: 700;
 
-    &:hover {
-      background-color: var(--gda-brand-yellow);
-      color: var(--gda-brand-white);
-      border-color: var(--gda-brand-yellow);
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--gda-brand-yellow);
+        color: var(--gda-brand-white);
+        border-color: var(--gda-brand-yellow);
+      }
     }
   }
 
@@ -694,8 +711,10 @@ h3,
     background-color: transparent;
     color: var(--gda-brand-black);
 
-    &:hover {
-      color: var(--gda-brand-yellow);
+    @media (hover: hover) {
+      &:hover {
+        color: var(--gda-brand-yellow);
+      }
     }
   }
 
@@ -764,11 +783,13 @@ h3,
   text-align: center;
   color: var(--gda-brand-black);
   transition: color 0.3s ease-in-out;
-}
 
-.gda-nav-item:hover {
-  color: var(--gda-brand-yellow);
-  text-decoration: none;
+  @media (hover: hover) {
+    &:hover {
+      color: var(--gda-brand-yellow);
+      text-decoration: none;
+    }
+  }
 }
 
 @keyframes slideInFromRight {
