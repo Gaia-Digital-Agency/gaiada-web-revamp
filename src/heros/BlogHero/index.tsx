@@ -47,9 +47,7 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
       try {
         const catRes = await fetch('/api/categories?limit=100')
         const catData = await catRes.json()
-        const postRes = await fetch(
-          '/api/posts?limit=1000&depth=0&select[categories]=true',
-        )
+        const postRes = await fetch('/api/posts?limit=1000&depth=0&select[categories]=true')
         const postData = await postRes.json()
 
         const counts: Record<string, number> = {}
@@ -84,7 +82,7 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
     } else {
       setCurrentCat(catID)
       window.dispatchEvent(new CustomEvent('categoryChanged', { detail: catID }))
-      
+
       // Scroll to listing section with offset
       const listingSection = document.getElementById('post-listing')
       if (listingSection) {
@@ -135,7 +133,7 @@ const BlogHeroContent: React.FC<BlogHeroType> = ({ title }) => {
           </div>
 
           {categories.length > 0 && (
-            <div className="category-wrapper w-full mt-8 flex flex-wrap justify-start items-center gap-1.5">
+            <div className="category-wrapper w-full mt-8 flex flex-wrap justify-start items-center mr-[2px]">
               <span className="text-sm text-gray-600 italic">Popular Tags:</span>
               {categories.map((cat, index) => {
                 const isSelected = currentCat === String(cat.id)

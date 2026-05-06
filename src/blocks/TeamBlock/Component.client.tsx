@@ -121,7 +121,7 @@ export const TeamBlockClient: React.FC<Props> = ({ departments, title, introText
                 {/* Card Shell */}
                 <div
                   className={`our-team-body relative h-[420px] overflow-hidden transition-all duration-300 outline outline-1
-                  ${isActive ? 'active shadow-[0_24px_64px_rgba(255,194,44,0.15)] outline-primary/20' : 'outline-border/10'}
+                  ${isActive ? 'active shadow-[0_24px_64px_rgba(255,194,44,0.15)] outline-primary/5' : 'outline-border/10'}
                 `}
                 >
                   {/* Face A - Dept Info */}
