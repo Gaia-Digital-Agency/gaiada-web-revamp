@@ -43,7 +43,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] transition-colors duration-300',
               isOpen
-                ? 'text-(--gda-brand-black)'
+                ? 'text-(--gda-brand-black) group-hover:text-(--gda-brand-yellow)'
                 : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
@@ -54,7 +54,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
               isOpen
-                ? 'text-(--gda-brand-black)'
+                ? 'text-(--gda-brand-black) group-hover:text-(--gda-brand-yellow)'
                 : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
@@ -71,7 +71,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
               className={cn(
                 'w-6 h-6 md:w-8 md:h-8 transition-colors duration-300',
                 isOpen
-                  ? 'text-(--gda-brand-black)'
+                  ? 'text-(--gda-brand-black) group-hover:text-(--gda-brand-yellow)'
                   : 'text-foreground group-hover:text-(--gda-brand-yellow)',
               )}
             />
@@ -79,18 +79,28 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
         </div>
       </button>
 
-      {isOpen && (
-        <div className="flex flex-col">
-          <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
-            <p
-              className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
-              style={{ fontFamily: 'Inter, sans-serif' }}
-            >
-              {description}
-            </p>
-          </div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-col">
+              <div className="pl-[40px] md:pl-[66px] max-w-[450px] w-full">
+                <p
+                  className="text-[14px] leading-[22px] text-muted-foreground font-normal pb-6"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  {description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
