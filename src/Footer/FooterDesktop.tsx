@@ -124,7 +124,7 @@ export const FooterDesktop = ({
         </div>
       </div>
 
-      <div className="relative z-10 bg-[#C6C6C633] backdrop-blur-[12px] flex items-center justify-start h-full px-16 lg:px-24">
+      <div className="relative z-10 bg-[#C6C6C633] backdrop-blur-[12px] flex items-center justify-start h-full px-16 lg:px-24 py-20">
         <div className="w-full max-w-md">
           {form && <FormBlock form={form} enableIntro={false} />}
         </div>
