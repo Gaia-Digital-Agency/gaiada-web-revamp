@@ -43,7 +43,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] transition-colors duration-300',
               isOpen
-                ? 'text-(--gda-brand-black)'
+                ? 'text-(--gda-brand-black) group-hover:text-(--gda-brand-yellow)'
                 : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
@@ -54,7 +54,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
             className={cn(
               'text-[24px] md:text-[32px] font-semibold leading-[130%] tracking-[0.01em] transition-colors duration-300',
               isOpen
-                ? 'text-(--gda-brand-black)'
+                ? 'text-(--gda-brand-black) group-hover:text-(--gda-brand-yellow)'
                 : 'text-foreground group-hover:text-(--gda-brand-yellow)',
             )}
             style={{ fontFamily: 'Avenir Next, sans-serif' }}
@@ -71,7 +71,7 @@ const AccordionItem: React.FC<{ title: string; description: string; index: numbe
               className={cn(
                 'w-6 h-6 md:w-8 md:h-8 transition-colors duration-300',
                 isOpen
-                  ? 'text-(--gda-brand-black)'
+                  ? 'text-(--gda-brand-black) group-hover:text-(--gda-brand-yellow)'
                   : 'text-foreground group-hover:text-(--gda-brand-yellow)',
               )}
             />
