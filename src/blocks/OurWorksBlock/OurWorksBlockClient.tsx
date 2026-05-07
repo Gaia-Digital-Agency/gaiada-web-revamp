@@ -110,17 +110,23 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
 
   useEffect(() => {
     const container = scrollContainerRef.current
-    if (container) {
+    if (container && isVisible) {
+      // Force scroll to start when it becomes visible
+      container.scrollTo({ left: 0, behavior: 'instant' })
+      checkScroll()
+      
       const handleScroll = () => checkScroll()
       container.addEventListener('scroll', handleScroll)
-      checkScroll()
-      const timer = setTimeout(checkScroll, 100)
+      
+      // Re-check after a short delay to account for layout shifts
+      const timer = setTimeout(checkScroll, 150)
+      
       return () => {
         container.removeEventListener('scroll', handleScroll)
         clearTimeout(timer)
       }
     }
-  }, [checkScroll, filteredItems])
+  }, [checkScroll, filteredItems, isVisible])
 
   useEffect(() => {
     if (typeof window === 'undefined' || index === undefined) return
@@ -133,15 +139,6 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
     window.addEventListener('homepage-stack-index', handleIndexChange)
     return () => window.removeEventListener('homepage-stack-index', handleIndexChange)
   }, [index])
-
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({
-        left: 0,
-        behavior: 'instant',
-      })
-    }
-  }, [activeServiceId])
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -201,105 +198,100 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
 
             <div className="lg:w-3/4 flex flex-col gap-0 md:gap-8 min-w-0">
               <div className="swiper lg:mr-[calc(-1*(100vw-100%)/2)]">
-                <div
-                  ref={scrollContainerRef}
-                  onMouseDown={handleMouseDown}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseUp}
-                  onMouseMove={handleMouseMove}
-                  className={cn(
-                    'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] px-2 -mx-2 pl-2 scrollbar-hide cursor-grab active:cursor-grabbing',
-                    !isShortScreen && 'snap-x snap-mandatory',
-                  )}
-                  style={{
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                    touchAction: 'pan-x',
-                    pointerEvents: 'auto',
-                  }}
-                >
-                  <AnimatePresence mode="wait" initial={true}>
-                    <motion.div
-                      key={activeServiceId ?? 'all'}
-                      className="flex gap-8"
-                      style={{ pointerEvents: 'auto' }}
-                      initial={isShortScreen ? undefined : { opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={isShortScreen ? undefined : { opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {filteredItems.map((item, i) => (
-                        <motion.div
-                          key={item.slug}
-                          initial={
-                            isShortScreen
-                              ? undefined
-                              : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
-                          }
-                          animate={
-                            isShortScreen
+                <AnimatePresence mode="wait" initial={true}>
+                  <motion.div
+                    key={activeServiceId ?? 'all'}
+                    ref={scrollContainerRef}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}
+                    onMouseMove={handleMouseMove}
+                    initial={isShortScreen ? undefined : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={isShortScreen ? undefined : { opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className={cn(
+                      'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] px-2 -mx-2 pl-2 scrollbar-hide cursor-grab active:cursor-grabbing',
+                      !isShortScreen && 'snap-x snap-mandatory',
+                    )}
+                    style={{
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none',
+                      touchAction: 'pan-x',
+                      pointerEvents: 'auto',
+                    }}
+                  >
+                    {filteredItems.map((item, i) => (
+                      <motion.div
+                        key={item.slug}
+                        initial={
+                          isShortScreen
+                            ? undefined
+                            : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
+                        }
+                        animate={
+                          isShortScreen
+                            ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+                            : isVisible
                               ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
-                              : isVisible
-                                ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
-                                : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
-                          }
-                          transition={
-                            isShortScreen
-                              ? { duration: 0 }
-                              : {
-                                  duration: 1.4,
-                                  ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
-                                  delay: isVisible ? i * 0.12 : 0,
-                                  opacity: { duration: 1 },
-                                  filter: { duration: 1.2 },
-                                }
-                          }
-                          className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
+                              : { opacity: 0, y: 70, scale: 0.92, filter: 'blur(4px)' }
+                        }
+                        transition={
+                          isShortScreen
+                            ? { duration: 0 }
+                            : {
+                                duration: 1.4,
+                                ease: [0.19, 1, 0.22, 1], // Luxurious Exponential Out
+                                delay: isVisible ? i * 0.12 : 0,
+                                opacity: { duration: 1 },
+                                filter: { duration: 1.2 },
+                              }
+                        }
+                        className="swiper-slide shrink-0 w-[260px] md:w-[320px] lg:w-[420px] snap-start"
+                      >
+                        <Link
+                          href={`/portfolio/${item.slug}`}
+                          onClick={handleLinkClick}
+                          draggable={false}
+                          className="swiper-body group flex flex-col w-full h-full"
                         >
-                          <Link
-                            href={`/portfolio/${item.slug}`}
-                            onClick={handleLinkClick}
-                            draggable={false}
-                            className="swiper-body group flex flex-col w-full h-full"
-                          >
-                            <div className="image-wrapper h-[200px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden w-full">
-                              {item.featuredImage && (
-                                <img
-                                  src={
-                                    typeof item.featuredImage === 'object'
-                                      ? item.featuredImage.url
-                                      : ''
-                                  }
-                                  alt={item.title}
-                                  draggable={false}
-                                  className="absolute inset-0 object-cover w-full h-[200px] md:h-full transition-transform duration-700 group-hover:scale-105"
-                                />
-                              )}
-                              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            </div>
-                            <div className="swiper-content space-y-1">
-                              <h3 className="heading-5 group-hover:text-primary transition-colors px-1 -mx-1">
-                                {item.title}
-                              </h3>
-                              <p className="text-sm text-[#999] uppercase tracking-widest flex items-start gap-2">
-                                <span className="text-[#bbb] italic lowercase">in</span>
-                                <span className="underline">
-                                  {item.services?.map((s) => s.title).join(',')}
-                                </span>
-                              </p>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  </AnimatePresence>
+                          <div className="image-wrapper h-[200px] md:h-[320px] lg:h-full aspect-3/4 relative overflow-hidden w-full">
+                            {item.featuredImage && (
+                              <img
+                                src={
+                                  typeof item.featuredImage === 'object'
+                                    ? item.featuredImage.url
+                                    : ''
+                                }
+                                alt={item.title}
+                                draggable={false}
+                                className="absolute inset-0 object-cover w-full h-[200px] md:h-full transition-transform duration-700 group-hover:scale-105"
+                              />
+                            )}
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          </div>
+                          <div className="swiper-content space-y-1">
+                            <h3 className="heading-5 group-hover:text-primary transition-colors px-1 -mx-1">
+                              {item.title}
+                            </h3>
+                            <p className="text-sm text-[#999] uppercase tracking-widest flex items-start gap-2">
+                              <span className="text-[#bbb] italic lowercase">in</span>
+                              <span className="underline">
+                                {item.services?.map((s) => s.title).join(',')}
+                              </span>
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
 
-                  {filteredItems.length === 0 && (
-                    <div className="flex items-center justify-start w-full py-40">
-                      <p className="text-[#999] italic">No works found in this category.</p>
-                    </div>
-                  )}
-                </div>
+                    {filteredItems.length === 0 && (
+                      <div className="flex items-center justify-start w-full py-40">
+                        <p className="text-[#999] italic">No works found in this category.</p>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               <div className="lg:hidden">
