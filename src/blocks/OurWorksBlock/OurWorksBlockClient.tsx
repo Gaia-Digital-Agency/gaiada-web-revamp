@@ -208,7 +208,8 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   onMouseLeave={handleMouseUp}
                   onMouseMove={handleMouseMove}
                   className={cn(
-                    'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide cursor-grab active:cursor-grabbing',
+                    'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] px-1 -mx-1 scrollbar-hide cursor-grab active:cursor-grabbing',
+                    // 'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide cursor-grab active:cursor-grabbing',
                     !isShortScreen && 'snap-x snap-mandatory',
                   )}
                   style={{
