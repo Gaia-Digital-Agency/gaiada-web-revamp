@@ -83,7 +83,7 @@ export const FooterDesktop = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full grid grid-cols-2 lg:min-h-screen overflow-hidden"
+      className="relative w-full grid grid-cols-2 lg:h-full overflow-hidden"
       style={{
         backgroundColor: '#F9F9F9',
       }}

@@ -36,8 +36,8 @@ export async function Footer() {
       : null
 
   return (
-    <footer className="footer">
-      <div className="footer-desktop hidden md:block">
+    <footer className="footer h-auto lg:h-screen flex flex-col">
+      <div className="footer-desktop hidden md:flex flex-grow w-full">
         <FooterDesktop footerData={footerData} form={form} bgImage={bgImage} />
       </div>
       <div className="footer-mobile md:hidden">
@@ -50,7 +50,7 @@ export async function Footer() {
       </div>
 
       {/* BOTTOM */}
-      <div style={{ backdropFilter: 'blur(10px)' }}>
+      <div style={{ backdropFilter: 'blur(10px)' }} className="shrink-0">
         <div className="container footer-bottom grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 py-4 md:py-16">
           <div className="flex flex-row flex-start justify-center md:justify-start flex-wrap gap-4">
             {navItems.map((navItem) => (
