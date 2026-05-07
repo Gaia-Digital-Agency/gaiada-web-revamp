@@ -208,8 +208,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                   onMouseLeave={handleMouseUp}
                   onMouseMove={handleMouseMove}
                   className={cn(
-                    'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] px-1 -mx-1 scrollbar-hide cursor-grab active:cursor-grabbing',
-                    // 'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] scrollbar-hide cursor-grab active:cursor-grabbing',
+                    'swiper-wrapper flex gap-8 overflow-x-auto pb-8 pr-[50%] px-2 -mx-2 scrollbar-hide cursor-grab active:cursor-grabbing',
                     !isShortScreen && 'snap-x snap-mandatory',
                   )}
                   style={{
@@ -279,7 +278,7 @@ export const OurWorksBlockClient: React.FC<OurWorksBlockClientProps> = ({
                               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             </div>
                             <div className="swiper-content space-y-1">
-                              <h3 className="heading-5 group-hover:text-primary transition-colors">
+                              <h3 className="heading-5 group-hover:text-primary transition-colors px-1 -mx-1">
                                 {item.title}
                               </h3>
                               <p className="text-sm text-[#999] uppercase tracking-widest flex items-start gap-2">
