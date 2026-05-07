@@ -100,7 +100,7 @@ const DropdownNavItem: React.FC<{
       <button
         aria-controls={submenuId}
         aria-expanded={open}
-        className={`has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir cursor-pointer transition-colors duration-300 ${isMobile ? '' : 'group-hover:text-[#FFC22C] [&.submenu-open]:text-[#FFC22C]'} ${isAnySubActive ? 'text-[#FFC22C]' : ''}`}
+        className={`has-submenu inline-flex items-center gap-1 text-lg font-semibold text-avenir cursor-pointer transition-colors duration-300 ${isMobile ? 'group-hover:text-[#FFC22C] [&.submenu-open]:text-[#FFC22C]' : 'group-hover:text-[#FFC22C] [&.submenu-open]:text-[#FFC22C]'} ${isAnySubActive ? 'text-[#FFC22C]' : ''}`}
         onClick={() => setOpen((prev) => !prev)}
         onFocus={handleEnter}
         type="button"
@@ -135,7 +135,7 @@ const DropdownNavItem: React.FC<{
               <CMSLink
                 {...subItem.link}
                 appearance="inline"
-                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse ${isMobile ? 'justify-start' : ''}`}
+                className={`sub-menu flex items-center justify-end gap-3 py-2 text-sm flex-row-reverse transition-colors duration-300 hover:text-[#FFC22C] ${isMobile ? 'justify-start' : ''}`}
               >
                 <div className="relative w-3 h-3 flex-shrink-0">
                   <div
