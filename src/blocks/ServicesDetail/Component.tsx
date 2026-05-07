@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import { Media } from '@/components/Media'
 import { ChevronDown } from 'lucide-react'
 import { AppButton } from '@/components/common/AppButton'
@@ -24,34 +25,43 @@ export default function SubServiceList({
 }: {
   subServices: ServicesDetailBlockType['subServices']
 }) {
+  const [activeId, setActiveId] = useState<string | null>(null)
+
   if (subServices?.length === 0) return null
+
+  const handleToggle = (id: string | null) => {
+    setActiveId(activeId === id ? null : id)
+  }
+
   return (
     <>
       {subServices?.map((service, index) => {
         const isOdd = index % 2 !== 0 // index 0 = genap, index 1 = ganjil, dst
+        const isActive = activeId === service.id
 
         return (
           <div
             key={service.id}
+            onClick={() => handleToggle(service.id || null)}
             className={`relative w-full h-[350px] md:h-[400px] group overflow-hidden cursor-pointer transition-all duration-500 ${
               !isOdd ? 'mt-0' : 'md:mt-20 mt-0'
-            }`}
+            } ${isActive ? 'is-active' : ''}`}
           >
             <Media
               resource={service.image}
               fill
-              imgClassName="object-cover transition-transform duration-700 group-hover:scale-105"
+              imgClassName={`object-cover transition-transform duration-700 group-hover:scale-105 ${isActive ? 'scale-105' : ''}`}
             />
             {/* Base Overlay */}
             <div
-              className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
+              className={`absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 ${isActive ? 'opacity-0' : ''}`}
               style={{
                 background: `linear-gradient(180deg, rgba(26, 26, 27, 0) -25%, rgba(26, 26, 27, 0.6) 100%)`,
               }}
             />
             {/* Hover Overlay */}
             <div
-              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              className={`absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${isActive ? 'opacity-100' : ''}`}
               style={{
                 background: `
                   linear-gradient(180deg,rgba(26, 26, 27, 0.5) 0%, rgba(255, 194, 44, 1) 100%),
@@ -61,12 +71,14 @@ export default function SubServiceList({
             />
 
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-col items-center">
-              <h3 className="text-(--gda-brand-white) text-center text-xl md:text-2xl transition-transform duration-500 group-hover:-translate-y-2">
+              <h3
+                className={`text-(--gda-brand-white) text-center text-xl md:text-2xl transition-transform duration-500 group-hover:-translate-y-2 ${isActive ? '-translate-y-2' : ''}`}
+              >
                 {service.title}
               </h3>
 
               <div
-                className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-56 group-hover:opacity-100 group-hover:overflow-y-auto transition-all duration-500 ease-in-out"
+                className={`overflow-hidden max-h-0 opacity-0 group-hover:max-h-56 group-hover:opacity-100 group-hover:overflow-y-auto transition-all duration-500 ease-in-out ${isActive ? 'max-h-56 opacity-100 overflow-y-auto' : ''}`}
                 style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.2) transparent' }}
               >
                 <p className="text-(--gda-brand-white) text-center px-4 mt-2 text-sm md:text-base">
@@ -76,7 +88,7 @@ export default function SubServiceList({
 
               <div className="mt-4">
                 <ChevronDown
-                  className="text-(--gda-brand-white) transition-transform duration-500 group-hover:rotate-180"
+                  className={`text-(--gda-brand-white) transition-transform duration-500 group-hover:rotate-180 ${isActive ? 'rotate-180' : ''}`}
                   size={36}
                 />
               </div>
@@ -87,6 +99,7 @@ export default function SubServiceList({
     </>
   )
 }
+
 
 export const ServicesDetailBlock: React.FC<ServicesDetailBlockType> = ({
   intro,
