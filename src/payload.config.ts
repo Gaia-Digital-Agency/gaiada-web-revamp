@@ -40,6 +40,11 @@ const smtpAuth =
 export default buildConfig({
   serverURL: getServerSideURL(),
   admin: {
+    meta: {
+      icons: [
+        { rel: 'icon', type: 'image/png', url: '/admin-favicon.png' },
+      ],
+    },
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
